@@ -191,7 +191,7 @@ namespace ArkSavegameToolkitNet
                     }
 
                     //remove temp (cryo data) file
-                    //File.Delete(filePath);
+                    File.Delete(filePath);
                 }
 
             }
