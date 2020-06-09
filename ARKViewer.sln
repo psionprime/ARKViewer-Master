@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28922.388
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArkSavegameToolkitNet", "ArkSavegameToolkitNet\ArkSavegameToolkitNet.csproj", "{2B78ED8E-A311-49BD-B4AC-8787F829AD17}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArkSavegameToolkitNet.Domain", "ArkSavegameToolkitNet.Domain\ArkSavegameToolkitNet.Domain.csproj", "{DBF15752-CB8A-40D8-8DA6-2597538E86D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARKViewer", "ARKViewer\ARKViewer.csproj", "{2694464B-92D2-4DF6-9717-C187442F49C3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2B78ED8E-A311-49BD-B4AC-8787F829AD17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B78ED8E-A311-49BD-B4AC-8787F829AD17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B78ED8E-A311-49BD-B4AC-8787F829AD17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B78ED8E-A311-49BD-B4AC-8787F829AD17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBF15752-CB8A-40D8-8DA6-2597538E86D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBF15752-CB8A-40D8-8DA6-2597538E86D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBF15752-CB8A-40D8-8DA6-2597538E86D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBF15752-CB8A-40D8-8DA6-2597538E86D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2694464B-92D2-4DF6-9717-C187442F49C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2694464B-92D2-4DF6-9717-C187442F49C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2694464B-92D2-4DF6-9717-C187442F49C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2694464B-92D2-4DF6-9717-C187442F49C3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F97AB52D-B2AA-4B88-8415-00ED41A5B030}
+	EndGlobalSection
+EndGlobal
