@@ -122,20 +122,6 @@ namespace ArkSavegameToolkitNet
         /// </summary>
         public bool LoadEverything()
         {
-            //var fi = new FileInfo(_fileName);
-            //var size = fi.Length;
-            //SaveTime = fi.LastWriteTimeUtc;
-            //if (size == 0) return false;
-
-            //using (MemoryMappedFile mmf = MemoryMappedFile.CreateFromFile(_fileName, FileMode.Open))
-            //{
-            //    using (MemoryMappedViewAccessor va = mmf.CreateViewAccessor(0L, 0L, MemoryMappedFileAccess.Read))
-            //    {
-            //        ArkArchive archive = new ArkArchive(va, size, _arkNameCache);
-            //        readBinary(archive, mmf);
-            //    }
-            //}
-
             readBinary(_archive, _mmf);
             bool returnValue  = LoadCryopodEntries();
             return returnValue;
@@ -146,14 +132,9 @@ namespace ArkSavegameToolkitNet
             
             //Now parse out cryo creature data
             var cryoPodEntries = Objects.Where(WhereEmptyCryopodHasCustomItemDataBytesArrayBytes).ToList();
-
-
-            //string filePathWithoutExtension = _fileName.Substring(0, _fileName.LastIndexOf("."));
-            //string fileExtension = "cryo";
-            //string filePath = string.Join(".", filePathWithoutExtension, fileExtension);
             int nextObjectId = Objects.Count();
 
-            if (cryoPodEntries !=null && cryoPodEntries.Count > 0)
+            if (cryoPodEntries != null && cryoPodEntries.Count() > 0)
             {
                 foreach (GameObject cryoPod in cryoPodEntries)
                 {
@@ -161,48 +142,42 @@ namespace ArkSavegameToolkitNet
                     sbyte[] sbyteValues = byteList.Value.Cast<sbyte>().ToArray();
                     byte[] cryoDataBytes = (byte[])(Array)sbyteValues;
 
-                    //easier to save to disk and read back as memorymappedfile
-                    var filePath = Path.GetTempFileName();
-                    File.WriteAllBytes(filePath, cryoDataBytes);
-                    var fi = new FileInfo(filePath);
-
-                    using (MemoryMappedFile cryoMmf = MemoryMappedFile.CreateFromFile(filePath, FileMode.Open, null, 0L, MemoryMappedFileAccess.Read))
-                    using (MemoryMappedViewAccessor cryoVa = cryoMmf.CreateViewAccessor(0L, 0L, MemoryMappedFileAccess.Read))
+                    using (MemoryMappedFile cryoMmf = MemoryMappedFile.CreateNew(null, cryoDataBytes.Length))
                     {
-                        ArkArchive cryoArchive = new ArkArchive(cryoVa, fi.Length, _arkNameCache, _arkStringCache, _exclusivePropertyNameTree);
-
-
-
-                        var result = UpdateCryoCreatureStatus(cryoArchive);
-                        var ownerInventoryRef = cryoPod.GetProperty<PropertyObject>(_ownerInventory);
-
-                        var ownerContainerInventory = Objects.FirstOrDefault(o => o.ObjectId == ownerInventoryRef.Value.ObjectId );
-                        if(ownerContainerInventory != null)
+                        using (MemoryMappedViewStream stream = cryoMmf.CreateViewStream())
                         {
-                            var ownerContainer = Objects.FirstOrDefault(o => o.Properties.ContainsKey(_myInventoryComponent) && o.GetProperty<PropertyObject>(_myInventoryComponent).Value.ObjectId == ownerContainerInventory.ObjectId);
-                            if (ownerContainer != null && ownerContainer.Location != null)
-                            {
-                                result.Item1.Location = ownerContainer.Location;
-                            }
+                            BinaryWriter writer = new BinaryWriter(stream);
+                            writer.Write(cryoDataBytes);
                         }
 
-                        Objects.Add(result.Item1);
-                        Objects.Add(result.Item2);
+                        using (MemoryMappedViewAccessor cryoVa = cryoMmf.CreateViewAccessor(0L, 0L, MemoryMappedFileAccess.Read))
+                        {
+                            ArkArchive cryoArchive = new ArkArchive(cryoVa, cryoDataBytes.Length, _arkNameCache, _arkStringCache, _exclusivePropertyNameTree);
+
+                            var result = UpdateCryoCreatureStatus(cryoArchive);
+                            var ownerInventoryRef = cryoPod.GetProperty<PropertyObject>(_ownerInventory);
+
+                            var ownerContainerInventory = Objects.FirstOrDefault(o => o.ObjectId == ownerInventoryRef.Value.ObjectId);
+                            if (ownerContainerInventory != null)
+                            {
+                                var ownerContainer = Objects.FirstOrDefault(o => o.Properties.ContainsKey(_myInventoryComponent) && o.GetProperty<PropertyObject>(_myInventoryComponent).Value.ObjectId == ownerContainerInventory.ObjectId);
+                                if (ownerContainer != null && ownerContainer.Location != null)
+                                {
+                                    result.Item1.Location = ownerContainer.Location;
+                                }
+                            }
+
+                            Objects.Add(result.Item1);
+                            Objects.Add(result.Item2);
+                        }
+
                     }
 
-                    //remove temp (cryo data) file
-                    File.Delete(filePath);
                 }
-
+   
             }
-            
-
 
             return true;
-
-
-
-
 
             bool WhereEmptyCryopodHasCustomItemDataBytesArrayBytes(GameObject o) => (o.ClassName.Name == "PrimalItem_WeaponEmptyCryopod_C" || o.ClassName.Name == "PrimalItem_WeaponEmptyCryopod_PE_C")
                 && o.GetProperty<PropertyArray>(_customItemData)?.Value[0] is StructPropertyList customProperties
