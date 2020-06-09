@@ -1,0 +1,401 @@
+[
+  {
+    "map": "Genesis.ark",
+    "name": "Cave loot crate ",
+    "lat": 6.2,
+    "lon": 46.4,
+    "type": "cave-loot"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Cave loot crate ",
+    "lat": 8.5,
+    "lon": 43.3,
+    "type": "cave-loot"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Cave loot crate ",
+    "lat": 9.3,
+    "lon": 47.1,
+    "type": "cave-loot"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Cave loot crate ",
+    "lat": 9.6,
+    "lon": 49.1,
+    "type": "cave-loot"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Cave loot crate ",
+    "lat": 10.9,
+    "lon": 85.0,
+    "type": "cave-loot"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Cave loot crate ",
+    "lat": 12.6,
+    "lon": 47.7,
+    "type": "cave-loot"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Cave loot crate ",
+    "lat": 12.7,
+    "lon": 46.3,
+    "type": "cave-loot"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Cave loot crate ",
+    "lat": 13.5,
+    "lon": 50.0,
+    "type": "cave-loot"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Cave loot crate ",
+    "lat": 14.8,
+    "lon": 82.2,
+    "type": "cave-loot"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Cave loot crate ",
+    "lat": 15.3,
+    "lon": 91.4,
+    "type": "cave-loot"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Cave loot crate ",
+    "lat": 19.2,
+    "lon": 90.6,
+    "type": "cave-loot"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Cave loot crate ",
+    "lat": 19.9,
+    "lon": 88.3,
+    "type": "cave-loot"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Cave loot crate ",
+    "lat": 21.4,
+    "lon": 79.6,
+    "type": "cave-loot"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Cave loot crate ",
+    "lat": 21.8,
+    "lon": 87.8,
+    "type": "cave-loot"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Cave loot crate ",
+    "lat": 87.5,
+    "lon": 88.0,
+    "type": "cave-loot"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Cave loot crate ",
+    "lat": 90.2,
+    "lon": 87.0,
+    "type": "cave-loot"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Cave loot crate ",
+    "lat": 93.0,
+    "lon": 79.8,
+    "type": "cave-loot"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Cave loot crate ",
+    "lat": 94.2,
+    "lon": 85.3,
+    "type": "cave-loot"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Cave loot crate ",
+    "lat": 94.7,
+    "lon": 81.0,
+    "type": "cave-loot"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Cave loot crate ",
+    "lat": 95.1,
+    "lon": 79.3,
+    "type": "cave-loot"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Cave loot crate ",
+    "lat": 95.4,
+    "lon": 90.2,
+    "type": "cave-loot"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Orbital Supply Drop ",
+    "lat": 17.0,
+    "lon": 13.0,
+    "type": "osd"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Orbital Supply Drop ",
+    "lat": 18.0,
+    "lon": 35.0,
+    "type": "osd"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Orbital Supply Drop ",
+    "lat": 19.0,
+    "lon": 28.0,
+    "type": "osd"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Orbital Supply Drop ",
+    "lat": 22.0,
+    "lon": 55.0,
+    "type": "osd"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Orbital Supply Drop ",
+    "lat": 26.0,
+    "lon": 48.0,
+    "type": "osd"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Orbital Supply Drop ",
+    "lat": 29.0,
+    "lon": 40.0,
+    "type": "osd"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Orbital Supply Drop ",
+    "lat": 29.0,
+    "lon": 58.0,
+    "type": "osd"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Orbital Supply Drop ",
+    "lat": 34.0,
+    "lon": 37.0,
+    "type": "osd"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Orbital Supply Drop ",
+    "lat": 34.0,
+    "lon": 40.0,
+    "type": "osd"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Orbital Supply Drop ",
+    "lat": 35.0,
+    "lon": 14.0,
+    "type": "osd"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Orbital Supply Drop ",
+    "lat": 35.0,
+    "lon": 47.0,
+    "type": "osd"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Orbital Supply Drop ",
+    "lat": 36.0,
+    "lon": 57.0,
+    "type": "osd"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Orbital Supply Drop ",
+    "lat": 39.0,
+    "lon": 32.0,
+    "type": "osd"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Orbital Supply Drop ",
+    "lat": 39.0,
+    "lon": 62.0,
+    "type": "osd"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Orbital Supply Drop ",
+    "lat": 40.0,
+    "lon": 27.0,
+    "type": "osd"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Orbital Supply Drop ",
+    "lat": 43.0,
+    "lon": 10.0,
+    "type": "osd"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Orbital Supply Drop ",
+    "lat": 43.0,
+    "lon": 13.0,
+    "type": "osd"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Orbital Supply Drop ",
+    "lat": 43.0,
+    "lon": 77.0,
+    "type": "osd"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Orbital Supply Drop ",
+    "lat": 46.0,
+    "lon": 85.0,
+    "type": "osd"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Orbital Supply Drop ",
+    "lat": 51.0,
+    "lon": 19.0,
+    "type": "osd"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Orbital Supply Drop ",
+    "lat": 54.0,
+    "lon": 15.0,
+    "type": "osd"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Orbital Supply Drop ",
+    "lat": 58.0,
+    "lon": 90.0,
+    "type": "osd"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Orbital Supply Drop ",
+    "lat": 60.0,
+    "lon": 71.0,
+    "type": "osd"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Orbital Supply Drop ",
+    "lat": 65.0,
+    "lon": 59.0,
+    "type": "osd"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Orbital Supply Drop ",
+    "lat": 65.0,
+    "lon": 37.0,
+    "type": "osd"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Orbital Supply Drop ",
+    "lat": 66.0,
+    "lon": 49.0,
+    "type": "osd"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Orbital Supply Drop ",
+    "lat": 68.0,
+    "lon": 31.0,
+    "type": "osd"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Orbital Supply Drop ",
+    "lat": 68.0,
+    "lon": 54.0,
+    "type": "osd"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Orbital Supply Drop ",
+    "lat": 70.0,
+    "lon": 18.0,
+    "type": "osd"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Orbital Supply Drop ",
+    "lat": 71.0,
+    "lon": 38.0,
+    "type": "osd"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Orbital Supply Drop ",
+    "lat": 72.0,
+    "lon": 43.0,
+    "type": "osd"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Orbital Supply Drop ",
+    "lat": 78.0,
+    "lon": 57.0,
+    "type": "osd"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Orbital Supply Drop ",
+    "lat": 82.0,
+    "lon": 40.0,
+    "type": "osd"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Orbital Supply Drop ",
+    "lat": 85.0,
+    "lon": 28.0,
+    "type": "osd"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Element Vein ",
+    "lat": 54.0,
+    "lon": 84.0,
+    "type": "element"
+  },
+  {
+    "map": "Genesis.ark",
+    "name": "Element Vein ",
+    "lat": 62.0,
+    "lon": 69.0,
+    "type": "element"
+  }
+]
