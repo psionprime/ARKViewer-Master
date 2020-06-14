@@ -10983,9 +10983,9 @@ namespace ARKViewer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap map_crystalsles {
+        internal static System.Drawing.Bitmap map_crystalisles {
             get {
-                object obj = ResourceManager.GetObject("map_crystalsles", resourceCulture);
+                object obj = ResourceManager.GetObject("map_crystalisles", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -1242,6 +1242,12 @@ namespace ARKViewer
                             
                             if (shouldDownload)
                             {
+                                //delete local if any
+                                if (File.Exists(localFilename))
+                                {
+                                    File.Delete(localFilename);
+                                }
+
                                 using (FileStream outputStream = new FileStream(localFilename, FileMode.CreateNew))
                                 {
                                     sftp.DownloadFile(serverFile.FullName, outputStream);
@@ -1565,7 +1571,7 @@ namespace ARKViewer
                     break;
 
                 case "crystalisles":
-                    originalImage = new Bitmap(ARKViewer.Properties.Resources.map_crystalsles, new Size(1024, 1024));
+                    originalImage = new Bitmap(ARKViewer.Properties.Resources.map_crystalisles, new Size(1024, 1024));
                     break;
 
                 case "genesis":

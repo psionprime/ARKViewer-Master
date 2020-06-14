@@ -203,6 +203,7 @@ namespace ArkSavegameToolkitNet.Domain
 
                     return returnValue;
                 }).ToArray();
+
                 var structures = objects.Where(x => x.IsStructure).Select(x => x.AsStructure(save.SaveState)).ToArray();
 
 

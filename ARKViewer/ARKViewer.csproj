@@ -3691,5 +3691,8 @@
   <ItemGroup>
     <None Include="Resources\structure_marker_glitch.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\map_crystalisles.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
