@@ -157,13 +157,16 @@ namespace ArkSavegameToolkitNet
                             var result = UpdateCryoCreatureStatus(cryoArchive);
                             var ownerInventoryRef = cryoPod.GetProperty<PropertyObject>(_ownerInventory);
 
-                            var ownerContainerInventory = Objects.FirstOrDefault(o => o.ObjectId == ownerInventoryRef.Value.ObjectId);
-                            if (ownerContainerInventory != null)
+                            if(ownerInventoryRef!=null && ownerInventoryRef.Value?.ObjectId != null)
                             {
-                                var ownerContainer = Objects.FirstOrDefault(o => o.Properties.ContainsKey(_myInventoryComponent) && o.GetProperty<PropertyObject>(_myInventoryComponent).Value.ObjectId == ownerContainerInventory.ObjectId);
-                                if (ownerContainer != null && ownerContainer.Location != null)
+                                var ownerContainerInventory = Objects.FirstOrDefault(o => o.ObjectId == ownerInventoryRef.Value.ObjectId);
+                                if (ownerContainerInventory != null)
                                 {
-                                    result.Item1.Location = ownerContainer.Location;
+                                    var ownerContainer = Objects.FirstOrDefault(o => o.Properties.ContainsKey(_myInventoryComponent) && o.GetProperty<PropertyObject>(_myInventoryComponent).Value.ObjectId == ownerContainerInventory.ObjectId);
+                                    if (ownerContainer != null && ownerContainer.Location != null)
+                                    {
+                                        result.Item1.Location = ownerContainer.Location;
+                                    }
                                 }
                             }
 
