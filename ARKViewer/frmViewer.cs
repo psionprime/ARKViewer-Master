@@ -1577,6 +1577,9 @@ namespace ARKViewer
                 case "genesis":
                     originalImage = new Bitmap(ARKViewer.Properties.Resources.map_genesis, new Size(1024, 1024));
                     break;
+                case "astralark":
+                    originalImage = new Bitmap(ARKViewer.Properties.Resources.map_astralark, new Size(1024, 1024));
+                    break;
                 default:
                     originalImage = new Bitmap(1024,1024);
                     break;
@@ -1598,7 +1601,8 @@ namespace ARKViewer
                     { "Ragnarok", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) },
                     { "Valguero_P", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) },
                     { "CrystalIsles", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) },
-                    { "Genesis", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) }
+                    { "Genesis", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) },
+                    { "AstralARK", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) }
                 };
 
 

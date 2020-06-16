@@ -27,8 +27,8 @@ namespace ArkSavegameToolkitNet.Domain
             { "PGARK", Tuple.Create(0.0f, 6080.0f, 0.0f, 6080.0f) },
             { "CrystalIsles" , Tuple.Create(50f, 15250f, 50.0f, 17000.0f) },
             { "Valguero_P" , Tuple.Create(50.0f, 8161.0f, 50.0f, 8161.0f) },
-            { "Genesis", Tuple.Create(50.0f, 10500.0f, 50.0f, 10500.0f)}
-            
+            { "Genesis", Tuple.Create(50.0f, 10500.0f, 50.0f, 10500.0f)},
+            { "AstralARK", Tuple.Create(50.0f, 2000.0f, 50.0f, 2000.0f)}
         };
 
         //width, height, latitude-top, longitude-left, longitude-right, latitude-bottom
@@ -55,7 +55,8 @@ namespace ArkSavegameToolkitNet.Domain
                     { "ShigoIslands", Tuple.Create(1024, 1024, -2.0f, -1.6f, 99.8f, 101.0f) },
                     { "TheVolcano", Tuple.Create(1024, 1024, -1.95f, -1.3f, 99.5f, 100.7f) },
                     { "Valguero_P", Tuple.Create(1024, 1024, -10.0f, -10.0f, 110.0f, 110.0f) },
-                    { "Genesis", Tuple.Create(1024, 1024, 0.0f, 0.0f, 100.0f, 100.0f) }
+                    { "Genesis", Tuple.Create(1024, 1024, 0.0f, 0.0f, 100.0f, 100.0f) },
+                    { "AstralARK", Tuple.Create(1024, 1024, 0.0f, 0.0f, 100.0f, 100.0f) }
                 };
             }
             finally

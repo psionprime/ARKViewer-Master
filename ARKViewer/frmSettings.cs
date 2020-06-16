@@ -213,7 +213,8 @@ namespace ARKViewer
                 { "ragnarok.ark", "Ragnarok"},
                 { "valguero_p.ark", "Valguero" },
                 { "crystalisles.ark", "Crystal Isles" },
-                { "genesis.ark", "Genesis" }
+                { "genesis.ark", "Genesis" },
+                { "astralark.ark", "AstralARK" },
 
             };
 
