@@ -151,7 +151,6 @@
             this.Name = "frmStructureLocations";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Structure Locations";
-            this.TopMost = true;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmStructureLocations_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.picType)).EndInit();
             this.ResumeLayout(false);

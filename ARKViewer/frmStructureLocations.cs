@@ -87,7 +87,7 @@ namespace ARKViewer
                 }
                 else if (structure.ClassName.StartsWith("WyvernNest_"))
                 {
-                    var fertileEggs= gameData.Items.Where(i => i.ClassName.Contains("Egg_Wyvern") && i.Location != null && i.Location.Latitude.Value.ToString("0.00").Equals(structure.Location.Latitude.Value.ToString("0.00")) && i.Location.Longitude.Value.ToString("0.00").Equals(structure.Location.Longitude.Value.ToString("0.00")) && i.OwnerInventoryId == null);
+                    var fertileEggs= gameData.Items.Where(i =>  i.ClassName.ToLower().Contains("egg") && i.Location != null && i.Location.Latitude.Value.ToString("0.00").Equals(structure.Location.Latitude.Value.ToString("0.00")) && i.Location.Longitude.Value.ToString("0.00").Equals(structure.Location.Longitude.Value.ToString("0.00")) && i.OwnerInventoryId == null);
                     if (fertileEggs != null && fertileEggs.Count() > 0)
                     {
                         newItem.BackColor = Color.LightGreen;
