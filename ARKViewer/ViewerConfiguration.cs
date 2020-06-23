@@ -133,7 +133,10 @@ namespace ARKViewer
         public int CommandPrefix { get; set; } = 0;
 
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
+        
         public int FtpDownloadMode { get; set; } = 0;
+        [DataMember(IsRequired = false, EmitDefaultValue = false)]
+        public bool SortCommandLineExport { get; set; } = false;
 
         public ViewerConfiguration()
         {
@@ -501,6 +504,7 @@ namespace ARKViewer
                 this.MagmaNests = savedState.MagmaNests;
                 this.UpdateNotificationFile = savedState.UpdateNotificationFile;
                 this.UpdateNotificationSingle = savedState.UpdateNotificationSingle;
+                this.SortCommandLineExport = savedState.SortCommandLineExport;
 
 
                 if (savedState.StructureExclusions != null)

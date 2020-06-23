@@ -67,9 +67,9 @@
             this.btnZoomMinus = new System.Windows.Forms.Button();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.lvwMapMarkers = new System.Windows.Forms.ListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lvwMapMarkers_Name = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lvwMapMarkers_Lat = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lvwMapMarkers_Lon = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.lblMapMarkerHeader = new System.Windows.Forms.Label();
             this.btnRemoveMarker = new System.Windows.Forms.Button();
@@ -115,22 +115,22 @@
             this.txtMarkerFilter = new System.Windows.Forms.TextBox();
             this.tabFeatures = new System.Windows.Forms.TabControl();
             this.tpgWild = new System.Windows.Forms.TabPage();
-            this.label8 = new System.Windows.Forms.Label();
+            this.lblWildRadius = new System.Windows.Forms.Label();
             this.udWildRadius = new System.Windows.Forms.NumericUpDown();
-            this.label7 = new System.Windows.Forms.Label();
+            this.lblWildLon = new System.Windows.Forms.Label();
             this.udWildLon = new System.Windows.Forms.NumericUpDown();
-            this.label6 = new System.Windows.Forms.Label();
+            this.lblWildLat = new System.Windows.Forms.Label();
             this.udWildLat = new System.Windows.Forms.NumericUpDown();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.lblWildMin = new System.Windows.Forms.Label();
+            this.lblWildMax = new System.Windows.Forms.Label();
             this.udWildMin = new System.Windows.Forms.NumericUpDown();
             this.udWildMax = new System.Windows.Forms.NumericUpDown();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblWildCommand = new System.Windows.Forms.Label();
             this.cboConsoleCommandsWild = new System.Windows.Forms.ComboBox();
             this.lblSelectedWildTotal = new System.Windows.Forms.Label();
             this.lblWildClass = new System.Windows.Forms.Label();
             this.tpgTamed = new System.Windows.Forms.TabPage();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lblTamedCommand = new System.Windows.Forms.Label();
             this.cboConsoleCommandsTamed = new System.Windows.Forms.ComboBox();
             this.cboTameTribes = new System.Windows.Forms.ComboBox();
             this.cboTamePlayers = new System.Windows.Forms.ComboBox();
@@ -163,6 +163,8 @@
             this.lvwTameDetail_Colour4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lvwTameDetail_Colour5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lvwTameDetail_Colour6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lvwTameDetail_MutationsFemale = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lvwTameDetail_MutationsMale = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lblTameTotal = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.lblStats = new System.Windows.Forms.Label();
@@ -227,19 +229,19 @@
             this.lvwPlayers_SteamName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tpgDroppedItems = new System.Windows.Forms.TabPage();
             this.cboDroppedItem = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lblDroppedPlayer = new System.Windows.Forms.Label();
             this.cboDroppedPlayer = new System.Windows.Forms.ComboBox();
             this.lblCopyCommandDropped = new System.Windows.Forms.Label();
             this.cboCopyCommandDropped = new System.Windows.Forms.ComboBox();
             this.lblCountDropped = new System.Windows.Forms.Label();
             this.lblDroppedItem = new System.Windows.Forms.Label();
             this.lvwDroppedItems = new System.Windows.Forms.ListView();
-            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lvwDroppedItems_Item = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lvwDroppedItems_DroppedBy = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lvwDroppedItems_Lat = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lvwDroppedItems_Lon = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lvwDroppedItems_Tribe = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lvwDroppedItems_Player = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.pnlStructures = new System.Windows.Forms.Panel();
             this.chkGlitches = new System.Windows.Forms.CheckBox();
             this.chkMagmasaurNests = new System.Windows.Forms.CheckBox();
@@ -249,8 +251,6 @@
             this.chkApplyFilterMarkers = new System.Windows.Forms.CheckBox();
             this.lblStatus = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.lvwTameDetail_MutationsFemale = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.lvwTameDetail_MutationsMale = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.mnuContext.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picMap)).BeginInit();
             this.pnlMap.SuspendLayout();
@@ -601,9 +601,9 @@
             this.lvwMapMarkers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lvwMapMarkers.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2,
-            this.columnHeader3});
+            this.lvwMapMarkers_Name,
+            this.lvwMapMarkers_Lat,
+            this.lvwMapMarkers_Lon});
             this.lvwMapMarkers.FullRowSelect = true;
             this.lvwMapMarkers.HideSelection = false;
             this.lvwMapMarkers.LargeImageList = this.imageList1;
@@ -618,18 +618,18 @@
             this.lvwMapMarkers.SelectedIndexChanged += new System.EventHandler(this.lvwMapMarkers_SelectedIndexChanged);
             this.lvwMapMarkers.Click += new System.EventHandler(this.lvwMapMarkers_Click);
             // 
-            // columnHeader1
+            // lvwMapMarkers_Name
             // 
-            this.columnHeader1.Text = "Name";
-            this.columnHeader1.Width = 214;
+            this.lvwMapMarkers_Name.Text = "Name";
+            this.lvwMapMarkers_Name.Width = 214;
             // 
-            // columnHeader2
+            // lvwMapMarkers_Lat
             // 
-            this.columnHeader2.Text = "Lat";
+            this.lvwMapMarkers_Lat.Text = "Lat";
             // 
-            // columnHeader3
+            // lvwMapMarkers_Lon
             // 
-            this.columnHeader3.Text = "Lon";
+            this.lvwMapMarkers_Lon.Text = "Lon";
             // 
             // imageList1
             // 
@@ -1200,18 +1200,18 @@
             // 
             // tpgWild
             // 
-            this.tpgWild.Controls.Add(this.label8);
+            this.tpgWild.Controls.Add(this.lblWildRadius);
             this.tpgWild.Controls.Add(this.udWildRadius);
-            this.tpgWild.Controls.Add(this.label7);
+            this.tpgWild.Controls.Add(this.lblWildLon);
             this.tpgWild.Controls.Add(this.udWildLon);
-            this.tpgWild.Controls.Add(this.label6);
+            this.tpgWild.Controls.Add(this.lblWildLat);
             this.tpgWild.Controls.Add(this.udWildLat);
-            this.tpgWild.Controls.Add(this.label5);
-            this.tpgWild.Controls.Add(this.label4);
+            this.tpgWild.Controls.Add(this.lblWildMin);
+            this.tpgWild.Controls.Add(this.lblWildMax);
             this.tpgWild.Controls.Add(this.udWildMin);
             this.tpgWild.Controls.Add(this.udWildMax);
             this.tpgWild.Controls.Add(this.btnCopyCommandWild);
-            this.tpgWild.Controls.Add(this.label1);
+            this.tpgWild.Controls.Add(this.lblWildCommand);
             this.tpgWild.Controls.Add(this.cboConsoleCommandsWild);
             this.tpgWild.Controls.Add(this.lblSelectedWildTotal);
             this.tpgWild.Controls.Add(this.lblWildClass);
@@ -1226,16 +1226,16 @@
             this.tpgWild.Text = "Wild Creatures";
             this.tpgWild.UseVisualStyleBackColor = true;
             // 
-            // label8
+            // lblWildRadius
             // 
-            this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(665, 18);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(50, 13);
-            this.label8.TabIndex = 45;
-            this.label8.Text = "Radius:";
+            this.lblWildRadius.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblWildRadius.AutoSize = true;
+            this.lblWildRadius.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblWildRadius.Location = new System.Drawing.Point(665, 18);
+            this.lblWildRadius.Name = "lblWildRadius";
+            this.lblWildRadius.Size = new System.Drawing.Size(50, 13);
+            this.lblWildRadius.TabIndex = 45;
+            this.lblWildRadius.Text = "Radius:";
             // 
             // udWildRadius
             // 
@@ -1252,16 +1252,16 @@
             131072});
             this.udWildRadius.ValueChanged += new System.EventHandler(this.udWildRadius_ValueChanged);
             // 
-            // label7
+            // lblWildLon
             // 
-            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(550, 18);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(32, 13);
-            this.label7.TabIndex = 43;
-            this.label7.Text = "Lon:";
+            this.lblWildLon.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblWildLon.AutoSize = true;
+            this.lblWildLon.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblWildLon.Location = new System.Drawing.Point(550, 18);
+            this.lblWildLon.Name = "lblWildLon";
+            this.lblWildLon.Size = new System.Drawing.Size(32, 13);
+            this.lblWildLon.TabIndex = 43;
+            this.lblWildLon.Text = "Lon:";
             // 
             // udWildLon
             // 
@@ -1278,16 +1278,16 @@
             131072});
             this.udWildLon.ValueChanged += new System.EventHandler(this.udWildLon_ValueChanged);
             // 
-            // label6
+            // lblWildLat
             // 
-            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(428, 18);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(29, 13);
-            this.label6.TabIndex = 41;
-            this.label6.Text = "Lat:";
+            this.lblWildLat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblWildLat.AutoSize = true;
+            this.lblWildLat.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblWildLat.Location = new System.Drawing.Point(428, 18);
+            this.lblWildLat.Name = "lblWildLat";
+            this.lblWildLat.Size = new System.Drawing.Size(29, 13);
+            this.lblWildLat.TabIndex = 41;
+            this.lblWildLat.Text = "Lat:";
             // 
             // udWildLat
             // 
@@ -1304,25 +1304,25 @@
             131072});
             this.udWildLat.ValueChanged += new System.EventHandler(this.udWildLat_ValueChanged);
             // 
-            // label5
+            // lblWildMin
             // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(42, 18);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(31, 13);
-            this.label5.TabIndex = 39;
-            this.label5.Text = "Min:";
+            this.lblWildMin.AutoSize = true;
+            this.lblWildMin.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblWildMin.Location = new System.Drawing.Point(42, 18);
+            this.lblWildMin.Name = "lblWildMin";
+            this.lblWildMin.Size = new System.Drawing.Size(31, 13);
+            this.lblWildMin.TabIndex = 39;
+            this.lblWildMin.Text = "Min:";
             // 
-            // label4
+            // lblWildMax
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(142, 18);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(34, 13);
-            this.label4.TabIndex = 38;
-            this.label4.Text = "Max:";
+            this.lblWildMax.AutoSize = true;
+            this.lblWildMax.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblWildMax.Location = new System.Drawing.Point(142, 18);
+            this.lblWildMax.Name = "lblWildMax";
+            this.lblWildMax.Size = new System.Drawing.Size(34, 13);
+            this.lblWildMax.TabIndex = 38;
+            this.lblWildMax.Text = "Max:";
             // 
             // udWildMin
             // 
@@ -1370,16 +1370,16 @@
             0});
             this.udWildMax.ValueChanged += new System.EventHandler(this.udWildMax_ValueChanged);
             // 
-            // label1
+            // lblWildCommand
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(14, 204);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(65, 13);
-            this.label1.TabIndex = 34;
-            this.label1.Text = "Command:";
+            this.lblWildCommand.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblWildCommand.AutoSize = true;
+            this.lblWildCommand.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblWildCommand.Location = new System.Drawing.Point(14, 204);
+            this.lblWildCommand.Name = "lblWildCommand";
+            this.lblWildCommand.Size = new System.Drawing.Size(65, 13);
+            this.lblWildCommand.TabIndex = 34;
+            this.lblWildCommand.Text = "Command:";
             // 
             // cboConsoleCommandsWild
             // 
@@ -1421,7 +1421,7 @@
             // 
             this.tpgTamed.Controls.Add(this.chkCryo);
             this.tpgTamed.Controls.Add(this.btnCopyCommandTamed);
-            this.tpgTamed.Controls.Add(this.label2);
+            this.tpgTamed.Controls.Add(this.lblTamedCommand);
             this.tpgTamed.Controls.Add(this.cboConsoleCommandsTamed);
             this.tpgTamed.Controls.Add(this.cboTameTribes);
             this.tpgTamed.Controls.Add(this.cboTamePlayers);
@@ -1441,16 +1441,16 @@
             this.tpgTamed.Text = "Tamed Creatures";
             this.tpgTamed.UseVisualStyleBackColor = true;
             // 
-            // label2
+            // lblTamedCommand
             // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(192, 202);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(65, 13);
-            this.label2.TabIndex = 34;
-            this.label2.Text = "Command:";
+            this.lblTamedCommand.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblTamedCommand.AutoSize = true;
+            this.lblTamedCommand.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTamedCommand.Location = new System.Drawing.Point(192, 202);
+            this.lblTamedCommand.Name = "lblTamedCommand";
+            this.lblTamedCommand.Size = new System.Drawing.Size(65, 13);
+            this.lblTamedCommand.TabIndex = 34;
+            this.lblTamedCommand.Text = "Command:";
             // 
             // cboConsoleCommandsTamed
             // 
@@ -1686,6 +1686,14 @@
             // 
             this.lvwTameDetail_Colour6.Text = "C5";
             this.lvwTameDetail_Colour6.Width = 35;
+            // 
+            // lvwTameDetail_MutationsFemale
+            // 
+            this.lvwTameDetail_MutationsFemale.Text = "Mut (F)";
+            // 
+            // lvwTameDetail_MutationsMale
+            // 
+            this.lvwTameDetail_MutationsMale.Text = "Mut (M)";
             // 
             // lblTameTotal
             // 
@@ -2340,7 +2348,7 @@
             // tpgDroppedItems
             // 
             this.tpgDroppedItems.Controls.Add(this.cboDroppedItem);
-            this.tpgDroppedItems.Controls.Add(this.label3);
+            this.tpgDroppedItems.Controls.Add(this.lblDroppedPlayer);
             this.tpgDroppedItems.Controls.Add(this.cboDroppedPlayer);
             this.tpgDroppedItems.Controls.Add(this.btnCopyCommandDropped);
             this.tpgDroppedItems.Controls.Add(this.lblCopyCommandDropped);
@@ -2367,15 +2375,15 @@
             this.cboDroppedItem.TabIndex = 48;
             this.cboDroppedItem.SelectedIndexChanged += new System.EventHandler(this.cboDroppedItem_SelectedIndexChanged);
             // 
-            // label3
+            // lblDroppedPlayer
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(17, 18);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(46, 13);
-            this.label3.TabIndex = 47;
-            this.label3.Text = "Player:";
+            this.lblDroppedPlayer.AutoSize = true;
+            this.lblDroppedPlayer.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDroppedPlayer.Location = new System.Drawing.Point(17, 18);
+            this.lblDroppedPlayer.Name = "lblDroppedPlayer";
+            this.lblDroppedPlayer.Size = new System.Drawing.Size(46, 13);
+            this.lblDroppedPlayer.TabIndex = 47;
+            this.lblDroppedPlayer.Text = "Player:";
             // 
             // cboDroppedPlayer
             // 
@@ -2438,12 +2446,12 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lvwDroppedItems.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader4,
-            this.columnHeader5,
-            this.columnHeader7,
-            this.columnHeader8,
-            this.columnHeader9,
-            this.columnHeader10});
+            this.lvwDroppedItems_Item,
+            this.lvwDroppedItems_DroppedBy,
+            this.lvwDroppedItems_Lat,
+            this.lvwDroppedItems_Lon,
+            this.lvwDroppedItems_Tribe,
+            this.lvwDroppedItems_Player});
             this.lvwDroppedItems.FullRowSelect = true;
             this.lvwDroppedItems.HideSelection = false;
             this.lvwDroppedItems.Location = new System.Drawing.Point(12, 52);
@@ -2455,33 +2463,33 @@
             this.lvwDroppedItems.View = System.Windows.Forms.View.Details;
             this.lvwDroppedItems.SelectedIndexChanged += new System.EventHandler(this.lvwDroppedItems_SelectedIndexChanged);
             // 
-            // columnHeader4
+            // lvwDroppedItems_Item
             // 
-            this.columnHeader4.Text = "Item";
-            this.columnHeader4.Width = 247;
+            this.lvwDroppedItems_Item.Text = "Item";
+            this.lvwDroppedItems_Item.Width = 247;
             // 
-            // columnHeader5
+            // lvwDroppedItems_DroppedBy
             // 
-            this.columnHeader5.Text = "Dropped By";
-            this.columnHeader5.Width = 169;
+            this.lvwDroppedItems_DroppedBy.Text = "Dropped By";
+            this.lvwDroppedItems_DroppedBy.Width = 169;
             // 
-            // columnHeader7
+            // lvwDroppedItems_Lat
             // 
-            this.columnHeader7.Text = "Lat";
+            this.lvwDroppedItems_Lat.Text = "Lat";
             // 
-            // columnHeader8
+            // lvwDroppedItems_Lon
             // 
-            this.columnHeader8.Text = "Lon";
+            this.lvwDroppedItems_Lon.Text = "Lon";
             // 
-            // columnHeader9
+            // lvwDroppedItems_Tribe
             // 
-            this.columnHeader9.Text = "Tribe";
-            this.columnHeader9.Width = 105;
+            this.lvwDroppedItems_Tribe.Text = "Tribe";
+            this.lvwDroppedItems_Tribe.Width = 105;
             // 
-            // columnHeader10
+            // lvwDroppedItems_Player
             // 
-            this.columnHeader10.Text = "Player";
-            this.columnHeader10.Width = 109;
+            this.lvwDroppedItems_Player.Text = "Player";
+            this.lvwDroppedItems_Player.Width = 109;
             // 
             // pnlStructures
             // 
@@ -2636,14 +2644,6 @@
             this.splitContainer1.TabIndex = 23;
             this.splitContainer1.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitContainer1_SplitterMoved);
             // 
-            // lvwTameDetail_MutationsFemale
-            // 
-            this.lvwTameDetail_MutationsFemale.Text = "Mut (F)";
-            // 
-            // lvwTameDetail_MutationsMale
-            // 
-            this.lvwTameDetail_MutationsMale.Text = "Mut (M)";
-            // 
             // frmViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2748,9 +2748,9 @@
         private System.Windows.Forms.CheckBox chkDeinoNests;
         private System.Windows.Forms.PictureBox picBeaverDams;
         private System.Windows.Forms.CheckBox chkBeaverDams;
-        private System.Windows.Forms.ColumnHeader columnHeader1;
-        private System.Windows.Forms.ColumnHeader columnHeader2;
-        private System.Windows.Forms.ColumnHeader columnHeader3;
+        private System.Windows.Forms.ColumnHeader lvwMapMarkers_Name;
+        private System.Windows.Forms.ColumnHeader lvwMapMarkers_Lat;
+        private System.Windows.Forms.ColumnHeader lvwMapMarkers_Lon;
         private System.Windows.Forms.PictureBox picArtifacts;
         private System.Windows.Forms.CheckBox chkArtifacts;
         private System.Windows.Forms.ToolTip toolTip1;
@@ -2853,10 +2853,10 @@
         private System.Windows.Forms.Label lblSelectedWildTotal;
         private System.Windows.Forms.ColumnHeader lvwTameDetail_Creature;
         private System.Windows.Forms.Button btnCopyCommandWild;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblWildCommand;
         private System.Windows.Forms.ComboBox cboConsoleCommandsWild;
         private System.Windows.Forms.Button btnCopyCommandTamed;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblTamedCommand;
         private System.Windows.Forms.ComboBox cboConsoleCommandsTamed;
         private System.Windows.Forms.ContextMenuStrip mnuContext;
         private System.Windows.Forms.ToolStripMenuItem mnuContext_PlayerId;
@@ -2885,16 +2885,16 @@
         private System.Windows.Forms.Label lblDroppedItem;
         private System.Windows.Forms.ListView lvwDroppedItems;
         private System.Windows.Forms.ComboBox cboDroppedItem;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblDroppedPlayer;
         private System.Windows.Forms.ComboBox cboDroppedPlayer;
-        private System.Windows.Forms.ColumnHeader columnHeader4;
-        private System.Windows.Forms.ColumnHeader columnHeader5;
-        private System.Windows.Forms.ColumnHeader columnHeader7;
-        private System.Windows.Forms.ColumnHeader columnHeader8;
-        private System.Windows.Forms.ColumnHeader columnHeader9;
-        private System.Windows.Forms.ColumnHeader columnHeader10;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ColumnHeader lvwDroppedItems_Item;
+        private System.Windows.Forms.ColumnHeader lvwDroppedItems_DroppedBy;
+        private System.Windows.Forms.ColumnHeader lvwDroppedItems_Lat;
+        private System.Windows.Forms.ColumnHeader lvwDroppedItems_Lon;
+        private System.Windows.Forms.ColumnHeader lvwDroppedItems_Tribe;
+        private System.Windows.Forms.ColumnHeader lvwDroppedItems_Player;
+        private System.Windows.Forms.Label lblWildMin;
+        private System.Windows.Forms.Label lblWildMax;
         private System.Windows.Forms.NumericUpDown udWildMin;
         private System.Windows.Forms.NumericUpDown udWildMax;
         private System.Windows.Forms.TabPage tpgTribes;
@@ -2914,11 +2914,11 @@
         private System.Windows.Forms.CheckBox chkTribePlayers;
         private System.Windows.Forms.CheckBox chkMagmasaurNests;
         private System.Windows.Forms.PictureBox picMagmasaurNests;
-        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label lblWildRadius;
         private System.Windows.Forms.NumericUpDown udWildRadius;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label lblWildLon;
         private System.Windows.Forms.NumericUpDown udWildLon;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label lblWildLat;
         private System.Windows.Forms.NumericUpDown udWildLat;
         private System.Windows.Forms.PictureBox picGlitches;
         private System.Windows.Forms.CheckBox chkGlitches;

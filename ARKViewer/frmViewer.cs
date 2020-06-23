@@ -1797,6 +1797,7 @@ namespace ARKViewer
             {
 
                 var wyvernNestList = gd.Structures.Where(f => f.ClassName.StartsWith("WyvernNest_"));
+                //var allNests = gd.Structures.Where(f => f.ClassName.Contains("heir"));
                 foreach (var wyvernNest in wyvernNestList)
                 {
                     markerX = ((decimal)Math.Round(wyvernNest.Location.Longitude.Value,2) - mapvals.Item4) * mapvals.Item1 / (mapvals.Item5 - mapvals.Item4);

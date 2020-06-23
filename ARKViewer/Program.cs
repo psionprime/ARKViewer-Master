@@ -36,12 +36,14 @@ namespace ARKViewer
                 //command line, load save game data for export
                 string savePath = "";
                 string saveFilename = "";
+                bool shouldSort = ProgramConfig.SortCommandLineExport;
 
                 if(commandArguments.Length > 3)
                 {
                     //ark save game specified
                     saveFilename = commandArguments[3].ToString().Trim();
                     savePath = Path.GetFullPath(saveFilename);
+
                 }
                 else
                 {
@@ -244,10 +246,12 @@ namespace ARKViewer
                                     {
                                         using (JsonTextWriter jw = new JsonTextWriter(sw))
                                         {
+                                            var creatureList = shouldSort ? gd.WildCreatures.OrderBy(o => o.ClassName).Cast<ArkWildCreature>() : gd.WildCreatures;
+
                                             jw.WriteStartArray();
 
                                             //Creature, Sex, Lvl, Lat, Lon, HP, Stam, Weight, Speed, Food, Oxygen, Craft, C0, C1, C2, C3, C4, C5              
-                                            foreach (var creature in gd.WildCreatures)
+                                            foreach (var creature in creatureList)
                                             {
                                                 jw.WriteStartObject();
                                             
@@ -355,9 +359,12 @@ namespace ARKViewer
                                     {
                                         using (JsonTextWriter jw = new JsonTextWriter(sw))
                                         {
+
+                                            var creatureList = shouldSort ? gd.TamedCreatures.OrderBy(o => o.ClassName).Cast<ArkTamedCreature>() : gd.TamedCreatures;
+
                                             jw.WriteStartArray();
 
-                                            foreach (var creature in gd.TamedCreatures)
+                                            foreach (var creature in creatureList)
                                             {
 
                                                 jw.WriteStartObject();

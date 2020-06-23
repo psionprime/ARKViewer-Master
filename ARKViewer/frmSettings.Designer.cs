@@ -112,6 +112,11 @@
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tpgPlayers = new System.Windows.Forms.TabPage();
+            this.pnlFtpSettingsCommands = new System.Windows.Forms.Panel();
+            this.optFTPSync = new System.Windows.Forms.RadioButton();
+            this.optFTPClean = new System.Windows.Forms.RadioButton();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.pnlPlayerSettingsCommands = new System.Windows.Forms.Panel();
             this.optPlayerCommandsPrefixAdmincheat = new System.Windows.Forms.RadioButton();
             this.optPlayerCommandsPrefixNone = new System.Windows.Forms.RadioButton();
@@ -134,11 +139,11 @@
             this.lblOptionHeaderStructures = new System.Windows.Forms.Label();
             this.lblOptionTextStructures = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.pnlFtpSettingsCommands = new System.Windows.Forms.Panel();
-            this.optFTPSync = new System.Windows.Forms.RadioButton();
-            this.optFTPClean = new System.Windows.Forms.RadioButton();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.pnlCommandExportOptions = new System.Windows.Forms.Panel();
+            this.optExportNoSort = new System.Windows.Forms.RadioButton();
+            this.optExportSort = new System.Windows.Forms.RadioButton();
+            this.lblCommandExportOptionTitle = new System.Windows.Forms.Label();
+            this.lblCommandExportDescription = new System.Windows.Forms.Label();
             this.tabSettings.SuspendLayout();
             this.tpgMap.SuspendLayout();
             this.grpServer.SuspendLayout();
@@ -150,11 +155,12 @@
             this.tpgStructures.SuspendLayout();
             this.tpgItems.SuspendLayout();
             this.tpgPlayers.SuspendLayout();
+            this.pnlFtpSettingsCommands.SuspendLayout();
             this.pnlPlayerSettingsCommands.SuspendLayout();
             this.pnlPlayerSettingsBody.SuspendLayout();
             this.pnlPlayerSettingsTames.SuspendLayout();
             this.pnlPlayerSettingsStuctures.SuspendLayout();
-            this.pnlFtpSettingsCommands.SuspendLayout();
+            this.pnlCommandExportOptions.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnSave
@@ -1100,6 +1106,7 @@
             // 
             // tpgPlayers
             // 
+            this.tpgPlayers.Controls.Add(this.pnlCommandExportOptions);
             this.tpgPlayers.Controls.Add(this.pnlFtpSettingsCommands);
             this.tpgPlayers.Controls.Add(this.pnlPlayerSettingsCommands);
             this.tpgPlayers.Controls.Add(this.pnlPlayerSettingsBody);
@@ -1113,6 +1120,62 @@
             this.tpgPlayers.Text = "Options";
             this.tpgPlayers.UseVisualStyleBackColor = true;
             this.tpgPlayers.Click += new System.EventHandler(this.tpgPlayers_Click);
+            // 
+            // pnlFtpSettingsCommands
+            // 
+            this.pnlFtpSettingsCommands.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlFtpSettingsCommands.BackColor = System.Drawing.Color.PowderBlue;
+            this.pnlFtpSettingsCommands.Controls.Add(this.optFTPSync);
+            this.pnlFtpSettingsCommands.Controls.Add(this.optFTPClean);
+            this.pnlFtpSettingsCommands.Controls.Add(this.label2);
+            this.pnlFtpSettingsCommands.Controls.Add(this.label3);
+            this.pnlFtpSettingsCommands.Location = new System.Drawing.Point(19, 387);
+            this.pnlFtpSettingsCommands.Name = "pnlFtpSettingsCommands";
+            this.pnlFtpSettingsCommands.Size = new System.Drawing.Size(507, 73);
+            this.pnlFtpSettingsCommands.TabIndex = 20;
+            // 
+            // optFTPSync
+            // 
+            this.optFTPSync.AutoSize = true;
+            this.optFTPSync.Checked = true;
+            this.optFTPSync.Location = new System.Drawing.Point(347, 37);
+            this.optFTPSync.Name = "optFTPSync";
+            this.optFTPSync.Size = new System.Drawing.Size(83, 17);
+            this.optFTPSync.TabIndex = 5;
+            this.optFTPSync.TabStop = true;
+            this.optFTPSync.Text = "Synchronise";
+            this.optFTPSync.UseVisualStyleBackColor = true;
+            // 
+            // optFTPClean
+            // 
+            this.optFTPClean.AutoSize = true;
+            this.optFTPClean.Location = new System.Drawing.Point(440, 37);
+            this.optFTPClean.Name = "optFTPClean";
+            this.optFTPClean.Size = new System.Drawing.Size(52, 17);
+            this.optFTPClean.TabIndex = 3;
+            this.optFTPClean.Text = "Clean";
+            this.optFTPClean.UseVisualStyleBackColor = true;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(10, 14);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(128, 18);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "FTP Downloads";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(10, 39);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(130, 13);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "How to handle downloads";
             // 
             // pnlPlayerSettingsCommands
             // 
@@ -1367,61 +1430,61 @@
             this.toolTip1.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.toolTip1.ToolTipTitle = "Information";
             // 
-            // pnlFtpSettingsCommands
+            // pnlCommandExportOptions
             // 
-            this.pnlFtpSettingsCommands.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.pnlCommandExportOptions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlFtpSettingsCommands.BackColor = System.Drawing.Color.PowderBlue;
-            this.pnlFtpSettingsCommands.Controls.Add(this.optFTPSync);
-            this.pnlFtpSettingsCommands.Controls.Add(this.optFTPClean);
-            this.pnlFtpSettingsCommands.Controls.Add(this.label2);
-            this.pnlFtpSettingsCommands.Controls.Add(this.label3);
-            this.pnlFtpSettingsCommands.Location = new System.Drawing.Point(19, 387);
-            this.pnlFtpSettingsCommands.Name = "pnlFtpSettingsCommands";
-            this.pnlFtpSettingsCommands.Size = new System.Drawing.Size(507, 73);
-            this.pnlFtpSettingsCommands.TabIndex = 20;
+            this.pnlCommandExportOptions.BackColor = System.Drawing.Color.PowderBlue;
+            this.pnlCommandExportOptions.Controls.Add(this.optExportNoSort);
+            this.pnlCommandExportOptions.Controls.Add(this.optExportSort);
+            this.pnlCommandExportOptions.Controls.Add(this.lblCommandExportOptionTitle);
+            this.pnlCommandExportOptions.Controls.Add(this.lblCommandExportDescription);
+            this.pnlCommandExportOptions.Location = new System.Drawing.Point(20, 481);
+            this.pnlCommandExportOptions.Name = "pnlCommandExportOptions";
+            this.pnlCommandExportOptions.Size = new System.Drawing.Size(507, 73);
+            this.pnlCommandExportOptions.TabIndex = 21;
             // 
-            // optFTPSync
+            // optExportNoSort
             // 
-            this.optFTPSync.AutoSize = true;
-            this.optFTPSync.Checked = true;
-            this.optFTPSync.Location = new System.Drawing.Point(347, 37);
-            this.optFTPSync.Name = "optFTPSync";
-            this.optFTPSync.Size = new System.Drawing.Size(83, 17);
-            this.optFTPSync.TabIndex = 5;
-            this.optFTPSync.TabStop = true;
-            this.optFTPSync.Text = "Synchronise";
-            this.optFTPSync.UseVisualStyleBackColor = true;
+            this.optExportNoSort.AutoSize = true;
+            this.optExportNoSort.Checked = true;
+            this.optExportNoSort.Location = new System.Drawing.Point(347, 37);
+            this.optExportNoSort.Name = "optExportNoSort";
+            this.optExportNoSort.Size = new System.Drawing.Size(39, 17);
+            this.optExportNoSort.TabIndex = 5;
+            this.optExportNoSort.TabStop = true;
+            this.optExportNoSort.Text = "No";
+            this.optExportNoSort.UseVisualStyleBackColor = true;
             // 
-            // optFTPClean
+            // optExportSort
             // 
-            this.optFTPClean.AutoSize = true;
-            this.optFTPClean.Location = new System.Drawing.Point(440, 37);
-            this.optFTPClean.Name = "optFTPClean";
-            this.optFTPClean.Size = new System.Drawing.Size(52, 17);
-            this.optFTPClean.TabIndex = 3;
-            this.optFTPClean.Text = "Clean";
-            this.optFTPClean.UseVisualStyleBackColor = true;
+            this.optExportSort.AutoSize = true;
+            this.optExportSort.Location = new System.Drawing.Point(440, 37);
+            this.optExportSort.Name = "optExportSort";
+            this.optExportSort.Size = new System.Drawing.Size(43, 17);
+            this.optExportSort.TabIndex = 3;
+            this.optExportSort.Text = "Yes";
+            this.optExportSort.UseVisualStyleBackColor = true;
             // 
-            // label2
+            // lblCommandExportOptionTitle
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(10, 14);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(128, 18);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "FTP Downloads";
+            this.lblCommandExportOptionTitle.AutoSize = true;
+            this.lblCommandExportOptionTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCommandExportOptionTitle.Location = new System.Drawing.Point(10, 14);
+            this.lblCommandExportOptionTitle.Name = "lblCommandExportOptionTitle";
+            this.lblCommandExportOptionTitle.Size = new System.Drawing.Size(175, 18);
+            this.lblCommandExportOptionTitle.TabIndex = 2;
+            this.lblCommandExportOptionTitle.Text = "Command Line Export";
             // 
-            // label3
+            // lblCommandExportDescription
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(10, 39);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(130, 13);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "How to handle downloads";
+            this.lblCommandExportDescription.AutoSize = true;
+            this.lblCommandExportDescription.Location = new System.Drawing.Point(10, 39);
+            this.lblCommandExportDescription.Name = "lblCommandExportDescription";
+            this.lblCommandExportDescription.Size = new System.Drawing.Size(175, 13);
+            this.lblCommandExportDescription.TabIndex = 0;
+            this.lblCommandExportDescription.Text = "Sort creature exports by class name";
             // 
             // frmSettings
             // 
@@ -1458,6 +1521,8 @@
             this.tpgItems.ResumeLayout(false);
             this.tpgItems.PerformLayout();
             this.tpgPlayers.ResumeLayout(false);
+            this.pnlFtpSettingsCommands.ResumeLayout(false);
+            this.pnlFtpSettingsCommands.PerformLayout();
             this.pnlPlayerSettingsCommands.ResumeLayout(false);
             this.pnlPlayerSettingsCommands.PerformLayout();
             this.pnlPlayerSettingsBody.ResumeLayout(false);
@@ -1466,8 +1531,8 @@
             this.pnlPlayerSettingsTames.PerformLayout();
             this.pnlPlayerSettingsStuctures.ResumeLayout(false);
             this.pnlPlayerSettingsStuctures.PerformLayout();
-            this.pnlFtpSettingsCommands.ResumeLayout(false);
-            this.pnlFtpSettingsCommands.PerformLayout();
+            this.pnlCommandExportOptions.ResumeLayout(false);
+            this.pnlCommandExportOptions.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1582,5 +1647,10 @@
         private System.Windows.Forms.RadioButton optFTPClean;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Panel pnlCommandExportOptions;
+        private System.Windows.Forms.RadioButton optExportNoSort;
+        private System.Windows.Forms.RadioButton optExportSort;
+        private System.Windows.Forms.Label lblCommandExportOptionTitle;
+        private System.Windows.Forms.Label lblCommandExportDescription;
     }
 }
