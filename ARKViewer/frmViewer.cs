@@ -1622,7 +1622,7 @@ namespace ARKViewer
 
             if (ARKViewer.Program.ProgramConfig.Obelisks)
             {
-                foreach (var terminal in ARKViewer.Program.ProgramConfig.TerminalMarkers.Where(t => t.Map == Path.GetFileName(ARKViewer.Program.ProgramConfig.SelectedFile)))
+                foreach (var terminal in ARKViewer.Program.ProgramConfig.TerminalMarkers.Where(t => t.Map.ToLower() == Path.GetFileName(ARKViewer.Program.ProgramConfig.SelectedFile).ToLower()))
                 {
 
                     //attempt to determine colour from class name
@@ -1805,7 +1805,7 @@ namespace ARKViewer
                     graphics.FillEllipse(new SolidBrush(Color.White), (float)markerX - 15f, (float)markerY - 15f, 30, 30);
 
                     Color borderColor = Color.Red;
-                    ArkItem fertileEgg = gd.Items.Where(i => i.ClassName.Contains("Egg_Wyvern") && i.Location != null && i.Location.Latitude.Value.ToString("0.00").Equals(wyvernNest.Location.Latitude.Value.ToString("0.00")) && i.Location.Longitude.Value.ToString("0.00").Equals(wyvernNest.Location.Longitude.Value.ToString("0.00")) && i.OwnerInventoryId == null).FirstOrDefault();
+                    ArkItem fertileEgg = gd.Items.Where(i => i.ClassName.ToLower().Contains("egg") && i.Location != null && i.Location.Latitude.Value.ToString("0.00").Equals(wyvernNest.Location.Latitude.Value.ToString("0.00")) && i.Location.Longitude.Value.ToString("0.00").Equals(wyvernNest.Location.Longitude.Value.ToString("0.00")) && i.OwnerInventoryId == null).FirstOrDefault();
                     if (fertileEgg != null)
                     {
 
