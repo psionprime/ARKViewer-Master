@@ -2007,30 +2007,29 @@ namespace ARKViewer
 
                     break;
                 case "tpgTamed":
-                    if (cboTameClass.SelectedItem !=null)
-                    {
 
+                    
+
+                    if(lvwTameDetail.Items.Count > 0)
+                    {
                         float markerSize = 10f;
 
-                        if(lvwTameDetail.Items.Count > 0)
+                        foreach (ListViewItem item in lvwTameDetail.Items)
                         {
-                            foreach (ListViewItem item in lvwTameDetail.Items)
-                            {
 
-                                decimal.TryParse(item.SubItems[6].Text, out decimal longtitude);
-                                decimal.TryParse(item.SubItems[5].Text, out decimal latitude);
+                            decimal.TryParse(item.SubItems[6].Text, out decimal longtitude);
+                            decimal.TryParse(item.SubItems[5].Text, out decimal latitude);
 
-                                markerX = ((decimal)Math.Round(longtitude, 2) - mapvals.Item4) * mapvals.Item1 / (mapvals.Item5 - mapvals.Item4);
-                                markerY = ((decimal)Math.Round(latitude, 2) - mapvals.Item3) * mapvals.Item2 / (mapvals.Item6 - mapvals.Item3);
+                            markerX = ((decimal)Math.Round(longtitude, 2) - mapvals.Item4) * mapvals.Item1 / (mapvals.Item5 - mapvals.Item4);
+                            markerY = ((decimal)Math.Round(latitude, 2) - mapvals.Item3) * mapvals.Item2 / (mapvals.Item6 - mapvals.Item3);
 
-                                Color markerColor = Color.Blue;
+                            Color markerColor = Color.Blue;
 
-                                graphics.FillEllipse(new SolidBrush(markerColor), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
-                            }
-
+                            graphics.FillEllipse(new SolidBrush(markerColor), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
                         }
 
                     }
+
 
                     break;
                 case "tpgStructures":
@@ -2720,7 +2719,7 @@ namespace ARKViewer
                 */
 
 
-                if(tabFeatures.SelectedTab.Name == "tpgTames")
+                if(tabFeatures.SelectedTab.Name == "tpgTamed")
                 {
                     picMap.Image = DrawMap(lastSelectedX, lastSelectedY);
                     picMap.Refresh();
