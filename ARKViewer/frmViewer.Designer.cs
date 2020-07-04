@@ -1070,7 +1070,7 @@
             this.chkCryo.Name = "chkCryo";
             this.chkCryo.Size = new System.Drawing.Size(30, 30);
             this.chkCryo.TabIndex = 36;
-            this.toolTip1.SetToolTip(this.chkCryo, "Show/Hide Cryopod Creatures");
+            this.toolTip1.SetToolTip(this.chkCryo, "Show/Hide Stored Creatures");
             this.chkCryo.UseVisualStyleBackColor = true;
             this.chkCryo.CheckedChanged += new System.EventHandler(this.chkCryo_CheckedChanged);
             // 
@@ -1655,7 +1655,7 @@
             // 
             // lvwTameDetail_Cryo
             // 
-            this.lvwTameDetail_Cryo.Text = "Cryo";
+            this.lvwTameDetail_Cryo.Text = "Stored";
             // 
             // lvwTameDetail_Colour1
             // 

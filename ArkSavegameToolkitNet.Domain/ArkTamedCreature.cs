@@ -224,6 +224,7 @@ namespace ArkSavegameToolkitNet.Domain
             BabyNextCuddleTime = creature.GetPropertyValue<double?>(_babyNextCuddleTime);
             IsNeutered = creature.GetPropertyValue<bool?>(_bNeutered) ?? false;
             IsCryo = creature.IsCryo;
+            IsVivarium = creature.IsVivarium;
             DinoAncestors = ArkTamedCreatureAncestor.FromPropertyValue(creature.GetPropertyValue<ArkArrayStruct>(_dinoAncestors));
             DinoAncestorsMale = ArkTamedCreatureAncestor.FromPropertyValue(creature.GetPropertyValue<ArkArrayStruct>(_dinoAncestorsMale));
 
@@ -317,6 +318,7 @@ namespace ArkSavegameToolkitNet.Domain
         public DateTime? BabyNextCuddleTimeApprox => _saveState?.GetApproxDateTimeOf(BabyNextCuddleTime);
         public bool IsNeutered { get; set; }
         public bool IsCryo { get; set; }
+        public bool IsVivarium { get; set; }
         public ArkTamedCreatureAncestor[] DinoAncestors { get; set; }
         public ArkTamedCreatureAncestor[] DinoAncestorsMale { get; set; }
         public sbyte[] GestationEggColors { get; set; }

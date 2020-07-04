@@ -64,7 +64,8 @@ namespace ArkSavegameToolkitNet
 
         //query helper fields
         private GameObjectIs _isFlags;
-        public bool IsCryo { get; set; }
+        public bool IsCryo { get; set; } = false;
+        public bool IsVivarium { get; set; } = false;
         public bool IsCreature => (_isFlags & GameObjectIs.IsCreature) == GameObjectIs.IsCreature;
         public bool IsTamedCreature => (_isFlags & GameObjectIs.IsTamedCreature) == GameObjectIs.IsTamedCreature;
         public bool IsWildCreature => (_isFlags & GameObjectIs.IsWildCreature) == GameObjectIs.IsWildCreature;

@@ -2509,6 +2509,7 @@ namespace ARKViewer
                                                 && (selectedTribeId == 0 || w.TargetingTeam == selectedTribeId)
                                                 && (selectedPlayerId == 0 || (w.OwningPlayerId.GetValueOrDefault(0) == selectedPlayerId || w.ImprinterPlayerDataId.GetValueOrDefault(0) == selectedPlayerId ))
                                                 && (chkCryo.Checked || w.IsCryo == false)
+                                                && (chkCryo.Checked || w.IsVivarium == false)
 
                                            );
 
@@ -2583,8 +2584,10 @@ namespace ARKViewer
                     item.SubItems.Add(tamerName);
                     item.SubItems.Add(detail.ImprinterName);
                     item.SubItems.Add((detail.DinoImprintingQuality * 100).ToString());
-                    
-                    item.SubItems.Add(detail.IsCryo.ToString());
+
+                    bool isStored = detail.IsCryo | detail.IsVivarium;
+
+                    item.SubItems.Add(isStored.ToString());
                     
                     if (detail.IsCryo)
                     {
@@ -2607,6 +2610,27 @@ namespace ARKViewer
                         item.SubItems[16].BackColor = Color.LightSkyBlue;
                         item.SubItems[17].BackColor = Color.LightSkyBlue;
                         item.SubItems[18].BackColor = Color.LightSkyBlue;
+                    }else if (detail.IsVivarium)
+                    {
+                        item.BackColor = Color.LightPink;
+                        item.SubItems[1].BackColor = Color.LightPink;
+                        item.SubItems[2].BackColor = Color.LightPink;
+                        item.SubItems[3].BackColor = Color.LightPink;
+                        item.SubItems[4].BackColor = Color.LightPink;
+                        item.SubItems[5].BackColor = Color.LightPink;
+                        item.SubItems[6].BackColor = Color.LightPink;
+                        item.SubItems[7].BackColor = Color.LightPink;
+                        item.SubItems[8].BackColor = Color.LightPink;
+                        item.SubItems[9].BackColor = Color.LightPink;
+                        item.SubItems[10].BackColor = Color.LightPink;
+                        item.SubItems[11].BackColor = Color.LightPink;
+                        item.SubItems[12].BackColor = Color.LightPink;
+                        item.SubItems[13].BackColor = Color.LightPink;
+                        item.SubItems[14].BackColor = Color.LightPink;
+                        item.SubItems[15].BackColor = Color.LightPink;
+                        item.SubItems[16].BackColor = Color.LightPink;
+                        item.SubItems[17].BackColor = Color.LightPink;
+                        item.SubItems[18].BackColor = Color.LightPink;
                     }
 
 

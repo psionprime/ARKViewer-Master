@@ -24,6 +24,7 @@ namespace ArkSavegameToolkitNet
         bool IsStructure { get; }
         bool IsInventory { get; }
         bool IsCryo { get; set; }
+        bool IsVivarium { get; set; }
         bool IsTamedCreatureInventory { get; }
         bool IsWildCreatureInventory { get; }
         bool IsStructureInventory { get; }

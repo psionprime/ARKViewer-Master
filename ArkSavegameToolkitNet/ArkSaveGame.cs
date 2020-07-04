@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.IO;
 using System.IO.MemoryMappedFiles;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -129,10 +130,59 @@ namespace ArkSavegameToolkitNet
 
         private bool LoadCryopodEntries()
         {
-            
+
+            int nextObjectId = 0;
+
+            //parse any vivarium creatures
+            var vivariumList = Objects.Where(o => o.ClassName.Name == "BP_Vivarium_C" && o.Location!=null).ToList();
+            Guid currentId = Guid.Empty;
+
+            foreach(var vivarium in vivariumList)
+            {
+                if(!currentId.Equals(vivarium.Uuid))
+                {
+                    currentId = vivarium.Uuid;
+
+                    //get dino data (PropertyArray)
+                    PropertyArray dinoArray = vivarium.GetProperty<PropertyArray>("DinoDataList");
+                    foreach (StructPropertyList dinoData in dinoArray.Value)
+                    {
+                        PropertyArray dinoDetails = dinoData.GetProperty<PropertyArray>("DinoData");
+
+                        nextObjectId = Objects.Count();
+                        sbyte[] sbyteData = dinoDetails.Value.Cast<sbyte>().ToArray();
+                        byte[] byteData = (byte[])(Array)sbyteData;
+
+
+                        using (MemoryMappedFile cryoMmf = MemoryMappedFile.CreateNew(null, byteData.Length))
+                        {
+                            using (MemoryMappedViewStream stream = cryoMmf.CreateViewStream())
+                            {
+                                BinaryWriter writer = new BinaryWriter(stream);
+                                writer.Write(byteData);
+                            }
+
+                            using (MemoryMappedViewAccessor cryoVa = cryoMmf.CreateViewAccessor(0L, 0L, MemoryMappedFileAccess.Read))
+                            {
+                                ArkArchive cryoArchive = new ArkArchive(cryoVa, byteData.Length, _arkNameCache, _arkStringCache, _exclusivePropertyNameTree);
+
+                                var result = UpdateVivariumCreatureStatus(cryoArchive);
+                                result.Item1.Location = vivarium.Location;
+                                Objects.Add(result.Item1);
+                                Objects.Add(result.Item2);
+                            }
+
+                        }
+
+                    }
+
+                }
+            }
+
             //Now parse out cryo creature data
             var cryoPodEntries = Objects.Where(WhereEmptyCryopodHasCustomItemDataBytesArrayBytes).ToList();
-            int nextObjectId = Objects.Count();
+
+            nextObjectId = Objects.Count();
 
             if (cryoPodEntries != null && cryoPodEntries.Count() > 0)
             {
@@ -221,6 +271,33 @@ namespace ArkSavegameToolkitNet
                 statusobject.loadProperties(cryoArchive, new GameObject(), 0, null);
                 return new Tuple<GameObject, GameObject>(dino, statusobject);
             }
+
+            Tuple<GameObject, GameObject> UpdateVivariumCreatureStatus(ArkArchive vivariumArchive)
+            {
+                vivariumArchive.GetBytes(4);
+
+                nextObjectId++;
+                var dino = new GameObject(vivariumArchive)
+                {
+                    ObjectId = nextObjectId,
+                    IsVivarium = true
+                };
+
+                nextObjectId++;
+                var statusobject = new GameObject(vivariumArchive)
+                {
+                    ObjectId = nextObjectId
+                };
+
+                dino.loadProperties(vivariumArchive, new GameObject(), 0, null);
+
+                var statusComponentRef = dino.GetProperty<PropertyObject>(_myCharacterStatusComponent);
+                statusComponentRef.Value.ObjectId = statusobject.ObjectId;
+
+                statusobject.loadProperties(vivariumArchive, new GameObject(), 0, null);
+                return new Tuple<GameObject, GameObject>(dino, statusobject);
+            }
+
 
         }
 

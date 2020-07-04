@@ -497,6 +497,9 @@ namespace ARKViewer
                                                 jw.WritePropertyName("cryo");
                                                 jw.WriteValue(creature.IsCryo);
 
+                                                jw.WritePropertyName("viv");
+                                                jw.WriteValue(creature.IsVivarium);
+
                                                 jw.WritePropertyName("ccc");
                                                 if (creature.Location != null)
                                                 {
