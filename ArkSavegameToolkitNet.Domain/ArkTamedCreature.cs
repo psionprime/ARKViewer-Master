@@ -193,7 +193,7 @@ namespace ArkSavegameToolkitNet.Domain
             Construct();
 
             _saveState = saveState;
-
+            
             OwningPlayerId = creature.GetPropertyValue<int?>(_owningPlayerID);
             OwningPlayerName = creature.GetPropertyValue<string>(_owningPlayerName);
             Name = creature.GetPropertyValue<string>(_tamedName);
@@ -205,10 +205,14 @@ namespace ArkSavegameToolkitNet.Domain
             if (creature.Properties.ContainsKey(_tamingTeamId))
             {
                 TargetingTeam = creature.GetPropertyValue<int>(_tamingTeamId);
-
+                var claimedTribeId = creature.GetPropertyValue<int>(_targetingTeam);
+                if (claimedTribeId != TargetingTeam)
+                {
+                    TargetingTeam = claimedTribeId;
+                }
             }
             //override if no valid tamingTeamid returned ( 2000000000 = Unclaimed )
-            if ((ImprinterPlayerDataId != null && TargetingTeam == 2000000000) || TargetingTeam == 0)
+            if ((ImprinterPlayerDataId != null || TargetingTeam == 0))
             {
                 TargetingTeam = creature.GetPropertyValue<int>(_targetingTeam);
             }

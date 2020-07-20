@@ -3697,5 +3697,8 @@
   <ItemGroup>
     <None Include="Resources\map_astralark.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\map_hope.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

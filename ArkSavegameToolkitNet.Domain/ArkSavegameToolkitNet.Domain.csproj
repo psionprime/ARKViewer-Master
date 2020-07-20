@@ -54,6 +54,7 @@
     <Compile Include="ArkCloudInventoryItem.cs" />
     <Compile Include="ArkClusterData.cs" />
     <Compile Include="ArkClusterDataResult.cs" />
+    <Compile Include="ArkDeathCache.cs" />
     <Compile Include="ArkDroppedItem.cs" />
     <Compile Include="ArkGameData.cs" />
     <Compile Include="ArkClusterDataBase.cs" />

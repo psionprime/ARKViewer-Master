@@ -215,6 +215,7 @@ namespace ARKViewer
                 { "crystalisles.ark", "Crystal Isles" },
                 { "genesis.ark", "Genesis" },
                 { "astralark.ark", "AstralARK" },
+                { "hope.ark", "Hope"}
 
             };
 

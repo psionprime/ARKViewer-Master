@@ -76,23 +76,30 @@ namespace ArkSavegameToolkitNet.Domain
 
         public ArkTribe(IGameObject tribe, DateTime tribeSaveTime) : this()
         {
-            _tribe = tribe;
-
-            var tribeData = tribe.GetPropertyValue<StructPropertyList>(_tribeData);
-            Id = tribeData.GetPropertyValue<int>(_tribeID);
-            if(Id == 0)
+            try
             {
-                Id = tribeData.GetPropertyValue<int>(_tribeId);
+                var tribeData = tribe.GetPropertyValue<StructPropertyList>(_tribeData);
+                Id = tribeData.GetPropertyValue<int>(_tribeID);
+                if (Id == 0)
+                {
+                    Id = tribeData.GetPropertyValue<int>(_tribeId);
+                }
+
+                Name = tribeData.GetPropertyValue<string>(_tribeName);
+                OwnerPlayerId = tribeData.GetPropertyValue<int>(_ownerPlayerDataID);
+                MemberIds = tribeData.GetPropertyValue<ArkArrayInteger>(_membersPlayerDataID)?.Where(x => x != null).Select(x => x.Value).ToArray() ?? new int[] { };
+                AdminIds = tribeData.GetPropertyValue<ArkArrayInteger>(_tribeAdmins)?.Where(x => x != null).Select(x => x.Value).ToArray() ?? new int[] { };
+                MemberNames = tribeData.GetPropertyValue<ArkArrayString>(_membersPlayerName)?.ToArray() ?? new string[] { };
+                Logs = tribeData.GetPropertyValue<ArkArrayString>(_tribeLog)?.ToArray();
+
+                SavedAt = tribeSaveTime;
+                _tribe = tribe;
+
             }
-
-            Name = tribeData.GetPropertyValue<string>(_tribeName);
-            OwnerPlayerId = tribeData.GetPropertyValue<int>(_ownerPlayerDataID);
-            MemberIds = tribeData.GetPropertyValue<ArkArrayInteger>(_membersPlayerDataID)?.Where(x => x != null).Select(x => x.Value).ToArray() ?? new int[] {};
-            AdminIds = tribeData.GetPropertyValue<ArkArrayInteger>(_tribeAdmins)?.Where(x => x != null).Select(x => x.Value).ToArray() ?? new int[] { };
-            MemberNames = tribeData.GetPropertyValue<ArkArrayString>(_membersPlayerName)?.ToArray() ?? new string[] { };
-            Logs = tribeData.GetPropertyValue<ArkArrayString>(_tribeLog)?.ToArray();
-
-            SavedAt = tribeSaveTime;
+            catch
+            {
+                Id = 0;
+            }
         }
 
         public string Name { get; set; }

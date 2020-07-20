@@ -378,6 +378,7 @@ namespace ARKViewer
             }
 
 
+
             chkArtifacts.CheckedChanged -= Structure_CheckedChanged;
             chkBeaverDams.CheckedChanged -= Structure_CheckedChanged;
             chkDeinoNests.CheckedChanged -= Structure_CheckedChanged;
@@ -492,6 +493,7 @@ namespace ARKViewer
             if (gd == null) return;
 
             cboTameTribes.Items.Clear();
+            cboTameTribes.Items.Add(new ComboValuePair("2000000000", "[Unclaimed Creatures]"));
             cboTameTribes.Items.Add(new ComboValuePair("0", "[All Tribes]"));
 
             List<ComboValuePair> newItems = new List<ComboValuePair>();
@@ -620,12 +622,8 @@ namespace ARKViewer
             {
                 foreach (var player in allPlayers)
                 {
-
-                    if (gd.DroppedItems != null && gd.DroppedItems.LongCount(c => c.DroppedByPlayerId== player.PlayerId) > 0)
-                    {
-                        ComboValuePair valuePair = new ComboValuePair(player.PlayerId.ToString(), player.PlayerName);
-                        newItems.Add(valuePair);
-                    }
+                    ComboValuePair valuePair = new ComboValuePair(player.PlayerId.ToString(), player.PlayerName);
+                    newItems.Add(valuePair);
                 }
             }
             if (newItems.Count > 0)
@@ -649,7 +647,9 @@ namespace ARKViewer
             cboDroppedItem.Items.Clear();
 
             List<ComboValuePair> newItems = new List<ComboValuePair>();
-            cboDroppedItem.Items.Add(new ComboValuePair() { Key = "", Value = "[All Items]" });
+            cboDroppedItem.Items.Add(new ComboValuePair() { Key = "", Value = "[Dropped Items]" });
+            cboDroppedItem.Items.Add(new ComboValuePair() { Key = "DeathItemCache_PlayerDeath_C", Value = "[Death Cache]" });
+
 
             if (gd.DroppedItems != null && gd.DroppedItems.Count() > 0)
             {
@@ -692,7 +692,7 @@ namespace ARKViewer
 
             }
 
-
+       
             if (newItems.Count > 0)
             {
                 cboDroppedItem.BeginUpdate();
@@ -1580,6 +1580,9 @@ namespace ARKViewer
                 case "astralark":
                     originalImage = new Bitmap(ARKViewer.Properties.Resources.map_astralark, new Size(1024, 1024));
                     break;
+                case "hope":
+                    originalImage = new Bitmap(ARKViewer.Properties.Resources.map_hope, new Size(1024, 1024));
+                    break;
                 default:
                     originalImage = new Bitmap(1024,1024);
                     break;
@@ -1602,7 +1605,8 @@ namespace ARKViewer
                     { "Valguero_P", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) },
                     { "CrystalIsles", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) },
                     { "Genesis", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) },
-                    { "AstralARK", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) }
+                    { "AstralARK", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) },
+                    { "Hope", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) }
                 };
 
 
@@ -2372,16 +2376,19 @@ namespace ARKViewer
             lvwDroppedItems.BeginUpdate();
             lvwDroppedItems.Items.Clear();
 
+
+            //player
+            ComboValuePair comboValue = (ComboValuePair)cboDroppedPlayer.SelectedItem;
+            int.TryParse(comboValue.Key, out int selectedPlayerId);
+
+            string selectedClass = "NONE";
+            comboValue = (ComboValuePair)cboDroppedItem.SelectedItem;
+            selectedClass = comboValue.Key;
+
             if (gd.DroppedItems != null && gd.DroppedItems.Count() > 0)
             {
 
-                //player
-                ComboValuePair comboValue = (ComboValuePair)cboDroppedPlayer.SelectedItem;
-                int.TryParse(comboValue.Key, out int selectedPlayerId);
 
-                string selectedClass = "NONE";
-                comboValue = (ComboValuePair)cboDroppedItem.SelectedItem;
-                selectedClass = comboValue.Key;
 
                 var droppedItems = gd.DroppedItems.Where(s =>
                                                                 (s.ClassName == selectedClass || selectedClass.Length == 0)
@@ -2436,6 +2443,47 @@ namespace ARKViewer
                 }
 
             }
+
+            if(selectedClass == "DeathItemCache_PlayerDeath_C")
+            {
+                foreach(var playerCache in gd.PlayerDeathCache)
+                {
+
+                    string itemName = "Player Cache";
+       
+                    //tribe name
+                    string tribeName = "";
+
+                    //player name
+                    string playerName = "";
+                    PlayerMap playerMap = allPlayers.Where(p => p.PlayerId == playerCache.OwningPlayerId).FirstOrDefault();
+                    if (playerMap != null)
+                    {
+                        playerName = playerMap.PlayerName;
+                        TribeMap tribeMap = allTribes.Where(t => t.TribeId == playerMap.TribeId).FirstOrDefault();
+                        if (tribeMap != null)
+                        {
+                            tribeName = tribeMap.TribeName;
+                        }
+                    }
+                    else
+                    {
+                        //check tamed dinos
+
+                    }
+
+                    ListViewItem newItem = lvwDroppedItems.Items.Add(itemName);
+                    newItem.Tag = playerCache;
+                    newItem.SubItems.Add(playerCache.OwnerName);
+                    newItem.SubItems.Add(playerCache.Location == null ? "N/A" : playerCache.Location.Latitude.Value.ToString("0.00"));
+                    newItem.SubItems.Add(playerCache.Location == null ? "N/A" : playerCache.Location.Longitude.Value.ToString("0.00"));
+                    newItem.SubItems.Add(tribeName);
+                    newItem.SubItems.Add(playerName);
+                }
+            }
+
+
+
             lvwDroppedItems.EndUpdate();
             lblStatus.Text = "Dropped item data populated.";
             lblStatus.Refresh();

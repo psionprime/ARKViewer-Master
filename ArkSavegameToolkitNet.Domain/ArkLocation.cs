@@ -15,6 +15,7 @@ namespace ArkSavegameToolkitNet.Domain
         private static Dictionary<string, Tuple<float, float, float, float>> _latlonCalcs = new Dictionary<string, Tuple<float, float, float, float>>
         {
             { "TheIsland", Tuple.Create(50.0f, 8000.0f, 50.0f, 8000.0f) },
+            { "Hope", Tuple.Create(50f, 6850f, 50f, 6850f) },
             { "TheCenter", Tuple.Create(30.34223747253418f, 9584.0f, 55.10416793823242f, 9600.0f) },
             { "ScorchedEarth_P", Tuple.Create(50.0f, 8000.0f, 50.0f, 8000.0f) },
             { "Aberration_P", Tuple.Create(50.0f, 8000.0f, 50.0f, 8000.0f) },
@@ -46,6 +47,7 @@ namespace ArkSavegameToolkitNet.Domain
                 _topoMapCalcs = new Dictionary<string, Tuple<int, int, float, float, float, float>>
                 {
                     { "TheIsland", Tuple.Create(1024, 1024, 7.2f, 7.2f, 92.8f, 92.8f) },
+                    { "Hope", Tuple.Create(1024, 1024, 0f, 0f, 100.0f, 100.0f) },
                     { "TheCenter", Tuple.Create(1024, 1024, -2.5f, 1f, 104.5f, 101f) },
                     { "ScorchedEarth_P", Tuple.Create(1024, 1024, 7.2f, 7.2f, 92.8f, 92.8f) },
                     { "Aberration_P", Tuple.Create(1024, 1024, 0.0f, 0.0f, 100.0f, 100.0f) },
@@ -92,7 +94,7 @@ namespace ArkSavegameToolkitNet.Domain
                 }
                 else
                 {
-                    _latlonCalcs.TryGetValue("Genesis", out vals);
+                    _latlonCalcs.TryGetValue("Extinction", out vals);
 
                     Latitude = vals.Item1 + Y / vals.Item2;
                     Longitude = vals.Item3 + X / vals.Item4;
