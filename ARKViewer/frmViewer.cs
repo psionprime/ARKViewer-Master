@@ -5144,14 +5144,28 @@ namespace ARKViewer
             {
 
                 ListViewItem selectedItem = lvwDroppedItems.SelectedItems[0];
-                ArkDroppedItem droppedItem = (ArkDroppedItem)selectedItem.Tag;
-
-                if (droppedItem.Location != null)
+                switch (selectedItem.Tag)
                 {
-                    commandText = commandText.Replace("<x>", System.FormattableString.Invariant($"{droppedItem.Location.X:0.00}"));
-                    commandText = commandText.Replace("<y>", System.FormattableString.Invariant($"{droppedItem.Location.Y:0.00}"));
-                    commandText = commandText.Replace("<z>", System.FormattableString.Invariant($"{droppedItem.Location.Z + 100:0.00}"));
+                    case ArkDroppedItem droppedItem:
+                        if (droppedItem.Location != null)
+                        {
+                            commandText = commandText.Replace("<x>", System.FormattableString.Invariant($"{droppedItem.Location.X:0.00}"));
+                            commandText = commandText.Replace("<y>", System.FormattableString.Invariant($"{droppedItem.Location.Y:0.00}"));
+                            commandText = commandText.Replace("<z>", System.FormattableString.Invariant($"{droppedItem.Location.Z + 100:0.00}"));
+                        }
+                        break;
+                    case ArkDeathCache deathCache:
+                        if (deathCache.Location != null)
+                        {
+                            commandText = commandText.Replace("<x>", System.FormattableString.Invariant($"{deathCache.Location.X:0.00}"));
+                            commandText = commandText.Replace("<y>", System.FormattableString.Invariant($"{deathCache.Location.Y:0.00}"));
+                            commandText = commandText.Replace("<z>", System.FormattableString.Invariant($"{deathCache.Location.Z + 100:0.00}"));
+                        }
+                        break;
+                    default:
+                        break;
                 }
+
 
                 switch (Program.ProgramConfig.CommandPrefix)
                 {
