@@ -251,6 +251,7 @@
             this.chkApplyFilterMarkers = new System.Windows.Forms.CheckBox();
             this.lblStatus = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.lvwTameDetail_Server = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.mnuContext.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picMap)).BeginInit();
             this.pnlMap.SuspendLayout();
@@ -1539,6 +1540,7 @@
             this.lvwTameDetail_Food,
             this.lvwTameDetail_Oxygen,
             this.lvwTameDetail_Craft,
+            this.lvwTameDetail_Server,
             this.lvwTameDetail_Tamer,
             this.lvwTameDetail_Imprinter,
             this.lvwTameDetail_Imprint,
@@ -2644,6 +2646,11 @@
             this.splitContainer1.TabIndex = 23;
             this.splitContainer1.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitContainer1_SplitterMoved);
             // 
+            // lvwTameDetail_Server
+            // 
+            this.lvwTameDetail_Server.Text = "Server";
+            this.lvwTameDetail_Server.Width = 150;
+            // 
             // frmViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2928,6 +2935,7 @@
         private System.Windows.Forms.ColumnHeader lvwPlayers_SteamName;
         private System.Windows.Forms.ColumnHeader lvwTameDetail_MutationsFemale;
         private System.Windows.Forms.ColumnHeader lvwTameDetail_MutationsMale;
+        private System.Windows.Forms.ColumnHeader lvwTameDetail_Server;
     }
 }
 

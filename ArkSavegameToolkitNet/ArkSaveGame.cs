@@ -30,6 +30,9 @@ namespace ArkSavegameToolkitNet
         private static readonly ArkName _byteArraysIdentifier = ArkName.Create("ByteArrays");
         private static readonly ArkName _bytesIdentifier = ArkName.Create("Bytes");
 
+        private static readonly ArkName _dinoDataList = ArkName.Create("DinoDataList");
+        private static readonly ArkName _dinoData = ArkName.Create("DinoData");
+
 
         [JsonProperty]
         public IList<GameObject> Objects
@@ -111,7 +114,7 @@ namespace ArkSavegameToolkitNet
             var fi = new FileInfo(_fileName);
             var size = fi.Length;
             SaveTime = fi.LastWriteTimeUtc;
-            //if (size == 0) return false;
+            if (size == 0) return;
 
             _mmf = MemoryMappedFile.CreateFromFile(_fileName, FileMode.Open, null, 0L, MemoryMappedFileAccess.Read);
             _va = _mmf.CreateViewAccessor(0L, 0L, MemoryMappedFileAccess.Read);
@@ -146,38 +149,41 @@ namespace ArkSavegameToolkitNet
                     currentId = vivarium.Uuid;
 
                     //get dino data (PropertyArray)
-                    PropertyArray dinoArray = vivarium.GetProperty<PropertyArray>("DinoDataList");
-                    foreach (StructPropertyList dinoData in dinoArray.Value)
+                    if (vivarium.Properties.ContainsKey(_dinoDataList))
                     {
-                        PropertyArray dinoDetails = dinoData.GetProperty<PropertyArray>("DinoData");
-
-                        nextObjectId = Objects.Count();
-                        sbyte[] sbyteData = dinoDetails.Value.Cast<sbyte>().ToArray();
-                        byte[] byteData = (byte[])(Array)sbyteData;
-
-
-                        using (MemoryMappedFile cryoMmf = MemoryMappedFile.CreateNew(null, byteData.Length))
+                        PropertyArray dinoArray = vivarium.GetProperty<PropertyArray>(_dinoDataList);
+                        foreach (StructPropertyList dinoData in dinoArray.Value)
                         {
-                            using (MemoryMappedViewStream stream = cryoMmf.CreateViewStream())
+                            if (dinoData.Properties.ContainsKey(_dinoData))
                             {
-                                BinaryWriter writer = new BinaryWriter(stream);
-                                writer.Write(byteData);
-                            }
+                                PropertyArray dinoDetails = dinoData.GetProperty<PropertyArray>(_dinoData);
 
-                            using (MemoryMappedViewAccessor cryoVa = cryoMmf.CreateViewAccessor(0L, 0L, MemoryMappedFileAccess.Read))
-                            {
-                                ArkArchive cryoArchive = new ArkArchive(cryoVa, byteData.Length, _arkNameCache, _arkStringCache, _exclusivePropertyNameTree);
+                                nextObjectId = Objects.Count();
+                                sbyte[] sbyteData = dinoDetails.Value.Cast<sbyte>().ToArray();
+                                byte[] byteData = (byte[])(Array)sbyteData;
 
-                                var result = UpdateVivariumCreatureStatus(cryoArchive);
-                                result.Item1.Location = vivarium.Location;
-                                Objects.Add(result.Item1);
-                                Objects.Add(result.Item2);
-                            }
 
+                                using (MemoryMappedFile cryoMmf = MemoryMappedFile.CreateNew(null, byteData.Length))
+                                {
+                                    using (MemoryMappedViewStream stream = cryoMmf.CreateViewStream())
+                                    {
+                                        BinaryWriter writer = new BinaryWriter(stream);
+                                        writer.Write(byteData);
+                                    }
+
+                                    using (MemoryMappedViewAccessor cryoVa = cryoMmf.CreateViewAccessor(0L, 0L, MemoryMappedFileAccess.Read))
+                                    {
+                                        ArkArchive cryoArchive = new ArkArchive(cryoVa, byteData.Length, _arkNameCache, _arkStringCache, _exclusivePropertyNameTree);
+
+                                        var result = UpdateVivariumCreatureStatus(cryoArchive);
+                                        result.Item1.Location = vivarium.Location;
+                                        Objects.Add(result.Item1);
+                                        Objects.Add(result.Item2);
+                                    }
+                                }
+                            }                            
                         }
-
                     }
-
                 }
             }
 
@@ -407,6 +413,8 @@ namespace ArkSavegameToolkitNet
 
         protected void readBinaryHeader(ArkArchive archive)
         {
+
+
             SaveVersion = archive.GetShort();
 
             if (SaveVersion == 5)

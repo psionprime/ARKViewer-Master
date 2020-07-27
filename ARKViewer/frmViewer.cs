@@ -239,7 +239,7 @@ namespace ARKViewer
                                 var serverTribes = gd.Tribes.Where(t => structureTribes.LongCount(s => s.TribeId == t.Id) == 0 && t.Id != 0)
                                                             .Select(i => new TribeMap() { TribeId = i.Id, TribeName = i.Name, ContainsLog = i.Logs.Count() > 0 });
 
-                                if (serverTribes != null)
+                                if (serverTribes != null && serverTribes.Count() > 0)
                                 {
                                     structureTribes.AddRange(serverTribes.ToArray());
                                 }
@@ -493,8 +493,8 @@ namespace ARKViewer
             if (gd == null) return;
 
             cboTameTribes.Items.Clear();
-            cboTameTribes.Items.Add(new ComboValuePair("2000000000", "[Unclaimed Creatures]"));
             cboTameTribes.Items.Add(new ComboValuePair("0", "[All Tribes]"));
+            cboTameTribes.Items.Add(new ComboValuePair("2000000000", "[Unclaimed Creatures]"));
 
             List<ComboValuePair> newItems = new List<ComboValuePair>();
 
@@ -2616,6 +2616,8 @@ namespace ARKViewer
 
                     }
 
+                    item.SubItems.Add(detail.TamedOnServerName);
+
                     string tamerName = detail.TamerName!=null?detail.TamerName:"";
                     string imprinterName = detail.ImprinterName;
 
@@ -3344,6 +3346,7 @@ namespace ARKViewer
             if(ARKViewer.Program.ProgramConfig.Mode == ViewerModes.Mode_Ftp)
             {
                 ServerConfiguration selectedServer = ARKViewer.Program.ProgramConfig.ServerList.Where(s => s.Name == ARKViewer.Program.ProgramConfig.SelectedServer).FirstOrDefault();
+                if (selectedServer == null) return;
                 if (selectedServer.Mode == 0)
                 {
                     DownloadFtp();
