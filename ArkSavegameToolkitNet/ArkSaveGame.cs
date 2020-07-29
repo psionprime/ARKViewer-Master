@@ -40,8 +40,7 @@ namespace ArkSavegameToolkitNet
             get { return _objects; }
             private set
             {
-                if (value == null) throw new NullReferenceException("Value cannot be null");
-                _objects = value;
+                _objects = value ?? throw new NullReferenceException("Value cannot be null");
             }
         }
         private IList<GameObject> _objects = new List<GameObject>();
@@ -52,8 +51,7 @@ namespace ArkSavegameToolkitNet
             get { return _dataFiles; }
             set
             {
-                if (value == null) throw new NullReferenceException("Value cannot be null");
-                _dataFiles = value;
+                _dataFiles = value ?? throw new NullReferenceException("Value cannot be null");
             }
         }
         private IList<string> _dataFiles = new List<string>();
@@ -64,8 +62,7 @@ namespace ArkSavegameToolkitNet
             get { return _embeddedData; }
             set
             {
-                if (value == null) throw new NullReferenceException("Value cannot be null");
-                _embeddedData = value;
+                _embeddedData = value ?? throw new NullReferenceException("Value cannot be null");
             }
         }
         private IList<EmbeddedData> _embeddedData = new List<EmbeddedData>();
@@ -144,15 +141,18 @@ namespace ArkSavegameToolkitNet
 
             foreach(var vivarium in vivariumList)
             {
-                if(!currentId.Equals(vivarium.Uuid))
+
+                if (!currentId.Equals(vivarium.Uuid))
                 {
                     currentId = vivarium.Uuid;
 
                     //get dino data (PropertyArray)
                     if (vivarium.Properties.ContainsKey(_dinoDataList))
                     {
+
+
                         PropertyArray dinoArray = vivarium.GetProperty<PropertyArray>(_dinoDataList);
-                        foreach (StructPropertyList dinoData in dinoArray.Value)
+                        foreach(StructPropertyList dinoData in dinoArray.Value)
                         {
                             if (dinoData.Properties.ContainsKey(_dinoData))
                             {
@@ -177,16 +177,20 @@ namespace ArkSavegameToolkitNet
 
                                         var result = UpdateVivariumCreatureStatus(cryoArchive);
                                         result.Item1.Location = vivarium.Location;
+
+                                        
                                         Objects.Add(result.Item1);
                                         Objects.Add(result.Item2);
+
                                     }
                                 }
-                            }                            
+                            }
                         }
                     }
                 }
-            }
+            };
 
+  
             //Now parse out cryo creature data
             var cryoPodEntries = Objects.Where(WhereEmptyCryopodHasCustomItemDataBytesArrayBytes).ToList();
 
@@ -194,11 +198,14 @@ namespace ArkSavegameToolkitNet
 
             if (cryoPodEntries != null && cryoPodEntries.Count() > 0)
             {
-                foreach (GameObject cryoPod in cryoPodEntries)
+                
+                foreach(var cryoPod in cryoPodEntries)
                 {
+
                     var byteList = SelectCustomDataBytesArrayBytes(cryoPod);
                     sbyte[] sbyteValues = byteList.Value.Cast<sbyte>().ToArray();
                     byte[] cryoDataBytes = (byte[])(Array)sbyteValues;
+
 
                     using (MemoryMappedFile cryoMmf = MemoryMappedFile.CreateNew(null, cryoDataBytes.Length))
                     {
@@ -215,7 +222,7 @@ namespace ArkSavegameToolkitNet
                             var result = UpdateCryoCreatureStatus(cryoArchive);
                             var ownerInventoryRef = cryoPod.GetProperty<PropertyObject>(_ownerInventory);
 
-                            if(ownerInventoryRef!=null && ownerInventoryRef.Value?.ObjectId != null)
+                            if (ownerInventoryRef != null && ownerInventoryRef.Value?.ObjectId != null)
                             {
                                 var ownerContainerInventory = Objects.FirstOrDefault(o => o.ObjectId == ownerInventoryRef.Value.ObjectId);
                                 if (ownerContainerInventory != null)
@@ -233,9 +240,9 @@ namespace ArkSavegameToolkitNet
                         }
 
                     }
+                };
 
-                }
-   
+
             }
 
             return true;
@@ -402,9 +409,9 @@ namespace ArkSavegameToolkitNet
 
                 for (int n = 0; n < unknownValue; n++)
                 {
-                    var unknownFlags = archive.GetInt();
-                    var objectCount = archive.GetInt();
-                    var name = archive.GetString();
+                    archive.GetInt(); //unknownFlags
+                    archive.GetInt(); //objectCount
+                    archive.GetString(); //name
                 }
             }
             _baseRead = true;
@@ -460,7 +467,7 @@ namespace ArkSavegameToolkitNet
                 GameTime = archive.GetFloat();
 
                 //note: unknown integer value was added in v268.22 with SaveVersion=9 [0x25 (37) on The Island, 0x26 (38) on ragnarok/center/scorched]
-                var unknownValue2 = archive.GetInt();
+                archive.GetInt(); //unknownValue2
             }
             else
             {

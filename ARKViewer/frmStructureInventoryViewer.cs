@@ -1,5 +1,6 @@
 ﻿using ArkSavegameToolkitNet.Domain;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -53,8 +54,8 @@ namespace ARKViewer
             if (selectedStructure.Inventory != null)
             {
                 //var playerItems = selectedPlayer.Creatures;
-
-                foreach (var invItem in selectedStructure.Inventory)
+                ConcurrentBag<ListViewItem> listItems = new ConcurrentBag<ListViewItem>();
+                Parallel.ForEach(selectedStructure.Inventory, invItem =>
                 {
                     string itemName = invItem.ClassName;
                     string categoryName = "Misc.";
@@ -91,14 +92,17 @@ namespace ARKViewer
                     {
                         if (!invItem.IsEngram)
                         {
-                            ListViewItem newItem = lvwInventory.Items.Add(itemName);
+                            ListViewItem newItem = new ListViewItem(itemName);
                             newItem.SubItems.Add(categoryName);
                             newItem.SubItems.Add(invItem.Quantity.ToString());
                             newItem.ImageIndex = itemIcon - 1;
 
+                            listItems.Add(newItem);
                         }
                     }
-                }
+                });
+
+                lvwInventory.Items.AddRange(listItems.ToArray());
             }
         }
 

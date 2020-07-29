@@ -18,6 +18,7 @@ using Renci.SshNet;
 using Timer = System.Windows.Forms.Timer;
 using FluentFTP;
 using System.Threading.Tasks;
+using System.Collections.Concurrent;
 
 namespace ARKViewer
 {
@@ -236,12 +237,17 @@ namespace ARKViewer
                         {
                             if (gd.Tribes != null && gd.Tribes.Count() > 0)
                             {
-                                var serverTribes = gd.Tribes.Where(t => structureTribes.LongCount(s => s.TribeId == t.Id) == 0 && t.Id != 0)
-                                                            .Select(i => new TribeMap() { TribeId = i.Id, TribeName = i.Name, ContainsLog = i.Logs.Count() > 0 });
-
-                                if (serverTribes != null && serverTribes.Count() > 0)
+                                var serverTribesQuery = gd.Tribes.Where(t => structureTribes.LongCount(s => s.TribeId == t.Id) == 0 && t.Id != 0);
+                                if(serverTribesQuery!=null && serverTribesQuery.Count() > 0)
                                 {
-                                    structureTribes.AddRange(serverTribes.ToArray());
+                                    var serverTribes = serverTribesQuery.Select(i => new TribeMap() { TribeId = i.Id, TribeName = i.Name, ContainsLog = (i.Logs !=null && i.Logs.Count() > 0) });
+
+
+                                    if (serverTribes != null && serverTribes.Count() > 0)
+                                    {
+                                        structureTribes.AddRange(serverTribes.ToArray());
+                                    }
+
                                 }
 
                             }
@@ -267,14 +273,15 @@ namespace ARKViewer
                             var serverPlayers = gd.Players.Select(i => new PlayerMap() { TribeId = (long)i.TribeId.GetValueOrDefault(0), PlayerId = (long)i.Id, PlayerName = i.CharacterName != null ? i.CharacterName : i.Name });
                             if (serverPlayers != null)
                             {
-                                foreach (var serverPlayer in serverPlayers.Where(p => p.TribeId == 0))
+                                Parallel.ForEach(serverPlayers.Where(p => p.TribeId == 0), new ParallelOptions() { MaxDegreeOfParallelism = 4 }, serverPlayer =>
                                 {
                                     var testTribe = gd.Tribes.Where(t => t.MemberIds.Contains((int)serverPlayer.PlayerId)).FirstOrDefault();
                                     if (testTribe != null)
                                     {
                                         serverPlayer.TribeId = testTribe.Id;
                                     }
-                                }
+                                });
+
 
                                 allPlayers = serverPlayers.Where(p => p.TribeId != 0).ToList();
                             }
@@ -288,8 +295,7 @@ namespace ARKViewer
                             allPlayers.AddRange(structurePlayers.ToArray());
                         }
 
-
-                        foreach (var tribe in allTribes)
+                        Parallel.ForEach(allTribes,  new ParallelOptions() { MaxDegreeOfParallelism = 4 }, tribe =>
                         {
                             int playerCount = allPlayers.Count(p => p.TribeId == tribe.TribeId);
                             int tribePlayerCount = gd.Tribes.Where(t => t.Id == tribe.TribeId).Select(m => m.Members).Count();
@@ -335,13 +341,11 @@ namespace ARKViewer
                                         tribe.TribeName = actualTribe.Name;
                                     }
                                     //error reported by @mjfro2 - crash when tribe has no log data
-                                    long logCount = actualTribe.Logs == null?0:actualTribe.Logs.Count();
+                                    long logCount = actualTribe.Logs == null ? 0 : actualTribe.Logs.Count();
                                     tribe.ContainsLog = logCount > 0;
                                 }
                             }
-
-
-                        }
+                        });
 
                         if (gd.WildCreatures != null && gd.WildCreatures.Count() > 0)
                         {
@@ -917,7 +921,9 @@ namespace ARKViewer
             lvwPlayers.BeginUpdate();
 
             //Name, sex, lvl, lat, lon, hp, stam, melee, weight, speed, food,water, oxy, last on
-            foreach(ArkPlayer player in tribePlayerList)
+            ConcurrentBag<ListViewItem> listItems = new ConcurrentBag<ListViewItem>();
+
+            Parallel.ForEach(tribePlayerList, new ParallelOptions() { MaxDegreeOfParallelism = 4 }, player =>
             {
                 bool addPlayer = true;
                 if(Program.ProgramConfig.HideNoBody)
@@ -927,7 +933,7 @@ namespace ARKViewer
 
                 if (addPlayer)
                 {
-                    ListViewItem newItem = lvwPlayers.Items.Add(player.CharacterName);
+                    ListViewItem newItem = new ListViewItem(player.CharacterName);
                     newItem.SubItems.Add(player.Tribe.Name);
 
                     newItem.SubItems.Add(player.Gender.ToString());
@@ -973,13 +979,17 @@ namespace ARKViewer
                     newItem.SubItems.Add(player.LastActiveTime.ToString("dd MMM yy HH:mm:ss"));
                     newItem.SubItems.Add(player.Name);
                     newItem.Tag = player;
+
+
+                    listItems.Add(newItem);
                 }
 
 
-            }
+            });
 
             //Name, sex, lvl, lat, lon, hp, stam, melee, weight, speed, food,water, oxy, last on
-            foreach (ArkPlayer player in soloPlayerList)
+
+            Parallel.ForEach(soloPlayerList, new ParallelOptions() { MaxDegreeOfParallelism = 4 }, player =>
             {
 
                 bool addPlayer = true;
@@ -991,7 +1001,7 @@ namespace ARKViewer
                 if (addPlayer)
                 {
 
-                    ListViewItem newItem = lvwPlayers.Items.Add(player.CharacterName);
+                    ListViewItem newItem = new ListViewItem(player.CharacterName);
 
                     string tribeName = "";
                     if (player.Tribe != null)
@@ -1032,9 +1042,12 @@ namespace ARKViewer
                     newItem.SubItems.Add(player.LastActiveTime.ToString("dd MMM yy HH:mm:ss"));
 
                     newItem.Tag = player;
-                }
-            }
 
+                    listItems.Add(newItem);
+                }
+            });
+
+            lvwPlayers.Items.AddRange(listItems.ToArray());
 
             if (SortingColumn_Players != null)
             {
@@ -1539,7 +1552,6 @@ namespace ARKViewer
             lblStatus.Text = "Updating map display.";
             lblStatus.Refresh();
 
-
             lastSelectedX = selectedX;
             lastSelectedY = selectedY;
 
@@ -1992,21 +2004,20 @@ namespace ARKViewer
                         float selectedLon = (float)udWildLon.Value;
                         float selectedRad = (float)udWildRadius.Value;
 
-                        var wildDetailList = gd.WildCreatures.Where(w => 
-                                                                        (w.ClassName == className && ((w.BaseLevel >= minLevel && w.BaseLevel <=  maxLevel) || w.BaseLevel  == 0))
-                                                                        && (Math.Abs(w.Location.Latitude.GetValueOrDefault(0) - selectedLat) <= selectedRad)
-                                                                        && (Math.Abs(w.Location.Longitude.GetValueOrDefault(0) - selectedLon) <= selectedRad)
-                                                                    ).OrderByDescending(c => c.BaseLevel);
-                        foreach (var detail in wildDetailList)
+                        foreach(ListViewItem item in lvwWildDetail.Items)
                         {
-                            markerX = ((decimal)Math.Round(detail.Location.Longitude.Value, 2) - mapvals.Item4) * mapvals.Item1 / (mapvals.Item5 - mapvals.Item4);
-                            markerY = ((decimal)Math.Round(detail.Location.Latitude.Value, 2) - mapvals.Item3) * mapvals.Item2 / (mapvals.Item6 - mapvals.Item3);
+                            
+                            decimal.TryParse(item.SubItems[4].Text, out decimal latWild);
+                            decimal.TryParse(item.SubItems[5].Text, out decimal lonWild);
+
+                            markerX = ((decimal)Math.Round(lonWild, 2) - mapvals.Item4) * mapvals.Item1 / (mapvals.Item5 - mapvals.Item4);
+                            markerY = ((decimal)Math.Round(latWild, 2) - mapvals.Item3) * mapvals.Item2 / (mapvals.Item6 - mapvals.Item3);
 
                             Color markerColor = Color.Blue;
 
                             graphics.FillEllipse(new SolidBrush(markerColor), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
-                        }
 
+                        }
                     }
 
                     break;
@@ -2376,7 +2387,6 @@ namespace ARKViewer
             lvwDroppedItems.BeginUpdate();
             lvwDroppedItems.Items.Clear();
 
-
             //player
             ComboValuePair comboValue = (ComboValuePair)cboDroppedPlayer.SelectedItem;
             int.TryParse(comboValue.Key, out int selectedPlayerId);
@@ -2385,6 +2395,7 @@ namespace ARKViewer
             comboValue = (ComboValuePair)cboDroppedItem.SelectedItem;
             selectedClass = comboValue.Key;
 
+            ConcurrentBag<ListViewItem> listItems = new ConcurrentBag<ListViewItem>();
             if (gd.DroppedItems != null && gd.DroppedItems.Count() > 0)
             {
 
@@ -2402,7 +2413,8 @@ namespace ARKViewer
 
                 if(droppedItems!=null && droppedItems.LongCount(d=>d.DroppedByPlayerId !=0) > 0)
                 {
-                    foreach(var droppedItem in droppedItems)
+                    
+                    Parallel.ForEach(droppedItems, new ParallelOptions() { MaxDegreeOfParallelism = 4 }, droppedItem =>
                     {
                         string itemName = droppedItem.ClassName;
                         ItemClassMap itemMap = Program.ProgramConfig.ItemMap.Where(m => m.ClassName == droppedItem.ClassName).FirstOrDefault();
@@ -2432,25 +2444,28 @@ namespace ARKViewer
 
                         }
 
-                        ListViewItem newItem = lvwDroppedItems.Items.Add(itemName);
+                        ListViewItem newItem = new ListViewItem(itemName);
                         newItem.Tag = droppedItem;
                         newItem.SubItems.Add(droppedItem.DroppedByName);
-                        newItem.SubItems.Add(droppedItem.Location==null?"N/A":droppedItem.Location.Latitude.Value.ToString("0.00"));
+                        newItem.SubItems.Add(droppedItem.Location == null ? "N/A" : droppedItem.Location.Latitude.Value.ToString("0.00"));
                         newItem.SubItems.Add(droppedItem.Location == null ? "N/A" : droppedItem.Location.Longitude.Value.ToString("0.00"));
                         newItem.SubItems.Add(tribeName);
                         newItem.SubItems.Add(playerName);
-                    }
+
+                        listItems.Add(newItem);
+
+                    });
+
                 }
 
             }
 
             if(selectedClass == "DeathItemCache_PlayerDeath_C")
             {
-                foreach(var playerCache in gd.PlayerDeathCache)
+                Parallel.ForEach(gd.PlayerDeathCache, new ParallelOptions() { MaxDegreeOfParallelism = 4 }, playerCache =>
                 {
-
                     string itemName = "Player Cache";
-       
+
                     //tribe name
                     string tribeName = "";
 
@@ -2472,18 +2487,22 @@ namespace ARKViewer
 
                     }
 
-                    ListViewItem newItem = lvwDroppedItems.Items.Add(itemName);
+                    ListViewItem newItem = new ListViewItem(itemName);
                     newItem.Tag = playerCache;
                     newItem.SubItems.Add(playerCache.OwnerName);
                     newItem.SubItems.Add(playerCache.Location == null ? "N/A" : playerCache.Location.Latitude.Value.ToString("0.00"));
                     newItem.SubItems.Add(playerCache.Location == null ? "N/A" : playerCache.Location.Longitude.Value.ToString("0.00"));
                     newItem.SubItems.Add(tribeName);
                     newItem.SubItems.Add(playerName);
-                }
+
+                    listItems.Add(newItem);
+
+                });
+
             }
 
 
-
+            lvwDroppedItems.Items.AddRange(listItems.ToArray());
             lvwDroppedItems.EndUpdate();
             lblStatus.Text = "Dropped item data populated.";
             lblStatus.Refresh();
@@ -2562,9 +2581,8 @@ namespace ARKViewer
                                            );
 
                 //change into a strongly typed list for use in parallel
-
-
-                foreach (var detail in detailList)
+                ConcurrentBag<ListViewItem> listItems = new ConcurrentBag<ListViewItem>();
+                Parallel.ForEach(detailList, new ParallelOptions() { MaxDegreeOfParallelism = 4 }, detail =>
                 {
                     var dinoMap = ARKViewer.Program.ProgramConfig.DinoMap.Where(dino => dino.ClassName == detail.ClassName).FirstOrDefault();
 
@@ -2581,7 +2599,7 @@ namespace ARKViewer
                         detail.Gender = ArkCreatureGender.Female;
                     }
 
-                    ListViewItem item = lvwTameDetail.Items.Add(creatureClassName);
+                    ListViewItem item = new ListViewItem(creatureClassName);
                     item.Tag = detail;
                     item.UseItemStyleForSubItems = false;
 
@@ -2618,15 +2636,15 @@ namespace ARKViewer
 
                     item.SubItems.Add(detail.TamedOnServerName);
 
-                    string tamerName = detail.TamerName!=null?detail.TamerName:"";
+                    string tamerName = detail.TamerName != null ? detail.TamerName : "";
                     string imprinterName = detail.ImprinterName;
 
-                    if(detail.TargetingTeam > 0 && detail.ImprinterPlayerDataId ==null && tamerName.Length == 0)
+                    if (detail.TargetingTeam > 0 && detail.ImprinterPlayerDataId == null && tamerName.Length == 0)
                     {
                         tamerName = allTribes.FirstOrDefault(t => t.TribeId == detail.TargetingTeam)?.TribeName;
                     }
 
-                    if(detail.ImprinterPlayerDataId != null)
+                    if (detail.ImprinterPlayerDataId != null)
                     {
                         tamerName = "";
                     }
@@ -2638,7 +2656,7 @@ namespace ARKViewer
                     bool isStored = detail.IsCryo | detail.IsVivarium;
 
                     item.SubItems.Add(isStored.ToString());
-                    
+
                     if (detail.IsCryo)
                     {
                         item.BackColor = Color.LightSkyBlue;
@@ -2660,7 +2678,8 @@ namespace ARKViewer
                         item.SubItems[16].BackColor = Color.LightSkyBlue;
                         item.SubItems[17].BackColor = Color.LightSkyBlue;
                         item.SubItems[18].BackColor = Color.LightSkyBlue;
-                    }else if (detail.IsVivarium)
+                    }
+                    else if (detail.IsVivarium)
                     {
                         item.BackColor = Color.LightPink;
                         item.SubItems[1].BackColor = Color.LightPink;
@@ -2686,7 +2705,7 @@ namespace ARKViewer
 
                     //Colours
                     int colourCheck = (int)detail.Colors[0];
-                    item.SubItems.Add(colourCheck == 0 ? "N/A": detail.Colors[0].ToString()); //14
+                    item.SubItems.Add(colourCheck == 0 ? "N/A" : detail.Colors[0].ToString()); //14
                     ColourMap selectedColor = Program.ProgramConfig.ColourMap.Where(c => c.Id == (int)detail.Colors[0]).FirstOrDefault();
                     if (selectedColor != null && selectedColor.Hex.Length > 0)
                     {
@@ -2695,7 +2714,7 @@ namespace ARKViewer
                     }
 
                     colourCheck = (int)detail.Colors[1];
-                    item.SubItems.Add(colourCheck == 0?"N/A":detail.Colors[1].ToString()); //15
+                    item.SubItems.Add(colourCheck == 0 ? "N/A" : detail.Colors[1].ToString()); //15
                     selectedColor = Program.ProgramConfig.ColourMap.Where(c => c.Id == (int)detail.Colors[1]).FirstOrDefault();
                     if (selectedColor != null && selectedColor.Hex.Length > 0)
                     {
@@ -2752,8 +2771,11 @@ namespace ARKViewer
                         selectedX = (decimal)detail.Location.Longitude;
                         selectedY = (decimal)detail.Location.Latitude;
                     }
-                }
 
+                    listItems.Add(item);
+                });
+
+                lvwTameDetail.Items.AddRange(listItems.ToArray());
 
                 if (SortingColumn_DetailTame != null)
                 {
@@ -2853,11 +2875,13 @@ namespace ARKViewer
 
                                 ).OrderByDescending(c => c.BaseLevel);
 
-                foreach (var detail in detailList)
+                ConcurrentBag<ListViewItem> listItems = new ConcurrentBag<ListViewItem>();
+
+                Parallel.ForEach(detailList, new ParallelOptions() { MaxDegreeOfParallelism = 4 }, detail =>
                 {
                     var dinoMap = ARKViewer.Program.ProgramConfig.DinoMap.Where(dino => dino.ClassName == detail.ClassName).FirstOrDefault();
                     string creatureName = dinoMap == null ? detail.ClassName : dinoMap.FriendlyName;
-                    ListViewItem item = lvwWildDetail.Items.Add(creatureName);
+                    ListViewItem item = new ListViewItem(creatureName);//lvwWildDetail.Items.Add(creatureName);
                     item.Tag = detail;
                     item.UseItemStyleForSubItems = false;
 
@@ -2943,13 +2967,14 @@ namespace ARKViewer
                     {
 
                         item.Selected = true;
-                        selectedX = (decimal)Math.Round(detail.Location.Longitude.Value,2);
-                        selectedY = (decimal)Math.Round(detail.Location.Latitude.Value,2);
+                        selectedX = (decimal)Math.Round(detail.Location.Longitude.Value, 2);
+                        selectedY = (decimal)Math.Round(detail.Location.Latitude.Value, 2);
                     }
 
+                    listItems.Add(item);
+                });
 
-                }
-
+                lvwWildDetail.Items.AddRange(listItems.ToArray());
 
                 // Create a comparer.
                 if (SortingColumn_DetailWild != null)
@@ -4235,10 +4260,12 @@ namespace ARKViewer
             lvwStructureLocations.Refresh();
             lvwStructureLocations.BeginUpdate();
 
-            foreach(var playerStructure in playerStructures)
+            ConcurrentBag<ListViewItem> listItems = new ConcurrentBag<ListViewItem>();
+
+            Parallel.ForEach(playerStructures, new ParallelOptions() { MaxDegreeOfParallelism = 4 }, playerStructure =>
             {
-                
-                if(playerStructure.Location!=null && playerStructure.Location.Latitude.HasValue)
+
+                if (playerStructure.Location != null && playerStructure.Location.Latitude.HasValue)
                 {
                     var playerName = playerStructure.OwningPlayerName;
                     var tribeName = playerStructure.OwnerName;
@@ -4249,7 +4276,8 @@ namespace ARKViewer
                         if (player != null)
                         {
                             playerName = player.CharacterName != null ? player.CharacterName : player.Name;
-                            if(player.Tribe !=null && player.Tribe.Name !=null && player.Tribe.Name.Length > 0){
+                            if (player.Tribe != null && player.Tribe.Name != null && player.Tribe.Name.Length > 0)
+                            {
                                 tribeName = player.Tribe.Name;
                             }
                         }
@@ -4280,7 +4308,7 @@ namespace ARKViewer
                             }
                         }
                     }
-                    
+
 
                     var itemName = playerStructure.ClassName;
                     var itemMap = ARKViewer.Program.ProgramConfig.StructureMap.Where(i => i.ClassName == playerStructure.ClassName).FirstOrDefault();
@@ -4289,7 +4317,7 @@ namespace ARKViewer
                         itemName = itemMap.FriendlyName;
                     }
 
-                    ListViewItem newItem = lvwStructureLocations.Items.Add(playerName);
+                    ListViewItem newItem = new ListViewItem(playerName);
                     newItem.SubItems.Add(tribeName);
                     newItem.SubItems.Add(itemName);
 
@@ -4301,10 +4329,12 @@ namespace ARKViewer
                     newItem.SubItems.Add(playerStructure.OwnerName);
 
                     newItem.Tag = playerStructure;
+
+                    listItems.Add(newItem);
                 }
-            
-            
-            }
+
+
+            });
 
             if(gd.TamedCreatures!=null && gd.TamedCreatures.Count() > 0)
             {
@@ -4321,7 +4351,7 @@ namespace ARKViewer
                                                 && (selectedPlayerId == 0 || (w.OwningPlayerId.GetValueOrDefault(0) == selectedPlayerId || w.ImprinterPlayerDataId.GetValueOrDefault(0) == selectedPlayerId))
                                            ).OrderBy(c => c.Name);
 
-                foreach (var raft in raftList)
+                Parallel.ForEach(raftList, new ParallelOptions() { MaxDegreeOfParallelism = 4 }, raft =>
                 {
 
                     var playerName = raft.OwningPlayerName;
@@ -4369,16 +4399,19 @@ namespace ARKViewer
                     {
                         itemName = itemMap.FriendlyName;
                     }
-                    ListViewItem newItem = lvwStructureLocations.Items.Add(playerName);
+                    ListViewItem newItem = new ListViewItem(playerName);
                     newItem.SubItems.Add(tribeName);
                     newItem.SubItems.Add(itemName);
                     newItem.SubItems.Add(raft.Location.Latitude.Value.ToString("0.00"));
                     newItem.SubItems.Add(raft.Location.Longitude.Value.ToString("0.00"));
                     newItem.Tag = raft;
-                }
+
+                    listItems.Add(newItem);
+                });
 
             }
 
+            lvwStructureLocations.Items.AddRange(listItems.ToArray());
 
             if (SortingColumn_Structures != null)
             {

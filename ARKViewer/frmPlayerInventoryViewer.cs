@@ -1,5 +1,6 @@
 ﻿using ArkSavegameToolkitNet.Domain;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -37,7 +38,9 @@ namespace ARKViewer
             {
                 //var playerItems = selectedPlayer.Creatures;
 
-                foreach (var invItem in currentPlayer.Inventory)
+                ConcurrentBag<ListViewItem> listItems = new ConcurrentBag<ListViewItem>();
+
+                Parallel.ForEach(currentPlayer.Inventory, invItem =>
                 {
                     string itemName = invItem.ClassName;
                     string categoryName = "Misc.";
@@ -70,7 +73,7 @@ namespace ARKViewer
 
                     }
 
-                    if(itemName.ToLower().Contains(txtPlayerFilter.Text.ToLower()) || categoryName.ToLower().Contains(txtPlayerFilter.Text.ToLower()))
+                    if (itemName.ToLower().Contains(txtPlayerFilter.Text.ToLower()) || categoryName.ToLower().Contains(txtPlayerFilter.Text.ToLower()))
                     {
                         if (!invItem.IsEngram)
                         {
@@ -82,7 +85,7 @@ namespace ARKViewer
                             {
                                 qualityName = "Primitive";
                                 backColor = Color.FromArgb(90, ColorTranslator.FromHtml("#C0C0C0"));
-                                
+
                                 foreColor = Color.Black;
                             }
                             if (invItem.Rating >= 1.25 && invItem.Rating < 2.5)
@@ -101,31 +104,31 @@ namespace ARKViewer
                             {
                                 qualityName = "Journeyman";
                                 backColor = ColorTranslator.FromHtml("#E2AAFF");
-                                
+
                                 foreColor = Color.Black;
                             }
                             else if (invItem.Rating >= 7 && invItem.Rating < 10)
                             {
                                 qualityName = "Mastercraft";
                                 backColor = ColorTranslator.FromHtml("#FFF991");
-                                
+
                                 foreColor = Color.Black;
                             }
-                            else if (invItem.Rating >=10)
+                            else if (invItem.Rating >= 10)
                             {
                                 qualityName = "Ascendant";
                                 backColor = ColorTranslator.FromHtml("#8EFFFD");
-                                
+
                                 foreColor = Color.Black;
                             }
 
                             string craftedBy = "";
-                            if(invItem.CraftedPlayerName!=null && invItem.CraftedPlayerName.Length > 0)
+                            if (invItem.CraftedPlayerName != null && invItem.CraftedPlayerName.Length > 0)
                             {
                                 craftedBy = $"{invItem.CraftedPlayerName} ({invItem.CraftedTribeName})";
                             }
 
-                            ListViewItem newItem = lvwPlayerInventory.Items.Add(itemName);
+                            ListViewItem newItem = new ListViewItem(itemName);
                             newItem.ForeColor = foreColor;
                             newItem.BackColor = backColor;
                             newItem.SubItems.Add(categoryName);
@@ -134,9 +137,12 @@ namespace ARKViewer
                             newItem.SubItems.Add(invItem.Quantity.ToString());
                             newItem.ImageIndex = itemIcon - 1;
 
+                            listItems.Add(newItem);
                         }
                     }
-                }
+                });
+
+                lvwPlayerInventory.Items.AddRange(listItems.ToArray());
             }
         }
 
@@ -149,7 +155,9 @@ namespace ARKViewer
             string selectedClass = selectedItem.Key;
             var selectedCreatures = tamedCreatureList.Where(t => t.ClassName == selectedClass || selectedClass.Length == 0);
 
-            foreach (var creature in selectedCreatures)
+            ConcurrentBag<ListViewItem> listItems = new ConcurrentBag<ListViewItem>();
+
+            Parallel.ForEach(selectedCreatures, creature =>
             {
                 if (creature.Inventory != null && creature.Inventory.Count() > 0)
                 {
@@ -185,7 +193,7 @@ namespace ARKViewer
                             }
                         }
 
-                        if(itemName.ToLower().Contains(txtCreatureFilter.Text.ToLower()) || creatureName.ToLower().Contains(txtCreatureFilter.Text.ToLower()))
+                        if (itemName.ToLower().Contains(txtCreatureFilter.Text.ToLower()) || creatureName.ToLower().Contains(txtCreatureFilter.Text.ToLower()))
                         {
                             if (!invItem.IsEngram)
                             {
@@ -241,7 +249,7 @@ namespace ARKViewer
                                     craftedBy = $"{invItem.CraftedPlayerName} ({invItem.CraftedTribeName})";
                                 }
 
-                                ListViewItem newItem = lvwCreatureInventory.Items.Add(itemName);
+                                ListViewItem newItem = new ListViewItem(itemName);
                                 newItem.BackColor = backColor;
                                 newItem.ForeColor = foreColor;
                                 newItem.SubItems.Add(categoryName);
@@ -255,13 +263,16 @@ namespace ARKViewer
                                 newItem.ImageIndex = itemIcon - 1;
                                 newItem.Tag = invItem;
 
+                                listItems.Add(newItem);
                             }
                         }
 
 
                     }
                 }
-            }
+            });
+
+            lvwCreatureInventory.Items.AddRange(listItems.ToArray());
         }
 
         private void PopulateStructureInventory()
@@ -274,8 +285,8 @@ namespace ARKViewer
 
             List<string> unmappedItemClassList = new List<string>();
 
-
-            foreach (var container in selectedContainers)
+            ConcurrentBag<ListViewItem> listItems = new ConcurrentBag<ListViewItem>();
+            Parallel.ForEach(selectedContainers, container =>
             {
                 if (container.Inventory != null && container.Inventory.Count() > 0)
                 {
@@ -305,7 +316,8 @@ namespace ARKViewer
                         }
 
 
-                        if(categoryName.ToLower().Contains(txtStorageFilter.Text.ToLower()) || itemName.ToLower().Contains(txtStorageFilter.Text.ToLower())){
+                        if (categoryName.ToLower().Contains(txtStorageFilter.Text.ToLower()) || itemName.ToLower().Contains(txtStorageFilter.Text.ToLower()))
+                        {
                             if (!invItem.IsEngram)
                             {
 
@@ -362,10 +374,10 @@ namespace ARKViewer
                                 }
 
 
-                                ListViewItem newItem = lvwStorageInventory.Items.Add(itemName);
+                                ListViewItem newItem = new ListViewItem(itemName);
                                 newItem.BackColor = backColor;
                                 newItem.ForeColor = foreColor;
-                                
+
                                 newItem.SubItems.Add(categoryName);
                                 newItem.SubItems.Add(qualityName);
                                 newItem.SubItems.Add(craftedBy);
@@ -375,15 +387,16 @@ namespace ARKViewer
                                 newItem.SubItems.Add(invItem.Quantity.ToString());
                                 newItem.ImageIndex = itemIcon - 1;
                                 newItem.Tag = invItem;
+
+                                listItems.Add(newItem);
                             }
                         }
 
                     }
                 }
-            }
+            });
 
-
-
+            lvwStorageInventory.Items.AddRange(listItems.ToArray());
 
         }
 
