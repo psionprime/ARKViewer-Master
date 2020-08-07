@@ -227,14 +227,21 @@ namespace ARKViewer
                         string exportFilePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
                         string exportFilename = "";
 
-                        if(commandArguments.Length > 2)
+                        string commandOptionCheck = commandArguments[1].ToString().Trim().ToLower();
+
+                        if (commandArguments.Length > 2)
                         {
                             //export filename
                             exportFilename = commandArguments[2].ToString().Trim();
+
+                            //use path only if "all"
+                            if(commandOptionCheck == "all")
+                            {
+                                exportFilePath = Path.GetDirectoryName(exportFilename);
+                                exportFilename = "";
+
+                            }
                         }
-
-                        string commandOptionCheck = commandArguments[1].ToString().Trim().ToLower();
-
 
                         if(commandOptionCheck ==  "wild" || commandOptionCheck == "all")
                         { 
