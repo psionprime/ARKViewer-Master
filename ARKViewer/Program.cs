@@ -41,8 +41,8 @@ namespace ARKViewer
                 if(commandArguments.Length > 3)
                 {
                     //ark save game specified
-                    saveFilename = commandArguments[3].ToString().Trim();
-                    savePath = Path.GetFullPath(saveFilename);
+                    saveFilename = commandArguments[3].ToString().Trim().Replace("\"", "");
+                    savePath = Path.GetDirectoryName(saveFilename);
 
                 }
                 else
@@ -232,7 +232,7 @@ namespace ARKViewer
                         if (commandArguments.Length > 2)
                         {
                             //export filename
-                            exportFilename = commandArguments[2].ToString().Trim();
+                            exportFilename = commandArguments[2].ToString().Trim().Replace("\"", "");
 
                             //use path only if "all"
                             if(commandOptionCheck == "all")
