@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -29,7 +30,8 @@ namespace ARKViewer
 
             ProgramConfig = new ViewerConfiguration();
 
-            string[] commandArguments = Environment.GetCommandLineArgs();
+            //support quoted command line arguments which doesn't seem to be supported with Environment.GetCommandLineArgs() 
+            string[] commandArguments = Regex.Split(Environment.CommandLine, " (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
 
             if (commandArguments != null && commandArguments.Length > 1)
             {
@@ -43,7 +45,6 @@ namespace ARKViewer
                     //ark save game specified
                     saveFilename = commandArguments[3].ToString().Trim().Replace("\"", "");
                     savePath = Path.GetDirectoryName(saveFilename);
-
                 }
                 else
                 {
