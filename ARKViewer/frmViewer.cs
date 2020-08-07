@@ -273,7 +273,7 @@ namespace ARKViewer
                             var serverPlayers = gd.Players.Select(i => new PlayerMap() { TribeId = (long)i.TribeId.GetValueOrDefault(0), PlayerId = (long)i.Id, PlayerName = i.CharacterName != null ? i.CharacterName : i.Name });
                             if (serverPlayers != null)
                             {
-                                Parallel.ForEach(serverPlayers.Where(p => p.TribeId == 0), new ParallelOptions() { MaxDegreeOfParallelism = 4 }, serverPlayer =>
+                                Parallel.ForEach(serverPlayers.Where(p => p.TribeId == 0), serverPlayer =>
                                 {
                                     var testTribe = gd.Tribes.Where(t => t.MemberIds.Contains((int)serverPlayer.PlayerId)).FirstOrDefault();
                                     if (testTribe != null)
@@ -295,7 +295,7 @@ namespace ARKViewer
                             allPlayers.AddRange(structurePlayers.ToArray());
                         }
 
-                        Parallel.ForEach(allTribes,  new ParallelOptions() { MaxDegreeOfParallelism = 4 }, tribe =>
+                        Parallel.ForEach(allTribes, tribe =>
                         {
                             int playerCount = allPlayers.Count(p => p.TribeId == tribe.TribeId);
                             int tribePlayerCount = gd.Tribes.Where(t => t.Id == tribe.TribeId).Select(m => m.Members).Count();
@@ -923,7 +923,7 @@ namespace ARKViewer
             //Name, sex, lvl, lat, lon, hp, stam, melee, weight, speed, food,water, oxy, last on
             ConcurrentBag<ListViewItem> listItems = new ConcurrentBag<ListViewItem>();
 
-            Parallel.ForEach(tribePlayerList, new ParallelOptions() { MaxDegreeOfParallelism = 4 }, player =>
+            Parallel.ForEach(tribePlayerList, player =>
             {
                 bool addPlayer = true;
                 if(Program.ProgramConfig.HideNoBody)
@@ -989,7 +989,7 @@ namespace ARKViewer
 
             //Name, sex, lvl, lat, lon, hp, stam, melee, weight, speed, food,water, oxy, last on
 
-            Parallel.ForEach(soloPlayerList, new ParallelOptions() { MaxDegreeOfParallelism = 4 }, player =>
+            Parallel.ForEach(soloPlayerList, player =>
             {
 
                 bool addPlayer = true;
@@ -2414,7 +2414,7 @@ namespace ARKViewer
                 if(droppedItems!=null && droppedItems.LongCount(d=>d.DroppedByPlayerId !=0) > 0)
                 {
                     
-                    Parallel.ForEach(droppedItems, new ParallelOptions() { MaxDegreeOfParallelism = 4 }, droppedItem =>
+                    Parallel.ForEach(droppedItems,  droppedItem =>
                     {
                         string itemName = droppedItem.ClassName;
                         ItemClassMap itemMap = Program.ProgramConfig.ItemMap.Where(m => m.ClassName == droppedItem.ClassName).FirstOrDefault();
@@ -2462,7 +2462,7 @@ namespace ARKViewer
 
             if(selectedClass == "DeathItemCache_PlayerDeath_C")
             {
-                Parallel.ForEach(gd.PlayerDeathCache, new ParallelOptions() { MaxDegreeOfParallelism = 4 }, playerCache =>
+                Parallel.ForEach(gd.PlayerDeathCache, playerCache =>
                 {
                     string itemName = "Player Cache";
 
@@ -2582,7 +2582,7 @@ namespace ARKViewer
 
                 //change into a strongly typed list for use in parallel
                 ConcurrentBag<ListViewItem> listItems = new ConcurrentBag<ListViewItem>();
-                Parallel.ForEach(detailList, new ParallelOptions() { MaxDegreeOfParallelism = 4 }, detail =>
+                Parallel.ForEach(detailList, detail =>
                 {
                     var dinoMap = ARKViewer.Program.ProgramConfig.DinoMap.Where(dino => dino.ClassName == detail.ClassName).FirstOrDefault();
 
@@ -2877,7 +2877,7 @@ namespace ARKViewer
 
                 ConcurrentBag<ListViewItem> listItems = new ConcurrentBag<ListViewItem>();
 
-                Parallel.ForEach(detailList, new ParallelOptions() { MaxDegreeOfParallelism = 4 }, detail =>
+                Parallel.ForEach(detailList, detail =>
                 {
                     var dinoMap = ARKViewer.Program.ProgramConfig.DinoMap.Where(dino => dino.ClassName == detail.ClassName).FirstOrDefault();
                     string creatureName = dinoMap == null ? detail.ClassName : dinoMap.FriendlyName;
@@ -3195,7 +3195,7 @@ namespace ARKViewer
             //add "All" summary
             int newIndex = 0;
 
-            foreach (var summary in wildSummary)
+            foreach (var summary in wildSummary.OrderBy(o=>o.Name))
             {
 
                 DinoSummary newSummary = new DinoSummary()
@@ -3207,6 +3207,8 @@ namespace ARKViewer
                     MaxLevel = summary.Max,
                     MaxLength = 100
                 };
+
+
                 newIndex = cboWildClass.Items.Add(newSummary);
                 if (selectedClass == summary.ClassName)
                 {
@@ -4262,7 +4264,7 @@ namespace ARKViewer
 
             ConcurrentBag<ListViewItem> listItems = new ConcurrentBag<ListViewItem>();
 
-            Parallel.ForEach(playerStructures, new ParallelOptions() { MaxDegreeOfParallelism = 4 }, playerStructure =>
+            Parallel.ForEach(playerStructures, playerStructure =>
             {
 
                 if (playerStructure.Location != null && playerStructure.Location.Latitude.HasValue)
@@ -4351,7 +4353,7 @@ namespace ARKViewer
                                                 && (selectedPlayerId == 0 || (w.OwningPlayerId.GetValueOrDefault(0) == selectedPlayerId || w.ImprinterPlayerDataId.GetValueOrDefault(0) == selectedPlayerId))
                                            ).OrderBy(c => c.Name);
 
-                Parallel.ForEach(raftList, new ParallelOptions() { MaxDegreeOfParallelism = 4 }, raft =>
+                Parallel.ForEach(raftList, raft =>
                 {
 
                     var playerName = raft.OwningPlayerName;

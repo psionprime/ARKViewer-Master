@@ -231,6 +231,7 @@ namespace ArkSavegameToolkitNet
         private static ArkName _droppedItem = ArkName.Create("DroppedItemGenericLowQuality_C", 0);
         private static ArkName _droppedByPlayerId = ArkName.Create("DroppedByPlayerID");
         private static ArkName _customData = ArkName.Create("CustomItemDatas", 0);
+        private static ArkName _imprinterName = ArkName.Create("ImprinterName");
 
         internal static readonly ArkNameTree _dependencies = new ArkNameTree
         {
@@ -315,7 +316,7 @@ namespace ArkSavegameToolkitNet
 
                     if(targetingTeamId > 1000000000)
                     {
-                        if(tamingTeamID > 0 && tamingTeamID < 1000000000)
+                        if((tamingTeamID > 0 && tamingTeamID < 1000000000) &! Properties.ContainsKey(_imprinterName))
                         {
 
                         }

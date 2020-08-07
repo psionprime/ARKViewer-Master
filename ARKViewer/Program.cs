@@ -98,7 +98,7 @@ namespace ARKViewer
                             gd.ApplyPreviousUpdate();
 
                             //get structures
-                            if (commandArguments[1].ToString().Trim().ToLower() == "structures" || commandArguments[1].ToString().Trim().ToLower() == "tribes")
+                            if (commandArguments[1].ToString().Trim().ToLower() == "structures" || commandArguments[1].ToString().Trim().ToLower() == "tribes" || commandArguments[1].ToString().Trim().ToString() == "all")
                             {
                                 if (gd.Structures != null && gd.Structures.Count() > 0)
                                 {
@@ -233,567 +233,571 @@ namespace ARKViewer
                             exportFilename = commandArguments[2].ToString().Trim();
                         }
 
+                        string commandOptionCheck = commandArguments[1].ToString().Trim().ToLower();
 
-                        switch (commandArguments[1].ToString().Trim().ToLower())
+
+                        if(commandOptionCheck ==  "wild" || commandOptionCheck == "all")
+                        { 
+                            //Wild 
+                            exportFilename = exportFilename.Length > 0 ? exportFilename : Path.Combine(exportFilePath, "ARKViewer_Export_Wild.json");
+
+                            using (FileStream fs = File.Create(exportFilename))
+                            {
+                                using (StreamWriter sw = new StreamWriter(fs))
+                                {
+                                    using (JsonTextWriter jw = new JsonTextWriter(sw))
+                                    {
+                                        var creatureList = shouldSort ? gd.WildCreatures.OrderBy(o => o.ClassName).Cast<ArkWildCreature>() : gd.WildCreatures;
+
+                                        jw.WriteStartArray();
+
+                                        //Creature, Sex, Lvl, Lat, Lon, HP, Stam, Weight, Speed, Food, Oxygen, Craft, C0, C1, C2, C3, C4, C5              
+                                        foreach (var creature in creatureList)
+                                        {
+                                            jw.WriteStartObject();
+
+                                            jw.WritePropertyName("creature");
+                                            jw.WriteValue(creature.ClassName);
+
+                                            jw.WritePropertyName("sex");
+                                            jw.WriteValue(creature.Gender);
+
+                                            jw.WritePropertyName("lvl");
+                                            jw.WriteValue(creature.BaseLevel);
+
+                                            jw.WritePropertyName("lat");
+                                            if (creature.Location != null && creature.Location.Latitude != null)
+                                            {
+                                                jw.WriteValue(creature.Location.Latitude);
+                                            }
+                                            else
+                                            {
+                                                jw.WriteValue(0);
+                                            }
+
+                                            jw.WritePropertyName("lon");
+                                            if (creature.Location != null && creature.Location.Longitude != null)
+                                            {
+                                                jw.WriteValue(creature.Location.Longitude);
+                                            }
+                                            else
+                                            {
+                                                jw.WriteValue(0);
+                                            }
+
+                                            jw.WritePropertyName("hp");
+                                            jw.WriteValue(creature.BaseStats[0]);
+
+                                            jw.WritePropertyName("stam");
+                                            jw.WriteValue(creature.BaseStats[1]);
+
+                                            jw.WritePropertyName("melee");
+                                            jw.WriteValue(creature.BaseStats[8]);
+
+                                            jw.WritePropertyName("weight");
+                                            jw.WriteValue(creature.BaseStats[7]);
+
+                                            jw.WritePropertyName("speed");
+                                            jw.WriteValue(creature.BaseStats[9]);
+
+                                            jw.WritePropertyName("food");
+                                            jw.WriteValue(creature.BaseStats[4]);
+
+                                            jw.WritePropertyName("oxy");
+                                            jw.WriteValue(creature.BaseStats[3]);
+
+                                            jw.WritePropertyName("craft");
+                                            jw.WriteValue(creature.BaseStats[11]);
+
+                                            jw.WritePropertyName("c0");
+                                            jw.WriteValue(creature.Colors[0]);
+
+                                            jw.WritePropertyName("c1");
+                                            jw.WriteValue(creature.Colors[1]);
+
+                                            jw.WritePropertyName("c2");
+                                            jw.WriteValue(creature.Colors[2]);
+
+                                            jw.WritePropertyName("c3");
+                                            jw.WriteValue(creature.Colors[3]);
+
+                                            jw.WritePropertyName("c4");
+                                            jw.WriteValue(creature.Colors[4]);
+
+                                            jw.WritePropertyName("c5");
+                                            jw.WriteValue(creature.Colors[5]);
+
+                                            jw.WritePropertyName("ccc");
+                                            if (creature.Location != null)
+                                            {
+                                                jw.WriteValue($"{creature.Location.X} {creature.Location.Y} {creature.Location.Z}");
+
+                                            }
+                                            else
+                                            {
+                                                jw.WriteValue("");
+                                            }
+
+                                            jw.WriteEnd();
+                                        }
+
+                                        jw.WriteEndArray();
+                                    }
+
+                                }
+
+                            }
+
+
+                        }
+                        if(commandOptionCheck == "tamed" || commandOptionCheck == "all")
+                            { 
+                            //Tamed
+                            exportFilename = exportFilename.Length > 0 && commandOptionCheck != "all" ? exportFilename : Path.Combine(exportFilePath, "ARKViewer_Export_Tamed.json");
+
+                            using (FileStream fs = File.Create(exportFilename))
+                            {
+                                using (StreamWriter sw = new StreamWriter(fs))
+                                {
+                                    using (JsonTextWriter jw = new JsonTextWriter(sw))
+                                    {
+
+                                        var creatureList = shouldSort ? gd.TamedCreatures.OrderBy(o => o.ClassName).Cast<ArkTamedCreature>() : gd.TamedCreatures;
+
+                                        jw.WriteStartArray();
+
+                                        foreach (var creature in creatureList)
+                                        {
+
+                                            jw.WriteStartObject();
+                                            jw.WritePropertyName("tribeid");
+                                            jw.WriteValue(creature.TargetingTeam);
+
+                                            jw.WritePropertyName("tribe");
+                                            jw.WriteValue(creature.TribeName);
+
+                                            jw.WritePropertyName("tamer");
+                                            jw.WriteValue(creature.TamerName);
+
+                                            jw.WritePropertyName("imprinter");
+                                            jw.WriteValue(creature.ImprinterName);
+
+
+                                            jw.WritePropertyName("imprint");
+                                            jw.WriteValue(creature.DinoImprintingQuality);
+
+                                            jw.WritePropertyName("creature");
+                                            jw.WriteValue(creature.ClassName);
+
+                                            jw.WritePropertyName("name");
+                                            jw.WriteValue(creature.Name != null ? creature.Name : "");
+
+
+                                            jw.WritePropertyName("sex");
+                                            jw.WriteValue(creature.Gender);
+
+                                            jw.WritePropertyName("base");
+                                            jw.WriteValue(creature.BaseLevel);
+
+
+                                            jw.WritePropertyName("lvl");
+                                            jw.WriteValue(creature.Level);
+
+                                            jw.WritePropertyName("lat");
+                                            if (creature.Location != null && creature.Location.Latitude != null)
+                                            {
+                                                jw.WriteValue(creature.Location.Latitude);
+                                            }
+                                            else
+                                            {
+                                                jw.WriteValue(0);
+                                            }
+
+                                            jw.WritePropertyName("lon");
+                                            if (creature.Location != null && creature.Location.Longitude != null)
+                                            {
+                                                jw.WriteValue(creature.Location.Longitude);
+                                            }
+                                            else
+                                            {
+                                                jw.WriteValue(0);
+                                            }
+
+                                            jw.WritePropertyName("hp-w");
+                                            jw.WriteValue(creature.BaseStats[0]);
+
+                                            jw.WritePropertyName("stam-w");
+                                            jw.WriteValue(creature.BaseStats[1]);
+
+                                            jw.WritePropertyName("melee-w");
+                                            jw.WriteValue(creature.BaseStats[8]);
+
+                                            jw.WritePropertyName("weight-w");
+                                            jw.WriteValue(creature.BaseStats[7]);
+
+                                            jw.WritePropertyName("speed-w");
+                                            jw.WriteValue(creature.BaseStats[9]);
+
+                                            jw.WritePropertyName("food-w");
+                                            jw.WriteValue(creature.BaseStats[4]);
+
+                                            jw.WritePropertyName("oxy-w");
+                                            jw.WriteValue(creature.BaseStats[3]);
+
+                                            jw.WritePropertyName("craft-w");
+                                            jw.WriteValue(creature.BaseStats[11]);
+
+                                            jw.WritePropertyName("hp-t");
+                                            jw.WriteValue(creature.TamedStats[0]);
+
+                                            jw.WritePropertyName("stam-t");
+                                            jw.WriteValue(creature.TamedStats[1]);
+
+                                            jw.WritePropertyName("melee-t");
+                                            jw.WriteValue(creature.TamedStats[8]);
+
+                                            jw.WritePropertyName("weight-t");
+                                            jw.WriteValue(creature.TamedStats[7]);
+
+                                            jw.WritePropertyName("speed-t");
+                                            jw.WriteValue(creature.TamedStats[9]);
+
+                                            jw.WritePropertyName("food-t");
+                                            jw.WriteValue(creature.TamedStats[4]);
+
+                                            jw.WritePropertyName("oxy-t");
+                                            jw.WriteValue(creature.TamedStats[3]);
+
+                                            jw.WritePropertyName("craft-t");
+                                            jw.WriteValue(creature.TamedStats[11]);
+
+
+                                            jw.WritePropertyName("c0");
+                                            jw.WriteValue(creature.Colors[0]);
+
+                                            jw.WritePropertyName("c1");
+                                            jw.WriteValue(creature.Colors[1]);
+
+                                            jw.WritePropertyName("c2");
+                                            jw.WriteValue(creature.Colors[2]);
+
+                                            jw.WritePropertyName("c3");
+                                            jw.WriteValue(creature.Colors[3]);
+
+                                            jw.WritePropertyName("c4");
+                                            jw.WriteValue(creature.Colors[4]);
+
+                                            jw.WritePropertyName("c5");
+                                            jw.WriteValue(creature.Colors[5]);
+
+                                            jw.WritePropertyName("mut-f");
+                                            jw.WriteValue(creature.RandomMutationsFemale);
+
+                                            jw.WritePropertyName("mut-m");
+                                            jw.WriteValue(creature.RandomMutationsMale);
+
+                                            jw.WritePropertyName("cryo");
+                                            jw.WriteValue(creature.IsCryo);
+
+                                            jw.WritePropertyName("viv");
+                                            jw.WriteValue(creature.IsVivarium);
+
+                                            jw.WritePropertyName("ccc");
+                                            if (creature.Location != null)
+                                            {
+                                                jw.WriteValue($"{creature.Location.X} {creature.Location.Y} {creature.Location.Z}");
+                                            }
+                                            else
+                                            {
+                                                jw.WriteValue("");
+                                            }
+
+                                            jw.WriteEnd();
+                                        }
+
+                                        jw.WriteEndArray();
+                                    }
+
+                                }
+
+                            }
+                        }
+
+                        if(commandOptionCheck ==  "structures" || commandOptionCheck == "all")
+                        { 
+                            //Structures
+                            exportFilename = exportFilename.Length > 0 && commandOptionCheck != "all" ? exportFilename : Path.Combine(exportFilePath, "ARKViewer_Export_Structures.json");
+
+                            //Player, Tribe, Structure, Lat, Lon
+                            using (FileStream fs = File.Create(exportFilename))
+                            {
+                                using (StreamWriter sw = new StreamWriter(fs))
+                                {
+                                    using (JsonTextWriter jw = new JsonTextWriter(sw))
+                                    {
+                                        jw.WriteStartArray();
+
+                                        foreach (var structure in gd.Structures)
+                                        {
+                                            jw.WriteStartObject();
+
+                                            jw.WritePropertyName("tribeid");
+                                            jw.WriteValue(structure.TargetingTeam.GetValueOrDefault(0));
+
+                                            jw.WritePropertyName("playerid");
+                                            if (structure.OwningPlayerId == structure.TargetingTeam.GetValueOrDefault(0))
+                                            {
+                                                jw.WriteValue(0);
+                                            }
+                                            else
+                                            {
+                                                jw.WriteValue(structure.OwningPlayerId.GetValueOrDefault(0));
+                                            }
+
+
+                                            jw.WritePropertyName("tribe");
+                                            if (allTribes.Count(t => t.TribeId == structure.TargetingTeam.GetValueOrDefault(0)) > 0)
+                                            {
+                                                jw.WriteValue(allTribes.First(t => t.TribeId == structure.TargetingTeam.GetValueOrDefault(0)).TribeName);
+                                            }
+                                            else
+                                            {
+                                                jw.WriteValue("");
+                                            }
+
+
+                                            jw.WritePropertyName("player");
+                                            jw.WriteValue(structure.OwningPlayerName == "null" ? "" : structure.OwningPlayerName);
+
+                                            jw.WritePropertyName("struct");
+                                            jw.WriteValue(structure.ClassName);
+
+                                            jw.WritePropertyName("lat");
+                                            if (structure.Location != null && structure.Location.Latitude != null)
+                                            {
+                                                jw.WriteValue(structure.Location.Latitude);
+                                            }
+                                            else
+                                            {
+                                                jw.WriteValue(0);
+                                            }
+
+
+                                            jw.WritePropertyName("lon");
+                                            if (structure.Location != null && structure.Location.Longitude != null)
+                                            {
+                                                jw.WriteValue(structure.Location.Longitude);
+                                            }
+                                            else
+                                            {
+                                                jw.WriteValue(0);
+                                            }
+
+                                            jw.WritePropertyName("ccc");
+                                            if (structure.Location != null)
+                                            {
+                                                jw.WriteValue($"{structure.Location.X} {structure.Location.Y} {structure.Location.Z}");
+                                            }
+                                            else
+                                            {
+                                                jw.WriteValue("");
+                                            }
+
+
+                                            jw.WriteEnd();
+                                        }
+
+                                        jw.WriteEndArray();
+                                    }
+
+                                }
+
+                            }
+                        }
+
+                                
+                        if(commandOptionCheck ==  "tribes" || commandOptionCheck == "all")
+                        { 
+                            //Tribes
+                            exportFilename = exportFilename.Length > 0 && commandOptionCheck != "all" ? exportFilename : Path.Combine(exportFilePath, "ARKViewer_Export_Tribes.json");
+
+                            //Id, Name, Players, Tames, Structures, Last Active
+                            using (FileStream fs = File.Create(exportFilename))
+                            {
+                                using (StreamWriter sw = new StreamWriter(fs))
+                                {
+                                    using (JsonTextWriter jw = new JsonTextWriter(sw))
+                                    {
+                                        jw.WriteStartArray();
+
+                                        foreach (var playerTribe in allTribes)
+                                        {
+                                            jw.WriteStartObject();
+
+                                            jw.WritePropertyName("tribeid");
+                                            jw.WriteValue(playerTribe.TribeId);
+
+                                            jw.WritePropertyName("tribe");
+                                            jw.WriteValue(playerTribe.TribeName);
+
+                                            jw.WritePropertyName("players");
+                                            jw.WriteValue(playerTribe.PlayerCount);
+
+                                            jw.WritePropertyName("tames");
+                                            jw.WriteValue(playerTribe.TameCount);
+
+                                            jw.WritePropertyName("structures");
+                                            jw.WriteValue(playerTribe.StructureCount);
+
+                                            jw.WritePropertyName("active");
+                                            jw.WriteValue(playerTribe.LastActive);
+
+
+                                            jw.WriteEnd();
+                                        }
+
+                                        jw.WriteEndArray();
+                                    }
+
+                                }
+
+                            }
+                        }
+
+
+                        if (commandOptionCheck == "all" || commandOptionCheck == "players")
                         {
-                            case "wild":
-                                //Wild 
-                                exportFilename = exportFilename.Length > 0 ? exportFilename : Path.Combine(exportFilePath, "ARKViewer_Export_Wild.json");
+                            //Players
+                            exportFilename = exportFilename.Length > 0 && commandOptionCheck != "all" ? exportFilename : Path.Combine(exportFilePath, "ARKViewer_Export_Players.json");
 
-                                using (FileStream fs = File.Create(exportFilename))
+                            //Id, Name, Tribe, Sex, Lvl, Lat, Lon, HP, Stam, Melee, Weight, Speed, Food, Water, Oxygen, Crafting, Fortitude, Steam, Last Online
+                            using (FileStream fs = File.Create(exportFilename))
+                            {
+                                using (StreamWriter sw = new StreamWriter(fs))
                                 {
-                                    using (StreamWriter sw = new StreamWriter(fs))
+                                    using (JsonTextWriter jw = new JsonTextWriter(sw))
                                     {
-                                        using (JsonTextWriter jw = new JsonTextWriter(sw))
+                                        jw.WriteStartArray();
+
+                                        foreach (var player in gd.Players)
                                         {
-                                            var creatureList = shouldSort ? gd.WildCreatures.OrderBy(o => o.ClassName).Cast<ArkWildCreature>() : gd.WildCreatures;
+                                            jw.WriteStartObject();
 
-                                            jw.WriteStartArray();
+                                            jw.WritePropertyName("playerid");
+                                            jw.WriteValue(player.Id);
 
-                                            //Creature, Sex, Lvl, Lat, Lon, HP, Stam, Weight, Speed, Food, Oxygen, Craft, C0, C1, C2, C3, C4, C5              
-                                            foreach (var creature in creatureList)
+                                            jw.WritePropertyName("steam");
+                                            jw.WriteValue(player.Name);
+
+                                            jw.WritePropertyName("name");
+                                            jw.WriteValue(player.CharacterName);
+
+                                            jw.WritePropertyName("tribeid");
+                                            jw.WriteValue(player.TribeId);
+
+                                            jw.WritePropertyName("tribe");
+                                            if (player.Tribe != null && player.Tribe.Name != null)
                                             {
-                                                jw.WriteStartObject();
-                                            
-                                                jw.WritePropertyName("creature");
-                                                jw.WriteValue(creature.ClassName);
-
-                                                jw.WritePropertyName("sex");
-                                                jw.WriteValue(creature.Gender);
-
-                                                jw.WritePropertyName("lvl");
-                                                jw.WriteValue(creature.BaseLevel);
-
-                                                jw.WritePropertyName("lat");
-                                                if(creature.Location!=null && creature.Location.Latitude != null)
-                                                {
-                                                    jw.WriteValue(creature.Location.Latitude);
-                                                }
-                                                else
-                                                {
-                                                    jw.WriteValue(0);
-                                                }
-
-                                                jw.WritePropertyName("lon");
-                                                if (creature.Location != null && creature.Location.Longitude != null)
-                                                {
-                                                    jw.WriteValue(creature.Location.Longitude);
-                                                }
-                                                else
-                                                {
-                                                    jw.WriteValue(0);
-                                                }
-
-                                                jw.WritePropertyName("hp");
-                                                jw.WriteValue(creature.BaseStats[0]);
-
-                                                jw.WritePropertyName("stam");
-                                                jw.WriteValue(creature.BaseStats[1]);
-
-                                                jw.WritePropertyName("melee");
-                                                jw.WriteValue(creature.BaseStats[8]);
-
-                                                jw.WritePropertyName("weight");
-                                                jw.WriteValue(creature.BaseStats[7]);
-
-                                                jw.WritePropertyName("speed");
-                                                jw.WriteValue(creature.BaseStats[9]);
-
-                                                jw.WritePropertyName("food");
-                                                jw.WriteValue(creature.BaseStats[4]);
-
-                                                jw.WritePropertyName("oxy");
-                                                jw.WriteValue(creature.BaseStats[3]);
-
-                                                jw.WritePropertyName("craft");
-                                                jw.WriteValue(creature.BaseStats[11]);
-
-                                                jw.WritePropertyName("c0");
-                                                jw.WriteValue(creature.Colors[0]);
-
-                                                jw.WritePropertyName("c1");
-                                                jw.WriteValue(creature.Colors[1]);
-
-                                                jw.WritePropertyName("c2");
-                                                jw.WriteValue(creature.Colors[2]);
-
-                                                jw.WritePropertyName("c3");
-                                                jw.WriteValue(creature.Colors[3]);
-
-                                                jw.WritePropertyName("c4");
-                                                jw.WriteValue(creature.Colors[4]);
-
-                                                jw.WritePropertyName("c5");
-                                                jw.WriteValue(creature.Colors[5]);
-
-                                                jw.WritePropertyName("ccc");
-                                                if (creature.Location != null)
-                                                {
-                                                    jw.WriteValue($"{creature.Location.X} {creature.Location.Y} {creature.Location.Z}");
-
-                                                }
-                                                else
-                                                {
-                                                    jw.WriteValue("");
-                                                }
-
-                                                jw.WriteEnd();
+                                                jw.WriteValue(player.Tribe.Name);
+                                            }
+                                            else
+                                            {
+                                                jw.WriteValue("");
                                             }
 
-                                            jw.WriteEndArray();
+                                            jw.WritePropertyName("sex");
+                                            jw.WriteValue(player.Gender);
+
+                                            jw.WritePropertyName("lvl");
+                                            jw.WriteValue(player.CharacterLevel);
+
+                                            jw.WritePropertyName("lat");
+                                            if (player.Location != null)
+                                            {
+                                                jw.WriteValue(player.Location.Latitude);
+                                            }
+                                            else
+                                            {
+                                                jw.WriteValue(0);
+                                            }
+
+                                            jw.WritePropertyName("lon");
+                                            if (player.Location != null)
+                                            {
+                                                jw.WriteValue(player.Location.Longitude);
+
+                                            }
+                                            else
+                                            {
+                                                jw.WriteValue(0);
+                                            }
+
+
+                                            //0=health
+                                            //1=stamina
+                                            //2=torpor
+                                            //3=oxygen
+                                            //4=food
+                                            //5=water
+                                            //6=temperature
+                                            //7=weight
+                                            //8=melee damage
+                                            //9=movement speed
+                                            //10=fortitude
+                                            //11=crafting speed
+                                            jw.WritePropertyName("hp");
+                                            jw.WriteValue(player.Stats[0]);
+
+                                            jw.WritePropertyName("stam");
+                                            jw.WriteValue(player.Stats[1]);
+
+                                            jw.WritePropertyName("melee");
+                                            jw.WriteValue(player.Stats[8]);
+
+                                            jw.WritePropertyName("weight");
+                                            jw.WriteValue(player.Stats[7]);
+
+                                            jw.WritePropertyName("speed");
+                                            jw.WriteValue(player.Stats[9]);
+
+                                            jw.WritePropertyName("food");
+                                            jw.WriteValue(player.Stats[4]);
+
+                                            jw.WritePropertyName("water");
+                                            jw.WriteValue(player.Stats[5]);
+
+                                            jw.WritePropertyName("oxy");
+                                            jw.WriteValue(player.Stats[3]);
+
+                                            jw.WritePropertyName("craft");
+                                            jw.WriteValue(player.Stats[11]);
+
+                                            jw.WritePropertyName("fort");
+                                            jw.WriteValue(player.Stats[10]);
+
+                                            jw.WritePropertyName("active");
+                                            jw.WriteValue(player.LastActiveTime);
+
+                                            jw.WritePropertyName("ccc");
+                                            if (player.Location != null)
+                                            {
+                                                jw.WriteValue($"{player.Location.X} {player.Location.Y} {player.Location.Z}");
+                                            }
+                                            else
+                                            {
+                                                jw.WriteValue("");
+                                            }
+
+
+                                            jw.WriteEnd();
                                         }
 
+                                        jw.WriteEndArray();
                                     }
 
                                 }
 
-                                break;
-
-                            case "tamed":
-                                //Tamed
-                                exportFilename = exportFilename.Length > 0 ? exportFilename : Path.Combine(exportFilePath, "ARKViewer_Export_Tamed.json");
-
-                                using (FileStream fs = File.Create(exportFilename))
-                                {
-                                    using (StreamWriter sw = new StreamWriter(fs))
-                                    {
-                                        using (JsonTextWriter jw = new JsonTextWriter(sw))
-                                        {
-
-                                            var creatureList = shouldSort ? gd.TamedCreatures.OrderBy(o => o.ClassName).Cast<ArkTamedCreature>() : gd.TamedCreatures;
-
-                                            jw.WriteStartArray();
-
-                                            foreach (var creature in creatureList)
-                                            {
-
-                                                jw.WriteStartObject();
-                                                jw.WritePropertyName("tribeid");
-                                                jw.WriteValue(creature.TargetingTeam);
-
-                                                jw.WritePropertyName("tribe");
-                                                jw.WriteValue(creature.TribeName);
-
-                                                jw.WritePropertyName("tamer");
-                                                jw.WriteValue(creature.TamerName);
-
-                                                jw.WritePropertyName("imprinter");
-                                                jw.WriteValue(creature.ImprinterName);
-
-
-                                                jw.WritePropertyName("imprint");
-                                                jw.WriteValue(creature.DinoImprintingQuality);
-
-                                                jw.WritePropertyName("creature");
-                                                jw.WriteValue(creature.ClassName);
-
-                                                jw.WritePropertyName("name");
-                                                jw.WriteValue(creature.Name != null ? creature.Name : "");
-
-
-                                                jw.WritePropertyName("sex");
-                                                jw.WriteValue(creature.Gender);
-
-                                                jw.WritePropertyName("base");
-                                                jw.WriteValue(creature.BaseLevel);
-
-
-                                                jw.WritePropertyName("lvl");
-                                                jw.WriteValue(creature.Level);
-
-                                                jw.WritePropertyName("lat");
-                                                if (creature.Location != null && creature.Location.Latitude != null)
-                                                {
-                                                    jw.WriteValue(creature.Location.Latitude);
-                                                }
-                                                else
-                                                {
-                                                    jw.WriteValue(0);
-                                                }
-                                            
-                                                jw.WritePropertyName("lon");
-                                                if (creature.Location != null && creature.Location.Longitude != null)
-                                                {
-                                                    jw.WriteValue(creature.Location.Longitude);
-                                                }
-                                                else
-                                                {
-                                                    jw.WriteValue(0);
-                                                }
-
-                                                jw.WritePropertyName("hp-w");
-                                                jw.WriteValue(creature.BaseStats[0]);
-
-                                                jw.WritePropertyName("stam-w");
-                                                jw.WriteValue(creature.BaseStats[1]);
-
-                                                jw.WritePropertyName("melee-w");
-                                                jw.WriteValue(creature.BaseStats[8]);
-
-                                                jw.WritePropertyName("weight-w");
-                                                jw.WriteValue(creature.BaseStats[7]);
-
-                                                jw.WritePropertyName("speed-w");
-                                                jw.WriteValue(creature.BaseStats[9]);
-
-                                                jw.WritePropertyName("food-w");
-                                                jw.WriteValue(creature.BaseStats[4]);
-
-                                                jw.WritePropertyName("oxy-w");
-                                                jw.WriteValue(creature.BaseStats[3]);
-
-                                                jw.WritePropertyName("craft-w");
-                                                jw.WriteValue(creature.BaseStats[11]);
-
-                                                jw.WritePropertyName("hp-t");
-                                                jw.WriteValue(creature.TamedStats[0]);
-
-                                                jw.WritePropertyName("stam-t");
-                                                jw.WriteValue(creature.TamedStats[1]);
-
-                                                jw.WritePropertyName("melee-t");
-                                                jw.WriteValue(creature.TamedStats[8]);
-
-                                                jw.WritePropertyName("weight-t");
-                                                jw.WriteValue(creature.TamedStats[7]);
-
-                                                jw.WritePropertyName("speed-t");
-                                                jw.WriteValue(creature.TamedStats[9]);
-
-                                                jw.WritePropertyName("food-t");
-                                                jw.WriteValue(creature.TamedStats[4]);
-
-                                                jw.WritePropertyName("oxy-t");
-                                                jw.WriteValue(creature.TamedStats[3]);
-
-                                                jw.WritePropertyName("craft-t");
-                                                jw.WriteValue(creature.TamedStats[11]);
-
-
-                                                jw.WritePropertyName("c0");
-                                                jw.WriteValue(creature.Colors[0]);
-
-                                                jw.WritePropertyName("c1");
-                                                jw.WriteValue(creature.Colors[1]);
-
-                                                jw.WritePropertyName("c2");
-                                                jw.WriteValue(creature.Colors[2]);
-
-                                                jw.WritePropertyName("c3");
-                                                jw.WriteValue(creature.Colors[3]);
-
-                                                jw.WritePropertyName("c4");
-                                                jw.WriteValue(creature.Colors[4]);
-
-                                                jw.WritePropertyName("c5");
-                                                jw.WriteValue(creature.Colors[5]);
-
-                                                jw.WritePropertyName("mut-f");
-                                                jw.WriteValue(creature.RandomMutationsFemale);
-
-                                                jw.WritePropertyName("mut-m");
-                                                jw.WriteValue(creature.RandomMutationsMale);
-
-                                                jw.WritePropertyName("cryo");
-                                                jw.WriteValue(creature.IsCryo);
-
-                                                jw.WritePropertyName("viv");
-                                                jw.WriteValue(creature.IsVivarium);
-
-                                                jw.WritePropertyName("ccc");
-                                                if (creature.Location != null)
-                                                {
-                                                    jw.WriteValue($"{creature.Location.X} {creature.Location.Y} {creature.Location.Z}");
-                                                }
-                                                else
-                                                {
-                                                    jw.WriteValue("");
-                                                }
-
-                                                jw.WriteEnd();
-                                            }
-
-                                            jw.WriteEndArray();
-                                        }
-
-                                    }
-
-                                }
-
-                                break;
-
-                            case "structures":
-                                //Structures
-                                exportFilename = exportFilename.Length > 0 ? exportFilename : Path.Combine(exportFilePath, "ARKViewer_Export_Structures.json");
-
-                                //Player, Tribe, Structure, Lat, Lon
-                                using (FileStream fs = File.Create(exportFilename))
-                                {
-                                    using (StreamWriter sw = new StreamWriter(fs))
-                                    {
-                                        using (JsonTextWriter jw = new JsonTextWriter(sw))
-                                        {
-                                            jw.WriteStartArray();
-
-                                            foreach (var structure in gd.Structures)
-                                            {
-                                                jw.WriteStartObject();
-
-                                                jw.WritePropertyName("tribeid");
-                                                jw.WriteValue(structure.TargetingTeam.GetValueOrDefault(0));
-
-                                                jw.WritePropertyName("playerid");
-                                                if(structure.OwningPlayerId == structure.TargetingTeam.GetValueOrDefault(0))
-                                                {
-                                                    jw.WriteValue(0);
-                                                }
-                                                else
-                                                {
-                                                    jw.WriteValue(structure.OwningPlayerId.GetValueOrDefault(0));
-                                                }
-                                            
-
-                                                jw.WritePropertyName("tribe");
-                                                if(allTribes.Count(t=>t.TribeId == structure.TargetingTeam.GetValueOrDefault(0)) > 0)
-                                                {
-                                                    jw.WriteValue(allTribes.First(t=>t.TribeId == structure.TargetingTeam.GetValueOrDefault(0)).TribeName);
-                                                }
-                                                else
-                                                {
-                                                    jw.WriteValue("");
-                                                }
-                                            
-
-                                                jw.WritePropertyName("player");
-                                                jw.WriteValue(structure.OwningPlayerName=="null"?"":structure.OwningPlayerName);
-
-                                                jw.WritePropertyName("struct");
-                                                jw.WriteValue(structure.ClassName);
-
-                                                jw.WritePropertyName("lat");
-                                                if(structure.Location!=null && structure.Location.Latitude != null)
-                                                {
-                                                    jw.WriteValue(structure.Location.Latitude);
-                                                }
-                                                else
-                                                {
-                                                    jw.WriteValue(0);
-                                                }
-                                            
-
-                                                jw.WritePropertyName("lon");
-                                                if (structure.Location != null && structure.Location.Longitude!= null)
-                                                {
-                                                    jw.WriteValue(structure.Location.Longitude);
-                                                }
-                                                else
-                                                {
-                                                    jw.WriteValue(0);
-                                                }
-
-                                                jw.WritePropertyName("ccc");
-                                                if(structure.Location != null)
-                                                {
-                                                    jw.WriteValue($"{structure.Location.X} {structure.Location.Y} {structure.Location.Z}");
-                                                }
-                                                else
-                                                {
-                                                    jw.WriteValue("");
-                                                }
-
-
-                                                jw.WriteEnd();
-                                            }
-
-                                            jw.WriteEndArray();
-                                        }
-
-                                    }
-
-                                }
-
-                                break;
-
-                            case "tribes":
-                                //Tribes
-                                exportFilename = exportFilename.Length > 0 ? exportFilename : Path.Combine(exportFilePath, "ARKViewer_Export_Tribes.json");
-
-                                //Id, Name, Players, Tames, Structures, Last Active
-                                using (FileStream fs = File.Create(exportFilename))
-                                {
-                                    using (StreamWriter sw = new StreamWriter(fs))
-                                    {
-                                        using (JsonTextWriter jw = new JsonTextWriter(sw))
-                                        {
-                                            jw.WriteStartArray();
-
-                                            foreach (var playerTribe in allTribes)
-                                            {
-                                                jw.WriteStartObject();
-                       
-                                                jw.WritePropertyName("tribeid");
-                                                jw.WriteValue(playerTribe.TribeId);
-
-                                                jw.WritePropertyName("tribe");
-                                                jw.WriteValue(playerTribe.TribeName);
-
-                                                jw.WritePropertyName("players");
-                                                jw.WriteValue(playerTribe.PlayerCount);
-
-                                                jw.WritePropertyName("tames");
-                                                jw.WriteValue(playerTribe.TameCount);
-
-                                                jw.WritePropertyName("structures");
-                                                jw.WriteValue(playerTribe.StructureCount);
-
-                                                jw.WritePropertyName("active");
-                                                jw.WriteValue(playerTribe.LastActive);
-
-
-                                                jw.WriteEnd();
-                                            }
-
-                                            jw.WriteEndArray();
-                                        }
-
-                                    }
-
-                                }
-                                break;
-
-                            case "players":
-                                //Players
-                                exportFilename = exportFilename.Length > 0 ? exportFilename : Path.Combine(exportFilePath, "ARKViewer_Export_Players.json");
-
-                                //Id, Name, Tribe, Sex, Lvl, Lat, Lon, HP, Stam, Melee, Weight, Speed, Food, Water, Oxygen, Crafting, Fortitude, Steam, Last Online
-                                using (FileStream fs = File.Create(exportFilename))
-                                {
-                                    using (StreamWriter sw = new StreamWriter(fs))
-                                    {
-                                        using (JsonTextWriter jw = new JsonTextWriter(sw))
-                                        {
-                                            jw.WriteStartArray();
-
-                                            foreach (var player in gd.Players)
-                                            {
-                                                jw.WriteStartObject();
-
-                                                jw.WritePropertyName("playerid");
-                                                jw.WriteValue(player.Id);
-
-                                                jw.WritePropertyName("steam");
-                                                jw.WriteValue(player.Name);
-
-                                                jw.WritePropertyName("name");
-                                                jw.WriteValue(player.CharacterName);
-
-                                                jw.WritePropertyName("tribeid");
-                                                jw.WriteValue(player.TribeId);
-
-                                                jw.WritePropertyName("tribe");
-                                                if (player.Tribe != null && player.Tribe.Name!=null)
-                                                {
-                                                    jw.WriteValue(player.Tribe.Name);
-                                                }
-                                                else 
-                                                {
-                                                    jw.WriteValue("");
-                                                }
-
-                                                jw.WritePropertyName("sex");
-                                                jw.WriteValue(player.Gender);
-
-                                                jw.WritePropertyName("lvl");
-                                                jw.WriteValue(player.CharacterLevel);
-
-                                                jw.WritePropertyName("lat");
-                                                if (player.Location != null)
-                                                {
-                                                    jw.WriteValue(player.Location.Latitude);
-                                                }
-                                                else
-                                                {
-                                                    jw.WriteValue(0);
-                                                }
-
-                                                jw.WritePropertyName("lon");
-                                                if (player.Location != null)
-                                                {
-                                                    jw.WriteValue(player.Location.Longitude);
-
-                                                }
-                                                else
-                                                {
-                                                    jw.WriteValue(0);
-                                                }
-
-
-                                                //0=health
-                                                //1=stamina
-                                                //2=torpor
-                                                //3=oxygen
-                                                //4=food
-                                                //5=water
-                                                //6=temperature
-                                                //7=weight
-                                                //8=melee damage
-                                                //9=movement speed
-                                                //10=fortitude
-                                                //11=crafting speed
-                                                jw.WritePropertyName("hp");
-                                                jw.WriteValue(player.Stats[0]);
-
-                                                jw.WritePropertyName("stam");
-                                                jw.WriteValue(player.Stats[1]);
-
-                                                jw.WritePropertyName("melee");
-                                                jw.WriteValue(player.Stats[8]);
-
-                                                jw.WritePropertyName("weight");
-                                                jw.WriteValue(player.Stats[7]);
-
-                                                jw.WritePropertyName("speed");
-                                                jw.WriteValue(player.Stats[9]);
-
-                                                jw.WritePropertyName("food");
-                                                jw.WriteValue(player.Stats[4]);
-
-                                                jw.WritePropertyName("water");
-                                                jw.WriteValue(player.Stats[5]);
-
-                                                jw.WritePropertyName("oxy");
-                                                jw.WriteValue(player.Stats[3]);
-
-                                                jw.WritePropertyName("craft");
-                                                jw.WriteValue(player.Stats[11]);
-
-                                                jw.WritePropertyName("fort");
-                                                jw.WriteValue(player.Stats[10]);
-
-                                                jw.WritePropertyName("active");
-                                                jw.WriteValue(player.LastActiveTime);
-
-                                                jw.WritePropertyName("ccc");
-                                                if (player.Location != null)
-                                                {
-                                                    jw.WriteValue($"{player.Location.X} {player.Location.Y} {player.Location.Z}");
-                                                }
-                                                else
-                                                {
-                                                    jw.WriteValue("");
-                                                }
-
-
-                                                jw.WriteEnd();
-                                            }
-
-                                            jw.WriteEndArray();
-                                        }
-
-                                    }
-
-                                }
-                                break;
+                            }
 
                         }
 
