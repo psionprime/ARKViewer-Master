@@ -31,7 +31,7 @@ namespace ARKViewer
             ProgramConfig = new ViewerConfiguration();
 
             //support quoted command line arguments which doesn't seem to be supported with Environment.GetCommandLineArgs() 
-            string[] commandArguments = Regex.Split(Environment.CommandLine, " (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
+            string[] commandArguments = Regex.Split(Environment.CommandLine.Trim(), " (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
 
             if (commandArguments != null && commandArguments.Length > 1)
             {
@@ -264,6 +264,9 @@ namespace ARKViewer
                                         {
                                             jw.WriteStartObject();
 
+                                            jw.WritePropertyName("id");
+                                            jw.WriteValue(creature.Id);
+
                                             jw.WritePropertyName("creature");
                                             jw.WriteValue(creature.ClassName);
 
@@ -378,6 +381,9 @@ namespace ARKViewer
                                         {
 
                                             jw.WriteStartObject();
+                                            jw.WritePropertyName("id");
+                                            jw.WriteValue(creature.Id);
+
                                             jw.WritePropertyName("tribeid");
                                             jw.WriteValue(creature.TargetingTeam);
 

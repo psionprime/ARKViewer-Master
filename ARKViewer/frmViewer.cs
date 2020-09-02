@@ -20,6 +20,7 @@ using FluentFTP;
 using System.Threading.Tasks;
 using System.Collections.Concurrent;
 
+
 namespace ARKViewer
 {
     public partial class frmViewer : Form
@@ -225,8 +226,9 @@ namespace ARKViewer
 
                     gd.ApplyPreviousUpdate();
 
-                    lblMapDate.Text = File.GetLastWriteTime(saveFilename).ToString("dd MMM yyyy - HH:mm");
+                    var test = gd.SaveState.GameTime;
 
+                    lblMapDate.Text = File.GetLastWriteTime(saveFilename).ToString("dd MMM yyyy - HH:mm") ;
 
                     //var tamerTribes = gd.TamedCreatures.Where(s=>s.TribeName!=null).Select(s => new TribeMap() { TribeId = s.TargetingTeam,  TribeName = s.TribeName}).ToList();
                     if (gd.Structures != null && gd.Structures.Count() > 0)
@@ -1585,6 +1587,11 @@ namespace ARKViewer
                 case "crystalisles":
                     originalImage = new Bitmap(ARKViewer.Properties.Resources.map_crystalisles, new Size(1024, 1024));
                     break;
+                case "tunguska_p":
+
+                    originalImage = new Bitmap(ARKViewer.Properties.Resources.map_tunguska, new Size(1024, 1024));
+                    break;
+
 
                 case "genesis":
                     originalImage = new Bitmap(ARKViewer.Properties.Resources.map_genesis, new Size(1024, 1024));
@@ -1618,7 +1625,8 @@ namespace ARKViewer
                     { "CrystalIsles", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) },
                     { "Genesis", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) },
                     { "AstralARK", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) },
-                    { "Hope", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) }
+                    { "Hope", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) },
+                    { "Tunguska", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) }
                 };
 
 
@@ -2763,6 +2771,8 @@ namespace ARKViewer
                     item.SubItems.Add(detail.RandomMutationsFemale.ToString());
                     item.SubItems.Add(detail.RandomMutationsMale.ToString());
 
+                    item.SubItems.Add(detail.Id.ToString());
+
 
                     if (detail.Id == selectedId)
                     {
@@ -2962,6 +2972,7 @@ namespace ARKViewer
                         item.SubItems[19].ForeColor = selectedColor.Color;
                     }
 
+                    item.SubItems.Add(detail.Id.ToString());
 
                     if (detail.Id == selectedId)
                     {
@@ -3480,7 +3491,9 @@ namespace ARKViewer
                     { "Ragnarok", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) },
                     { "Valguero_P", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) },
                     { "CrystalIsles", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) },
-                    { "Genesis", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) }
+                    { "Genesis", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) },
+                    { "Tunguska", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) }
+
                 };
 
                 decimal markerX = 0m;
@@ -3603,7 +3616,8 @@ namespace ARKViewer
                     { "Ragnarok", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) },
                     { "Valguero_P", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) },
                     { "CrystalIsles", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) },
-                    { "Genesis", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) }
+                    { "Genesis", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) },
+                    { "Tunguska", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) }
                 };
 
                 decimal markerX = 0m;

@@ -153,6 +153,7 @@
             this.lvwTameDetail_Food = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lvwTameDetail_Oxygen = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lvwTameDetail_Craft = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lvwTameDetail_Server = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lvwTameDetail_Tamer = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lvwTameDetail_Imprinter = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lvwTameDetail_Imprint = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -251,7 +252,8 @@
             this.chkApplyFilterMarkers = new System.Windows.Forms.CheckBox();
             this.lblStatus = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.lvwTameDetail_Server = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lvwWildDetail_Id = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lvwTameDetail_Id = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.mnuContext.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picMap)).BeginInit();
             this.pnlMap.SuspendLayout();
@@ -314,7 +316,8 @@
             this.lvwWildDetail_Colour3,
             this.lvwWildDetail_Colour4,
             this.lvwWildDetail_Colour5,
-            this.lvwWildDetail_Colour6});
+            this.lvwWildDetail_Colour6,
+            this.lvwWildDetail_Id});
             this.lvwWildDetail.ContextMenuStrip = this.mnuContext;
             this.lvwWildDetail.FullRowSelect = true;
             this.lvwWildDetail.HideSelection = false;
@@ -1552,7 +1555,8 @@
             this.lvwTameDetail_Colour5,
             this.lvwTameDetail_Colour6,
             this.lvwTameDetail_MutationsFemale,
-            this.lvwTameDetail_MutationsMale});
+            this.lvwTameDetail_MutationsMale,
+            this.lvwTameDetail_Id});
             this.lvwTameDetail.ContextMenuStrip = this.mnuContext;
             this.lvwTameDetail.FullRowSelect = true;
             this.lvwTameDetail.HideSelection = false;
@@ -1640,6 +1644,11 @@
             // 
             this.lvwTameDetail_Craft.Text = "Craft";
             this.lvwTameDetail_Craft.Width = 50;
+            // 
+            // lvwTameDetail_Server
+            // 
+            this.lvwTameDetail_Server.Text = "Server";
+            this.lvwTameDetail_Server.Width = 150;
             // 
             // lvwTameDetail_Tamer
             // 
@@ -2646,10 +2655,15 @@
             this.splitContainer1.TabIndex = 23;
             this.splitContainer1.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitContainer1_SplitterMoved);
             // 
-            // lvwTameDetail_Server
+            // lvwWildDetail_Id
             // 
-            this.lvwTameDetail_Server.Text = "Server";
-            this.lvwTameDetail_Server.Width = 150;
+            this.lvwWildDetail_Id.Text = "Id";
+            this.lvwWildDetail_Id.Width = 0;
+            // 
+            // lvwTameDetail_Id
+            // 
+            this.lvwTameDetail_Id.Text = "Id";
+            this.lvwTameDetail_Id.Width = 0;
             // 
             // frmViewer
             // 
@@ -2936,6 +2950,8 @@
         private System.Windows.Forms.ColumnHeader lvwTameDetail_MutationsFemale;
         private System.Windows.Forms.ColumnHeader lvwTameDetail_MutationsMale;
         private System.Windows.Forms.ColumnHeader lvwTameDetail_Server;
+        private System.Windows.Forms.ColumnHeader lvwWildDetail_Id;
+        private System.Windows.Forms.ColumnHeader lvwTameDetail_Id;
     }
 }
 
