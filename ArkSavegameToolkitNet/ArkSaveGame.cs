@@ -125,8 +125,6 @@ namespace ArkSavegameToolkitNet
         {
             readBinary(_archive, _mmf);
             bool returnValue  = LoadCryopodEntries();
-
-
             return returnValue;
         }
 
@@ -190,10 +188,10 @@ namespace ArkSavegameToolkitNet
                 }
             };
 
-  
+
             //Now parse out cryo creature data
             var cryoPodEntries = Objects.Where(WhereEmptyCryopodHasCustomItemDataBytesArrayBytes).ToList();
-
+            
             nextObjectId = Objects.Count();
 
             if (cryoPodEntries != null && cryoPodEntries.Count() > 0)
@@ -239,9 +237,10 @@ namespace ArkSavegameToolkitNet
                             Objects.Add(result.Item2);
                         }
 
+
+
                     }
                 };
-
 
             }
 

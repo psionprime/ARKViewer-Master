@@ -19,7 +19,7 @@ using Timer = System.Windows.Forms.Timer;
 using FluentFTP;
 using System.Threading.Tasks;
 using System.Collections.Concurrent;
-
+using System.CodeDom;
 
 namespace ARKViewer
 {
@@ -225,8 +225,6 @@ namespace ARKViewer
                 {
 
                     gd.ApplyPreviousUpdate();
-
-                    var test = gd.SaveState.GameTime;
 
                     lblMapDate.Text = File.GetLastWriteTime(saveFilename).ToString("dd MMM yyyy - HH:mm") ;
 
@@ -1592,6 +1590,10 @@ namespace ARKViewer
                     originalImage = new Bitmap(ARKViewer.Properties.Resources.map_tunguska, new Size(1024, 1024));
                     break;
 
+                case "caballus_p":
+
+                    originalImage = new Bitmap(ARKViewer.Properties.Resources.map_caballus, new Size(1024, 1024));
+                    break;
 
                 case "genesis":
                     originalImage = new Bitmap(ARKViewer.Properties.Resources.map_genesis, new Size(1024, 1024));
@@ -1626,7 +1628,8 @@ namespace ARKViewer
                     { "Genesis", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) },
                     { "AstralARK", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) },
                     { "Hope", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) },
-                    { "Tunguska", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) }
+                    { "Tunguska", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) },
+                    { "Caballus", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) }
                 };
 
 
@@ -2257,90 +2260,108 @@ namespace ARKViewer
                 case "tpgTribes":
                     if(lvwTribes.SelectedItems.Count > 0)
                     {
-                        TribeMap selectedTribe = (TribeMap)lvwTribes.SelectedItems[0].Tag;
+                        
 
                         if (chkTribeTames.Checked)
                         {
-                            //gold
-                            var tribeTames = gd.NoRafts.Where(s => s.TargetingTeam == selectedTribe.TribeId);
-                            if (tribeTames.Count() > 0)
+                            foreach(ListViewItem selectedItem in lvwTribes.SelectedItems)
                             {
-                                foreach (var structure in tribeTames)
+                                TribeMap selectedTribe = (TribeMap)selectedItem.Tag;
+                                //gold
+                                var tribeTames = gd.NoRafts.Where(s => s.TargetingTeam == selectedTribe.TribeId);
+                                if (tribeTames.Count() > 0)
                                 {
-                                    if (structure.Location != null)
+                                    foreach (var structure in tribeTames)
                                     {
-                                        float markerSize = 10f;
+                                        if (structure.Location != null)
+                                        {
+                                            float markerSize = 10f;
 
-                                        markerX = ((decimal)Math.Round(structure.Location.Longitude.Value, 2) - mapvals.Item4) * mapvals.Item1 / (mapvals.Item5 - mapvals.Item4);
-                                        markerY = ((decimal)Math.Round(structure.Location.Latitude.Value, 2) - mapvals.Item3) * mapvals.Item2 / (mapvals.Item6 - mapvals.Item3);
-                                        graphics.FillEllipse(new SolidBrush(Color.Gold), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
+                                            markerX = ((decimal)Math.Round(structure.Location.Longitude.Value, 2) - mapvals.Item4) * mapvals.Item1 / (mapvals.Item5 - mapvals.Item4);
+                                            markerY = ((decimal)Math.Round(structure.Location.Latitude.Value, 2) - mapvals.Item3) * mapvals.Item2 / (mapvals.Item6 - mapvals.Item3);
+                                            graphics.FillEllipse(new SolidBrush(Color.Gold), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
 
 
-                                        Color borderColour = Color.Black;
-                                        int borderSize = 1;
-                                        graphics.DrawEllipse(new Pen(borderColour, borderSize), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
+                                            Color borderColour = Color.Black;
+                                            int borderSize = 1;
+                                            graphics.DrawEllipse(new Pen(borderColour, borderSize), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
+                                        }
+
+
                                     }
-
-
                                 }
                             }
+                            
 
                         }
 
                         if (chkTribeStructures.Checked)
                         {
                             //pale green
-                            var tribeStructures = gd.Structures.Where(s => s.TargetingTeam.GetValueOrDefault(0) == selectedTribe.TribeId);
-                            if (tribeStructures.Count() > 0)
+                            foreach (ListViewItem selectedItem in lvwTribes.SelectedItems)
                             {
-                                foreach (var structure in tribeStructures)
+                                TribeMap selectedTribe = (TribeMap)selectedItem.Tag;
+                                
+                                var tribeStructures = gd.Structures.Where(s => s.TargetingTeam.GetValueOrDefault(0) == selectedTribe.TribeId);
+                                if (tribeStructures.Count() > 0)
                                 {
-                                    if (structure.Location != null)
+                                    foreach (var structure in tribeStructures)
                                     {
-                                        float markerSize = 10f;
+                                        if (structure.Location != null)
+                                        {
+                                            float markerSize = 10f;
 
-                                        markerX = ((decimal)Math.Round(structure.Location.Longitude.Value, 2) - mapvals.Item4) * mapvals.Item1 / (mapvals.Item5 - mapvals.Item4);
-                                        markerY = ((decimal)Math.Round(structure.Location.Latitude.Value, 2) - mapvals.Item3) * mapvals.Item2 / (mapvals.Item6 - mapvals.Item3);
-                                        graphics.FillEllipse(new SolidBrush(Color.PaleGreen), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
+                                            markerX = ((decimal)Math.Round(structure.Location.Longitude.Value, 2) - mapvals.Item4) * mapvals.Item1 / (mapvals.Item5 - mapvals.Item4);
+                                            markerY = ((decimal)Math.Round(structure.Location.Latitude.Value, 2) - mapvals.Item3) * mapvals.Item2 / (mapvals.Item6 - mapvals.Item3);
+                                            graphics.FillEllipse(new SolidBrush(Color.PaleGreen), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
 
 
-                                        Color borderColour = Color.Black;
-                                        int borderSize = 1;
-                                        graphics.DrawEllipse(new Pen(borderColour, borderSize), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
+                                            Color borderColour = Color.Black;
+                                            int borderSize = 1;
+                                            graphics.DrawEllipse(new Pen(borderColour, borderSize), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
+                                        }
+
+
                                     }
-
-
                                 }
                             }
+                            
 
                         }
 
                         if (chkTribePlayers.Checked)
                         {
-                            var tribePlayers = gd.Players.Where(p => p.TribeId.GetValueOrDefault(0) == selectedTribe.TribeId);
-                            if (tribePlayers != null && tribePlayers.Count() > 0)
+                            foreach (ListViewItem selectedItem in lvwTribes.SelectedItems)
                             {
-                                foreach (var player in tribePlayers)
+                                TribeMap selectedTribe = (TribeMap)selectedItem.Tag;
+
+                                var tribePlayers = gd.Players.Where(p => p.TribeId.GetValueOrDefault(0) == selectedTribe.TribeId);
+                                if (tribePlayers != null && tribePlayers.Count() > 0)
                                 {
-                                    if (player.Location != null)
+                                    foreach (var player in tribePlayers)
                                     {
-                                        markerX = ((decimal)Math.Round(player.Location.Longitude.Value, 2) - mapvals.Item4) * mapvals.Item1 / (mapvals.Item5 - mapvals.Item4);
-                                        markerY = ((decimal)Math.Round(player.Location.Latitude.Value, 2) - mapvals.Item3) * mapvals.Item2 / (mapvals.Item6 - mapvals.Item3);
-                                        graphics.FillEllipse(new SolidBrush(Color.FloralWhite), (float)markerX - 15.0f, (float)markerY - 15.0f, 30, 30);
-
-                                        Color borderColour = Color.Blue;
-                                        int borderSize = 1;
-                                        graphics.DrawEllipse(new Pen(borderColour, borderSize), (float)markerX - 15.0f, (float)markerY - 15.0f, 30, 30);
-
-                                        Bitmap playerMarker = new Bitmap(ARKViewer.Properties.Resources.marker_28, new Size(20, 20));
-                                        if (player.Gender == ArkPlayerGender.Female)
+                                        if (player.Location != null)
                                         {
-                                            playerMarker = new Bitmap(ARKViewer.Properties.Resources.marker_29, new Size(20, 20));
+                                            markerX = ((decimal)Math.Round(player.Location.Longitude.Value, 2) - mapvals.Item4) * mapvals.Item1 / (mapvals.Item5 - mapvals.Item4);
+                                            markerY = ((decimal)Math.Round(player.Location.Latitude.Value, 2) - mapvals.Item3) * mapvals.Item2 / (mapvals.Item6 - mapvals.Item3);
+                                            graphics.FillEllipse(new SolidBrush(Color.FloralWhite), (float)markerX - 15.0f, (float)markerY - 15.0f, 30, 30);
+
+                                            Color borderColour = Color.Blue;
+                                            int borderSize = 1;
+                                            graphics.DrawEllipse(new Pen(borderColour, borderSize), (float)markerX - 15.0f, (float)markerY - 15.0f, 30, 30);
+
+                                            Bitmap playerMarker = new Bitmap(ARKViewer.Properties.Resources.marker_28, new Size(20, 20));
+                                            if (player.Gender == ArkPlayerGender.Female)
+                                            {
+                                                playerMarker = new Bitmap(ARKViewer.Properties.Resources.marker_29, new Size(20, 20));
+                                            }
+                                            graphics.DrawImage(playerMarker, (float)markerX - 10.0f, (float)markerY - 10.0f);
                                         }
-                                        graphics.DrawImage(playerMarker, (float)markerX - 10.0f, (float)markerY - 10.0f);
                                     }
                                 }
                             }
+                            
+                            
                         }
 
                     }
@@ -2717,8 +2738,8 @@ namespace ARKViewer
                     ColourMap selectedColor = Program.ProgramConfig.ColourMap.Where(c => c.Id == (int)detail.Colors[0]).FirstOrDefault();
                     if (selectedColor != null && selectedColor.Hex.Length > 0)
                     {
-                        item.SubItems[19].BackColor = selectedColor.Color;
-                        item.SubItems[19].ForeColor = selectedColor.Color;
+                        item.SubItems[20].BackColor = selectedColor.Color;
+                        item.SubItems[20].ForeColor = selectedColor.Color;
                     }
 
                     colourCheck = (int)detail.Colors[1];
@@ -2726,8 +2747,8 @@ namespace ARKViewer
                     selectedColor = Program.ProgramConfig.ColourMap.Where(c => c.Id == (int)detail.Colors[1]).FirstOrDefault();
                     if (selectedColor != null && selectedColor.Hex.Length > 0)
                     {
-                        item.SubItems[20].BackColor = selectedColor.Color;
-                        item.SubItems[20].ForeColor = selectedColor.Color;
+                        item.SubItems[21].BackColor = selectedColor.Color;
+                        item.SubItems[21].ForeColor = selectedColor.Color;
                     }
 
                     colourCheck = (int)detail.Colors[2];
@@ -2735,8 +2756,8 @@ namespace ARKViewer
                     selectedColor = Program.ProgramConfig.ColourMap.Where(c => c.Id == (int)detail.Colors[2]).FirstOrDefault();
                     if (selectedColor != null && selectedColor.Hex.Length > 0)
                     {
-                        item.SubItems[21].BackColor = selectedColor.Color;
-                        item.SubItems[21].ForeColor = selectedColor.Color;
+                        item.SubItems[22].BackColor = selectedColor.Color;
+                        item.SubItems[22].ForeColor = selectedColor.Color;
                     }
 
                     colourCheck = (int)detail.Colors[3];
@@ -2744,8 +2765,8 @@ namespace ARKViewer
                     selectedColor = Program.ProgramConfig.ColourMap.Where(c => c.Id == (int)detail.Colors[3]).FirstOrDefault();
                     if (selectedColor != null && selectedColor.Hex.Length > 0)
                     {
-                        item.SubItems[22].BackColor = selectedColor.Color;
-                        item.SubItems[22].ForeColor = selectedColor.Color;
+                        item.SubItems[23].BackColor = selectedColor.Color;
+                        item.SubItems[23].ForeColor = selectedColor.Color;
                     }
 
                     colourCheck = (int)detail.Colors[4];
@@ -2753,8 +2774,8 @@ namespace ARKViewer
                     selectedColor = Program.ProgramConfig.ColourMap.Where(c => c.Id == (int)detail.Colors[4]).FirstOrDefault();
                     if (selectedColor != null && selectedColor.Hex.Length > 0)
                     {
-                        item.SubItems[23].BackColor = selectedColor.Color;
-                        item.SubItems[23].ForeColor = selectedColor.Color;
+                        item.SubItems[24].BackColor = selectedColor.Color;
+                        item.SubItems[24].ForeColor = selectedColor.Color;
                     }
 
                     colourCheck = (int)detail.Colors[5];
@@ -2762,8 +2783,8 @@ namespace ARKViewer
                     selectedColor = Program.ProgramConfig.ColourMap.Where(c => c.Id == (int)detail.Colors[5]).FirstOrDefault();
                     if (selectedColor != null && selectedColor.Hex.Length > 0)
                     {
-                        item.SubItems[24].BackColor = selectedColor.Color;
-                        item.SubItems[24].ForeColor = selectedColor.Color;
+                        item.SubItems[25].BackColor = selectedColor.Color;
+                        item.SubItems[25].ForeColor = selectedColor.Color;
                     }
 
 
@@ -3840,13 +3861,7 @@ namespace ARKViewer
 
         private void lvwPlayers_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (isLoading) return;
-
-            picMap.Image = DrawMap(lastSelectedX, lastSelectedY);
-            btnPlayerInventory.Enabled = lvwPlayers.SelectedItems.Count > 0;
-            btnPlayerTribeLog.Enabled = lvwPlayers.SelectedItems.Count > 0;
-            btnCopyCommandPlayer.Enabled = lvwPlayers.SelectedItems.Count > 0 && cboConsoleCommandsPlayerTribe.SelectedIndex >=0;
-            btnDeletePlayer.Enabled = lvwPlayers.SelectedItems.Count > 0;
+            
 
         }
 
@@ -4570,50 +4585,99 @@ namespace ARKViewer
             if (cboConsoleCommandsPlayerTribe.SelectedItem == null) return;
 
             var commandText = cboConsoleCommandsPlayerTribe.SelectedItem.ToString();
-            if (commandText != null)
+            string commandList = "";
+            
+
+            if (commandText.Contains("<FileCsvList>"))
             {
+                string fileList = "";
+                commandList = commandText;
 
-                ListViewItem selectedItem = lvwPlayers.SelectedItems[0];
-                ArkPlayer selectedPlayer = (ArkPlayer)selectedItem.Tag;
-
-                int selectedPlayerId = selectedPlayer.Id;
-                int selectedTribeId = selectedPlayer.TribeId.GetValueOrDefault(selectedPlayer.Id);
-                string selectedSteamId = selectedPlayer.SteamId;
-
-                commandText = commandText.Replace("<PlayerID>", selectedPlayerId.ToString("f0"));
-                commandText = commandText.Replace("<TribeID>", selectedTribeId.ToString("f0"));
-                commandText = commandText.Replace("<SteamID>", selectedSteamId);
-                commandText = commandText.Replace("<PlayerName>", selectedPlayer.Name);
-                commandText = commandText.Replace("<CharacterName>", selectedPlayer.CharacterName);
-                if (selectedPlayer.Tribe != null)
+                foreach (ListViewItem selectedItem in lvwTribes.SelectedItems)
                 {
-                    commandText = commandText.Replace("<TribeName>", selectedPlayer.Tribe.Name);
+                    TribeMap selectedTribe = (TribeMap)selectedItem.Tag;
+                    if (fileList.Length > 0)
+                    {
+                        fileList = fileList + " ";
+                    }
+                    fileList = fileList + selectedTribe.TribeId.ToString() + ".arktribe";
                 }
 
-                if (selectedPlayer.Location != null)
-                {
-                    commandText = commandText.Replace("<x>", System.FormattableString.Invariant($"{selectedPlayer.Location.X:0.00}"));
-                    commandText = commandText.Replace("<y>", System.FormattableString.Invariant($"{selectedPlayer.Location.Y:0.00}"));
-                    commandText = commandText.Replace("<z>", System.FormattableString.Invariant($"{selectedPlayer.Location.Z + 250:0.00}"));
-                }
-
-
+                commandList = commandList.Replace("<FileCsvList>", fileList);
                 switch (Program.ProgramConfig.CommandPrefix)
                 {
                     case 1:
-                        commandText = $"admincheat {commandText}";
+                        commandList = $"admincheat {commandList}";
 
                         break;
                     case 2:
-                        commandText = $"cheat {commandText}";
+                        commandList = $"cheat {commandList}";
                         break;
                 }
 
-                Clipboard.SetText(commandText);
-                MessageBox.Show($"Command copied to the clipboard:\n\n{commandText}", "Command Copied", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+
+                foreach(ListViewItem selectedItem in lvwPlayers.SelectedItems)
+                {
+                    ArkPlayer selectedPlayer = (ArkPlayer)selectedItem.Tag;
+
+                    int selectedPlayerId = selectedPlayer.Id;
+                    int selectedTribeId = selectedPlayer.TribeId.GetValueOrDefault(selectedPlayer.Id);
+                    string selectedSteamId = selectedPlayer.SteamId;
+
+                    commandText = cboTribeCopyCommand.SelectedItem.ToString();
+
+                    commandText = commandText.Replace("<PlayerID>", selectedPlayerId.ToString("f0"));
+                    commandText = commandText.Replace("<TribeID>", selectedTribeId.ToString("f0"));
+                    commandText = commandText.Replace("<SteamID>", selectedSteamId);
+                    commandText = commandText.Replace("<PlayerName>", selectedPlayer.Name);
+                    commandText = commandText.Replace("<CharacterName>", selectedPlayer.CharacterName);
+                    if (selectedPlayer.Tribe != null)
+                    {
+                        commandText = commandText.Replace("<TribeName>", selectedPlayer.Tribe.Name);
+                    }
+
+                    if (selectedPlayer.Location != null)
+                    {
+                        commandText = commandText.Replace("<x>", System.FormattableString.Invariant($"{selectedPlayer.Location.X:0.00}"));
+                        commandText = commandText.Replace("<y>", System.FormattableString.Invariant($"{selectedPlayer.Location.Y:0.00}"));
+                        commandText = commandText.Replace("<z>", System.FormattableString.Invariant($"{selectedPlayer.Location.Z + 250:0.00}"));
+                    }
+
+
+                    switch (Program.ProgramConfig.CommandPrefix)
+                    {
+                        case 1:
+                            commandText = $"admincheat {commandText}";
+
+                            break;
+                        case 2:
+                            commandText = $"cheat {commandText}";
+                            break;
+                    }
+
+                    commandText = commandText.Trim();
+
+                    if (commandList.Length > 0)
+                    {
+                        commandList += $"|{commandText}";
+                    }
+                    else
+                    {
+                        commandList = commandText;
+                    }
+                }
+                
+
 
             }
 
+            Clipboard.SetText(commandList);
+
+            lblStatus.Text = $"Command copied to the clipboard:\n\n{commandText}";
+            lblStatus.Refresh();
         }
 
         private void btnCopyCommandStructure_Click(object sender, EventArgs e)
@@ -4978,7 +5042,9 @@ namespace ARKViewer
                 }
 
                 Clipboard.SetText(commandText);
-                MessageBox.Show($"Command copied to the clipboard:\n\n{commandText}", "Command Copied", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                lblStatus.Text = $"Command copied to the clipboard:\n\n{commandText}";
+                lblStatus.Refresh();
 
             }
         }
@@ -5020,7 +5086,9 @@ namespace ARKViewer
                 }
 
                 Clipboard.SetText(commandText);
-                MessageBox.Show($"Command copied to the clipboard:\n\n{commandText}", "Command Copied", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                lblStatus.Text = $"Command copied to the clipboard:\n\n{commandText}";
+                lblStatus.Refresh();
 
             }
         }
@@ -5038,6 +5106,16 @@ namespace ARKViewer
                 mnuContext_PlayerId.Visible = true;
                 mnuContext_SteamId.Visible = true;
                 mnuContext_TribeId.Visible = false;
+            }
+            else
+            {
+                if (isLoading) return;
+
+                picMap.Image = DrawMap(lastSelectedX, lastSelectedY);
+                btnPlayerInventory.Enabled = lvwPlayers.SelectedItems.Count == 1;
+                btnPlayerTribeLog.Enabled = lvwPlayers.SelectedItems.Count == 1;
+                btnCopyCommandPlayer.Enabled = lvwPlayers.SelectedItems.Count > 0 && cboConsoleCommandsPlayerTribe.SelectedIndex >= 0;
+                btnDeletePlayer.Enabled = lvwPlayers.SelectedItems.Count == 1;
             }
         }
 
@@ -5231,7 +5309,9 @@ namespace ARKViewer
                 }
 
                 Clipboard.SetText(commandText);
-                MessageBox.Show($"Command copied to the clipboard:\n\n{commandText}", "Command Copied", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                lblStatus.Text = $"Command copied to the clipboard:\n\n{commandText}";
+                lblStatus.Refresh();
 
             }
         }
@@ -5253,21 +5333,7 @@ namespace ARKViewer
 
         private void lvwTribes_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (gd == null) return;
-
-            btnTribeLog.Enabled = false;
-            btnTribeCopyCommand.Enabled = lvwTribes.SelectedItems.Count > 0;
-
-            if (lvwTribes.SelectedItems.Count == 0) return;
-
-            TribeMap selectedTribe = (TribeMap)lvwTribes.SelectedItems[0].Tag;
-            btnTribeLog.Enabled = selectedTribe.ContainsLog;
-
-            if(tabFeatures.SelectedTab.Name == "tpgTribes")
-            {
-
-                picMap.Image = DrawMap(0, 0);
-            }
+            
 
         }
 
@@ -5378,32 +5444,81 @@ namespace ARKViewer
         {
             if (cboTribeCopyCommand.SelectedItem == null) return;
             if (lvwTribes.SelectedItems.Count == 0) return;
-
+            
+            string commandList = "";
             var commandText = cboTribeCopyCommand.SelectedItem.ToString();
+
             if (commandText != null)
             {
 
-                ListViewItem selectedItem = lvwTribes.SelectedItems[0];
-                TribeMap selectedTribe = (TribeMap)selectedItem.Tag;
-
-
-                commandText = commandText.Replace("<TribeID>", selectedTribe.TribeId.ToString("f0"));
-                commandText = commandText.Replace("<TribeName>", selectedTribe.TribeName);
-
-                switch (Program.ProgramConfig.CommandPrefix)
+                if (commandText.Contains("<FileCsvList>"))
                 {
-                    case 1:
-                        commandText = $"admincheat {commandText}";
+                    commandList = commandText;
+                    string fileList = "";
 
-                        break;
-                    case 2:
-                        commandText = $"cheat {commandText}";
-                        break;
+                    foreach (ListViewItem selectedItem in lvwTribes.SelectedItems)
+                    {
+                        TribeMap selectedTribe = (TribeMap)selectedItem.Tag;
+                        if(fileList.Length > 0)
+                        {
+                            fileList = fileList + " ";
+                        }
+                        fileList = fileList + selectedTribe.TribeId.ToString() + ".arktribe";
+                    }
+
+                    commandList = commandList.Replace("<FileCsvList>", fileList);
+
+                    switch (Program.ProgramConfig.CommandPrefix)
+                    {
+                        case 1:
+                            commandList = $"admincheat {commandList}";
+
+                            break;
+                        case 2:
+                            commandList = $"cheat {commandList}";
+                            break;
+                    }
+
+                }
+                else
+                {
+                    foreach (ListViewItem selectedItem in lvwTribes.SelectedItems)
+                    {
+                        TribeMap selectedTribe = (TribeMap)selectedItem.Tag;
+
+                        commandText = cboTribeCopyCommand.SelectedItem.ToString();
+                        commandText = commandText.Replace("<TribeID>", selectedTribe.TribeId.ToString("f0"));
+                        commandText = commandText.Replace("<TribeName>", selectedTribe.TribeName);
+                        switch (Program.ProgramConfig.CommandPrefix)
+                        {
+                            case 1:
+                                commandText = $"admincheat {commandText}";
+
+                                break;
+                            case 2:
+                                commandText = $"cheat {commandText}";
+                                break;
+                        }
+
+                        commandText = commandText.Trim();
+
+                        if (commandList.Length > 0)
+                        {
+                            commandList += $"|{commandText}";
+                        }
+                        else
+                        {
+                            commandList = commandText;
+                        }
+
+                    }
+
                 }
 
-                Clipboard.SetText(commandText);
-                MessageBox.Show($"Command copied to the clipboard:\n\n{commandText}", "Command Copied", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                Clipboard.SetText(commandList);
+                
+                lblStatus.Text = $"Command copied to the clipboard:\n\n{commandText}";
+                lblStatus.Refresh();
             }
         }
 
@@ -5414,6 +5529,25 @@ namespace ARKViewer
                 mnuContext_PlayerId.Visible = false;
                 mnuContext_SteamId.Visible = false;
                 mnuContext_TribeId.Visible = true;
+            }else
+            {
+                if (gd == null) return;
+
+                btnTribeLog.Enabled = false;
+                btnTribeCopyCommand.Enabled = lvwTribes.SelectedItems.Count > 0;
+
+                if (tabFeatures.SelectedTab.Name == "tpgTribes")
+                {
+
+                    picMap.Image = DrawMap(0, 0);
+                }
+
+                if (lvwTribes.SelectedItems.Count != 1) return;
+
+                TribeMap selectedTribe = (TribeMap)lvwTribes.SelectedItems[0].Tag;
+                btnTribeLog.Enabled = selectedTribe.ContainsLog;
+
+
             }
         }
 

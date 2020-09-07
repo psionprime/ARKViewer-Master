@@ -815,6 +815,7 @@ namespace ARKViewer
 
                         }
 
+                        //success
                         Environment.ExitCode = 0;
                     }
                     catch (Exception ex)
@@ -840,10 +841,19 @@ namespace ARKViewer
                             //couldn't write to error.log
                         }
 
+                        Console.Out.WriteLine($"Error : {ex.Message.ToString()}");
+
+                        //error
                         Environment.ExitCode = -1;
 
                     }
 
+                }
+                else
+                {
+                    //no save file found or inaccessible
+                    Console.Out.WriteLine($"Unable to find or access save game file: {saveFilename}");
+                    Environment.ExitCode = -2;
                 }
 
                 Application.Exit();

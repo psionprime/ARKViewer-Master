@@ -51,6 +51,7 @@
             this.lvwWildDetail_Colour4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lvwWildDetail_Colour5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lvwWildDetail_Colour6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lvwWildDetail_Id = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.mnuContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mnuContext_PlayerId = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuContext_SteamId = new System.Windows.Forms.ToolStripMenuItem();
@@ -166,6 +167,7 @@
             this.lvwTameDetail_Colour6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lvwTameDetail_MutationsFemale = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lvwTameDetail_MutationsMale = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lvwTameDetail_Id = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lblTameTotal = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.lblStats = new System.Windows.Forms.Label();
@@ -252,8 +254,6 @@
             this.chkApplyFilterMarkers = new System.Windows.Forms.CheckBox();
             this.lblStatus = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.lvwWildDetail_Id = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.lvwTameDetail_Id = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.mnuContext.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picMap)).BeginInit();
             this.pnlMap.SuspendLayout();
@@ -431,6 +431,11 @@
             // 
             this.lvwWildDetail_Colour6.Text = "C5";
             this.lvwWildDetail_Colour6.Width = 35;
+            // 
+            // lvwWildDetail_Id
+            // 
+            this.lvwWildDetail_Id.Text = "Id";
+            this.lvwWildDetail_Id.Width = 0;
             // 
             // mnuContext
             // 
@@ -924,12 +929,12 @@
             // 
             this.btnPlayerInventory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnPlayerInventory.Enabled = false;
-            this.btnPlayerInventory.Image = ((System.Drawing.Image)(resources.GetObject("btnPlayerInventory.Image")));
+            this.btnPlayerInventory.Image = global::ARKViewer.Properties.Resources.button_family;
             this.btnPlayerInventory.Location = new System.Drawing.Point(426, 196);
             this.btnPlayerInventory.Name = "btnPlayerInventory";
             this.btnPlayerInventory.Size = new System.Drawing.Size(30, 30);
             this.btnPlayerInventory.TabIndex = 21;
-            this.toolTip1.SetToolTip(this.btnPlayerInventory, "Inventory Data");
+            this.toolTip1.SetToolTip(this.btnPlayerInventory, "Player View");
             this.btnPlayerInventory.UseVisualStyleBackColor = true;
             this.btnPlayerInventory.Click += new System.EventHandler(this.btnPlayerInventory_Click);
             // 
@@ -1109,7 +1114,7 @@
             this.btnTribeLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnTribeLog.Enabled = false;
             this.btnTribeLog.Image = global::ARKViewer.Properties.Resources.button_notepad;
-            this.btnTribeLog.Location = new System.Drawing.Point(388, 197);
+            this.btnTribeLog.Location = new System.Drawing.Point(388, 196);
             this.btnTribeLog.Name = "btnTribeLog";
             this.btnTribeLog.Size = new System.Drawing.Size(30, 30);
             this.btnTribeLog.TabIndex = 29;
@@ -1706,6 +1711,11 @@
             // 
             this.lvwTameDetail_MutationsMale.Text = "Mut (M)";
             // 
+            // lvwTameDetail_Id
+            // 
+            this.lvwTameDetail_Id.Text = "Id";
+            this.lvwTameDetail_Id.Width = 0;
+            // 
             // lblTameTotal
             // 
             this.lblTameTotal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -2040,7 +2050,9 @@
             "RenameTribe \"<TribeName>\" ",
             "TakeTribe <TribeID>",
             "TribeStructureAudit <TribeID>",
-            "TribeDinoAudit  <TribeID>"});
+            "TribeDinoAudit  <TribeID>",
+            "RM <FileCsvList>",
+            "DEL <FileCsvList>"});
             this.cboTribeCopyCommand.Location = new System.Drawing.Point(82, 200);
             this.cboTribeCopyCommand.Name = "cboTribeCopyCommand";
             this.cboTribeCopyCommand.Size = new System.Drawing.Size(262, 21);
@@ -2062,7 +2074,6 @@
             this.lvwTribes.FullRowSelect = true;
             this.lvwTribes.HideSelection = false;
             this.lvwTribes.Location = new System.Drawing.Point(12, 19);
-            this.lvwTribes.MultiSelect = false;
             this.lvwTribes.Name = "lvwTribes";
             this.lvwTribes.Size = new System.Drawing.Size(773, 170);
             this.lvwTribes.TabIndex = 28;
@@ -2181,7 +2192,9 @@
             "TeleportToPlayerName <CharacterName",
             "TribeStructureAudit <TribeID>",
             "TribeDinoAudit  <TribeID>",
-            "UnbanPlayer <SteamID>"});
+            "UnbanPlayer <SteamID>",
+            "RM <FileCsvList>",
+            "DEL <FileCsvList>"});
             this.cboConsoleCommandsPlayerTribe.Location = new System.Drawing.Point(82, 200);
             this.cboConsoleCommandsPlayerTribe.Name = "cboConsoleCommandsPlayerTribe";
             this.cboConsoleCommandsPlayerTribe.Size = new System.Drawing.Size(262, 21);
@@ -2258,7 +2271,6 @@
             this.lvwPlayers.FullRowSelect = true;
             this.lvwPlayers.HideSelection = false;
             this.lvwPlayers.Location = new System.Drawing.Point(12, 52);
-            this.lvwPlayers.MultiSelect = false;
             this.lvwPlayers.Name = "lvwPlayers";
             this.lvwPlayers.Size = new System.Drawing.Size(773, 137);
             this.lvwPlayers.TabIndex = 12;
@@ -2654,16 +2666,6 @@
             this.splitContainer1.SplitterDistance = 830;
             this.splitContainer1.TabIndex = 23;
             this.splitContainer1.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitContainer1_SplitterMoved);
-            // 
-            // lvwWildDetail_Id
-            // 
-            this.lvwWildDetail_Id.Text = "Id";
-            this.lvwWildDetail_Id.Width = 0;
-            // 
-            // lvwTameDetail_Id
-            // 
-            this.lvwTameDetail_Id.Text = "Id";
-            this.lvwTameDetail_Id.Width = 0;
             // 
             // frmViewer
             // 

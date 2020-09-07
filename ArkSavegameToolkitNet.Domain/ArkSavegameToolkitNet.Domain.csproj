@@ -65,6 +65,7 @@
     <Compile Include="ArkGameDataUpdateResult.cs" />
     <Compile Include="ArkItem.cs" />
     <Compile Include="ArkItemTypeGroup.cs" />
+    <Compile Include="ArkMissionData.cs" />
     <Compile Include="ArkPlayerExternal.cs" />
     <Compile Include="ArkStructure.cs" />
     <Compile Include="ArkCloudInventory.cs" />

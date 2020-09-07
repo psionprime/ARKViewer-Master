@@ -27,6 +27,8 @@ namespace ARKViewer
         private ColumnHeader SortingColumn_Creature = null;
         private ColumnHeader SortingColumn_Storage = null;
 
+        private ColumnHeader SortingColumn_Scores = null;
+
         private ArkPlayer currentPlayer = null;
 
 
@@ -144,6 +146,26 @@ namespace ARKViewer
 
                 lvwPlayerInventory.Items.AddRange(listItems.ToArray());
             }
+        }
+
+        private void PopulateMissionScores()
+        {
+
+            ConcurrentBag<ListViewItem> listItems = new ConcurrentBag<ListViewItem>();
+
+
+            var missionScores = currentPlayer.MissionScores;
+            Parallel.ForEach(missionScores, missionScore =>
+            {
+                ArkMissionData missionData = missionScore;
+                ListViewItem newItem = new ListViewItem(missionData.MissionTag);
+                newItem.SubItems.Add(missionData.LastScore.ToString("f2"));
+                newItem.SubItems.Add(missionData.BestScore.ToString("f2"));
+                listItems.Add(newItem);
+            });
+            
+            
+            lvwPlayerScores.Items.AddRange(listItems.ToArray());
         }
 
         private void PopulateCreatureInventory()
@@ -428,6 +450,8 @@ namespace ARKViewer
                 imageList1.Images.Add(itemImage);
                 x++;
             }
+
+            PopulateMissionScores();
 
             PopulatePersonalInventory();
 
@@ -790,7 +814,6 @@ namespace ARKViewer
                 txtPlayerFilter.Focus();
             }
 
-
             PopulatePersonalInventory();
         }
 
@@ -808,6 +831,62 @@ namespace ARKViewer
                 txtCreatureFilter.Focus();
             }
             PopulateCreatureInventory();
+        }
+
+        private void lvwPlayerScores_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            // Get the new sorting column.
+            ColumnHeader new_sorting_column = lvwPlayerScores.Columns[e.Column];
+
+            // Figure out the new sorting order.
+            System.Windows.Forms.SortOrder sort_order;
+            if (SortingColumn_Scores == null)
+            {
+                // New column. Sort ascending.
+                sort_order = SortOrder.Ascending;
+            }
+            else
+            {
+                // See if this is the same column.
+                if (new_sorting_column == SortingColumn_Scores)
+                {
+                    // Same column. Switch the sort order.
+                    if (SortingColumn_Scores.Text.StartsWith("> "))
+                    {
+                        sort_order = SortOrder.Descending;
+                    }
+                    else
+                    {
+                        sort_order = SortOrder.Ascending;
+                    }
+                }
+                else
+                {
+                    // New column. Sort ascending.
+                    sort_order = SortOrder.Ascending;
+                }
+
+                // Remove the old sort indicator.
+                SortingColumn_Scores.Text = SortingColumn_Scores.Text.Substring(2);
+            }
+
+            // Display the new sort order.
+            SortingColumn_Scores = new_sorting_column;
+            if (sort_order == SortOrder.Ascending)
+            {
+                SortingColumn_Scores.Text = "> " + SortingColumn_Scores.Text;
+            }
+            else
+            {
+                SortingColumn_Scores.Text = "< " + SortingColumn_Scores.Text;
+            }
+
+            // Create a comparer.
+            lvwPlayerScores.ListViewItemSorter =
+                new ListViewComparer(e.Column, sort_order);
+
+            // Sort.
+            lvwPlayerScores.Sort();
         }
     }
 }

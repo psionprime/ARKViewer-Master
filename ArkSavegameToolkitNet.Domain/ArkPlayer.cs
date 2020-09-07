@@ -1,4 +1,5 @@
-﻿using ArkSavegameToolkitNet.Structs;
+﻿using ArkSavegameToolkitNet.Property;
+using ArkSavegameToolkitNet.Structs;
 using ArkSavegameToolkitNet.Types;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -28,6 +29,11 @@ namespace ArkSavegameToolkitNet.Domain
         private static readonly ArkName _playerState_TotalEngramPoints = ArkName.Create("PlayerState_TotalEngramPoints");
         private static readonly ArkName _characterStatusComponent_ExperiencePoints = ArkName.Create("CharacterStatusComponent_ExperiencePoints");
         private static readonly ArkName _characterStatusComponent_ExtraCharacterLevel = ArkName.Create("CharacterStatusComponent_ExtraCharacterLevel");
+        private static readonly ArkName _missionScores = ArkName.Create("LatestMissionScores");
+        private static readonly ArkName _missionTag = ArkName.Create("MissionTag");
+        private static readonly ArkName _latestScore = ArkName.Create("LatestScore");
+        private static readonly ArkName _bestScore = ArkName.Create("BestScore");
+
         private static readonly ArkName[] _characterStatusComponent_NumberOfLevelUpPointsApplied = new[]
         {
             ArkName.Create("CharacterStatusComponent_NumberOfLevelUpPointsApplied", 0), //health
@@ -186,6 +192,39 @@ namespace ArkSavegameToolkitNet.Domain
 
             if (player?.Location != null) Location = new ArkLocation(player.Location, saveState);
 
+            MissionScores = new List<ArkMissionData>();
+            //if (mydata.Properties.ContainsKey(_missionScores))
+            //{
+            //    var missionData = mydata.GetProperty<PropertyArray>(_missionScores);
+
+            //    foreach(StructPropertyList missionInf in missionData.Value)
+            //    {
+            //        try
+            //        {
+            //            var missionTag = missionInf.GetProperty<PropertyName>(_missionTag).Value;
+
+            //            var latestScoreData = ((StructPropertyList)missionInf.GetProperty<PropertyStruct>(_latestScore).Value);
+            //            float latestScore = ((PropertyFloat)latestScoreData.Properties[ArkName.Create("FloatValue")]).Value.GetValueOrDefault(0);
+
+            //            var bestScoreData = ((StructPropertyList)missionInf.GetProperty<PropertyStruct>(_bestScore).Value);
+            //            float bestScore = ((PropertyFloat)latestScoreData.Properties[ArkName.Create("FloatValue")]).Value.GetValueOrDefault(0);
+
+            //            MissionScores.Add(new ArkMissionData()
+            //            {
+            //                MissionTag = missionTag.Name,
+            //                LastScore = latestScore,
+            //                BestScore = bestScore
+
+            //            }); ;
+
+
+            //        }
+            //        finally { }
+
+            //    }
+
+            //}
+
             SavedAt = profileSaveTime;
         }
 
@@ -212,6 +251,8 @@ namespace ArkSavegameToolkitNet.Domain
         public float ExperiencePoints { get; set; }
         public short CharacterLevel { get; set; }
         public sbyte[] Stats { get; set; }
+        public List<ArkMissionData> MissionScores { get; set; }
+
         public int? InventoryId { get; set; }
         public ArkLocation Location { get; set; }
         public DateTime SavedAt { get; set; }

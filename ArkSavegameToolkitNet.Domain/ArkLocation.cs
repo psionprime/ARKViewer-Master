@@ -30,7 +30,8 @@ namespace ArkSavegameToolkitNet.Domain
             { "Valguero_P" , Tuple.Create(50.0f, 8161.0f, 50.0f, 8161.0f) },
             { "Genesis", Tuple.Create(50.0f, 10500.0f, 50.0f, 10500.0f)},
             { "AstralARK", Tuple.Create(50.0f, 2000.0f, 50.0f, 2000.0f)},
-            { "Tunguska_p", Tuple.Create(46.8f, 14000.0f,49.29f, 13300.0f) }
+            { "Tunguska_p", Tuple.Create(46.8f, 14000.0f,49.29f, 13300.0f) },
+            { "Caballus_p", Tuple.Create(50.0f, 8125.0f,50.0f, 8125.0f)}
         };
 
         //width, height, latitude-top, longitude-left, longitude-right, latitude-bottom
@@ -60,7 +61,8 @@ namespace ArkSavegameToolkitNet.Domain
                     { "Valguero_P", Tuple.Create(1024, 1024, -10.0f, -10.0f, 110.0f, 110.0f) },
                     { "Genesis", Tuple.Create(1024, 1024, 0.0f, 0.0f, 100.0f, 100.0f) },
                     { "AstralARK", Tuple.Create(1024, 1024, 0.0f, 0.0f, 100.0f, 100.0f) },
-                    { "Tunguska_p", Tuple.Create(1024, 1024, 0.0f, 0.0f, 100.0f, 100.0f) }
+                    { "Tunguska_p", Tuple.Create(1024, 1024, 0.0f, 0.0f, 100.0f, 100.0f) },
+                    { "Caballus_p", Tuple.Create(1024, 1024, 0.0f, 0.0f, 100.0f, 100.0f) }
                 };
             }
             finally
