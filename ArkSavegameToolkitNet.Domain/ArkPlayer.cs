@@ -197,7 +197,7 @@ namespace ArkSavegameToolkitNet.Domain
             //{
             //    var missionData = mydata.GetProperty<PropertyArray>(_missionScores);
 
-            //    foreach(StructPropertyList missionInf in missionData.Value)
+            //    foreach (StructPropertyList missionInf in missionData.Value)
             //    {
             //        try
             //        {

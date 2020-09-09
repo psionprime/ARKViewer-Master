@@ -32,6 +32,9 @@ namespace ARKViewer
 
             //support quoted command line arguments which doesn't seem to be supported with Environment.GetCommandLineArgs() 
             string[] commandArguments = Regex.Split(Environment.CommandLine.Trim(), " (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
+            
+            //remove empty argument entries
+            commandArguments = commandArguments.Where(a => string.IsNullOrEmpty(a) == false).ToArray();
 
             if (commandArguments != null && commandArguments.Length > 1)
             {
@@ -39,6 +42,7 @@ namespace ARKViewer
                 string savePath = "";
                 string saveFilename = "";
                 bool shouldSort = ProgramConfig.SortCommandLineExport;
+
 
                 if(commandArguments.Length > 3)
                 {
