@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -30,12 +31,26 @@ namespace ARKViewer
 
             ProgramConfig = new ViewerConfiguration();
 
+            string logFilename = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), @"ARKViewer.log");
+            TextWriter logWriter = null;
+
             //support quoted command line arguments which doesn't seem to be supported with Environment.GetCommandLineArgs() 
             string[] commandArguments = Regex.Split(Environment.CommandLine.Trim(), " (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
             
             //remove empty argument entries
             commandArguments = commandArguments.Where(a => string.IsNullOrEmpty(a) == false).ToArray();
+            if(commandArguments.Length > 0)
+            {
+                logWriter = new StreamWriter(logFilename);
+                logWriter.WriteLine($"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")} - ArkViewer Command Line Started: {commandArguments.Length}");
 
+                int argIndex = 0;
+                foreach (string arg in commandArguments)
+                {
+                    logWriter.WriteLine($"\tArg-{argIndex} = {arg}");
+                    argIndex++;
+                }
+            }
             if (commandArguments != null && commandArguments.Length > 1)
             {
                 //command line, load save game data for export
@@ -830,15 +845,15 @@ namespace ARKViewer
                         try
                         {
 
-                            string logFilename = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), @"\ARKViewer.log");
+
                             StringBuilder errorData = new StringBuilder();
 
-                            errorData.AppendLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm"));
+                            errorData.AppendLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
                             errorData.AppendLine($"Error: {errorMessage}");
                             errorData.AppendLine($"Trace: {traceLog}");
                             errorData.AppendLine("");
-
-                            File.AppendText(logFilename).Write(errorData.ToString());
+                            if (logWriter == null) logWriter = new StreamWriter(logFilename);
+                            logWriter.Write(errorData.ToString());
                         }
                         catch
                         {
@@ -856,8 +871,15 @@ namespace ARKViewer
                 else
                 {
                     //no save file found or inaccessible
-                    Console.Out.WriteLine($"Unable to find or access save game file: {saveFilename}");
+                    if (logWriter == null) logWriter = new StreamWriter(logFilename);
+                    logWriter.Write($"Unable to find or access save game file: {saveFilename}");
                     Environment.ExitCode = -2;
+                }
+
+                if (logWriter != null)
+                {
+                    logWriter.Close();
+                    logWriter.Dispose();
                 }
 
                 Application.Exit();
