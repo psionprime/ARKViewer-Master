@@ -4627,7 +4627,7 @@ namespace ARKViewer
                     int selectedTribeId = selectedPlayer.TribeId.GetValueOrDefault(selectedPlayer.Id);
                     string selectedSteamId = selectedPlayer.SteamId;
 
-                    commandText = cboTribeCopyCommand.SelectedItem.ToString();
+                    commandText = cboConsoleCommandsPlayerTribe.SelectedItem.ToString();
 
                     commandText = commandText.Replace("<PlayerID>", selectedPlayerId.ToString("f0"));
                     commandText = commandText.Replace("<TribeID>", selectedTribeId.ToString("f0"));
