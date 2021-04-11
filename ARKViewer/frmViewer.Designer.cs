@@ -254,6 +254,7 @@
             this.chkApplyFilterMarkers = new System.Windows.Forms.CheckBox();
             this.lblStatus = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.lvwPlayers_SteamId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.mnuContext.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picMap)).BeginInit();
             this.pnlMap.SuspendLayout();
@@ -2266,7 +2267,8 @@
             this.lvwPlayers_Crafting,
             this.lvwPlayers_Fortitude,
             this.lvwPlayers_LastOnline,
-            this.lvwPlayers_SteamName});
+            this.lvwPlayers_SteamName,
+            this.lvwPlayers_SteamId});
             this.lvwPlayers.ContextMenuStrip = this.mnuContext;
             this.lvwPlayers.FullRowSelect = true;
             this.lvwPlayers.HideSelection = false;
@@ -2667,6 +2669,10 @@
             this.splitContainer1.TabIndex = 23;
             this.splitContainer1.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitContainer1_SplitterMoved);
             // 
+            // lvwPlayers_SteamId
+            // 
+            this.lvwPlayers_SteamId.Width = 0;
+            // 
             // frmViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2954,6 +2960,7 @@
         private System.Windows.Forms.ColumnHeader lvwTameDetail_Server;
         private System.Windows.Forms.ColumnHeader lvwWildDetail_Id;
         private System.Windows.Forms.ColumnHeader lvwTameDetail_Id;
+        private System.Windows.Forms.ColumnHeader lvwPlayers_SteamId;
     }
 }
 
