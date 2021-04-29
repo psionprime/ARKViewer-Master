@@ -40,7 +40,8 @@ namespace ARKViewer
             { "ragnarok.ark", "Ragnarok"},
             { "valguero_p.ark", "Valguero" },
             {"crystalisles.ark", "Crystal Isles" },
-            {"genesis.ark", "Genesis 1" }
+            {"genesis.ark", "Genesis 1" },
+            {"viking_p.ark", "Fjördur"}
         };
 
         [DataMember]
@@ -138,6 +139,9 @@ namespace ARKViewer
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public bool SortCommandLineExport { get; set; } = false;
 
+        [DataMember(IsRequired = false, EmitDefaultValue = false)]
+        public bool ExportInventories { get; set; } = false;
+
         public ViewerConfiguration()
         {
             Load();
@@ -221,7 +225,7 @@ namespace ARKViewer
             Mode = ViewerModes.Mode_SinglePlayer;
             SelectedFile = "TheIsland.ark";
             SelectedServer = "";
-
+            
             //load colours
 
             ColourMap = new List<ColourMap>();
@@ -505,6 +509,7 @@ namespace ARKViewer
                 this.UpdateNotificationFile = savedState.UpdateNotificationFile;
                 this.UpdateNotificationSingle = savedState.UpdateNotificationSingle;
                 this.SortCommandLineExport = savedState.SortCommandLineExport;
+                this.ExportInventories = savedState.ExportInventories;
 
 
                 if (savedState.StructureExclusions != null)

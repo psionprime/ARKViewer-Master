@@ -113,6 +113,7 @@
             this.picGlitches = new System.Windows.Forms.PictureBox();
             this.btnStructureInventory = new System.Windows.Forms.Button();
             this.btnDeletePlayer = new System.Windows.Forms.Button();
+            this.btnDropInventory = new System.Windows.Forms.Button();
             this.txtMarkerFilter = new System.Windows.Forms.TextBox();
             this.tabFeatures = new System.Windows.Forms.TabControl();
             this.tpgWild = new System.Windows.Forms.TabPage();
@@ -230,6 +231,7 @@
             this.lvwPlayers_Fortitude = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lvwPlayers_LastOnline = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lvwPlayers_SteamName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lvwPlayers_SteamId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tpgDroppedItems = new System.Windows.Forms.TabPage();
             this.cboDroppedItem = new System.Windows.Forms.ComboBox();
             this.lblDroppedPlayer = new System.Windows.Forms.Label();
@@ -254,7 +256,6 @@
             this.chkApplyFilterMarkers = new System.Windows.Forms.CheckBox();
             this.lblStatus = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.lvwPlayers_SteamId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.mnuContext.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picMap)).BeginInit();
             this.pnlMap.SuspendLayout();
@@ -1178,6 +1179,19 @@
             this.toolTip1.SetToolTip(this.btnDeletePlayer, "Remove Player");
             this.btnDeletePlayer.UseVisualStyleBackColor = true;
             this.btnDeletePlayer.Click += new System.EventHandler(this.btnDeletePlayer_Click);
+            // 
+            // btnDropInventory
+            // 
+            this.btnDropInventory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnDropInventory.Enabled = false;
+            this.btnDropInventory.Image = ((System.Drawing.Image)(resources.GetObject("btnDropInventory.Image")));
+            this.btnDropInventory.Location = new System.Drawing.Point(386, 197);
+            this.btnDropInventory.Name = "btnDropInventory";
+            this.btnDropInventory.Size = new System.Drawing.Size(30, 30);
+            this.btnDropInventory.TabIndex = 49;
+            this.toolTip1.SetToolTip(this.btnDropInventory, "Inventory Data");
+            this.btnDropInventory.UseVisualStyleBackColor = true;
+            this.btnDropInventory.Click += new System.EventHandler(this.btnDropInventory_Click);
             // 
             // txtMarkerFilter
             // 
@@ -2370,8 +2384,13 @@
             this.lvwPlayers_SteamName.Text = "Steam Name";
             this.lvwPlayers_SteamName.Width = 150;
             // 
+            // lvwPlayers_SteamId
+            // 
+            this.lvwPlayers_SteamId.Width = 0;
+            // 
             // tpgDroppedItems
             // 
+            this.tpgDroppedItems.Controls.Add(this.btnDropInventory);
             this.tpgDroppedItems.Controls.Add(this.cboDroppedItem);
             this.tpgDroppedItems.Controls.Add(this.lblDroppedPlayer);
             this.tpgDroppedItems.Controls.Add(this.cboDroppedPlayer);
@@ -2669,10 +2688,6 @@
             this.splitContainer1.TabIndex = 23;
             this.splitContainer1.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitContainer1_SplitterMoved);
             // 
-            // lvwPlayers_SteamId
-            // 
-            this.lvwPlayers_SteamId.Width = 0;
-            // 
             // frmViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2961,6 +2976,7 @@
         private System.Windows.Forms.ColumnHeader lvwWildDetail_Id;
         private System.Windows.Forms.ColumnHeader lvwTameDetail_Id;
         private System.Windows.Forms.ColumnHeader lvwPlayers_SteamId;
+        private System.Windows.Forms.Button btnDropInventory;
     }
 }
 

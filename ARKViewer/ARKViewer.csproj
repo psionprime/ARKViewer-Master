@@ -71,6 +71,12 @@
     <Compile Include="ComboValuePair.cs" />
     <Compile Include="DinoClassMap.cs" />
     <Compile Include="DinoSummary.cs" />
+    <Compile Include="frmDeathCacheViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmDeathCacheViewer.Designer.cs">
+      <DependentUpon>frmDeathCacheViewer.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmDinoInventoryViewer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -150,6 +156,9 @@
     <Compile Include="ViewerConfiguration.cs" />
     <EmbeddedResource Include="frmCreatureClassMap.resx">
       <DependentUpon>frmCreatureClassMap.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmDeathCacheViewer.resx">
+      <DependentUpon>frmDeathCacheViewer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmDinoInventoryViewer.resx">
       <DependentUpon>frmDinoInventoryViewer.cs</DependentUpon>
@@ -3705,6 +3714,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\map_caballus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\map_fjordur.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

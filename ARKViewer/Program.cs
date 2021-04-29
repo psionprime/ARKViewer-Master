@@ -31,7 +31,7 @@ namespace ARKViewer
 
             ProgramConfig = new ViewerConfiguration();
 
-            string logFilename = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), @"ARKViewer.log");
+            string logFilename = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"ARKViewer.log");
             TextWriter logWriter = null;
 
             //support quoted command line arguments which doesn't seem to be supported with Environment.GetCommandLineArgs() 
@@ -244,7 +244,7 @@ namespace ARKViewer
                             gd = null;
                         }
 
-                        string exportFilePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                        string exportFilePath = AppDomain.CurrentDomain.BaseDirectory; 
                         string exportFilename = "";
 
                         string commandOptionCheck = commandArguments[1].ToString().Trim().ToLower();
@@ -545,6 +545,42 @@ namespace ARKViewer
                                                 jw.WriteValue("");
                                             }
 
+                                            if (ProgramConfig.ExportInventories)
+                                            {
+                                                jw.WritePropertyName("inventory");
+                                                jw.WriteStartArray();
+                                                foreach(var invItem in creature.Inventory)
+                                                {
+                                                    if (!invItem.IsEngram)
+                                                    {
+                                                        jw.WriteStartObject();
+                                                        
+                                                        jw.WritePropertyName("itemId");
+                                                        jw.WriteValue(invItem.ClassName);
+                                                        
+                                                        jw.WritePropertyName("qty");
+                                                        jw.WriteValue(invItem.Quantity);
+
+
+                                                        jw.WritePropertyName("blueprint");
+                                                        jw.WriteValue(invItem.IsBlueprint);
+
+                                                        var itemMap = ProgramConfig.ItemMap.FirstOrDefault(m => m.ClassName == invItem.ClassName);
+                                                        if (itemMap != null)
+                                                        {
+                                                            jw.WritePropertyName("category");
+                                                            jw.WriteValue(itemMap.Category);
+                                                        }
+
+                                                        jw.WriteEndObject();
+                                                    }
+                                                    
+                                                }
+
+
+                                                jw.WriteEndArray();
+                                            }
+
                                             jw.WriteEnd();
                                         }
 
@@ -634,6 +670,43 @@ namespace ARKViewer
                                             else
                                             {
                                                 jw.WriteValue("");
+                                            }
+
+                                            if (ProgramConfig.ExportInventories)
+                                            {
+                                                jw.WritePropertyName("inventory");
+                                                jw.WriteStartArray();
+                                                foreach (var invItem in structure.Inventory)
+                                                {
+                                                    if (!invItem.IsEngram)
+                                                    {
+                                                        jw.WriteStartObject();
+
+                                                        jw.WritePropertyName("itemId");
+                                                        jw.WriteValue(invItem.ClassName);
+
+                                                        jw.WritePropertyName("qty");
+                                                        jw.WriteValue(invItem.Quantity);
+
+
+                                                        jw.WritePropertyName("blueprint");
+                                                        jw.WriteValue(invItem.IsBlueprint);
+
+                                                        var itemMap = ProgramConfig.ItemMap.FirstOrDefault(m => m.ClassName == invItem.ClassName);
+                                                        if (itemMap != null)
+                                                        {
+                                                            jw.WritePropertyName("category");
+                                                            jw.WriteValue(itemMap.Category);
+                                                        }
+
+
+                                                        jw.WriteEndObject();
+                                                    }
+
+                                                }
+
+
+                                                jw.WriteEndArray();
                                             }
 
 
@@ -819,6 +892,41 @@ namespace ARKViewer
                                             else
                                             {
                                                 jw.WriteValue("");
+                                            }
+
+                                            if (ProgramConfig.ExportInventories)
+                                            {
+                                                jw.WritePropertyName("inventory");
+                                                jw.WriteStartArray();
+                                                foreach (var invItem in player.Inventory)
+                                                {
+                                                    if (!invItem.IsEngram && invItem.ClassName != "PrimalItem_StartingNote_C")
+                                                    {
+                                                        jw.WriteStartObject();
+
+                                                        jw.WritePropertyName("itemId");
+                                                        jw.WriteValue(invItem.ClassName);
+
+                                                        jw.WritePropertyName("qty");
+                                                        jw.WriteValue(invItem.Quantity);
+
+                                                        jw.WritePropertyName("blueprint");
+                                                        jw.WriteValue(invItem.IsBlueprint);
+                                                        
+                                                        var itemMap = ProgramConfig.ItemMap.FirstOrDefault(m => m.ClassName == invItem.ClassName);
+                                                        if (itemMap != null)
+                                                        {
+                                                            jw.WritePropertyName("category");
+                                                            jw.WriteValue(itemMap.Category);
+                                                        }
+
+                                                        jw.WriteEndObject();
+                                                    }
+
+                                                }
+
+
+                                                jw.WriteEndArray();
                                             }
 
 

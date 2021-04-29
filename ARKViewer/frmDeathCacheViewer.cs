@@ -6,38 +6,22 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Management.Instrumentation;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ARKViewer
 {
-    public partial class frmDinoInventoryViewer : Form
+    public partial class frmDeathCacheViewer : Form
     {
-        private ArkTamedCreature currentCreature = null;
+        ArkItem[] inventoryItems;
 
-        public frmDinoInventoryViewer(ArkGameData gameData, ArkTamedCreature selectedCreature)
+        public frmDeathCacheViewer(string playerName, string playerTribe, ArkItem[] inventory)
         {
             InitializeComponent();
-
-            currentCreature = selectedCreature;
-
-            string dinoName = selectedCreature.Name != null ? selectedCreature.Name : string.Empty;
-
-            if(dinoName.Length == 0)
-            {
-                dinoName = selectedCreature.ClassName;
-                DinoClassMap classMap = Program.ProgramConfig.DinoMap.Where(d => d.ClassName == selectedCreature.ClassName).FirstOrDefault();
-                if (classMap != null && classMap.FriendlyName.Length > 0)
-                {
-                    dinoName = classMap.FriendlyName;
-                }
-            }
-
-            lblPlayerName.Text = dinoName;
-            lblPlayerLevel.Text = selectedCreature.Level.ToString();
-            lblTribeName.Text = selectedCreature.TribeName;
+            lblPlayerName.Text = playerName;
+            lblTribeName.Text = playerTribe;
+            inventoryItems = inventory;
 
             //inventory images
             imageList1.Images.Clear();
@@ -54,19 +38,19 @@ namespace ARKViewer
                 x++;
             }
 
-            PopulateCreatureInventory();
+            PopulateDeathCacheInventory();
+
 
         }
 
-        private void PopulateCreatureInventory()
+        private void PopulateDeathCacheInventory()
         {
-            lvwCreatureInventory.Items.Clear();
-            if (currentCreature.Inventory != null)
+            
+            lvwInventory.Items.Clear();
+            if (inventoryItems != null && inventoryItems.Length > 0)
             {
-                //var playerItems = selectedPlayer.Creatures;
-
                 ConcurrentBag<ListViewItem> listItems = new ConcurrentBag<ListViewItem>();
-                Parallel.ForEach(currentCreature.Inventory, invItem =>
+                Parallel.ForEach(inventoryItems, invItem =>
                 {
                     string itemName = invItem.ClassName;
                     string categoryName = "Misc.";
@@ -99,7 +83,7 @@ namespace ARKViewer
 
                     }
 
-                    if (itemName.ToLower().Contains(txtCreatureFilter.Text.ToLower()) || categoryName.ToLower().Contains(txtCreatureFilter.Text.ToLower()))
+                    if (itemName.ToLower().Contains(txtFilter.Text.ToLower()) || categoryName.ToLower().Contains(txtFilter.Text.ToLower()))
                     {
                         if (!invItem.IsEngram)
                         {
@@ -114,29 +98,25 @@ namespace ARKViewer
 
                 });
 
-                lvwCreatureInventory.Items.AddRange(listItems.ToArray());
+                lvwInventory.Items.AddRange(listItems.ToArray());
 
             }
+        
         }
 
         private void chkApplyFilterDinos_CheckedChanged(object sender, EventArgs e)
         {
-            if (chkApplyFilterDinos.Checked)
+            if (chkApplyFilter.Checked)
             {
-                txtCreatureFilter.Enabled = false;
+                txtFilter.Enabled = false;
             }
             else
             {
-                txtCreatureFilter.Enabled = true;
-                txtCreatureFilter.Text = string.Empty;
-                txtCreatureFilter.Focus();
+                txtFilter.Enabled = true;
+                txtFilter.Text = string.Empty;
+                txtFilter.Focus();
             }
-            PopulateCreatureInventory();
-        }
-
-        private void txtCreatureFilter_TextChanged(object sender, EventArgs e)
-        {
-
+            PopulateDeathCacheInventory();
         }
     }
 }

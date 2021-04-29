@@ -33,6 +33,7 @@
             this.lblWindowTitle = new System.Windows.Forms.Label();
             this.picWindowIcon = new System.Windows.Forms.PictureBox();
             this.pnlCreatureInventory = new System.Windows.Forms.Panel();
+            this.chkApplyFilterDinos = new System.Windows.Forms.CheckBox();
             this.lblCreatureFilter = new System.Windows.Forms.Label();
             this.txtCreatureFilter = new System.Windows.Forms.TextBox();
             this.lvwCreatureInventory = new System.Windows.Forms.ListView();
@@ -45,7 +46,6 @@
             this.lblTribeName = new System.Windows.Forms.Label();
             this.lblPlayerName = new System.Windows.Forms.Label();
             this.btnClose = new System.Windows.Forms.Button();
-            this.chkApplyFilterDinos = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.picWindowIcon)).BeginInit();
             this.pnlCreatureInventory.SuspendLayout();
             this.SuspendLayout();
@@ -87,6 +87,18 @@
             this.pnlCreatureInventory.Size = new System.Drawing.Size(669, 346);
             this.pnlCreatureInventory.TabIndex = 10;
             // 
+            // chkApplyFilterDinos
+            // 
+            this.chkApplyFilterDinos.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkApplyFilterDinos.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chkApplyFilterDinos.Image = global::ARKViewer.Properties.Resources.button_filter;
+            this.chkApplyFilterDinos.Location = new System.Drawing.Point(616, 311);
+            this.chkApplyFilterDinos.Name = "chkApplyFilterDinos";
+            this.chkApplyFilterDinos.Size = new System.Drawing.Size(33, 27);
+            this.chkApplyFilterDinos.TabIndex = 22;
+            this.chkApplyFilterDinos.UseVisualStyleBackColor = true;
+            this.chkApplyFilterDinos.CheckedChanged += new System.EventHandler(this.chkApplyFilterDinos_CheckedChanged);
+            // 
             // lblCreatureFilter
             // 
             this.lblCreatureFilter.AutoSize = true;
@@ -104,6 +116,7 @@
             this.txtCreatureFilter.Name = "txtCreatureFilter";
             this.txtCreatureFilter.Size = new System.Drawing.Size(539, 20);
             this.txtCreatureFilter.TabIndex = 2;
+            this.txtCreatureFilter.TextChanged += new System.EventHandler(this.txtCreatureFilter_TextChanged);
             // 
             // lvwCreatureInventory
             // 
@@ -203,18 +216,6 @@
             this.btnClose.TabIndex = 15;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
-            // 
-            // chkApplyFilterDinos
-            // 
-            this.chkApplyFilterDinos.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.chkApplyFilterDinos.Appearance = System.Windows.Forms.Appearance.Button;
-            this.chkApplyFilterDinos.Image = global::ARKViewer.Properties.Resources.button_filter;
-            this.chkApplyFilterDinos.Location = new System.Drawing.Point(616, 311);
-            this.chkApplyFilterDinos.Name = "chkApplyFilterDinos";
-            this.chkApplyFilterDinos.Size = new System.Drawing.Size(33, 27);
-            this.chkApplyFilterDinos.TabIndex = 22;
-            this.chkApplyFilterDinos.UseVisualStyleBackColor = true;
-            this.chkApplyFilterDinos.CheckedChanged += new System.EventHandler(this.chkApplyFilterDinos_CheckedChanged);
             // 
             // frmDinoInventoryViewer
             // 

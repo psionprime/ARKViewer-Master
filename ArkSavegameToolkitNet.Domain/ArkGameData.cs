@@ -73,7 +73,7 @@ namespace ArkSavegameToolkitNet.Domain
                 save = new ArkSavegame(_saveFilePath, null, _savegameMaxDegreeOfParallelism, exclusivePropertyNameTree);
                 save.LoadEverything();
 
-                
+
                 ct.ThrowIfCancellationRequested();
 
                 var arktribes = Directory.GetFiles(directoryPath, "*.arktribe", SearchOption.TopDirectoryOnly).Select(x =>
@@ -196,13 +196,22 @@ namespace ArkSavegameToolkitNet.Domain
                 var items = objects.Where(x => x.IsItem).Select(x => x.AsItem(save.SaveState)).ToArray();
                 var droppedItems = objects.Where(x => x.IsDroppedItem).Select(x =>
                 {
+                    ArkDroppedItem returnValue = null;
                     GameObject linkedItem = null;
+                    try
+                    {
+                        int linkedItemId = x.GetPropertyValue<ObjectReference>(ArkName.Create("MyItem")).ObjectId;
+                        linkedItem = objects.Where(o => o.ObjectId == linkedItemId).FirstOrDefault();
+                        returnValue = x.AsDroppedItem(linkedItem, save.SaveState);
 
-                    int linkedItemId = x.GetPropertyValue<ObjectReference>(ArkName.Create("MyItem")).ObjectId;
-                    linkedItem = objects.Where(o => o.ObjectId == linkedItemId).FirstOrDefault();
-                    ArkDroppedItem returnValue = x.AsDroppedItem(linkedItem, save.SaveState);
+                    }
+                    catch
+                    {
+                        Debug.WriteLine("Failed to parse dropped item object, ignoring."); 
+                    }
 
                     return returnValue;
+
                 }).ToArray();
 
                 var playerDeathCache = objects.Where(x => x.IsDeathItemCache).Select(x => x.AsDeathCache(save.SaveState)).ToArray();

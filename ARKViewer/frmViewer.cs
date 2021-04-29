@@ -1605,6 +1605,12 @@ namespace ARKViewer
                 case "hope":
                     originalImage = new Bitmap(ARKViewer.Properties.Resources.map_hope, new Size(1024, 1024));
                     break;
+
+                case "viking_p":
+
+                    originalImage = new Bitmap(ARKViewer.Properties.Resources.map_fjordur, new Size(1024, 1024));
+                    break;
+
                 default:
                     originalImage = new Bitmap(1024,1024);
                     break;
@@ -5255,10 +5261,29 @@ namespace ARKViewer
             if(lvwDroppedItems.SelectedItems.Count > 0)
             {
                 ListViewItem selectedItem = lvwDroppedItems.SelectedItems[0];
-                ArkDroppedItem droppedItem = (ArkDroppedItem)selectedItem.Tag;
 
-                decimal selectedX = (decimal)droppedItem.Location.Longitude.GetValueOrDefault(0);
-                decimal selectedY = (decimal)droppedItem.Location.Latitude.GetValueOrDefault(0);
+                decimal selectedX = 0;
+                decimal selectedY = 0;
+
+                switch (selectedItem.Tag)
+                {
+                    case ArkDroppedItem droppedItem:
+                        selectedX = (decimal)droppedItem.Location.Longitude.GetValueOrDefault(0);
+                        selectedY = (decimal)droppedItem.Location.Latitude.GetValueOrDefault(0);
+
+                        btnDropInventory.Enabled = false;
+
+                        break;
+                    case ArkDeathCache deathCache:
+                        selectedX = (decimal)deathCache.Location.Longitude.GetValueOrDefault(0);
+                        selectedY = (decimal)deathCache.Location.Latitude.GetValueOrDefault(0);
+
+                        btnDropInventory.Enabled = deathCache.Inventory != null && deathCache.Inventory.Length > 0;
+                        break;
+                    default:
+
+                        break;
+                }
 
                 picMap.Image = DrawMap(selectedX, selectedY);
             }
@@ -6439,6 +6464,26 @@ namespace ARKViewer
 
             }
 
+        }
+
+        private void btnDropInventory_Click(object sender, EventArgs e)
+        {
+            if (lvwDroppedItems.SelectedItems.Count == 0) return;
+            switch (lvwDroppedItems.SelectedItems[0].Tag)
+            {
+                case ArkDeathCache deathCache:
+                    ArkTribe tribe = gd.Tribes.FirstOrDefault(t => t.Id == deathCache.TargetingTeam);
+                    string tribeName = tribe != null ? tribe.Name : "";
+
+                    frmDeathCacheViewer inventoryView = new frmDeathCacheViewer(deathCache.OwnerName, tribeName, deathCache.Inventory);
+                    inventoryView.ShowDialog();
+
+
+                    break;
+                default:
+
+                    break;
+            }
         }
     }
 }
