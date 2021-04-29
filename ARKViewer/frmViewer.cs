@@ -1041,6 +1041,8 @@ namespace ARKViewer
                     newItem.SubItems.Add(player.Stats.GetValue(10).ToString());//fortitude
 
                     newItem.SubItems.Add(player.LastActiveTime.ToString("dd MMM yy HH:mm:ss"));
+                    newItem.SubItems.Add(player.Name);
+                    newItem.SubItems.Add(player.SteamId);
 
                     newItem.Tag = player;
 
