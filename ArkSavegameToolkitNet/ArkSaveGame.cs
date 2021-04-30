@@ -139,7 +139,7 @@ namespace ArkSavegameToolkitNet
 
             List<GameObject> vivariumObjects = new List<GameObject>();
 
-            Parallel.For(0, vivariumList.Count, vivariumIndex =>
+            Parallel.For(0, vivariumList.Count-1, vivariumIndex =>
             {
                 var vivarium = vivariumList[vivariumIndex];
 
@@ -181,9 +181,13 @@ namespace ArkSavegameToolkitNet
                                         var result = UpdateVivariumCreatureStatus(cryoArchive, nextObjectId + vivariumIndex + 1);
                                         result.Item1.Location = vivarium.Location;
 
-                                        vivariumObjects.Add(result.Item1);
-                                        vivariumObjects.Add(result.Item2);
 
+
+                                        if (result!=null && result.Item1 != null && result.Item2 != null)
+                                        {
+                                            vivariumObjects.Add(result.Item1);
+                                            vivariumObjects.Add(result.Item2);
+                                        }
                                     }
                                 }
                             }
@@ -192,10 +196,10 @@ namespace ArkSavegameToolkitNet
                 }
             });
 
+            System.Threading.Thread.Sleep(1);
             vivariumObjects.ForEach(o => Objects.Add(o));
 
             
-
             //Now parse out cryo creature data
             var cryoPodEntries = Objects.Where(WhereEmptyCryopodHasCustomItemDataBytesArrayBytes).ToList();
             
@@ -205,7 +209,7 @@ namespace ArkSavegameToolkitNet
             {
                 List<GameObject> cryoObjects = new List<GameObject>();
 
-                Parallel.For(0,cryoPodEntries.Count, podIndex =>
+                Parallel.For(0,cryoPodEntries.Count-1, podIndex =>
                 {
                     var cryoPod = cryoPodEntries[podIndex];
                     var byteList = SelectCustomDataBytesArrayBytes(cryoPod);
@@ -242,19 +246,22 @@ namespace ArkSavegameToolkitNet
                             }
 
 
+                            if (result !=null && result.Item1 != null && result.Item2!=null)
+                            {
+                                cryoObjects.Add(result.Item1);
+                                cryoObjects.Add(result.Item2);
 
-                            cryoObjects.Add(result.Item1);
-                            cryoObjects.Add(result.Item2);
+                            }
                         }
 
                     }
                 });
 
-
+                System.Threading.Thread.Sleep(1);
                 cryoObjects.ForEach(o => Objects.Add(o));
 
             }
-
+            
             return true;
 
             bool WhereEmptyCryopodHasCustomItemDataBytesArrayBytes(GameObject o) => (o.ClassName.Name == "PrimalItem_WeaponEmptyCryopod_C" || o.ClassName.Name == "PrimalItem_WeaponEmptyCryopod_PE_C")
@@ -287,13 +294,7 @@ namespace ArkSavegameToolkitNet
                 
                 var statusComponentRef = dino.GetProperty<PropertyObject>(_myCharacterStatusComponent);
                 statusComponentRef.Value.ObjectId = statusobject.ObjectId;
-
                 statusobject.loadProperties(cryoArchive, new GameObject(), 0, null);
-                if (dino.IsWildCreature)
-                {
-                    Debug.Print("Eh?");
-
-                }
 
                 return new Tuple<GameObject, GameObject>(dino, statusobject);
             }

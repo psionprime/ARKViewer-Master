@@ -110,7 +110,6 @@ namespace ArkSavegameToolkitNet.Domain
 
                 // Map all game data into domain model
                 // Note: objects.GroupBy(x => x.Names.Last().Token) would also get creature, status- and inventory component together
-                
                 var statusComponents = save.Objects.Where(x => x.IsDinoStatusComponent).ToDictionary(x => x.ObjectId, x => x);
                 var tamed = save.Objects.Where(x => x.IsTamedCreature).Select(x =>
                 {
