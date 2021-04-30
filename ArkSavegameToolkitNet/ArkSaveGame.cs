@@ -131,17 +131,22 @@ namespace ArkSavegameToolkitNet
         private bool LoadCryopodEntries()
         {
 
-            int nextObjectId = 0;
-
+            int nextObjectId = Objects.Count;
+            
             //parse any vivarium creatures
             var vivariumList = Objects.Where(o => o.ClassName.Name == "BP_Vivarium_C" && o.Location!=null).ToList();
             Guid currentId = Guid.Empty;
 
-            foreach(var vivarium in vivariumList)
+            List<GameObject> vivariumObjects = new List<GameObject>();
+
+            Parallel.For(0, vivariumList.Count, vivariumIndex =>
             {
+                var vivarium = vivariumList[vivariumIndex];
+
 
                 if (!currentId.Equals(vivarium.Uuid))
                 {
+
                     currentId = vivarium.Uuid;
 
                     //get dino data (PropertyArray)
@@ -150,7 +155,7 @@ namespace ArkSavegameToolkitNet
 
 
                         PropertyArray dinoArray = vivarium.GetProperty<PropertyArray>(_dinoDataList);
-                        foreach(StructPropertyList dinoData in dinoArray.Value)
+                        foreach (StructPropertyList dinoData in dinoArray.Value)
                         {
                             if (dinoData.Properties.ContainsKey(_dinoData))
                             {
@@ -173,12 +178,11 @@ namespace ArkSavegameToolkitNet
                                     {
                                         ArkArchive cryoArchive = new ArkArchive(cryoVa, byteData.Length, _arkNameCache, _arkStringCache, _exclusivePropertyNameTree);
 
-                                        var result = UpdateVivariumCreatureStatus(cryoArchive);
+                                        var result = UpdateVivariumCreatureStatus(cryoArchive, nextObjectId + vivariumIndex + 1);
                                         result.Item1.Location = vivarium.Location;
 
-                                        
-                                        Objects.Add(result.Item1);
-                                        Objects.Add(result.Item2);
+                                        vivariumObjects.Add(result.Item1);
+                                        vivariumObjects.Add(result.Item2);
 
                                     }
                                 }
@@ -186,8 +190,11 @@ namespace ArkSavegameToolkitNet
                         }
                     }
                 }
-            };
+            });
 
+            vivariumObjects.ForEach(o => Objects.Add(o));
+
+            
 
             //Now parse out cryo creature data
             var cryoPodEntries = Objects.Where(WhereEmptyCryopodHasCustomItemDataBytesArrayBytes).ToList();
@@ -196,10 +203,11 @@ namespace ArkSavegameToolkitNet
 
             if (cryoPodEntries != null && cryoPodEntries.Count() > 0)
             {
-                
-                foreach(var cryoPod in cryoPodEntries)
-                {
+                List<GameObject> cryoObjects = new List<GameObject>();
 
+                Parallel.For(0,cryoPodEntries.Count, podIndex =>
+                {
+                    var cryoPod = cryoPodEntries[podIndex];
                     var byteList = SelectCustomDataBytesArrayBytes(cryoPod);
                     sbyte[] sbyteValues = byteList.Value.Cast<sbyte>().ToArray();
                     byte[] cryoDataBytes = (byte[])(Array)sbyteValues;
@@ -217,7 +225,7 @@ namespace ArkSavegameToolkitNet
                         {
                             ArkArchive cryoArchive = new ArkArchive(cryoVa, cryoDataBytes.Length, _arkNameCache, _arkStringCache, _exclusivePropertyNameTree);
 
-                            var result = UpdateCryoCreatureStatus(cryoArchive);
+                            var result = UpdateCryoCreatureStatus(cryoArchive,nextObjectId + podIndex + 1);
                             var ownerInventoryRef = cryoPod.GetProperty<PropertyObject>(_ownerInventory);
 
                             if (ownerInventoryRef != null && ownerInventoryRef.Value?.ObjectId != null)
@@ -233,14 +241,17 @@ namespace ArkSavegameToolkitNet
                                 }
                             }
 
-                            Objects.Add(result.Item1);
-                            Objects.Add(result.Item2);
+
+
+                            cryoObjects.Add(result.Item1);
+                            cryoObjects.Add(result.Item2);
                         }
 
-
-
                     }
-                };
+                });
+
+
+                cryoObjects.ForEach(o => Objects.Add(o));
 
             }
 
@@ -257,50 +268,51 @@ namespace ArkSavegameToolkitNet
 
             PropertyArray SelectCustomDataBytesArrayBytes(GameObject o) => ((StructPropertyList)((StructPropertyList)((StructPropertyList)o.GetProperty<PropertyArray>(_customItemData).Value[0]).GetProperty<PropertyStruct>(_customDataBytesIdentifier).Value).GetProperty<PropertyArray>(_byteArraysIdentifier).Value[0]).GetProperty<PropertyArray>(_bytesIdentifier);
 
-            Tuple<GameObject, GameObject> UpdateCryoCreatureStatus(ArkArchive cryoArchive)
+            Tuple<GameObject, GameObject> UpdateCryoCreatureStatus(ArkArchive cryoArchive, int nextId)
             {
                 cryoArchive.GetBytes(4);
 
-                nextObjectId++;
                 var dino = new GameObject(cryoArchive)
                 {
-                    ObjectId = nextObjectId,
+                    ObjectId = nextId,
                     IsCryo = true
                 };
 
-                nextObjectId++;
                 var statusobject = new GameObject(cryoArchive)
                 {
-                    ObjectId = nextObjectId
+                    ObjectId = nextId+1
                 };
 
                 dino.loadProperties(cryoArchive, new GameObject(), 0, null);
                 
-
-                
-                
                 var statusComponentRef = dino.GetProperty<PropertyObject>(_myCharacterStatusComponent);
                 statusComponentRef.Value.ObjectId = statusobject.ObjectId;
-                
+
                 statusobject.loadProperties(cryoArchive, new GameObject(), 0, null);
+                if (dino.IsWildCreature)
+                {
+                    Debug.Print("Eh?");
+
+                }
+
                 return new Tuple<GameObject, GameObject>(dino, statusobject);
             }
 
-            Tuple<GameObject, GameObject> UpdateVivariumCreatureStatus(ArkArchive vivariumArchive)
+            Tuple<GameObject, GameObject> UpdateVivariumCreatureStatus(ArkArchive vivariumArchive, int nextId)
             {
                 vivariumArchive.GetBytes(4);
 
-                nextObjectId++;
+                
                 var dino = new GameObject(vivariumArchive)
                 {
-                    ObjectId = nextObjectId,
+                    ObjectId = nextId,
                     IsVivarium = true
                 };
 
                 nextObjectId++;
                 var statusobject = new GameObject(vivariumArchive)
                 {
-                    ObjectId = nextObjectId
+                    ObjectId = nextId + 1
                 };
 
                 dino.loadProperties(vivariumArchive, new GameObject(), 0, null);

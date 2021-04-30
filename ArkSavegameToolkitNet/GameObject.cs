@@ -231,8 +231,8 @@ namespace ArkSavegameToolkitNet
         private static ArkName _droppedItem = ArkName.Create("DroppedItemGenericLowQuality_C", 0);
         private static ArkName _droppedByPlayerId = ArkName.Create("DroppedByPlayerID");
         private static ArkName _customData = ArkName.Create("CustomItemDatas", 0);
-        private static ArkName _imprinterName = ArkName.Create("ImprinterName");
-
+        private static ArkName _imprinterName = ArkName.Create("ImprinterName",0);
+        private static ArkName _tamedOnServer = ArkName.Create("TamedOnServerName",0);
         internal static readonly ArkNameTree _dependencies = new ArkNameTree
         {
             { _dinoId1, null },
@@ -314,9 +314,9 @@ namespace ArkSavegameToolkitNet
                     }
 
 
-                    if(targetingTeamId > 1000000000)
+                    if(targetingTeamId > 1000000)
                     {
-                        if((tamingTeamID > 0 && tamingTeamID < 1000000000) &! Properties.ContainsKey(_imprinterName))
+                        if((tamingTeamID > 0 && tamingTeamID < 1000000000) &! Properties.ContainsKey(_tamedOnServer))
                         {
 
                         }
@@ -325,6 +325,7 @@ namespace ArkSavegameToolkitNet
                             _isFlags |= GameObjectIs.IsTamedCreature;
                         }
                     }
+
 
                     
                 }
