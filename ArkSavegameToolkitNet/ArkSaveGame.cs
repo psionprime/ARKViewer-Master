@@ -161,7 +161,6 @@ namespace ArkSavegameToolkitNet
                             {
                                 PropertyArray dinoDetails = dinoData.GetProperty<PropertyArray>(_dinoData);
 
-                                nextObjectId = Objects.Count();
                                 sbyte[] sbyteData = dinoDetails.Value.Cast<sbyte>().ToArray();
                                 byte[] byteData = (byte[])(Array)sbyteData;
 
@@ -178,7 +177,10 @@ namespace ArkSavegameToolkitNet
                                     {
                                         ArkArchive cryoArchive = new ArkArchive(cryoVa, byteData.Length, _arkNameCache, _arkStringCache, _exclusivePropertyNameTree);
 
-                                        var result = UpdateVivariumCreatureStatus(cryoArchive, nextObjectId + vivariumIndex + 1);
+                                        int nextVivId = nextObjectId + vivariumIndex + 1;
+
+
+                                        var result = UpdateVivariumCreatureStatus(cryoArchive, nextVivId);
                                         result.Item1.Location = vivarium.Location;
 
 
@@ -197,7 +199,8 @@ namespace ArkSavegameToolkitNet
             });
 
             System.Threading.Thread.Sleep(1);
-            vivariumObjects.AsParallel().ForAll(o => Objects.Add(o));
+            var v = vivariumObjects.ToArray().ToList();
+            v.ForEach(o => Objects.Add(o));
 
             
             //Now parse out cryo creature data
@@ -229,7 +232,8 @@ namespace ArkSavegameToolkitNet
                         {
                             ArkArchive cryoArchive = new ArkArchive(cryoVa, cryoDataBytes.Length, _arkNameCache, _arkStringCache, _exclusivePropertyNameTree);
 
-                            var result = UpdateCryoCreatureStatus(cryoArchive,nextObjectId + podIndex + 1);
+                            int nextCryoId = nextObjectId + podIndex + 1;
+                            var result = UpdateCryoCreatureStatus(cryoArchive,nextCryoId);
                             var ownerInventoryRef = cryoPod.GetProperty<PropertyObject>(_ownerInventory);
 
                             if (ownerInventoryRef != null && ownerInventoryRef.Value?.ObjectId != null)
@@ -258,7 +262,9 @@ namespace ArkSavegameToolkitNet
                 });
 
                 System.Threading.Thread.Sleep(1);
-                cryoObjects.AsParallel().ForAll(o => Objects.Add(o));
+
+                var n = cryoObjects.ToArray<GameObject>().ToList();
+                n.ForEach(o => Objects.Add(o));
 
             }
             
