@@ -2386,6 +2386,7 @@
             // 
             // lvwPlayers_SteamId
             // 
+            this.lvwPlayers_SteamId.Text = "SteamId";
             this.lvwPlayers_SteamId.Width = 0;
             // 
             // tpgDroppedItems

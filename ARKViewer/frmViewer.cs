@@ -1365,7 +1365,7 @@ namespace ARKViewer
                     }
                 }
 
-
+                ftpClient.Connect();
                 var serverFiles = ftpClient.GetListing(selectedServer.SaveGamePath);
                 string localFilename = "";
 
@@ -6169,7 +6169,7 @@ namespace ARKViewer
                                                 }
                                                 else
                                                 {
-                                                    int.TryParse(item.SubItems[header.Index].Text, out int intValue);
+                                                    long.TryParse(item.SubItems[header.Index].Text, out long intValue);
 
                                                     jsonField.Add(new JProperty(headerText, intValue));
                                                 }

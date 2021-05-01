@@ -137,7 +137,7 @@ namespace ArkSavegameToolkitNet
             var vivariumList = Objects.Where(o => o.ClassName.Name == "BP_Vivarium_C" && o.Location!=null).ToList();
             Guid currentId = Guid.Empty;
 
-            List<GameObject> vivariumObjects = new List<GameObject>();
+            ConcurrentBag<GameObject> vivariumObjects = new ConcurrentBag<GameObject>();
 
             Parallel.For(0, vivariumList.Count-1, vivariumIndex =>
             {
@@ -197,7 +197,7 @@ namespace ArkSavegameToolkitNet
             });
 
             System.Threading.Thread.Sleep(1);
-            vivariumObjects.ForEach(o => Objects.Add(o));
+            vivariumObjects.AsParallel().ForAll(o => Objects.Add(o));
 
             
             //Now parse out cryo creature data
@@ -207,7 +207,7 @@ namespace ArkSavegameToolkitNet
 
             if (cryoPodEntries != null && cryoPodEntries.Count() > 0)
             {
-                List<GameObject> cryoObjects = new List<GameObject>();
+                ConcurrentBag<GameObject> cryoObjects = new ConcurrentBag<GameObject>();
 
                 Parallel.For(0,cryoPodEntries.Count-1, podIndex =>
                 {
@@ -246,7 +246,7 @@ namespace ArkSavegameToolkitNet
                             }
 
 
-                            if (result !=null && result.Item1 != null && result.Item2!=null)
+                            if (result !=null && (result.Item1 != null && result.Item2 !=null))
                             {
                                 cryoObjects.Add(result.Item1);
                                 cryoObjects.Add(result.Item2);
@@ -258,7 +258,7 @@ namespace ArkSavegameToolkitNet
                 });
 
                 System.Threading.Thread.Sleep(1);
-                cryoObjects.ForEach(o => Objects.Add(o));
+                cryoObjects.AsParallel().ForAll(o => Objects.Add(o));
 
             }
             

@@ -820,7 +820,7 @@ namespace ARKViewer
                                             jw.WritePropertyName("lat");
                                             if (player.Location != null)
                                             {
-                                                jw.WriteValue(player.Location.Latitude);
+                                                 jw.WriteValue(player.Location.Latitude);
                                             }
                                             else
                                             {
