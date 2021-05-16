@@ -112,7 +112,7 @@ namespace ArkSavegameToolkitNet.Domain
 
         public ArkPlayer()
         {
-            Stats = new sbyte[_characterStatusComponent_NumberOfLevelUpPointsApplied.Length];
+            Stats = new byte[_characterStatusComponent_NumberOfLevelUpPointsApplied.Length];
 
             // Relations
             _creatures = new Lazy<ArkTamedCreature[]>(() =>
@@ -187,7 +187,7 @@ namespace ArkSavegameToolkitNet.Domain
             TotalEngramPoints = myPersistentCharacterStats.GetPropertyValue<int>(_playerState_TotalEngramPoints);
             ExperiencePoints = myPersistentCharacterStats.GetPropertyValue<float>(_characterStatusComponent_ExperiencePoints);
             CharacterLevel = (short)(myPersistentCharacterStats.GetPropertyValue<short>(_characterStatusComponent_ExtraCharacterLevel) + 1);
-            for (var i = 0; i < Stats.Length; i++) Stats[i] = myPersistentCharacterStats.GetPropertyValue<sbyte?>(_characterStatusComponent_NumberOfLevelUpPointsApplied[i]) ?? 0;
+            for (var i = 0; i < Stats.Length; i++) Stats[i] = myPersistentCharacterStats.GetPropertyValue<byte?>(_characterStatusComponent_NumberOfLevelUpPointsApplied[i]) ?? 0;
             InventoryId = player?.GetPropertyValue<ObjectReference>(_myInventoryComponent)?.ObjectId;
 
             if (player?.Location != null) Location = new ArkLocation(player.Location, saveState);
@@ -250,7 +250,7 @@ namespace ArkSavegameToolkitNet.Domain
         public int TotalEngramPoints { get; set; }
         public float ExperiencePoints { get; set; }
         public short CharacterLevel { get; set; }
-        public sbyte[] Stats { get; set; }
+        public byte[] Stats { get; set; }
         public List<ArkMissionData> MissionScores { get; set; }
 
         public int? InventoryId { get; set; }

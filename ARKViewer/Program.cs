@@ -545,6 +545,7 @@ namespace ARKViewer
                                                 jw.WriteValue("");
                                             }
 
+
                                             if (ProgramConfig.ExportInventories)
                                             {
                                                 jw.WritePropertyName("inventory");
@@ -893,6 +894,9 @@ namespace ARKViewer
                                             {
                                                 jw.WriteValue("");
                                             }
+
+                                            jw.WritePropertyName("steamid");
+                                            jw.WriteValue(player.SteamId);
 
                                             if (ProgramConfig.ExportInventories)
                                             {
