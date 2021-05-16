@@ -218,7 +218,8 @@ namespace ARKViewer
                 { "hope.ark", "Hope"},
                 { "tunguska_p.ark", "Tunguska"},
                 { "caballus_p.ark", "Caballus"},
-                { "viking_p.ark", "Fjördur"}
+                { "viking_p.ark", "Fjördur"},
+                { "tiamatprime.ark", "Tiamat Prime"}
 
             };
 

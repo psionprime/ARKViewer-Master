@@ -32,7 +32,8 @@ namespace ArkSavegameToolkitNet.Domain
             { "AstralARK", Tuple.Create(50.0f, 2000.0f, 50.0f, 2000.0f)},
             { "Tunguska_p", Tuple.Create(46.8f, 14000.0f,49.29f, 13300.0f) },
             { "Caballus_p", Tuple.Create(50.0f, 8125.0f,50.0f, 8125.0f)},
-            { "Viking_P", Tuple.Create(50.0f, 7140.0f,50.0f, 7140.0f)}
+            { "Viking_P", Tuple.Create(50.0f, 7140.0f,50.0f, 7140.0f)},
+            { "TiamatPrime", Tuple.Create(50.0f, 8000.0f,50.0f, 8000.0f)}
         };
 
         //width, height, latitude-top, longitude-left, longitude-right, latitude-bottom
@@ -64,7 +65,8 @@ namespace ArkSavegameToolkitNet.Domain
                     { "AstralARK", Tuple.Create(1024, 1024, 0.0f, 0.0f, 100.0f, 100.0f) },
                     { "Tunguska_p", Tuple.Create(1024, 1024, 0.0f, 0.0f, 100.0f, 100.0f) },
                     { "Caballus_p", Tuple.Create(1024, 1024, 0.0f, 0.0f, 100.0f, 100.0f) },
-                    { "Viking_P", Tuple.Create(1024, 1024, 0.0f, 0.0f, 100.0f, 100.0f) }
+                    { "Viking_P", Tuple.Create(1024, 1024, 0.0f, 0.0f, 100.0f, 100.0f) },
+                    { "TiamatPrime", Tuple.Create(1024, 1024, 0.0f, 0.0f, 100.0f, 100.0f) }
                 };
             }
             finally

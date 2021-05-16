@@ -1612,7 +1612,9 @@ namespace ARKViewer
 
                     originalImage = new Bitmap(ARKViewer.Properties.Resources.map_fjordur, new Size(1024, 1024));
                     break;
-
+                case "tiamatprime":
+                    originalImage = new Bitmap(ARKViewer.Properties.Resources.map_tiamat, new Size(1024, 1024));
+                    break;
                 default:
                     originalImage = new Bitmap(1024,1024);
                     break;

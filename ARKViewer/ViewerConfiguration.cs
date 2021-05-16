@@ -41,7 +41,8 @@ namespace ARKViewer
             { "valguero_p.ark", "Valguero" },
             {"crystalisles.ark", "Crystal Isles" },
             {"genesis.ark", "Genesis 1" },
-            {"viking_p.ark", "Fjördur"}
+            {"viking_p.ark", "Fjördur"},
+            { "tiamatprime.ark", "Tiamat Prime"}
         };
 
         [DataMember]
