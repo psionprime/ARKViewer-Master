@@ -1658,7 +1658,8 @@ namespace ARKViewer
 
             if (ARKViewer.Program.ProgramConfig.Obelisks)
             {
-                foreach (var terminal in ARKViewer.Program.ProgramConfig.TerminalMarkers.Where(t => t.Map.ToLower() == Path.GetFileName(ARKViewer.Program.ProgramConfig.SelectedFile).ToLower()))
+                var terminalMarkers = ARKViewer.Program.ProgramConfig.TerminalMarkers.Where(t => t.Map.ToLower() == Path.GetFileName(ARKViewer.Program.ProgramConfig.SelectedFile).ToLower());
+                foreach (var terminal in terminalMarkers)
                 {
 
                     //attempt to determine colour from class name

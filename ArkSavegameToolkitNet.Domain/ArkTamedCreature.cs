@@ -271,7 +271,7 @@ namespace ArkSavegameToolkitNet.Domain
             TamedStats = new int[_numberOfLevelUpPointsAppliedTamed.Length];
             if (status != null)
             {
-                for (var i = 0; i < TamedStats.Length; i++) TamedStats[i] = status.GetPropertyValue<sbyte?>(_numberOfLevelUpPointsAppliedTamed[i]) ?? 0;
+                for (var i = 0; i < TamedStats.Length; i++) TamedStats[i] = status.GetPropertyValue<byte?>(_numberOfLevelUpPointsAppliedTamed[i]) ?? 0;
                 DinoImprintingQuality = status.GetPropertyValue<float?>(_dinoImprintingQuality);
                 ExperiencePoints = status.GetPropertyValue<float?>(_experiencePoints);
                 ExtraCharacterLevel = status.GetPropertyValue<short?>(_extraCharacterLevel) ?? 0;
