@@ -107,14 +107,14 @@ namespace ArkSavegameToolkitNet.Domain
                 }).Where(x => x != null).ToArray();
                 ct.ThrowIfCancellationRequested();
 
+                // Remove duplicates from object collection (objects are sometimes duplicated for structures, creatures etc.)
+                var objects = save.Objects.GroupBy(x => x.Names, new ArkNameCollectionComparer()).Select(x => x.OrderBy(y => y.ObjectId).First()).ToArray();
+
 
                 // Map all game data into domain model
                 // Note: objects.GroupBy(x => x.Names.Last().Token) would also get creature, status- and inventory component together
-                var statusComponents = save.Objects.Where(x => x.IsDinoStatusComponent).ToDictionary(x => x.ObjectId, x => x);
+                var statusComponents = objects.Where(x => x.IsDinoStatusComponent).ToDictionary(x => x.ObjectId, x => x);
 
-                // Remove duplicates from object collection (objects are sometimes duplicated for structures, creatures etc.)
-                // Had to move down as seemed to be removing genuine tames - maybe due to cryopod use?
-                var objects = save.Objects.GroupBy(x => x.Names, new ArkNameCollectionComparer()).Select(x => x.OrderBy(y => y.ObjectId).First()).ToArray();
 
 
                 var tamed = objects.Where(x => x.IsTamedCreature).Select(x =>
