@@ -76,6 +76,9 @@ namespace ARKViewer
                 this.Top = ARKViewer.Program.ProgramConfig.WindowTop;
                 this.Width = ARKViewer.Program.ProgramConfig.WindowWidth;
                 this.Height = ARKViewer.Program.ProgramConfig.WindowHeight;
+            }else
+            {
+                this.StartPosition = FormStartPosition.CenterScreen;
             }
 
             if (ARKViewer.Program.ProgramConfig.SplitterDistance > 0)
@@ -1625,36 +1628,10 @@ namespace ARKViewer
             Graphics graphics = Graphics.FromImage(bitmap);
             graphics.DrawImage(originalImage, new Rectangle(0, 0, 1024, 1024));
 
-
-            var topoMapCalcs = new Dictionary<string, Tuple<int, int, decimal, decimal, decimal, decimal>>
-                {
-                    { "TheIsland", Tuple.Create(1024, 1024, 0.0m,  0.0m, 100.0m, 100.0m) },
-                    { "TheCenter", Tuple.Create(1024, 1024, 0.0m,  0.0m, 100.0m, 100.0m) },
-                    { "ScorchedEarth_P", Tuple.Create(1024, 1024, 0.0m, 0.0m, 110.0m, 110.0m) },
-                    { "Aberration_P", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) },
-                    { "Extinction", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) },
-                    { "Ragnarok", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) },
-                    { "Valguero_P", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) },
-                    { "CrystalIsles", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) },
-                    { "Genesis", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) },
-                    { "AstralARK", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) },
-                    { "Hope", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) },
-                    { "Tunguska", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) },
-                    { "Caballus", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) }
-                };
-
-
             decimal markerX = 0m;
             decimal markerY = 0m;
 
-            Tuple<int, int, decimal, decimal, decimal, decimal> mapvals = null;
-            if (topoMapCalcs.TryGetValue(gd.SaveState.MapName, out mapvals) == false)
-            {
-                topoMapCalcs.TryGetValue("Genesis", out mapvals);
-            }
-
-
-            //var itemList = gd.Items.Where(i => i.IsBlueprint == false && i.IsEngram == false);
+            Tuple<int, int, decimal, decimal, decimal, decimal> mapvals = Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m);
 
             //obelisks/tribute terminals
 
@@ -3514,27 +3491,11 @@ namespace ARKViewer
                 Graphics graphics = Graphics.FromImage(bitmap);
                 graphics.DrawImage(originalImage, new Rectangle(0, 0, originalImage.Width, originalImage.Height));
 
-                var topoMapCalcs = new Dictionary<string, Tuple<int, int, decimal, decimal, decimal, decimal>>
-                {
-                    { "TheIsland", Tuple.Create(1024, 1024, 0.0m,  0.0m, 100.0m, 100.0m) },
-                    { "TheCenter", Tuple.Create(1024, 1024, 0.0m,  0.0m, 100.0m, 100.0m) },
-                    { "ScorchedEarth_P", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) },
-                    { "Aberration_P", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) },
-                    { "Extinction", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) },
-                    { "Ragnarok", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) },
-                    { "Valguero_P", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) },
-                    { "CrystalIsles", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) },
-                    { "Genesis", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) },
-                    { "Tunguska", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) }
-
-                };
-
                 decimal markerX = 0m;
                 decimal markerY = 0m;
 
-                Tuple<int, int, decimal, decimal, decimal, decimal> mapvals = null;
-                topoMapCalcs.TryGetValue(gd.SaveState.MapName, out mapvals);
-
+                Tuple<int, int, decimal, decimal, decimal, decimal> mapvals = Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m);
+                
                 if (structure != null)
                 {
                     markerX = ((decimal)Math.Round(structure.Lon, 2) - mapvals.Item4) * mapvals.Item1 / (mapvals.Item5 - mapvals.Item4);
@@ -3639,26 +3600,11 @@ namespace ARKViewer
                 Graphics graphics = Graphics.FromImage(bitmap);
                 graphics.DrawImage(originalImage, new Rectangle(0, 0, originalImage.Width, originalImage.Height));
 
-                var topoMapCalcs = new Dictionary<string, Tuple<int, int, decimal, decimal, decimal, decimal>>
-                {
-                    { "TheIsland", Tuple.Create(1024, 1024, 0.0m,  0.0m, 100.0m, 100.0m) },
-                    { "TheCenter", Tuple.Create(1024, 1024, 0.0m,  0.0m, 100.0m, 100.0m) },
-                    { "ScorchedEarth_P", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) },
-                    { "Aberration_P", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) },
-                    { "Extinction", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) },
-                    { "Ragnarok", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) },
-                    { "Valguero_P", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) },
-                    { "CrystalIsles", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) },
-                    { "Genesis", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) },
-                    { "Tunguska", Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m) }
-                };
-
                 decimal markerX = 0m;
                 decimal markerY = 0m;
 
-                Tuple<int, int, decimal, decimal, decimal, decimal> mapvals = null;
-                topoMapCalcs.TryGetValue(gd.SaveState.MapName, out mapvals);
-
+                Tuple<int, int, decimal, decimal, decimal, decimal> mapvals = Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m);
+                
                 if (structure != null)
                 {
                     markerX = ((decimal)Math.Round(structure.Lon, 2) - mapvals.Item4) * mapvals.Item1 / (mapvals.Item5 - mapvals.Item4);
@@ -3722,10 +3668,15 @@ namespace ARKViewer
 
         private void frmViewer_FormClosed(object sender, FormClosedEventArgs e)
         {
-            ARKViewer.Program.ProgramConfig.WindowTop = this.Top;
-            ARKViewer.Program.ProgramConfig.WindowLeft = this.Left;
-            ARKViewer.Program.ProgramConfig.WindowHeight = this.Height;
-            ARKViewer.Program.ProgramConfig.WindowWidth = this.Width;
+            //only save location if normal window, do not save location/size if minimized/maximized
+            if(this.WindowState == FormWindowState.Normal)
+            {
+                ARKViewer.Program.ProgramConfig.WindowTop = this.Top;
+                ARKViewer.Program.ProgramConfig.WindowLeft = this.Left;
+                ARKViewer.Program.ProgramConfig.WindowHeight = this.Height;
+                ARKViewer.Program.ProgramConfig.WindowWidth = this.Width;
+            }
+
             ARKViewer.Program.ProgramConfig.Zoom = trackZoom.Value;
             ARKViewer.Program.ProgramConfig.SplitterDistance = splitContainer1.SplitterDistance;
             ARKViewer.Program.ProgramConfig.Save();
