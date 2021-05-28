@@ -294,40 +294,13 @@ namespace ArkSavegameToolkitNet
                 }
 
                 if (Properties.ContainsKey(_dinoId1)) _isFlags |= GameObjectIs.IsCreature;
-                int tamingTeamID = 0;
-                int targetingTeamId = 0;
 
                 if (IsCreature) 
                 {
-
-
-                    if (Properties.ContainsKey(_tamingTeamID))
+                    if(Properties.ContainsKey(_tamedOnServer) || Properties.ContainsKey(_imprinterName))
                     {
-                        PropertyInt32 tamingTeam = (PropertyInt32)Properties[_tamingTeamID];
-                        tamingTeamID = tamingTeam.Value.GetValueOrDefault(0);
+                        _isFlags |= GameObjectIs.IsTamedCreature;
                     }
-
-                    if (Properties.ContainsKey(_targetTeamID))
-                    {
-                        PropertyInt32 targetingTeam = (PropertyInt32)Properties[_targetTeamID];
-                        targetingTeamId = targetingTeam.Value.GetValueOrDefault(0);
-                    }
-
-
-                    if(targetingTeamId > 1000000)
-                    {
-                        if((tamingTeamID > 0 && tamingTeamID < 1000000000) &! Properties.ContainsKey(_tamedOnServer))
-                        {
-
-                        }
-                        else
-                        {
-                            _isFlags |= GameObjectIs.IsTamedCreature;
-                        }
-                    }
-
-
-                    
                 }
 
                 if (IsCreature && !IsTamedCreature)
@@ -401,37 +374,6 @@ namespace ArkSavegameToolkitNet
                 _isFlags |= GameObjectIs.IsSomethingElse;
 
 
-                //IsStructure = (Properties.ContainsKey(_ownerName) || Properties.ContainsKey(_bHasResetDecayTime));
-                //if (IsStructure) goto SkipRest;
-
-                //IsCreature = Properties.ContainsKey(_dinoId1);
-                //IsTamedCreature = IsCreature && (Properties.ContainsKey(_tamerString) || Properties.ContainsKey(_tamingTeamID));
-                //IsWildCreature = IsCreature && !IsTamedCreature;
-                //IsRaftCreature = IsTamedCreature && ClassName.Equals(_raft_bp_c);
-                //if (IsCreature) goto SkipRest;
-
-                //IsStatusComponent = Properties.ContainsKey(_currentStatusValues);
-                //IsDinoStatusComponent = IsStatusComponent && ClassName.Token.StartsWith("DinoCharacterStatusComponent_");
-                //IsPlayerCharacterStatusComponent = IsStatusComponent && !IsDinoStatusComponent && ClassName.Token.StartsWith("PlayerCharacterStatusComponent_");
-                //if (IsStatusComponent) goto SkipRest;
-
-                //IsInventory = Properties.ContainsKey(_bInitializedMe);
-                //IsStructureInventory = IsInventory && ClassName.Token.StartsWith("PrimalInventoryBP_");
-                //IsTamedCreatureInventory = IsInventory && !IsStructureInventory && ClassName.Token.StartsWith("DinoTamedInventoryComponent_");
-                //IsPlayerCharacterInventory = IsInventory && !(IsStructureInventory || IsTamedCreatureInventory) && ClassName.Token.StartsWith("PrimalInventoryComponent");
-                //IsWildCreatureInventory = IsInventory && !(IsStructureInventory || IsTamedCreatureInventory || IsPlayerCharacterInventory) && ClassName.Token.StartsWith("DinoWildInventoryComponent_");
-                //if (IsInventory) goto SkipRest;
-
-                //IsStructurePaintingComponent = ClassName.Equals(_structurePaintingComponent);
-                //if (IsStructurePaintingComponent) goto SkipRest;
-
-                //IsDroppedItem = ClassName.Equals(_droppedItem);
-                //if (IsDroppedItem) goto SkipRest;
-
-                //IsPlayerCharacter = ClassName.Equals(_male) || ClassName.Equals(_female);
-                //if (IsPlayerCharacter) goto SkipRest;
-
-                //IsSomethingElse = true;
 
                 SkipRest:;
             }
