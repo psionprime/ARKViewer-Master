@@ -294,10 +294,26 @@ namespace ArkSavegameToolkitNet
                 }
 
                 if (Properties.ContainsKey(_dinoId1)) _isFlags |= GameObjectIs.IsCreature;
+                int tamingTeamID = 0;
+                int targetingTeamId = 0;
 
-                if (IsCreature) 
+                if (IsCreature)
                 {
-                    if(Properties.ContainsKey(_tamedOnServer) || Properties.ContainsKey(_imprinterName))
+
+
+                    if (Properties.ContainsKey(_tamingTeamID))
+                    {
+                        PropertyInt32 tamingTeam = (PropertyInt32)Properties[_tamingTeamID];
+                        tamingTeamID = tamingTeam.Value.GetValueOrDefault(0);
+                    }
+
+                    if (Properties.ContainsKey(_targetTeamID))
+                    {
+                        PropertyInt32 targetingTeam = (PropertyInt32)Properties[_targetTeamID];
+                        targetingTeamId = targetingTeam.Value.GetValueOrDefault(0);
+                    }
+
+                    if (Properties.ContainsKey(_tamedOnServer) || Properties.ContainsKey(_imprinterName) || (tamingTeamID >= 50000 && tamingTeamID < 2147483647))
                     {
                         _isFlags |= GameObjectIs.IsTamedCreature;
                     }
