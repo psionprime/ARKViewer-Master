@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ARKViewer
 {
-    public class StructureClassMap: IGenericClassMap
+    public interface IGenericClassMap
     {
-        public string ClassName { get; set; }
-        public string FriendlyName { get; set; }
+        string ClassName { get; set; }
+        string FriendlyName { get; set; }
     }
 }
-
-

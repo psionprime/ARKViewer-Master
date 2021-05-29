@@ -62,11 +62,19 @@
   <ItemGroup>
     <Compile Include="ColourMap.cs" />
     <Compile Include="CryoSummary.cs" />
-    <Compile Include="frmCreatureClassMap.cs">
+    <Compile Include="ExportManager.cs" />
+    <Compile Include="FilterManager.cs" />
+    <Compile Include="frmColourEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmCreatureClassMap.Designer.cs">
-      <DependentUpon>frmCreatureClassMap.cs</DependentUpon>
+    <Compile Include="frmColourEditor.Designer.cs">
+      <DependentUpon>frmColourEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmGenericClassMap.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmGenericClassMap.Designer.cs">
+      <DependentUpon>frmGenericClassMap.cs</DependentUpon>
     </Compile>
     <Compile Include="ComboValuePair.cs" />
     <Compile Include="DinoClassMap.cs" />
@@ -137,34 +145,58 @@
     <Compile Include="frmStructureLocations.Designer.cs">
       <DependentUpon>frmStructureLocations.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmTribeLogColourMap.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTribeLogColourMap.Designer.cs">
+      <DependentUpon>frmTribeLogColourMap.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmViewer.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmViewer.Designer.cs">
       <DependentUpon>frmViewer.cs</DependentUpon>
     </Compile>
+    <Compile Include="GenericClassMap.cs" />
     <Compile Include="ItemClassMap.cs" />
     <Compile Include="ListViewComparer.cs" />
+    <Compile Include="LogColourMap.cs" />
+    <Compile Include="LogTextColourMap.cs" />
     <Compile Include="MapMarker.cs" />
     <Compile Include="PlayerMap.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="ServerConfiguration.cs" />
     <Compile Include="StructureClassMap.cs" />
     <Compile Include="StructureMarker.cs" />
     <Compile Include="TribeMap.cs" />
     <Compile Include="ViewerConfiguration.cs" />
-    <EmbeddedResource Include="frmCreatureClassMap.resx">
-      <DependentUpon>frmCreatureClassMap.cs</DependentUpon>
+    <EmbeddedResource Include="frmColourEditor.resx">
+      <DependentUpon>frmColourEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmGenericClassMap.resx">
+      <DependentUpon>frmGenericClassMap.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="frmDeathCacheViewer.resx">
       <DependentUpon>frmDeathCacheViewer.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="frmDinoInventoryViewer.resx">
       <DependentUpon>frmDinoInventoryViewer.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="frmErrorReport.resx">
       <DependentUpon>frmErrorReport.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmItemClassMap.resx">
+      <DependentUpon>frmItemClassMap.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMarkerEditor.resx">
       <DependentUpon>frmMarkerEditor.cs</DependentUpon>
@@ -187,20 +219,18 @@
     <EmbeddedResource Include="frmStructureLocations.resx">
       <DependentUpon>frmStructureLocations.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmTribeLogColourMap.resx">
+      <DependentUpon>frmTribeLogColourMap.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmViewer.resx">
       <DependentUpon>frmViewer.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -3720,6 +3750,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\map_tiamat.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\iconfinder_themes_1419100.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

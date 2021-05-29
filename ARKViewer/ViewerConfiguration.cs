@@ -41,7 +41,7 @@ namespace ARKViewer
             { "valguero_p.ark", "Valguero" },
             {"crystalisles.ark", "Crystal Isles" },
             {"genesis.ark", "Genesis 1" },
-            {"viking_p.ark", "Fjördur"},
+            { "viking_p.ark", "Fjördur"},
             { "tiamatprime.ark", "Tiamat Prime"}
         };
 
@@ -143,6 +143,9 @@ namespace ARKViewer
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public bool ExportInventories { get; set; } = false;
 
+        [DataMember(IsRequired = false, EmitDefaultValue = true)]
+        public LogColourMap TribeLogColours { get; set; } = new LogColourMap();
+
         public ViewerConfiguration()
         {
             Load();
@@ -150,7 +153,7 @@ namespace ARKViewer
 
         public void Save()
         {
-            var savePath = AppDomain.CurrentDomain.BaseDirectory;
+            var savePath = AppContext.BaseDirectory;
             var saveFilename = Path.Combine(savePath, "config.json");
 
 
@@ -190,6 +193,29 @@ namespace ARKViewer
 
             File.WriteAllText(dinoMapFilename, dinoSaves.ToString(Formatting.None));
 
+
+            //save itemmap
+            var itemMapFilename = Path.Combine(savePath, "itemmap.json");
+
+            JArray itemArray = new JArray();
+            if (ItemMap.Count > 0)
+            {
+                foreach (var item in ItemMap)
+                {
+                    JObject itemObject = new JObject();
+                    itemObject.Add(new JProperty("ClassName", item.ClassName));
+                    itemObject.Add(new JProperty("Category", item.Category));
+                    itemObject.Add(new JProperty("FriendlyName", item.FriendlyName));
+                    itemObject.Add(new JProperty("Image", item.Image));
+
+                    itemArray.Add(itemObject);
+                }
+            }
+
+            JObject itemSaves = new JObject();
+            itemSaves.Add(new JProperty("items", itemArray));
+            File.WriteAllText(itemMapFilename, itemSaves.ToString(Formatting.None));
+
             //save mapmarkers
             var mapMarkerFilename  = Path.Combine(savePath, "mapmarkers.json");
             JArray markerArray = new JArray();
@@ -200,7 +226,7 @@ namespace ARKViewer
                     JObject markerObject = new JObject();
                     markerObject.Add(new JProperty("Map", marker.Map));
                     markerObject.Add(new JProperty("Name", marker.Name));
-                    markerObject.Add(new JProperty("Marker", marker.Marker));
+                    markerObject.Add(new JProperty("Image", marker.Image));
                     markerObject.Add(new JProperty("Colour", marker.Colour));
                     markerObject.Add(new JProperty("BorderColour", marker.BorderColour));
                     markerObject.Add(new JProperty("BorderWidth", marker.BorderWidth));
@@ -264,7 +290,7 @@ namespace ARKViewer
                     mapMarker.Colour = markerObject.Value<int>("Colour");
                     mapMarker.BorderColour = markerObject.Value<int>("BorderColour");
                     mapMarker.BorderWidth = markerObject.Value<int>("BorderWidth");
-                    mapMarker.Marker = markerObject.Value<int>("Marker");
+                    mapMarker.Image = markerObject.Value<string>("Image");
                     mapMarker.Lat = markerObject.Value<double>("Lat");
                     mapMarker.Lon = markerObject.Value<double>("Lon");
 
@@ -339,7 +365,7 @@ namespace ARKViewer
                     item.ClassName = itemObject.Value<string>("ClassName");
                     item.FriendlyName = itemObject.Value<string>("FriendlyName");
                     item.Category = itemObject.Value<string>("Category");
-                    item.Icon = itemObject.Value<int>("Icon");
+                    item.Image = itemObject.Value<string>("Image");
                     ItemMap.Add(item);
                 }
             }
@@ -511,12 +537,11 @@ namespace ARKViewer
                 this.UpdateNotificationSingle = savedState.UpdateNotificationSingle;
                 this.SortCommandLineExport = savedState.SortCommandLineExport;
                 this.ExportInventories = savedState.ExportInventories;
+                this.TribeLogColours = new LogColourMap();
+                if(savedState.TribeLogColours!=null)  this.TribeLogColours = savedState.TribeLogColours;
+                if (this.TribeLogColours.TextColourMap == null) this.TribeLogColours.TextColourMap = new List<LogTextColourMap>();
+                if (savedState.StructureExclusions != null)  this.StructureExclusions = savedState.StructureExclusions;
 
-
-                if (savedState.StructureExclusions != null)
-                {
-                    this.StructureExclusions = savedState.StructureExclusions;
-                }
                 this.HideNoBody = savedState.HideNoBody;
                 this.HideNoStructures = savedState.HideNoStructures;
                 this.HideNoTames = savedState.HideNoTames;

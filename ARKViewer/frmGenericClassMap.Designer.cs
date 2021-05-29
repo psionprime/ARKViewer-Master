@@ -1,6 +1,6 @@
 ﻿namespace ARKViewer
 {
-    partial class frmCreatureClassMap
+    partial class frmGenericClassMap
     {
         /// <summary>
         /// Required designer variable.
@@ -112,7 +112,7 @@
             this.txtDisplayName.TabIndex = 3;
             this.txtDisplayName.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // frmCreatureClassMap
+            // frmGenericClassMap
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -126,7 +126,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "frmCreatureClassMap";
+            this.Name = "frmGenericClassMap";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Class Map Editor";
             this.ResumeLayout(false);

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Management.Instrumentation;
 using System.Text;
@@ -15,11 +16,14 @@ namespace ARKViewer
 {
     public partial class frmDinoInventoryViewer : Form
     {
-        private ArkTamedCreature currentCreature = null;
+        private ArkTamedCreature currentCreature = null; 
 
         public frmDinoInventoryViewer(ArkGameData gameData, ArkTamedCreature selectedCreature)
         {
             InitializeComponent();
+
+            lvwCreatureInventory.LargeImageList = Program.ItemImageList;
+            lvwCreatureInventory.SmallImageList = Program.ItemImageList;
 
             currentCreature = selectedCreature;
 
@@ -39,20 +43,7 @@ namespace ARKViewer
             lblPlayerLevel.Text = selectedCreature.Level.ToString();
             lblTribeName.Text = selectedCreature.TribeName;
 
-            //inventory images
-            imageList1.Images.Clear();
-            int x = 1;
-            while (true)
-            {
-                Image itemImage = (Image)ARKViewer.Properties.Resources.ResourceManager.GetObject($"item_{x}");
-                if (itemImage == null)
-                {
-                    break;
-                }
-
-                imageList1.Images.Add(itemImage);
-                x++;
-            }
+           
 
             PopulateCreatureInventory();
 
@@ -75,8 +66,9 @@ namespace ARKViewer
                     if (itemMap != null && itemMap.ClassName != "")
                     {
                         itemName = itemMap.FriendlyName;
-                        itemIcon = itemMap.Icon;
                         categoryName = itemMap.Category;
+                        itemIcon = Program.GetItemImageIndex(itemMap.Image);
+                        
                     }
 
                     if (invItem.IsBlueprint) itemName += " (Blueprint)";

@@ -15,8 +15,9 @@ namespace ArkSavegameToolkitNet.Domain
             ArkWildCreature[] wild = null, 
             ArkPlayer[] players = null, 
             ArkTribe[] tribes = null, 
-            ArkItem[] items = null, 
+            ArkItem[] items = null,
             ArkDroppedItem[] droppedItems = null,
+            ArkPlayerDroppedItem[] droppedPlayerItems = null,
             ArkStructure[] structures = null,
             ArkDeathCache[] deathCache = null)
         {
@@ -26,7 +27,7 @@ namespace ArkSavegameToolkitNet.Domain
             _players = players;
             _tribes = tribes;
             _items = items;
-            _droppedItems = droppedItems;
+            _playerDroppedItems = droppedPlayerItems;
             _structures = structures;
             _deathCache = deathCache;
         }
@@ -48,8 +49,12 @@ namespace ArkSavegameToolkitNet.Domain
         public ArkItem[] Items => _items ?? new ArkItem[] { };
         internal ArkItem[] _items;
 
+        public ArkPlayerDroppedItem[] PlayerDroppedItems => _playerDroppedItems ?? new ArkPlayerDroppedItem[] { };
+        internal ArkPlayerDroppedItem[] _playerDroppedItems;
+
         public ArkDroppedItem[] DroppedItems => _droppedItems ?? new ArkDroppedItem[] { };
         internal ArkDroppedItem[] _droppedItems;
+
         public ArkStructure[] Structures => _structures ?? new ArkStructure[] { };
         internal ArkStructure[] _structures;
 
@@ -126,7 +131,7 @@ namespace ArkSavegameToolkitNet.Domain
             other._players = _players;
             other._tribes = _tribes;
             other._items = _items;
-            other._droppedItems = _droppedItems;
+            other._playerDroppedItems = _playerDroppedItems;
             other._structures = _structures;
             other._playerTamedCreatures = _playerTamedCreatures;
             other._tribeTamedCreatures = _tribeTamedCreatures;

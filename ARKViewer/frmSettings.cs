@@ -16,11 +16,21 @@ namespace ARKViewer
         private ColumnHeader SortingColumn_DinoMap = null;
         private ColumnHeader SortingColumn_ItemMap = null;
         private ColumnHeader SortingColumn_StructureMap = null;
+        string imageFolder = "";
 
         public ViewerConfiguration SavedConfig { get; set; }
         public frmSettings(ViewerConfiguration config)
         {
             InitializeComponent();
+
+            lvwItemMap.LargeImageList = Program.ItemImageList;
+            lvwItemMap.SmallImageList = Program.ItemImageList;
+
+            imageFolder = Path.Combine(AppContext.BaseDirectory, @"images\icons\");
+            if (!Directory.Exists(imageFolder))
+            {
+                Directory.CreateDirectory(imageFolder);
+            }
 
             SavedConfig = config;
         }
@@ -103,21 +113,6 @@ namespace ARKViewer
             btnEditDinoClass.Enabled = false;
             btnRemoveDinoClass.Enabled = false;
 
-            //populate imagelist
-            imageList1.Images.Clear();
-            int x = 1;
-            while (true)
-            {
-                Image itemImage = (Image)ARKViewer.Properties.Resources.ResourceManager.GetObject($"item_{x}");
-                if (itemImage == null)
-                {
-                    break;
-                }
-
-                imageList1.Images.Add(itemImage);
-                x++;
-            }
-
             //populate class map
             lvwItemMap.Items.Clear();
             lvwItemMap.Refresh();
@@ -134,7 +129,9 @@ namespace ARKViewer
                     ListViewItem newItem = lvwItemMap.Items.Add(item.Category);
                     newItem.SubItems.Add(item.ClassName);
                     newItem.SubItems.Add(item.FriendlyName);
-                    newItem.ImageIndex = item.Icon - 1;
+
+                    int imageIndex = Program.GetItemImageIndex(item.Image);
+                    newItem.ImageIndex = imageIndex -1;
 
                     newItem.Tag = item;
 
@@ -777,7 +774,7 @@ namespace ARKViewer
 
         private void btnAddDinoClass_Click(object sender, EventArgs e)
         {
-            frmCreatureClassMap mapEditor = new frmCreatureClassMap(SavedConfig.DinoMap, new DinoClassMap());
+            frmGenericClassMap mapEditor = new frmGenericClassMap(new DinoClassMap());
             if(mapEditor.ShowDialog() == DialogResult.OK)
             {
                 //if line already exist for this class update the friendly name.
@@ -790,7 +787,7 @@ namespace ARKViewer
                 else
                 {
                     //not found, add new
-                    SavedConfig.DinoMap.Add(mapEditor.ClassMap);
+                    SavedConfig.DinoMap.Add((DinoClassMap)mapEditor.ClassMap);
                 }
 
                 PopulateDinoClassMap(mapEditor.ClassMap.ClassName);
@@ -802,7 +799,7 @@ namespace ARKViewer
         {
             DinoClassMap selectedDinoMap = (DinoClassMap)lvwDinoClasses.SelectedItems[0].Tag;
 
-            frmCreatureClassMap mapEditor = new frmCreatureClassMap(SavedConfig.DinoMap, selectedDinoMap);
+            frmGenericClassMap mapEditor = new frmGenericClassMap(selectedDinoMap);
             if (mapEditor.ShowDialog() == DialogResult.OK)
             {
                 //if line already exist for this class update the friendly name.
@@ -815,7 +812,7 @@ namespace ARKViewer
                 else
                 {
                     //not found, add new
-                    SavedConfig.DinoMap.Add(mapEditor.ClassMap);
+                    SavedConfig.DinoMap.Add((DinoClassMap)mapEditor.ClassMap);
                 }
 
                 PopulateDinoClassMap(mapEditor.ClassMap.ClassName);
@@ -1021,7 +1018,18 @@ namespace ARKViewer
                 for(int currentIndex = lastIndex; currentIndex >= 0; currentIndex--)
                 {
                     ListViewItem item = lvwItemMap.Items[currentIndex];
-                    if(!(item.SubItems[1].Text.ToLower().Contains(txtItemFilter.Text.ToLower()) | item.SubItems[2].Text.ToLower().Contains(txtItemFilter.Text.ToLower())))
+                    bool shouldKeep = false;
+
+                    foreach (ListViewItem subItem in item.SubItems)
+                    {
+                        if (subItem.Text.ToLower().Contains(txtItemFilter.Text.ToLower()))
+                        {
+                            shouldKeep = true;
+                            break;
+                        }
+                    }
+
+                    if (!shouldKeep)
                     {
                         lvwItemMap.Items.Remove(item);
                     }
@@ -1034,20 +1042,75 @@ namespace ARKViewer
 
         private void btnAddItem_Click(object sender, EventArgs e)
         {
-            //TODO:// implement new item class map screen
-            MessageBox.Show("Item class map editing coming soon.", "Coming soon", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            frmItemClassMap mapEditor = new frmItemClassMap();
+            if (mapEditor.ShowDialog() == DialogResult.OK)
+            {
+                //if line already exist for this class update the friendly name.
+                ItemClassMap existingMap = SavedConfig.ItemMap.Where(i => i.ClassName.ToLower() == mapEditor.ClassMap.ClassName.ToLower()).FirstOrDefault<ItemClassMap>();
+                SavedConfig.ItemMap.Add(mapEditor.ClassMap);
+
+                PopulateItemClassMap(mapEditor.ClassMap.ClassName);
+            }
         }
 
         private void btnRemoveItem_Click(object sender, EventArgs e)
         {
-            //TODO:// implement new item class map screen
-            MessageBox.Show("Item class map editing coming soon.", "Coming soon", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (lvwItemMap.SelectedItems.Count == 0) return;
+            ListViewItem selectedItem = lvwItemMap.SelectedItems[0];
+            ItemClassMap itemMap = (ItemClassMap)selectedItem.Tag;
+
+            Program.ProgramConfig.ItemMap.Remove(itemMap);
+            lvwItemMap.Items.Remove(selectedItem);
         }
 
         private void btnEditItem_Click(object sender, EventArgs e)
         {
-            //TODO:// implement new item class map screen
-            MessageBox.Show("Item class map editing coming soon.", "Coming soon", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (lvwItemMap.SelectedItems.Count == 0) return;
+            ListViewItem selectedItem = lvwItemMap.SelectedItems[0];
+            ItemClassMap itemMap = (ItemClassMap)selectedItem.Tag;
+
+            frmItemClassMap mapEditor = new frmItemClassMap(itemMap);
+            if(mapEditor.ShowDialog() == DialogResult.OK)
+            {
+
+                //if line already exist for this class update the friendly name.
+                ItemClassMap existingMap = SavedConfig.ItemMap.Where(i => i.ClassName.ToLower() == mapEditor.ClassMap.ClassName.ToLower()).FirstOrDefault<ItemClassMap>();
+                if (existingMap != null && existingMap.ClassName.Length != 0)
+                {
+                    //found it, update
+                    existingMap.FriendlyName = mapEditor.ClassMap.FriendlyName;
+                    existingMap.Category = mapEditor.ClassMap.Category;
+                    existingMap.Image = mapEditor.ClassMap.Image;
+                }
+                else
+                {
+                    //not found, add new
+                    SavedConfig.ItemMap.Add(mapEditor.ClassMap);
+                }
+
+                PopulateItemClassMap(mapEditor.ClassMap.ClassName);
+
+                /*
+                selectedItem.Text = mapEditor.ClassMap.Category;
+                selectedItem.SubItems[1].Text = mapEditor.ClassMap.FriendlyName;
+                selectedItem.SubItems[2].Text = mapEditor.ClassMap.ClassName;
+                
+                if(mapEditor.ClassMap.Image.Length > 0)
+                {
+                    if (Program.GetItemImageIndex(mapEditor.ClassMap.Image) ==0)
+                    {
+                        Program.AddItemImageMap(mapEditor.ClassMap.Image);
+                    }
+                }
+
+                int imageIndex = Program.GetItemImageIndex(mapEditor.ClassMap.Image);
+                selectedItem.ImageIndex = imageIndex-1;
+
+                lvwItemMap.Refresh();
+                */
+
+            }
         }
 
         private void lvwItemMap_SelectedIndexChanged(object sender, EventArgs e)
@@ -1116,9 +1179,16 @@ namespace ARKViewer
             UpdatePlayerOptions();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void btnRemoveStructure_Click(object sender, EventArgs e)
         {
+            if (lvwStructureMap.SelectedItems.Count == 0) return;
 
+            StructureClassMap selectedClassMap = (StructureClassMap)lvwStructureMap.SelectedItems[0].Tag;
+            if (MessageBox.Show($"Are you sure you want to remove the display name for '{selectedClassMap.ClassName}'?", "Remove Name?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                SavedConfig.StructureMap.Remove(selectedClassMap);
+                PopulateStructureClassMap("");
+            }
         }
 
         private void lvwStructureMap_ColumnClick(object sender, ColumnClickEventArgs e)
@@ -1185,6 +1255,209 @@ namespace ARKViewer
         private void cboMapSinglePlayer_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnEditColour_Click(object sender, EventArgs e)
+        {
+            ListViewItem selectedItem = lvwColours.SelectedItems[0];
+            ColourMap selectedMap = (ColourMap)selectedItem.Tag;
+            using(frmColourEditor colourEditor = new frmColourEditor(selectedMap))
+            {
+                if(colourEditor.ShowDialog() == DialogResult.OK)
+                {
+                    ColourMap existingMap = Program.ProgramConfig.ColourMap.FirstOrDefault(m => m.Id == colourEditor.SelectedMap.Id);
+                    if (existingMap != null)
+                    {
+                        //update existing
+                        existingMap.Hex = colourEditor.SelectedMap.Hex;
+                    }
+                    else
+                    {
+                        //add new
+                        Program.ProgramConfig.ColourMap.Add(colourEditor.SelectedMap);
+                    }
+
+                    PopulateColours();
+                }
+            }
+        }
+
+        private void btnEditStructure_Click(object sender, EventArgs e)
+        {
+            StructureClassMap selectedStructureMap = (StructureClassMap)lvwStructureMap.SelectedItems[0].Tag;
+
+            frmGenericClassMap mapEditor = new frmGenericClassMap(selectedStructureMap);
+            if (mapEditor.ShowDialog() == DialogResult.OK)
+            {
+                //if line already exist for this class update the friendly name.
+                StructureClassMap existingMap = SavedConfig.StructureMap.Where(d => d.ClassName.ToLower() == mapEditor.ClassMap.ClassName.ToLower()).FirstOrDefault<StructureClassMap>();
+                if (existingMap != null && existingMap.ClassName.Length != 0)
+                {
+                    //found it, update
+                    existingMap.FriendlyName = mapEditor.ClassMap.FriendlyName;
+                }
+                else
+                {
+                    //not found, add new
+                    SavedConfig.StructureMap.Add((StructureClassMap)mapEditor.ClassMap);
+                }
+
+                PopulateStructureClassMap(mapEditor.ClassMap.ClassName);
+            }
+        }
+
+        private void chkApplyFilterStructures_CheckedChanged(object sender, EventArgs e)
+        {
+            txtStructureFilter.Enabled = !chkApplyFilterStructures.Checked;
+            if (!chkApplyFilterStructures.Checked)
+            {
+                txtStructureFilter.Text = string.Empty;
+                PopulateStructureClassMap("");
+                txtStructureFilter.Focus();
+            }
+            else
+            {
+                this.Cursor = Cursors.WaitCursor;
+
+                string filterText = txtStructureFilter.Text.ToLower();
+                ListView selectedListview = lvwStructureMap;
+
+                selectedListview.BeginUpdate();
+                int lastIndex = lvwStructureMap.Items.Count - 1;
+                for (int currentIndex = lastIndex; currentIndex >= 0; currentIndex--)
+                {
+                    ListViewItem item = selectedListview.Items[currentIndex];
+                    if (!(item.SubItems[1].Text.ToLower().Contains(filterText) | item.SubItems[2].Text.ToLower().Contains(filterText)))
+                    {
+                        selectedListview.Items.Remove(item);
+                    }
+                }
+                selectedListview.EndUpdate();
+
+                this.Cursor = Cursors.Default;
+            }
+        }
+
+        private void btnAddStructure_Click(object sender, EventArgs e)
+        {
+            frmGenericClassMap mapEditor = new frmGenericClassMap(new StructureClassMap());
+            if (mapEditor.ShowDialog() == DialogResult.OK)
+            {
+                //if line already exist for this class update the friendly name.
+                StructureClassMap existingMap = SavedConfig.StructureMap.Where(d => d.ClassName.ToLower() == mapEditor.ClassMap.ClassName.ToLower()).FirstOrDefault<StructureClassMap>();
+                if (existingMap != null && existingMap.ClassName.Length != 0)
+                {
+                    //found it, update
+                    existingMap.FriendlyName = mapEditor.ClassMap.FriendlyName;
+                }
+                else
+                {
+                    //not found, add new
+                    SavedConfig.DinoMap.Add((DinoClassMap)mapEditor.ClassMap);
+                }
+
+                PopulateStructureClassMap(mapEditor.ClassMap.ClassName);
+            }
+        }
+
+        private void chkApplyFilterColours_CheckedChanged(object sender, EventArgs e)
+        {
+            ListView selectedListview = lvwColours;
+            TextBox selectedTextbox = txtFilterColour;
+            CheckBox selectedCheckbox = chkApplyFilterColours;
+
+            selectedTextbox.Enabled = !selectedCheckbox.Checked;
+            if (!selectedCheckbox.Checked)
+            {
+                selectedTextbox.Text = string.Empty;
+                PopulateColours();
+                selectedTextbox.Focus();
+            }
+            else
+            {
+                this.Cursor = Cursors.WaitCursor;
+
+                string filterText = selectedTextbox.Text.ToLower();
+                
+
+                selectedListview.BeginUpdate();
+                int lastIndex = lvwStructureMap.Items.Count - 1;
+                for (int currentIndex = lastIndex; currentIndex >= 0; currentIndex--)
+                {
+                    ListViewItem item = selectedListview.Items[currentIndex];
+                    bool shouldKeep = false;
+
+                    foreach(ListViewItem subItem in item.SubItems)
+                    {
+                        if (subItem.Text.ToLower().Contains(filterText))
+                        {
+                            shouldKeep = true;
+                            break;
+                        }
+                    }
+
+                    if (!shouldKeep)
+                    {
+                        selectedListview.Items.Remove(item);
+                    }
+
+                }
+                selectedListview.EndUpdate();
+
+                this.Cursor = Cursors.Default;
+            }
+        }
+
+        private void btnRemoveColour_Click(object sender, EventArgs e)
+        {
+            if (lvwColours.SelectedItems.Count == 0) return;
+
+            ColourMap selectedClassMap = (ColourMap)lvwColours.SelectedItems[0].Tag;
+            if (MessageBox.Show($"Are you sure you want to remove colour for index '{selectedClassMap.Id}'?", "Remove Colour?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                SavedConfig.ColourMap.Remove(selectedClassMap);
+                PopulateColours();
+            }
+        }
+
+        private void btnNewColour_Click(object sender, EventArgs e)
+        {
+            using (frmColourEditor colourEditor = new frmColourEditor())
+            {
+                if (colourEditor.ShowDialog() == DialogResult.OK)
+                {
+                    ColourMap existingMap = Program.ProgramConfig.ColourMap.FirstOrDefault(m => m.Id == colourEditor.SelectedMap.Id);
+                    if (existingMap != null)
+                    {
+                        //update existing
+                        existingMap.Hex = colourEditor.SelectedMap.Hex;
+                    }
+                    else
+                    {
+                        //add new
+                        Program.ProgramConfig.ColourMap.Add(colourEditor.SelectedMap);
+                    }
+
+                    PopulateColours();
+                }
+            }
+        }
+
+        private void lvwColours_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnRemoveColour.Enabled = lvwColours.SelectedItems.Count == 1;
+            btnEditColour.Enabled = lvwColours.SelectedItems.Count == 1;
+        }
+
+        private void lvwStructureMap_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lvwColours_Click(object sender, EventArgs e)
+        {
+            btnRemoveColour.Enabled = lvwColours.SelectedItems.Count == 1;
+            btnEditColour.Enabled = lvwColours.SelectedItems.Count == 1;
         }
     }
 }

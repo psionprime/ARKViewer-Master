@@ -10,20 +10,17 @@ using System.Windows.Forms;
 
 namespace ARKViewer
 {
-    public partial class frmCreatureClassMap : Form
+    public partial class frmGenericClassMap : Form
     {
 
         private ColumnHeader SortingColumn_ClassMap = null;
-
-        private List<DinoClassMap> dinoClassMapList = new List<DinoClassMap>();
-        public DinoClassMap ClassMap { get; set; } = new DinoClassMap();
+        public IGenericClassMap ClassMap { get; set; } = null;
 
 
-        public frmCreatureClassMap(List<DinoClassMap> classMapList, DinoClassMap selectedClassMap) 
+        public frmGenericClassMap(IGenericClassMap selectedClassMap) 
         {
             InitializeComponent();
 
-            dinoClassMapList = classMapList;
             ClassMap = selectedClassMap;
             txtClassName.Text = selectedClassMap.ClassName;
             txtDisplayName.Text = selectedClassMap.FriendlyName;

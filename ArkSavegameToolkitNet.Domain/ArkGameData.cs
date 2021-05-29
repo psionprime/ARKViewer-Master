@@ -197,6 +197,26 @@ namespace ArkSavegameToolkitNet.Domain
 
                 var tribes = arktribes.Select(x => x.Tribe.AsTribe(x.SaveTime)).Where(t=>t.Id!=0).ToArray();
                 var items = objects.Where(x => x.IsItem).Select(x => x.AsItem(save.SaveState)).ToArray();
+                var playerDroppedItems = objects.Where(x => x.IsPlayerDroppedItem).Select(x =>
+                {
+                    ArkPlayerDroppedItem returnValue = null;
+                    GameObject linkedItem = null;
+                    try
+                    {
+                        int linkedItemId = x.GetPropertyValue<ObjectReference>(ArkName.Create("MyItem")).ObjectId;
+                        linkedItem = objects.Where(o => o.ObjectId == linkedItemId).FirstOrDefault();
+                        returnValue = x.AsPlayerDroppedItem(linkedItem, save.SaveState);
+
+                    }
+                    catch
+                    {
+                        Debug.WriteLine("Failed to parse dropped item object, ignoring."); 
+                    }
+
+                    return returnValue;
+
+                }).ToArray();
+
                 var droppedItems = objects.Where(x => x.IsDroppedItem).Select(x =>
                 {
                     ArkDroppedItem returnValue = null;
@@ -210,7 +230,7 @@ namespace ArkSavegameToolkitNet.Domain
                     }
                     catch
                     {
-                        Debug.WriteLine("Failed to parse dropped item object, ignoring."); 
+                        Debug.WriteLine("Failed to parse dropped item object, ignoring.");
                     }
 
                     return returnValue;
@@ -222,7 +242,7 @@ namespace ArkSavegameToolkitNet.Domain
                 var structures = objects.Where(x => x.IsStructure).Select(x => x.AsStructure(save.SaveState)).ToArray();
 
                 
-                ApplyOrSaveNewData(deferApplyNewData, save, tamed, wild, allplayers, tribes, items, droppedItems, structures, playerDeathCache, anonymize);
+                ApplyOrSaveNewData(deferApplyNewData, save, tamed, wild, allplayers, tribes, items, droppedItems, playerDroppedItems, structures, playerDeathCache, anonymize);
 
                 
                 
@@ -244,26 +264,26 @@ namespace ArkSavegameToolkitNet.Domain
         {
             if (_newData != null)
             {
-                ApplyNewData(_newData[0], _newData[1], _newData[2], _newData[3], _newData[4], _newData[5], _newData[6], _newData[7], decouple, _newData[8]);
+                ApplyNewData(_newData[0], _newData[1], _newData[2], _newData[3], _newData[4], _newData[5], _newData[6], _newData[7], _newData[8], decouple, _newData[8]);
                 _newData = null;
                 return true;
             }
             else return false;
         }
 
-        private void ApplyOrSaveNewData(bool deferApplyNewData, ArkSavegame save, ArkTamedCreature[] tamed, ArkWildCreature[] wild, ArkPlayer[] players, ArkTribe[] tribes, ArkItem[] items, ArkDroppedItem[] droppedItems, ArkStructure[] structures, ArkDeathCache[] deathCache, ArkAnonymizeData anonymize = null)
+        private void ApplyOrSaveNewData(bool deferApplyNewData, ArkSavegame save, ArkTamedCreature[] tamed, ArkWildCreature[] wild, ArkPlayer[] players, ArkTribe[] tribes, ArkItem[] items, ArkDroppedItem[] droppedItems, ArkPlayerDroppedItem[] playerDroppedItems, ArkStructure[] structures, ArkDeathCache[] deathCache, ArkAnonymizeData anonymize = null)
         {
             if (deferApplyNewData)
             {
-                _newData = new dynamic[] { save, tamed, wild, players, tribes, items, droppedItems, structures, deathCache, anonymize };
+                _newData = new dynamic[] { save, tamed, wild, players, tribes, items, droppedItems, playerDroppedItems, structures, deathCache, anonymize };
             }
             else
             {
-                ApplyNewData(save, tamed, wild, players, tribes, items, droppedItems, structures, true, deathCache, anonymize);
+                ApplyNewData(save, tamed, wild, players, tribes, items, droppedItems, playerDroppedItems, structures, true, deathCache, anonymize);
             }
         }
 
-        private void ApplyNewData(ArkSavegame save, ArkTamedCreature[] tamed, ArkWildCreature[] wild, ArkPlayer[] players, ArkTribe[] tribes, ArkItem[] items, ArkDroppedItem[] droppedItems, ArkStructure[] structures, bool decouple = true, ArkDeathCache[] deathCache = null, ArkAnonymizeData anonymize = null)
+        private void ApplyNewData(ArkSavegame save, ArkTamedCreature[] tamed, ArkWildCreature[] wild, ArkPlayer[] players, ArkTribe[] tribes, ArkItem[] items, ArkDroppedItem[] droppedItems, ArkPlayerDroppedItem[] playerDroppedItems, ArkStructure[] structures, bool decouple = true, ArkDeathCache[] deathCache = null, ArkAnonymizeData anonymize = null)
         {
             // Anonymize data if requested
             if (anonymize != null)
@@ -275,14 +295,14 @@ namespace ArkSavegameToolkitNet.Domain
             }
 
             // Setup relations in the domain model between entities
-            var newGameData = new ArkGameDataBase(save.SaveState, tamed, wild, players, tribes, items, droppedItems, structures, deathCache);
+            var newGameData = new ArkGameDataBase(save.SaveState, tamed, wild, players, tribes, items, droppedItems,playerDroppedItems, structures, deathCache);
             newGameData.Initialize(_clusterData);
             foreach (var i in tamed) i.Initialize(newGameData, _clusterData);
             foreach (var i in wild) i.Initialize(newGameData, _clusterData);
             foreach (var i in players) i.Initialize(newGameData, _clusterData);
             foreach (var i in tribes) i.Initialize(newGameData, _clusterData);
             foreach (var i in items) i.Initialize(newGameData, _clusterData);
-            foreach (var i in droppedItems) i.Initialize(newGameData, _clusterData);
+            foreach (var i in playerDroppedItems) i.Initialize(newGameData, _clusterData);
             foreach (var i in structures) i.Initialize(newGameData, _clusterData);
             foreach (var i in deathCache) i.Initialize(newGameData, _clusterData);
 
@@ -294,7 +314,7 @@ namespace ArkSavegameToolkitNet.Domain
                 foreach (var i in players) i.Decouple();
                 foreach (var i in tribes) i.Decouple();
                 foreach (var i in items) i.Decouple();
-                foreach (var i in droppedItems) i.Decouple();
+                foreach (var i in playerDroppedItems) i.Decouple();
                 foreach (var i in structures) i.Decouple();
                 foreach (var i in deathCache) i.Decouple();
 

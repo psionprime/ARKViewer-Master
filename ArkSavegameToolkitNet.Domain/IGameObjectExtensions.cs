@@ -63,6 +63,13 @@ namespace ArkSavegameToolkitNet.Domain
             return new ArkItem(self, saveState);
         }
 
+        public static ArkPlayerDroppedItem AsPlayerDroppedItem(this IGameObject self, IGameObject linkedItem, ISaveState saveState)
+        {
+            ArkPlayerDroppedItem droppedItem = new ArkPlayerDroppedItem(self, linkedItem, saveState);
+            return droppedItem;
+
+        }
+
         public static ArkDroppedItem AsDroppedItem(this IGameObject self, IGameObject linkedItem, ISaveState saveState)
         {
             ArkDroppedItem droppedItem = new ArkDroppedItem(self, linkedItem, saveState);

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +21,7 @@ namespace ARKViewer
         {
             InitializeComponent();
 
+            
             selectedStructure = structure;
             string structureName = structure.ClassName;
 
@@ -30,20 +32,6 @@ namespace ARKViewer
             }
             lblStructureName.Text = structureName;
 
-            //inventory images
-            imageList1.Images.Clear();
-            int x = 1;
-            while (true)
-            {
-                Image itemImage = (Image)ARKViewer.Properties.Resources.ResourceManager.GetObject($"item_{x}");
-                if (itemImage == null)
-                {
-                    break;
-                }
-
-                imageList1.Images.Add(itemImage);
-                x++;
-            }
 
             PopulateStructureInventory();
         }
@@ -64,7 +52,7 @@ namespace ARKViewer
                     if (itemMap != null && itemMap.ClassName != "")
                     {
                         itemName = itemMap.FriendlyName;
-                        itemIcon = itemMap.Icon;
+                        itemIcon = Program.GetItemImageIndex(itemMap.Image);
                         categoryName = itemMap.Category;
                     }
 

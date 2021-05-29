@@ -120,22 +120,8 @@
   <metadata name="openFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>114, 17</value>
-  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="chkPasswordVisibility.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6
-        JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAB3RJ
-        TUUH4wwRCicXJdCsAwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAADgSURBVDhP
-        3dI7agJRFIfxMbgAE/CxAMFHdhKJW1A0pY/W0kJMYcDGXZjSxm24ACtRixCXYL4vzJUxGuz9w69wOOfO
-        uceJ7jcpPOMlVo2f3UwB79jj+McOY+RxNU0csMAAHWTwiC42WOIbDZzygA98wXFDinAS31yHh7RhjbX2
-        2BvNsEbJH2SKNIZYIYz/hE8Ya+2x9+IAixzbpuT9PWAOc3aAY0wQrvAGx3VsG/WKPlqowVp7fq8Q4mJc
-        kItyYT04iW+2+d8lJpODf1Vy/GCLEbK4GT+aCsKHVI6f3V+i6AeVIjtp+AHmYgAAAABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="button1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="btnEditColour.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAI
         UAAACFABYaxc2AAAAklJREFUOE+dkU9rE1EUxeNXsJXMTPoNuhTcuvcPdSVYFRfdufcDuOiiaaEhQhM1
@@ -151,6 +137,23 @@
         ctzq9jKrqwAAAABJRU5ErkJggg==
 </value>
   </data>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>114, 17</value>
+  </metadata>
+  <data name="chkPasswordVisibility.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6
+        JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAB3RJ
+        TUUH4wwRCicXJdCsAwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAADgSURBVDhP
+        3dI7agJRFIfxMbgAE/CxAMFHdhKJW1A0pY/W0kJMYcDGXZjSxm24ACtRixCXYL4vzJUxGuz9w69wOOfO
+        uceJ7jcpPOMlVo2f3UwB79jj+McOY+RxNU0csMAAHWTwiC42WOIbDZzygA98wXFDinAS31yHh7RhjbX2
+        2BvNsEbJH2SKNIZYIYz/hE8Ya+2x9+IAixzbpuT9PWAOc3aAY0wQrvAGx3VsG/WKPlqowVp7fq8Q4mJc
+        kItyYT04iW+2+d8lJpODf1Vy/GCLEbK4GT+aCsKHVI6f3V+i6AeVIjtp+AHmYgAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>114, 17</value>
+  </metadata>
   <data name="btnEditDinoClass.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAI
@@ -183,9 +186,6 @@
         ctzq9jKrqwAAAABJRU5ErkJggg==
 </value>
   </data>
-  <metadata name="imageList1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>211, 17</value>
-  </metadata>
   <data name="btnEditItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAI

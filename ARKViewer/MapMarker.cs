@@ -19,8 +19,9 @@ namespace ARKViewer
 
         [DataMember]
         public int Colour { get; set; } = Color.White.ToArgb();
+        
         [DataMember]
-        public int Marker { get; set; } = 0;
+        public string Image { get; set; } = "";
 
         [DataMember]
         public int BorderColour { get; set; } = Color.Black.ToArgb();

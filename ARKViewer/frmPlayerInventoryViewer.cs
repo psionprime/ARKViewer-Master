@@ -31,7 +31,6 @@ namespace ARKViewer
 
         private ArkPlayer currentPlayer = null;
 
-
         private void PopulatePersonalInventory()
         {
             //populate personal inventory list
@@ -51,8 +50,8 @@ namespace ARKViewer
                     if (itemMap != null && itemMap.ClassName != "")
                     {
                         itemName = itemMap.FriendlyName;
-                        itemIcon = itemMap.Icon;
                         categoryName = itemMap.Category;
+                        itemIcon = Program.GetItemImageIndex(itemMap.Image);
                     }
 
                     if (invItem.IsBlueprint) itemName += " (Blueprint)";
@@ -211,7 +210,6 @@ namespace ARKViewer
                             {
                                 itemName = itemMap.FriendlyName;
                                 categoryName = itemMap.Category;
-                                itemIcon = itemMap.Icon;
                             }
                         }
 
@@ -333,7 +331,6 @@ namespace ARKViewer
                             {
                                 itemName = itemMap.FriendlyName;
                                 categoryName = itemMap.Category;
-                                itemIcon = itemMap.Icon;
                             }
                         }
 
@@ -427,6 +424,13 @@ namespace ARKViewer
         {
             InitializeComponent();
 
+            lvwCreatureInventory.SmallImageList = Program.ItemImageList;
+            lvwCreatureInventory.LargeImageList = Program.ItemImageList;
+            lvwPlayerInventory.SmallImageList = Program.ItemImageList;
+            lvwPlayerInventory.LargeImageList = Program.ItemImageList;
+            lvwStorageInventory.LargeImageList = Program.ItemImageList;
+            lvwStorageInventory.SmallImageList = Program.ItemImageList;
+
             currentPlayer = selectedPlayer;
             lblPlayerName.Text = selectedPlayer.CharacterName;
             lblPlayerLevel.Text = selectedPlayer.CharacterLevel.ToString();
@@ -437,19 +441,6 @@ namespace ARKViewer
             
             //inventory images
             itemMapList = availableItemList;
-            imageList1.Images.Clear();
-            int x = 1;
-            while (true)
-            {
-                Image itemImage = (Image)ARKViewer.Properties.Resources.ResourceManager.GetObject($"item_{x}");
-                if (itemImage == null)
-                {
-                    break;
-                }
-
-                imageList1.Images.Add(itemImage);
-                x++;
-            }
 
             PopulateMissionScores();
 

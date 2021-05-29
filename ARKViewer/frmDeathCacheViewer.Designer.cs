@@ -29,7 +29,6 @@ namespace ARKViewer
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.pnlCreatureInventory = new System.Windows.Forms.Panel();
             this.chkApplyFilter = new System.Windows.Forms.CheckBox();
             this.lblCreatureFilter = new System.Windows.Forms.Label();
@@ -38,7 +37,6 @@ namespace ARKViewer
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.lblWindowTitle = new System.Windows.Forms.Label();
             this.btnClose = new System.Windows.Forms.Button();
             this.lblTribeName = new System.Windows.Forms.Label();
@@ -100,11 +98,9 @@ namespace ARKViewer
             this.columnHeader12});
             this.lvwInventory.FullRowSelect = true;
             this.lvwInventory.HideSelection = false;
-            this.lvwInventory.LargeImageList = this.imageList1;
             this.lvwInventory.Location = new System.Drawing.Point(24, 19);
             this.lvwInventory.Name = "lvwInventory";
             this.lvwInventory.Size = new System.Drawing.Size(625, 288);
-            this.lvwInventory.SmallImageList = this.imageList1;
             this.lvwInventory.TabIndex = 0;
             this.lvwInventory.UseCompatibleStateImageBehavior = false;
             this.lvwInventory.View = System.Windows.Forms.View.Details;
@@ -123,12 +119,6 @@ namespace ARKViewer
             // 
             this.columnHeader12.Text = "Qty";
             this.columnHeader12.Width = 48;
-            // 
-            // imageList1
-            // 
-            this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
-            this.imageList1.ImageSize = new System.Drawing.Size(30, 30);
-            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // lblWindowTitle
             // 
@@ -213,7 +203,6 @@ namespace ARKViewer
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.ColumnHeader columnHeader8;
         private System.Windows.Forms.ColumnHeader columnHeader12;
-        private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.Label lblWindowTitle;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Label lblTribeName;

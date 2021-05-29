@@ -36,6 +36,8 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.btnCopyCommand = new System.Windows.Forms.Button();
             this.cboConsoleCommands = new System.Windows.Forms.ComboBox();
+            this.lblInventory = new System.Windows.Forms.Label();
+            this.txtContents = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.picType)).BeginInit();
             this.SuspendLayout();
             // 
@@ -49,7 +51,7 @@
             this.picType.Image = global::ARKViewer.Properties.Resources.structure_marker_beaver;
             this.picType.Location = new System.Drawing.Point(81, 4);
             this.picType.Name = "picType";
-            this.picType.Size = new System.Drawing.Size(102, 50);
+            this.picType.Size = new System.Drawing.Size(198, 50);
             this.picType.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picType.TabIndex = 2;
             this.picType.TabStop = false;
@@ -62,7 +64,7 @@
             this.lblType.ForeColor = System.Drawing.Color.Black;
             this.lblType.Location = new System.Drawing.Point(12, 58);
             this.lblType.Name = "lblType";
-            this.lblType.Size = new System.Drawing.Size(241, 18);
+            this.lblType.Size = new System.Drawing.Size(337, 18);
             this.lblType.TabIndex = 3;
             this.lblType.Text = "Beaver Dams";
             this.lblType.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -80,7 +82,7 @@
             this.lvwMapMarkers.Location = new System.Drawing.Point(15, 79);
             this.lvwMapMarkers.Name = "lvwMapMarkers";
             this.lvwMapMarkers.ShowItemToolTips = true;
-            this.lvwMapMarkers.Size = new System.Drawing.Size(238, 293);
+            this.lvwMapMarkers.Size = new System.Drawing.Size(334, 298);
             this.lvwMapMarkers.TabIndex = 21;
             this.lvwMapMarkers.UseCompatibleStateImageBehavior = false;
             this.lvwMapMarkers.View = System.Windows.Forms.View.Details;
@@ -103,7 +105,7 @@
             // 
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClose.Location = new System.Drawing.Point(178, 411);
+            this.btnClose.Location = new System.Drawing.Point(274, 520);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 22;
@@ -115,7 +117,7 @@
             // 
             this.btnCopyCommand.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCopyCommand.Image = global::ARKViewer.Properties.Resources.button_document;
-            this.btnCopyCommand.Location = new System.Drawing.Point(223, 378);
+            this.btnCopyCommand.Location = new System.Drawing.Point(319, 487);
             this.btnCopyCommand.Name = "btnCopyCommand";
             this.btnCopyCommand.Size = new System.Drawing.Size(30, 30);
             this.btnCopyCommand.TabIndex = 38;
@@ -130,17 +132,43 @@
             this.cboConsoleCommands.FormattingEnabled = true;
             this.cboConsoleCommands.Items.AddRange(new object[] {
             "SetPlayerPos  <x> <y> <z>"});
-            this.cboConsoleCommands.Location = new System.Drawing.Point(14, 382);
+            this.cboConsoleCommands.Location = new System.Drawing.Point(14, 491);
             this.cboConsoleCommands.Name = "cboConsoleCommands";
-            this.cboConsoleCommands.Size = new System.Drawing.Size(201, 21);
+            this.cboConsoleCommands.Size = new System.Drawing.Size(297, 21);
             this.cboConsoleCommands.TabIndex = 36;
+            // 
+            // lblInventory
+            // 
+            this.lblInventory.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblInventory.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblInventory.ForeColor = System.Drawing.Color.Black;
+            this.lblInventory.Location = new System.Drawing.Point(11, 380);
+            this.lblInventory.Name = "lblInventory";
+            this.lblInventory.Size = new System.Drawing.Size(337, 25);
+            this.lblInventory.TabIndex = 39;
+            this.lblInventory.Text = "Selected  Content(s)";
+            this.lblInventory.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // txtContents
+            // 
+            this.txtContents.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtContents.Location = new System.Drawing.Point(15, 408);
+            this.txtContents.Multiline = true;
+            this.txtContents.Name = "txtContents";
+            this.txtContents.ReadOnly = true;
+            this.txtContents.Size = new System.Drawing.Size(334, 73);
+            this.txtContents.TabIndex = 40;
             // 
             // frmStructureLocations
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gainsboro;
-            this.ClientSize = new System.Drawing.Size(265, 442);
+            this.ClientSize = new System.Drawing.Size(361, 551);
+            this.Controls.Add(this.txtContents);
+            this.Controls.Add(this.lblInventory);
             this.Controls.Add(this.btnCopyCommand);
             this.Controls.Add(this.cboConsoleCommands);
             this.Controls.Add(this.btnClose);
@@ -154,6 +182,7 @@
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmStructureLocations_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.picType)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -167,5 +196,7 @@
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnCopyCommand;
         private System.Windows.Forms.ComboBox cboConsoleCommands;
+        private System.Windows.Forms.Label lblInventory;
+        private System.Windows.Forms.TextBox txtContents;
     }
 }

@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDinoInventoryViewer));
             this.lblWindowTitle = new System.Windows.Forms.Label();
             this.picWindowIcon = new System.Windows.Forms.PictureBox();
@@ -40,7 +39,6 @@
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.lblPlayerLevelLabel = new System.Windows.Forms.Label();
             this.lblPlayerLevel = new System.Windows.Forms.Label();
             this.lblTribeName = new System.Windows.Forms.Label();
@@ -128,11 +126,9 @@
             this.columnHeader12});
             this.lvwCreatureInventory.FullRowSelect = true;
             this.lvwCreatureInventory.HideSelection = false;
-            this.lvwCreatureInventory.LargeImageList = this.imageList1;
             this.lvwCreatureInventory.Location = new System.Drawing.Point(24, 19);
             this.lvwCreatureInventory.Name = "lvwCreatureInventory";
             this.lvwCreatureInventory.Size = new System.Drawing.Size(625, 288);
-            this.lvwCreatureInventory.SmallImageList = this.imageList1;
             this.lvwCreatureInventory.TabIndex = 0;
             this.lvwCreatureInventory.UseCompatibleStateImageBehavior = false;
             this.lvwCreatureInventory.View = System.Windows.Forms.View.Details;
@@ -151,12 +147,6 @@
             // 
             this.columnHeader12.Text = "Qty";
             this.columnHeader12.Width = 48;
-            // 
-            // imageList1
-            // 
-            this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
-            this.imageList1.ImageSize = new System.Drawing.Size(30, 30);
-            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // lblPlayerLevelLabel
             // 
@@ -260,7 +250,6 @@
         private System.Windows.Forms.Label lblTribeName;
         private System.Windows.Forms.Label lblPlayerName;
         private System.Windows.Forms.Button btnClose;
-        private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.CheckBox chkApplyFilterDinos;
     }
 }

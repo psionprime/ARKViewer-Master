@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,33 +13,25 @@ namespace ARKViewer
 {
     public partial class frmMarkerEditor : Form
     {
-        private int selectedMarkerIndex = 0;
         private string selectedMap = "TheIsland.ark";
-        private List<Image> markerIcons = new List<Image>();
         public MapMarker EditingMarker { get; set; } = new MapMarker();
         private List<MapMarker> markerList = new List<MapMarker>();
+        string imageFolder = "";
 
         public frmMarkerEditor(string currentMapFile, List<MapMarker> currentMarkers, string selectedMarkerName)
         {
             InitializeComponent();
 
+            imageFolder = Path.Combine(AppContext.BaseDirectory, @"images\");
+            if (!Directory.Exists(imageFolder)) Directory.CreateDirectory(imageFolder);
+
             markerList = currentMarkers;
             selectedMap = currentMapFile;
-
-            for(int markerIndex = 0; markerIndex <= 32; markerIndex++)
-            {
-
-                Image markerImage = (Image)ARKViewer.Properties.Resources.ResourceManager.GetObject($"marker_{markerIndex}");
-                if (markerImage != null)
-                {
-                    markerIcons.Add(markerImage);
-                }
-            }
 
             if(selectedMarkerName.Length > 0)
             {
                 //attempt to find and load it
-                MapMarker selectedMarker = currentMarkers.Where(m => m.Map == currentMapFile && m.Name == selectedMarkerName).FirstOrDefault();
+                MapMarker selectedMarker = currentMarkers.Where(m => m.Map.ToLower() == currentMapFile.ToLower() && m.Name == selectedMarkerName).FirstOrDefault();
                 EditingMarker = selectedMarker;
             }
 
@@ -56,7 +49,6 @@ namespace ARKViewer
             udBorderSize.Value = 0;
             udLat.Value = 0;
             udLon.Value = 0;
-            selectedMarkerIndex = 0;
             picIcon.Image = ARKViewer.Properties.Resources.marker_0;
 
             if (EditingMarker != null)
@@ -67,7 +59,6 @@ namespace ARKViewer
                 udBorderSize.Value = EditingMarker.BorderWidth;
                 udLat.Value = (decimal)EditingMarker.Lat;
                 udLon.Value = (decimal)EditingMarker.Lon;
-                selectedMarkerIndex = EditingMarker.Marker;
                 UpdateImage();
             }
 
@@ -75,43 +66,21 @@ namespace ARKViewer
 
         private void UpdateImage()
         {
-            Image markerImage = (Image)ARKViewer.Properties.Resources.ResourceManager.GetObject($"marker_{selectedMarkerIndex}");
-            picIcon.Image = markerImage;
+            picIcon.Tag = string.Empty;
+
+            if(EditingMarker.Image.Length > 0)
+            {
+                string imageFilename = Path.Combine(imageFolder,EditingMarker.Image);
+                if (File.Exists(imageFilename))
+                {
+                    Image markerImage = Image.FromFile(imageFilename);
+                    picIcon.Image = markerImage;
+                    picIcon.Tag = Path.GetFileName(imageFilename);
+                }
+            }
         }
 
 
-
-
-        private void btnNextIcon_Click(object sender, EventArgs e)
-        {
-            if(selectedMarkerIndex < markerIcons.Count-1)
-            {
-                selectedMarkerIndex += 1;
-
-            }
-            else
-            {
-                selectedMarkerIndex = 0;
-            }
-
-            UpdateImage();
-
-        }
-
-        private void btnPrevIcon_Click(object sender, EventArgs e)
-        {
-            if (selectedMarkerIndex > 0)
-            {
-                selectedMarkerIndex -= 1;
-            }
-            else
-            {
-                selectedMarkerIndex = markerIcons.Count-1;
-
-            }
-            UpdateImage();
-
-        }
 
         private void txtName_Validating(object sender, CancelEventArgs e)
         {
@@ -163,7 +132,57 @@ namespace ARKViewer
             EditingMarker.BorderWidth = (int)udBorderSize.Value;
             EditingMarker.Lat = (double)udLat.Value;
             EditingMarker.Lon = (double)udLon.Value;
-            EditingMarker.Marker = selectedMarkerIndex;
+
+            EditingMarker.Image = picIcon.Tag.ToString();
+        }
+
+        private void picIcon_Click(object sender, EventArgs e)
+        {
+            using(OpenFileDialog dialog = new OpenFileDialog())
+            {
+                string imageFolder = Path.Combine(AppContext.BaseDirectory, @"images\");
+                if (!Directory.Exists(imageFolder)) Directory.CreateDirectory(imageFolder);
+
+
+                dialog.Filter = "All Supported Images|*.ico;*.png;*.jpg;*.bmp";
+                dialog.Title = "Select Marker Icon";
+                dialog.InitialDirectory = imageFolder;
+
+                if(dialog.ShowDialog() == DialogResult.OK)
+                {
+                    using(Image img = Image.FromFile(dialog.FileName))
+                    {
+                        string fileName = dialog.FileName;
+                        var mapIcon = img.GetThumbnailImage(100, 100, () => { return true; },IntPtr.Zero);
+                        picIcon.Image = mapIcon;
+
+                        if(Path.GetDirectoryName(fileName) != Path.GetDirectoryName(imageFolder))
+                        {
+                            //not already in image folder, save for future use
+                            var newFilename = Path.GetFileNameWithoutExtension(Path.GetRandomFileName()) + ".png";
+                            fileName = Path.Combine(imageFolder, newFilename);
+                            mapIcon.Save(fileName, System.Drawing.Imaging.ImageFormat.Png);
+                        }
+
+                        var fileNameOnly = Path.GetFileName(fileName);
+                        picIcon.Tag = fileNameOnly;
+                        
+                    }
+
+
+                }
+
+            }
+        }
+
+        private void udLat_Enter(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void udLon_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }

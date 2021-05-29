@@ -33,6 +33,7 @@ namespace ARKViewer
         private bool isLoading = false;
         private decimal lastSelectedX = 0.0m;
         private decimal lastSelectedY = 0.0m;
+        private string imageFolder = "";
 
         ArkGameData gd = null;
         private ColumnHeader SortingColumn_DetailTame = null;
@@ -60,15 +61,8 @@ namespace ARKViewer
 
             isLoading = true;
 
-            for (int x = 0; x <= 32; x++)
-            {
-                Image image = (Image)ARKViewer.Properties.Resources.ResourceManager.GetObject($"marker_{x}");
-                if (image != null)
-                {
-                    imageList1.Images.Add($"marker_{x}", image);
-                }
-            }
-
+            lvwMapMarkers.SmallImageList = Program.MarkerImageList;
+            lvwMapMarkers.LargeImageList = Program.MarkerImageList;
             
             if(ARKViewer.Program.ProgramConfig.WindowHeight != 0)
             {
@@ -658,14 +652,14 @@ namespace ARKViewer
             cboDroppedItem.Items.Add(new ComboValuePair() { Key = "DeathItemCache_PlayerDeath_C", Value = "[Death Cache]" });
 
 
-            if (gd.DroppedItems != null && gd.DroppedItems.Count() > 0)
+            if (gd.PlayerDroppedItems != null && gd.PlayerDroppedItems.Count() > 0)
             {
                 //player
                 ComboValuePair comboValue = (ComboValuePair)cboDroppedPlayer.SelectedItem;
                 int.TryParse(comboValue.Key, out int selectedPlayerId);
 
 
-                var playerStructureTypes = gd.DroppedItems.Where(s => (s.DroppedByPlayerId == selectedPlayerId || selectedPlayerId == 0))
+                var playerStructureTypes = gd.PlayerDroppedItems.Where(s => (s.DroppedByPlayerId == selectedPlayerId || selectedPlayerId == 0))
                                                             .GroupBy(g => g.ClassName)
                                                             .Select(s => s.Key);
 
@@ -1086,7 +1080,7 @@ namespace ARKViewer
                     if (marker.Name.ToLower().Contains(txtMarkerFilter.Text.ToLower()))
                     {
                         ListViewItem newItem = lvwMapMarkers.Items.Add(marker.Name);
-                        newItem.ImageKey = $"marker_{marker.Marker}";
+                        newItem.ImageIndex = Program.GetMarkerImageIndex(marker.Image);
                         newItem.SubItems.Add(marker.Lat.ToString("0.00"));
                         newItem.SubItems.Add(marker.Lon.ToString("0.00"));
                         newItem.Tag = marker;
@@ -1705,28 +1699,37 @@ namespace ARKViewer
 
 
             //map markers
-            if (lvwMapMarkers.SelectedItems.Count > 0)
+            if (lvwMapMarkers.CheckedItems.Count > 0)
             {
-                MapMarker selectedMarker = (MapMarker)lvwMapMarkers.SelectedItems[0].Tag;
-
-                markerX = ((decimal)selectedMarker.Lon - mapvals.Item4) * mapvals.Item1 / (mapvals.Item5 - mapvals.Item4);
-                markerY = ((decimal)selectedMarker.Lat - mapvals.Item3) * mapvals.Item2 / (mapvals.Item6 - mapvals.Item3);
-
-                Color markerBackGround = Color.FromArgb(selectedMarker.Colour);
-                graphics.FillEllipse(new SolidBrush(markerBackGround), (float)markerX - 17.5f, (float)markerY - 17.5f, 35, 35);
-
-                if (selectedMarker.BorderWidth > 0)
+                foreach(ListViewItem checkedItem in lvwMapMarkers.CheckedItems)
                 {
-                    Color markerBorder = Color.FromArgb(selectedMarker.BorderColour);
-                    graphics.DrawEllipse(new Pen(markerBackGround, selectedMarker.BorderWidth), (float)markerX - 17.5f, (float)markerY - 17.5f, 35, 35);
+                    MapMarker selectedMarker = (MapMarker)checkedItem.Tag;
 
+                    markerX = ((decimal)selectedMarker.Lon - mapvals.Item4) * mapvals.Item1 / (mapvals.Item5 - mapvals.Item4);
+                    markerY = ((decimal)selectedMarker.Lat - mapvals.Item3) * mapvals.Item2 / (mapvals.Item6 - mapvals.Item3);
+
+                    Color markerBackGround = Color.FromArgb(selectedMarker.Colour);
+                    graphics.FillEllipse(new SolidBrush(markerBackGround), (float)markerX - 17.5f, (float)markerY - 17.5f, 35, 35);
+
+
+                    if (selectedMarker.Image.Length > 0)
+                    {
+                        string imageFilename = Path.Combine(imageFolder, selectedMarker.Image);
+                        if (File.Exists(imageFilename))
+                        {
+                            Image markerImage = Image.FromFile(imageFilename);
+                            graphics.DrawImage(new Bitmap(markerImage, 28, 28), (float)markerX - 14.0f, (float)markerY - 14.0f, 28.0f, 28.0f);
+                        }
+                    }
+
+                    if (selectedMarker.BorderWidth > 0)
+                    {
+                        Color markerBorder = Color.FromArgb(selectedMarker.BorderColour);
+                        graphics.DrawEllipse(new Pen(markerBorder, selectedMarker.BorderWidth), (float)markerX - 17.5f, (float)markerY - 17.5f, 35, 35);
+                    }
                 }
 
-                if (selectedMarker.Marker > 0)
-                {
-                    Image markerImage = (Image)ARKViewer.Properties.Resources.ResourceManager.GetObject($"marker_{selectedMarker.Marker}");
-                    graphics.DrawImage(new Bitmap(markerImage, 28, 28), (float)markerX - 14.0f, (float)markerY - 14.0f, 28.0f, 28.0f);
-                }
+                
 
             }
 
@@ -2414,12 +2417,12 @@ namespace ARKViewer
             selectedClass = comboValue.Key;
 
             ConcurrentBag<ListViewItem> listItems = new ConcurrentBag<ListViewItem>();
-            if (gd.DroppedItems != null && gd.DroppedItems.Count() > 0)
+            if (gd.PlayerDroppedItems != null && gd.PlayerDroppedItems.Count() > 0)
             {
 
 
 
-                var droppedItems = gd.DroppedItems.Where(s =>
+                var droppedItems = gd.PlayerDroppedItems.Where(s =>
                                                                 (s.ClassName == selectedClass || selectedClass.Length == 0)
                                                                 &&
                                                                 (s.DroppedByPlayerId == selectedPlayerId || selectedPlayerId == 0)
@@ -3212,9 +3215,36 @@ namespace ARKViewer
 
             
             cboWildClass.Items.Clear();
+            int newIndex = 0;
+
+            //add NONE
+            DinoSummary noneSummary = new DinoSummary()
+            {
+                ClassName = "-1",
+                Name = "[Please Select]",
+                Count = 0,
+                MinLevel = 0,
+                MaxLevel = 0,
+                MaxLength = 100
+            };
+
+            newIndex = cboWildClass.Items.Add(noneSummary);
 
             //add "All" summary
-            int newIndex = 0;
+            DinoSummary allSummary = new DinoSummary()
+            {
+                ClassName = "",
+                Name = "[All Creatures]",
+                Count = wildSummary.Sum(s => s.Count),
+                MinLevel = wildSummary.Min(s => s.Min),
+                MaxLevel = wildSummary.Max(s => s.Max),
+                MaxLength = 100
+            };
+
+            newIndex = cboWildClass.Items.Add(allSummary);
+
+
+
 
             foreach (var summary in wildSummary.OrderBy(o=>o.Name))
             {
@@ -3238,6 +3268,7 @@ namespace ARKViewer
             }
 
 
+         
             lblWildTotal.Text = "TOTAL: " + wildSummary.Sum(w => w.Count).ToString(); ;
             lblStatus.Text = "Wild creatures populated.";
             lblStatus.Refresh();
@@ -3439,7 +3470,7 @@ namespace ARKViewer
             if (markerEditor.ShowDialog() == DialogResult.OK)
             {
                 ListViewItem newItem = lvwMapMarkers.Items.Add(markerEditor.EditingMarker.Name);
-                newItem.ImageKey = $"marker_{markerEditor.EditingMarker.Marker}";
+                newItem.ImageIndex = Program.GetMarkerImageIndex(markerEditor.EditingMarker.Image);
                 newItem.SubItems.Add(markerEditor.EditingMarker.Lat.ToString("0.00"));
                 newItem.SubItems.Add(markerEditor.EditingMarker.Lon.ToString("0.00"));
                 newItem.Tag = markerEditor.EditingMarker;
@@ -3693,7 +3724,7 @@ namespace ARKViewer
             if (markerEditor.ShowDialog() == DialogResult.OK)
             {
                 selectedItem.Text = markerEditor.EditingMarker.Name;
-                selectedItem.ImageKey = $"marker_{markerEditor.EditingMarker.Marker}";
+                selectedItem.ImageKey = $"marker_{markerEditor.EditingMarker.Image}";
                 selectedItem.SubItems[1].Text = markerEditor.EditingMarker.Lat.ToString("0.00");
                 selectedItem.SubItems[2].Text = markerEditor.EditingMarker.Lon.ToString("0.00");
                 selectedItem.Tag = markerEditor.EditingMarker;
@@ -3715,9 +3746,9 @@ namespace ARKViewer
         private void lvwMapMarkers_SelectedIndexChanged(object sender, EventArgs e)
         {
 
-            picMap.Image = DrawMap(lastSelectedX, lastSelectedY);
-            btnEditMarker.Enabled = lvwMapMarkers.SelectedItems.Count > 0;
-            btnRemoveMarker.Enabled = lvwMapMarkers.SelectedItems.Count > 0;
+
+            btnEditMarker.Enabled = lvwMapMarkers.SelectedItems.Count == 1;
+            btnRemoveMarker.Enabled = lvwMapMarkers.SelectedItems.Count == 1;
         }
 
         private void btnRemoveMarker_Click(object sender, EventArgs e)
@@ -5223,7 +5254,7 @@ namespace ARKViewer
 
                 switch (selectedItem.Tag)
                 {
-                    case ArkDroppedItem droppedItem:
+                    case ArkPlayerDroppedItem droppedItem:
                         selectedX = (decimal)droppedItem.Location.Longitude.GetValueOrDefault(0);
                         selectedY = (decimal)droppedItem.Location.Latitude.GetValueOrDefault(0);
 
@@ -5258,7 +5289,7 @@ namespace ARKViewer
                 ListViewItem selectedItem = lvwDroppedItems.SelectedItems[0];
                 switch (selectedItem.Tag)
                 {
-                    case ArkDroppedItem droppedItem:
+                    case ArkPlayerDroppedItem droppedItem:
                         if (droppedItem.Location != null)
                         {
                             commandText = commandText.Replace("<x>", System.FormattableString.Invariant($"{droppedItem.Location.X:0.00}"));
@@ -6440,6 +6471,11 @@ namespace ARKViewer
 
                     break;
             }
+        }
+
+        private void lvwMapMarkers_ItemChecked(object sender, ItemCheckedEventArgs e)
+        {
+            picMap.Image = DrawMap(lastSelectedX, lastSelectedY);
         }
     }
 }

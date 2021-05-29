@@ -28,8 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnNextIcon = new System.Windows.Forms.Button();
-            this.btnPrevIcon = new System.Windows.Forms.Button();
             this.picIcon = new System.Windows.Forms.PictureBox();
             this.lblName = new System.Windows.Forms.Label();
             this.lblBorderSize = new System.Windows.Forms.Label();
@@ -53,37 +51,17 @@
             ((System.ComponentModel.ISupportInitialize)(this.udLon)).BeginInit();
             this.SuspendLayout();
             // 
-            // btnNextIcon
-            // 
-            this.btnNextIcon.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNextIcon.Location = new System.Drawing.Point(221, 268);
-            this.btnNextIcon.Name = "btnNextIcon";
-            this.btnNextIcon.Size = new System.Drawing.Size(28, 101);
-            this.btnNextIcon.TabIndex = 10;
-            this.btnNextIcon.Text = ">";
-            this.btnNextIcon.UseVisualStyleBackColor = true;
-            this.btnNextIcon.Click += new System.EventHandler(this.btnNextIcon_Click);
-            // 
-            // btnPrevIcon
-            // 
-            this.btnPrevIcon.Location = new System.Drawing.Point(14, 268);
-            this.btnPrevIcon.Name = "btnPrevIcon";
-            this.btnPrevIcon.Size = new System.Drawing.Size(28, 101);
-            this.btnPrevIcon.TabIndex = 9;
-            this.btnPrevIcon.Text = "<";
-            this.btnPrevIcon.UseVisualStyleBackColor = true;
-            this.btnPrevIcon.Click += new System.EventHandler(this.btnPrevIcon_Click);
-            // 
             // picIcon
             // 
             this.picIcon.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.picIcon.Image = global::ARKViewer.Properties.Resources.marker_0;
-            this.picIcon.Location = new System.Drawing.Point(81, 269);
+            this.picIcon.Location = new System.Drawing.Point(95, 269);
             this.picIcon.Name = "picIcon";
-            this.picIcon.Size = new System.Drawing.Size(100, 100);
+            this.picIcon.Size = new System.Drawing.Size(64, 64);
             this.picIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picIcon.TabIndex = 2;
             this.picIcon.TabStop = false;
+            this.picIcon.Click += new System.EventHandler(this.picIcon_Click);
             // 
             // lblName
             // 
@@ -189,6 +167,7 @@
             this.udLat.Size = new System.Drawing.Size(235, 22);
             this.udLat.TabIndex = 12;
             this.udLat.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.udLat.Enter += new System.EventHandler(this.udLat_Enter);
             // 
             // lblLat
             // 
@@ -215,6 +194,7 @@
             this.udLon.Size = new System.Drawing.Size(235, 22);
             this.udLon.TabIndex = 14;
             this.udLon.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.udLon.Enter += new System.EventHandler(this.udLon_Enter);
             // 
             // label7
             // 
@@ -296,8 +276,6 @@
             this.Controls.Add(this.lblBorderSize);
             this.Controls.Add(this.lblName);
             this.Controls.Add(this.picIcon);
-            this.Controls.Add(this.btnPrevIcon);
-            this.Controls.Add(this.btnNextIcon);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "frmMarkerEditor";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
@@ -312,9 +290,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Button btnNextIcon;
-        private System.Windows.Forms.Button btnPrevIcon;
         private System.Windows.Forms.PictureBox picIcon;
         private System.Windows.Forms.Label lblName;
         private System.Windows.Forms.Label lblBorderSize;

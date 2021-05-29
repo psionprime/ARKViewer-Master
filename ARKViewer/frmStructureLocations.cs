@@ -151,7 +151,8 @@ namespace ARKViewer
             {
                 selectedMarker = (StructureMarker)selectedItem.Tag;
             }
-            
+
+            txtContents.Text = selectedItem.ToolTipText.Replace("\n", Environment.NewLine);
             
             HighlightStructure?.Invoke(this, selectedMarker);
         }

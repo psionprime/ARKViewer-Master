@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPlayerInventoryViewer));
             this.pnlPlayerInventory = new System.Windows.Forms.Panel();
             this.chkApplyFilterPlayer = new System.Windows.Forms.CheckBox();
@@ -40,7 +39,6 @@
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.tabInventory = new System.Windows.Forms.TabControl();
             this.tpgPlayerInventory = new System.Windows.Forms.TabPage();
             this.lblPlayerLevelLabel = new System.Windows.Forms.Label();
@@ -82,16 +80,16 @@
             this.columnHeader16 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader17 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader18 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.picWindowIcon = new System.Windows.Forms.PictureBox();
-            this.lblWindowTitle = new System.Windows.Forms.Label();
-            this.btnClose = new System.Windows.Forms.Button();
-            this.lblPlayerId = new System.Windows.Forms.Label();
             this.tpgMissions = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
             this.lvwPlayerScores = new System.Windows.Forms.ListView();
             this.columnHeader22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader23 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader24 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.picWindowIcon = new System.Windows.Forms.PictureBox();
+            this.lblWindowTitle = new System.Windows.Forms.Label();
+            this.btnClose = new System.Windows.Forms.Button();
+            this.lblPlayerId = new System.Windows.Forms.Label();
             this.pnlPlayerInventory.SuspendLayout();
             this.tabInventory.SuspendLayout();
             this.tpgPlayerInventory.SuspendLayout();
@@ -102,9 +100,9 @@
             this.tpgStorageInventory.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.pnlStorageInventory.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picWindowIcon)).BeginInit();
             this.tpgMissions.SuspendLayout();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picWindowIcon)).BeginInit();
             this.SuspendLayout();
             // 
             // pnlPlayerInventory
@@ -167,11 +165,9 @@
             this.columnHeader7});
             this.lvwPlayerInventory.FullRowSelect = true;
             this.lvwPlayerInventory.HideSelection = false;
-            this.lvwPlayerInventory.LargeImageList = this.imageList1;
             this.lvwPlayerInventory.Location = new System.Drawing.Point(24, 19);
             this.lvwPlayerInventory.Name = "lvwPlayerInventory";
             this.lvwPlayerInventory.Size = new System.Drawing.Size(621, 290);
-            this.lvwPlayerInventory.SmallImageList = this.imageList1;
             this.lvwPlayerInventory.TabIndex = 0;
             this.lvwPlayerInventory.UseCompatibleStateImageBehavior = false;
             this.lvwPlayerInventory.View = System.Windows.Forms.View.Details;
@@ -202,12 +198,6 @@
             // 
             this.columnHeader7.Text = "Qty";
             this.columnHeader7.Width = 55;
-            // 
-            // imageList1
-            // 
-            this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
-            this.imageList1.ImageSize = new System.Drawing.Size(24, 24);
-            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // tabInventory
             // 
@@ -406,11 +396,9 @@
             this.columnHeader12});
             this.lvwCreatureInventory.FullRowSelect = true;
             this.lvwCreatureInventory.HideSelection = false;
-            this.lvwCreatureInventory.LargeImageList = this.imageList1;
             this.lvwCreatureInventory.Location = new System.Drawing.Point(24, 19);
             this.lvwCreatureInventory.Name = "lvwCreatureInventory";
             this.lvwCreatureInventory.Size = new System.Drawing.Size(619, 288);
-            this.lvwCreatureInventory.SmallImageList = this.imageList1;
             this.lvwCreatureInventory.TabIndex = 0;
             this.lvwCreatureInventory.UseCompatibleStateImageBehavior = false;
             this.lvwCreatureInventory.View = System.Windows.Forms.View.Details;
@@ -561,11 +549,9 @@
             this.columnHeader18});
             this.lvwStorageInventory.FullRowSelect = true;
             this.lvwStorageInventory.HideSelection = false;
-            this.lvwStorageInventory.LargeImageList = this.imageList1;
             this.lvwStorageInventory.Location = new System.Drawing.Point(24, 19);
             this.lvwStorageInventory.Name = "lvwStorageInventory";
             this.lvwStorageInventory.Size = new System.Drawing.Size(621, 290);
-            this.lvwStorageInventory.SmallImageList = this.imageList1;
             this.lvwStorageInventory.TabIndex = 0;
             this.lvwStorageInventory.UseCompatibleStateImageBehavior = false;
             this.lvwStorageInventory.View = System.Windows.Forms.View.Details;
@@ -611,10 +597,66 @@
             this.columnHeader18.Text = "Qty";
             this.columnHeader18.Width = 48;
             // 
+            // tpgMissions
+            // 
+            this.tpgMissions.Controls.Add(this.panel1);
+            this.tpgMissions.Location = new System.Drawing.Point(4, 22);
+            this.tpgMissions.Name = "tpgMissions";
+            this.tpgMissions.Padding = new System.Windows.Forms.Padding(3);
+            this.tpgMissions.Size = new System.Drawing.Size(708, 467);
+            this.tpgMissions.TabIndex = 3;
+            this.tpgMissions.Text = "Mission Scores";
+            this.tpgMissions.UseVisualStyleBackColor = true;
+            // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.BackColor = System.Drawing.Color.PowderBlue;
+            this.panel1.Controls.Add(this.lvwPlayerScores);
+            this.panel1.Location = new System.Drawing.Point(18, 59);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(673, 348);
+            this.panel1.TabIndex = 3;
+            // 
+            // lvwPlayerScores
+            // 
+            this.lvwPlayerScores.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lvwPlayerScores.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader22,
+            this.columnHeader23,
+            this.columnHeader24});
+            this.lvwPlayerScores.FullRowSelect = true;
+            this.lvwPlayerScores.HideSelection = false;
+            this.lvwPlayerScores.Location = new System.Drawing.Point(24, 19);
+            this.lvwPlayerScores.Name = "lvwPlayerScores";
+            this.lvwPlayerScores.Size = new System.Drawing.Size(621, 290);
+            this.lvwPlayerScores.TabIndex = 0;
+            this.lvwPlayerScores.UseCompatibleStateImageBehavior = false;
+            this.lvwPlayerScores.View = System.Windows.Forms.View.Details;
+            this.lvwPlayerScores.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lvwPlayerScores_ColumnClick);
+            // 
+            // columnHeader22
+            // 
+            this.columnHeader22.Text = "Mission";
+            this.columnHeader22.Width = 428;
+            // 
+            // columnHeader23
+            // 
+            this.columnHeader23.Text = "Latest Score";
+            this.columnHeader23.Width = 80;
+            // 
+            // columnHeader24
+            // 
+            this.columnHeader24.Text = "Best Score";
+            this.columnHeader24.Width = 80;
+            // 
             // picWindowIcon
             // 
             this.picWindowIcon.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.picWindowIcon.Image = global::ARKViewer.Properties.Resources.marker_15;
             this.picWindowIcon.Location = new System.Drawing.Point(691, 7);
             this.picWindowIcon.Name = "picWindowIcon";
             this.picWindowIcon.Size = new System.Drawing.Size(30, 30);
@@ -656,65 +698,6 @@
             this.lblPlayerId.TabIndex = 8;
             this.lblPlayerId.Text = "Player Id:";
             // 
-            // tpgMissions
-            // 
-            this.tpgMissions.Controls.Add(this.panel1);
-            this.tpgMissions.Location = new System.Drawing.Point(4, 22);
-            this.tpgMissions.Name = "tpgMissions";
-            this.tpgMissions.Padding = new System.Windows.Forms.Padding(3);
-            this.tpgMissions.Size = new System.Drawing.Size(708, 467);
-            this.tpgMissions.TabIndex = 3;
-            this.tpgMissions.Text = "Mission Scores";
-            this.tpgMissions.UseVisualStyleBackColor = true;
-            // 
-            // panel1
-            // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.BackColor = System.Drawing.Color.PowderBlue;
-            this.panel1.Controls.Add(this.lvwPlayerScores);
-            this.panel1.Location = new System.Drawing.Point(18, 59);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(673, 348);
-            this.panel1.TabIndex = 3;
-            // 
-            // lvwPlayerScores
-            // 
-            this.lvwPlayerScores.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lvwPlayerScores.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader22,
-            this.columnHeader23,
-            this.columnHeader24});
-            this.lvwPlayerScores.FullRowSelect = true;
-            this.lvwPlayerScores.HideSelection = false;
-            this.lvwPlayerScores.LargeImageList = this.imageList1;
-            this.lvwPlayerScores.Location = new System.Drawing.Point(24, 19);
-            this.lvwPlayerScores.Name = "lvwPlayerScores";
-            this.lvwPlayerScores.Size = new System.Drawing.Size(621, 290);
-            this.lvwPlayerScores.SmallImageList = this.imageList1;
-            this.lvwPlayerScores.TabIndex = 0;
-            this.lvwPlayerScores.UseCompatibleStateImageBehavior = false;
-            this.lvwPlayerScores.View = System.Windows.Forms.View.Details;
-            this.lvwPlayerScores.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lvwPlayerScores_ColumnClick);
-            // 
-            // columnHeader22
-            // 
-            this.columnHeader22.Text = "Mission";
-            this.columnHeader22.Width = 428;
-            // 
-            // columnHeader23
-            // 
-            this.columnHeader23.Text = "Latest Score";
-            this.columnHeader23.Width = 80;
-            // 
-            // columnHeader24
-            // 
-            this.columnHeader24.Text = "Best Score";
-            this.columnHeader24.Width = 80;
-            // 
             // frmPlayerInventoryViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -747,9 +730,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.pnlStorageInventory.ResumeLayout(false);
             this.pnlStorageInventory.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picWindowIcon)).EndInit();
             this.tpgMissions.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picWindowIcon)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -799,7 +782,6 @@
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Label lblPlayerLevelLabel;
         private System.Windows.Forms.Label lblPlayerLevel;
-        private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Label lblPlayerId;

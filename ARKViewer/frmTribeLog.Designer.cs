@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmTribeLog));
             this.lblPlayerLevelLabel = new System.Windows.Forms.Label();
             this.lblPlayerLevel = new System.Windows.Forms.Label();
             this.lblTribeName = new System.Windows.Forms.Label();
@@ -36,8 +37,9 @@
             this.pnlPlayerInventory = new System.Windows.Forms.Panel();
             this.lvwLog = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.btnClose = new System.Windows.Forms.Button();
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.btnClose = new System.Windows.Forms.Button();
+            this.btnSettings = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picPlayerGender)).BeginInit();
             this.pnlPlayerInventory.SuspendLayout();
             this.SuspendLayout();
@@ -139,6 +141,11 @@
             this.columnHeader1.Text = "Date";
             this.columnHeader1.Width = 110;
             // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "Information";
+            this.columnHeader3.Width = 630;
+            // 
             // btnClose
             // 
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -152,16 +159,23 @@
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
-            // columnHeader3
+            // btnSettings
             // 
-            this.columnHeader3.Text = "Information";
-            this.columnHeader3.Width = 630;
+            this.btnSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSettings.Image = ((System.Drawing.Image)(resources.GetObject("btnSettings.Image")));
+            this.btnSettings.Location = new System.Drawing.Point(12, 443);
+            this.btnSettings.Name = "btnSettings";
+            this.btnSettings.Size = new System.Drawing.Size(33, 27);
+            this.btnSettings.TabIndex = 20;
+            this.btnSettings.UseVisualStyleBackColor = true;
+            this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
             // 
-            // frmPlayerTribeLog
+            // frmTribeLog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(843, 478);
+            this.Controls.Add(this.btnSettings);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.lblPlayerLevelLabel);
             this.Controls.Add(this.lblPlayerLevel);
@@ -171,7 +185,7 @@
             this.Controls.Add(this.pnlPlayerInventory);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "frmPlayerTribeLog";
+            this.Name = "frmTribeLog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Tribe Log Viewer";
             ((System.ComponentModel.ISupportInitialize)(this.picPlayerGender)).EndInit();
@@ -193,5 +207,6 @@
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.ColumnHeader columnHeader3;
+        private System.Windows.Forms.Button btnSettings;
     }
 }

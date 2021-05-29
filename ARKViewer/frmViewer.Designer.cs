@@ -71,7 +71,6 @@
             this.lvwMapMarkers_Name = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lvwMapMarkers_Lat = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lvwMapMarkers_Lon = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.lblMapMarkerHeader = new System.Windows.Forms.Label();
             this.btnRemoveMarker = new System.Windows.Forms.Button();
             this.btnAddMarker = new System.Windows.Forms.Button();
@@ -611,21 +610,21 @@
             // 
             this.lvwMapMarkers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.lvwMapMarkers.CheckBoxes = true;
             this.lvwMapMarkers.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.lvwMapMarkers_Name,
             this.lvwMapMarkers_Lat,
             this.lvwMapMarkers_Lon});
             this.lvwMapMarkers.FullRowSelect = true;
             this.lvwMapMarkers.HideSelection = false;
-            this.lvwMapMarkers.LargeImageList = this.imageList1;
             this.lvwMapMarkers.Location = new System.Drawing.Point(455, 34);
             this.lvwMapMarkers.Name = "lvwMapMarkers";
             this.lvwMapMarkers.Size = new System.Drawing.Size(359, 221);
-            this.lvwMapMarkers.SmallImageList = this.imageList1;
             this.lvwMapMarkers.TabIndex = 2;
             this.lvwMapMarkers.UseCompatibleStateImageBehavior = false;
             this.lvwMapMarkers.View = System.Windows.Forms.View.Details;
             this.lvwMapMarkers.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lvwMapMarkers_ColumnClick);
+            this.lvwMapMarkers.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.lvwMapMarkers_ItemChecked);
             this.lvwMapMarkers.SelectedIndexChanged += new System.EventHandler(this.lvwMapMarkers_SelectedIndexChanged);
             this.lvwMapMarkers.Click += new System.EventHandler(this.lvwMapMarkers_Click);
             // 
@@ -641,12 +640,6 @@
             // lvwMapMarkers_Lon
             // 
             this.lvwMapMarkers_Lon.Text = "Lon";
-            // 
-            // imageList1
-            // 
-            this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
-            this.imageList1.ImageSize = new System.Drawing.Size(20, 20);
-            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // lblMapMarkerHeader
             // 
@@ -699,7 +692,7 @@
             this.picArtifacts.BackColor = System.Drawing.Color.Cornsilk;
             this.picArtifacts.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.picArtifacts.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picArtifacts.Image = global::ARKViewer.Properties.Resources.structure_marker_trophy;
+            this.picArtifacts.Image = ((System.Drawing.Image)(resources.GetObject("picArtifacts.Image")));
             this.picArtifacts.Location = new System.Drawing.Point(34, 209);
             this.picArtifacts.Name = "picArtifacts";
             this.picArtifacts.Size = new System.Drawing.Size(32, 32);
@@ -752,7 +745,7 @@
             this.picObelisks.BackColor = System.Drawing.Color.Green;
             this.picObelisks.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.picObelisks.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picObelisks.Image = global::ARKViewer.Properties.Resources.structure_marker_obelisk;
+            this.picObelisks.Image = ((System.Drawing.Image)(resources.GetObject("picObelisks.Image")));
             this.picObelisks.Location = new System.Drawing.Point(34, 10);
             this.picObelisks.Name = "picObelisks";
             this.picObelisks.Size = new System.Drawing.Size(32, 32);
@@ -1077,9 +1070,9 @@
             this.chkCryo.Appearance = System.Windows.Forms.Appearance.Button;
             this.chkCryo.BackgroundImage = global::ARKViewer.Properties.Resources.button_cryooff;
             this.chkCryo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.chkCryo.Location = new System.Drawing.Point(623, 194);
+            this.chkCryo.Location = new System.Drawing.Point(762, 15);
             this.chkCryo.Name = "chkCryo";
-            this.chkCryo.Size = new System.Drawing.Size(30, 30);
+            this.chkCryo.Size = new System.Drawing.Size(23, 22);
             this.chkCryo.TabIndex = 36;
             this.toolTip1.SetToolTip(this.chkCryo, "Show/Hide Stored Creatures");
             this.chkCryo.UseVisualStyleBackColor = true;
@@ -1508,7 +1501,7 @@
             this.cboTamePlayers.FormattingEnabled = true;
             this.cboTamePlayers.Location = new System.Drawing.Point(281, 16);
             this.cboTamePlayers.Name = "cboTamePlayers";
-            this.cboTamePlayers.Size = new System.Drawing.Size(204, 21);
+            this.cboTamePlayers.Size = new System.Drawing.Size(178, 21);
             this.cboTamePlayers.TabIndex = 31;
             this.cboTamePlayers.SelectedIndexChanged += new System.EventHandler(this.cboTamePlayers_SelectedIndexChanged);
             // 
@@ -1516,7 +1509,7 @@
             // 
             this.lblTameCreature.AutoSize = true;
             this.lblTameCreature.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTameCreature.Location = new System.Drawing.Point(494, 18);
+            this.lblTameCreature.Location = new System.Drawing.Point(467, 18);
             this.lblTameCreature.Name = "lblTameCreature";
             this.lblTameCreature.Size = new System.Drawing.Size(59, 13);
             this.lblTameCreature.TabIndex = 30;
@@ -1793,7 +1786,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cboTameClass.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboTameClass.FormattingEnabled = true;
-            this.cboTameClass.Location = new System.Drawing.Point(559, 16);
+            this.cboTameClass.Location = new System.Drawing.Point(532, 16);
             this.cboTameClass.Name = "cboTameClass";
             this.cboTameClass.Size = new System.Drawing.Size(224, 21);
             this.cboTameClass.TabIndex = 14;
@@ -2623,9 +2616,9 @@
             this.lblStructureMarkers.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblStructureMarkers.Location = new System.Drawing.Point(9, 16);
             this.lblStructureMarkers.Name = "lblStructureMarkers";
-            this.lblStructureMarkers.Size = new System.Drawing.Size(65, 13);
+            this.lblStructureMarkers.Size = new System.Drawing.Size(93, 13);
             this.lblStructureMarkers.TabIndex = 18;
-            this.lblStructureMarkers.Text = "Structures";
+            this.lblStructureMarkers.Text = "Map Structures";
             // 
             // chkApplyFilterMarkers
             // 
@@ -2799,7 +2792,6 @@
         private System.Windows.Forms.PictureBox picArtifacts;
         private System.Windows.Forms.CheckBox chkArtifacts;
         private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.TextBox txtMarkerFilter;
         private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.Button btnZoomMinus;

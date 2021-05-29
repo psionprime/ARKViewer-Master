@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace ARKViewer
 {
     [DataContract]
-    public class DinoClassMap
+    public class DinoClassMap: IGenericClassMap
     {
         [DataMember]
         public string ClassName { get; set; }

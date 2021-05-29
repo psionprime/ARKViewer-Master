@@ -15,26 +15,40 @@ namespace ARKViewer
     {
 
         private ColumnHeader SortingColumn_Markers = null;
+        private string[] logData = null;
 
         public frmTribeLog(ArkTribe tribe)
         {
             InitializeComponent();
 
+            Color standardBackColour = Color.FromArgb(64, 64, 64);
+            Color overrideBackColour = standardBackColour;
+            lvwLog.BackColor = overrideBackColour;
+
             lblPlayerName.Text = tribe.Name;
             lblPlayerLevelLabel.Visible = false;
             lblPlayerLevel.Text = "";
             lblTribeName.Text = "";
-            picPlayerGender.Image = ARKViewer.Properties.Resources.marker_30;
+            picPlayerGender.Image = ARKViewer.Properties.Resources.marker_28;
 
             lvwLog.Items.Clear();
             if (tribe.Logs.Count() > 0)
             {
-                LoadLog(tribe.Logs);
+                logData = tribe.Logs;
+                LoadLog();
             }
         }
         public frmTribeLog(ArkPlayer player)
         {
             InitializeComponent();
+
+            Color standardBackColour = Color.FromArgb(64, 64, 64);
+            Color overrideBackColour = standardBackColour;
+            lvwLog.BackColor = overrideBackColour;
+
+            Color standardTimestampColour = Color.WhiteSmoke;
+            Color overrideTimestampColour = standardTimestampColour;
+            lvwLog.ForeColor = overrideTimestampColour;
 
             lblPlayerName.Text = player.CharacterName;
             lblPlayerLevel.Text = player.CharacterLevel.ToString();
@@ -46,18 +60,25 @@ namespace ARKViewer
             lvwLog.Items.Clear();
             if(player.Tribe!=null && player.Tribe.Logs.Count() > 0)
             {
-                LoadLog(player.Tribe.Logs);
+                logData = player.Tribe.Logs;
+                LoadLog();
             }
 
 
         }
 
-        private void LoadLog(string[] logFile)
+        private void LoadLog()
         {
+            var logFile = logData;
+            lvwLog.Items.Clear();
+
+            lvwLog.BackColor = Color.FromArgb(Program.ProgramConfig.TribeLogColours.BackgroundColour);
+            lvwLog.ForeColor = Color.FromArgb(Program.ProgramConfig.TribeLogColours.ForegroundColour);
+
             foreach (string logEntry in logFile.Reverse())
             {
 
-                Color textColor = Color.WhiteSmoke;
+                Color standardTextColour = Color.WhiteSmoke;
 
                 int daySeperatorPos = logEntry.IndexOf(",");
                 int infoSeperatorPos = daySeperatorPos + 11;
@@ -103,11 +124,11 @@ namespace ARKViewer
                         if (blueValue > 255) blueValue = 255;
                         try
                         {
-                            textColor = Color.FromArgb(alphaColorValue, redColorValue, greenColorValue, blueColorValue);
+                            standardTextColour = Color.FromArgb(alphaColorValue, redColorValue, greenColorValue, blueColorValue);
                         }
                         catch
                         {
-                            textColor = Color.WhiteSmoke;
+                            standardTextColour = Color.WhiteSmoke;
                         }
                         
 
@@ -122,8 +143,15 @@ namespace ARKViewer
                 newItem.UseItemStyleForSubItems = false;
 
                 newItem.SubItems.Add(logText);
-                newItem.SubItems[1].ForeColor = textColor;
+                newItem.SubItems[1].Tag = standardTextColour;
 
+                int overrideTextColour = standardTextColour.ToArgb();
+                if (Program.ProgramConfig.TribeLogColours.TextColourMap.Any(c=>c.gc == standardTextColour.ToArgb()))
+                {
+                    overrideTextColour = Program.ProgramConfig.TribeLogColours.TextColourMap.First(c => c.gc == standardTextColour.ToArgb()).cc;
+                }
+
+                newItem.SubItems[1].ForeColor = Color.FromArgb(overrideTextColour);
             }
         }
 
@@ -186,6 +214,30 @@ namespace ARKViewer
 
             // Sort.
             lvwLog.Sort();
+        }
+
+        private void btnSettings_Click(object sender, EventArgs e)
+        {
+            frmTribeLogColourMap colourEditor = null;
+
+            //colour settings
+            if(lvwLog.SelectedItems.Count != 0)
+            {
+                ListViewItem selectedItem = lvwLog.SelectedItems[0];
+                Color standardColor = (Color)selectedItem.SubItems[1].Tag;
+                Color overrideColor = selectedItem.SubItems[1].ForeColor;
+                colourEditor = new frmTribeLogColourMap(lvwLog.BackColor, lvwLog.ForeColor, standardColor, overrideColor);
+;            }
+            else 
+            {
+                colourEditor = new frmTribeLogColourMap(lvwLog.BackColor, lvwLog.ForeColor);
+            }
+
+            if (colourEditor.ShowDialog() == DialogResult.OK)
+            {
+                LoadLog();
+            }
+
         }
     }
 }

@@ -73,11 +73,11 @@
             this.optSinglePlayer = new System.Windows.Forms.RadioButton();
             this.optServer = new System.Windows.Forms.RadioButton();
             this.tpgColours = new System.Windows.Forms.TabPage();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.chkApplyFilterColours = new System.Windows.Forms.CheckBox();
+            this.txtFilterColour = new System.Windows.Forms.TextBox();
+            this.btnEditColour = new System.Windows.Forms.Button();
+            this.btnRemoveColour = new System.Windows.Forms.Button();
+            this.btnNewColour = new System.Windows.Forms.Button();
             this.lvwColours = new System.Windows.Forms.ListView();
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -100,7 +100,6 @@
             this.lvwStructureMap = new System.Windows.Forms.ListView();
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.tpgItems = new System.Windows.Forms.TabPage();
             this.chkApplyFilterItems = new System.Windows.Forms.CheckBox();
             this.txtItemFilter = new System.Windows.Forms.TextBox();
@@ -112,6 +111,11 @@
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tpgPlayers = new System.Windows.Forms.TabPage();
+            this.pnlCommandExportOptions = new System.Windows.Forms.Panel();
+            this.optExportNoSort = new System.Windows.Forms.RadioButton();
+            this.optExportSort = new System.Windows.Forms.RadioButton();
+            this.lblCommandExportOptionTitle = new System.Windows.Forms.Label();
+            this.lblCommandExportDescription = new System.Windows.Forms.Label();
             this.pnlFtpSettingsCommands = new System.Windows.Forms.Panel();
             this.optFTPSync = new System.Windows.Forms.RadioButton();
             this.optFTPClean = new System.Windows.Forms.RadioButton();
@@ -139,11 +143,6 @@
             this.lblOptionHeaderStructures = new System.Windows.Forms.Label();
             this.lblOptionTextStructures = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.pnlCommandExportOptions = new System.Windows.Forms.Panel();
-            this.optExportNoSort = new System.Windows.Forms.RadioButton();
-            this.optExportSort = new System.Windows.Forms.RadioButton();
-            this.lblCommandExportOptionTitle = new System.Windows.Forms.Label();
-            this.lblCommandExportDescription = new System.Windows.Forms.Label();
             this.tabSettings.SuspendLayout();
             this.tpgMap.SuspendLayout();
             this.grpServer.SuspendLayout();
@@ -155,12 +154,12 @@
             this.tpgStructures.SuspendLayout();
             this.tpgItems.SuspendLayout();
             this.tpgPlayers.SuspendLayout();
+            this.pnlCommandExportOptions.SuspendLayout();
             this.pnlFtpSettingsCommands.SuspendLayout();
             this.pnlPlayerSettingsCommands.SuspendLayout();
             this.pnlPlayerSettingsBody.SuspendLayout();
             this.pnlPlayerSettingsTames.SuspendLayout();
             this.pnlPlayerSettingsStuctures.SuspendLayout();
-            this.pnlCommandExportOptions.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnSave
@@ -692,72 +691,73 @@
             // 
             // tpgColours
             // 
-            this.tpgColours.Controls.Add(this.checkBox1);
-            this.tpgColours.Controls.Add(this.textBox1);
-            this.tpgColours.Controls.Add(this.button1);
-            this.tpgColours.Controls.Add(this.button2);
-            this.tpgColours.Controls.Add(this.button3);
+            this.tpgColours.Controls.Add(this.chkApplyFilterColours);
+            this.tpgColours.Controls.Add(this.txtFilterColour);
+            this.tpgColours.Controls.Add(this.btnEditColour);
+            this.tpgColours.Controls.Add(this.btnRemoveColour);
+            this.tpgColours.Controls.Add(this.btnNewColour);
             this.tpgColours.Controls.Add(this.lvwColours);
             this.tpgColours.Location = new System.Drawing.Point(4, 22);
             this.tpgColours.Name = "tpgColours";
             this.tpgColours.Size = new System.Drawing.Size(545, 626);
             this.tpgColours.TabIndex = 5;
-            this.tpgColours.Text = "Colours";
+            this.tpgColours.Text = "Creature Colours";
             this.tpgColours.UseVisualStyleBackColor = true;
             // 
-            // checkBox1
+            // chkApplyFilterColours
             // 
-            this.checkBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkBox1.Appearance = System.Windows.Forms.Appearance.Button;
-            this.checkBox1.Enabled = false;
-            this.checkBox1.Image = global::ARKViewer.Properties.Resources.button_filter;
-            this.checkBox1.Location = new System.Drawing.Point(445, 514);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(33, 27);
-            this.checkBox1.TabIndex = 27;
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.chkApplyFilterColours.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkApplyFilterColours.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chkApplyFilterColours.Image = global::ARKViewer.Properties.Resources.button_filter;
+            this.chkApplyFilterColours.Location = new System.Drawing.Point(445, 514);
+            this.chkApplyFilterColours.Name = "chkApplyFilterColours";
+            this.chkApplyFilterColours.Size = new System.Drawing.Size(33, 27);
+            this.chkApplyFilterColours.TabIndex = 27;
+            this.chkApplyFilterColours.UseVisualStyleBackColor = true;
+            this.chkApplyFilterColours.CheckedChanged += new System.EventHandler(this.chkApplyFilterColours_CheckedChanged);
             // 
-            // textBox1
+            // txtFilterColour
             // 
-            this.textBox1.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.textBox1.Enabled = false;
-            this.textBox1.Location = new System.Drawing.Point(108, 517);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(331, 20);
-            this.textBox1.TabIndex = 26;
+            this.txtFilterColour.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.txtFilterColour.Location = new System.Drawing.Point(108, 517);
+            this.txtFilterColour.Name = "txtFilterColour";
+            this.txtFilterColour.Size = new System.Drawing.Size(331, 20);
+            this.txtFilterColour.TabIndex = 26;
             // 
-            // button1
+            // btnEditColour
             // 
-            this.button1.Enabled = false;
-            this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
-            this.button1.Location = new System.Drawing.Point(481, 514);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(34, 27);
-            this.button1.TabIndex = 25;
-            this.toolTip1.SetToolTip(this.button1, "Edit display name");
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnEditColour.Enabled = false;
+            this.btnEditColour.Image = ((System.Drawing.Image)(resources.GetObject("btnEditColour.Image")));
+            this.btnEditColour.Location = new System.Drawing.Point(481, 514);
+            this.btnEditColour.Name = "btnEditColour";
+            this.btnEditColour.Size = new System.Drawing.Size(34, 27);
+            this.btnEditColour.TabIndex = 25;
+            this.toolTip1.SetToolTip(this.btnEditColour, "Edit display name");
+            this.btnEditColour.UseVisualStyleBackColor = true;
+            this.btnEditColour.Click += new System.EventHandler(this.btnEditColour_Click);
             // 
-            // button2
+            // btnRemoveColour
             // 
-            this.button2.Enabled = false;
-            this.button2.Image = global::ARKViewer.Properties.Resources.button_remove;
-            this.button2.Location = new System.Drawing.Point(68, 514);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(34, 27);
-            this.button2.TabIndex = 24;
-            this.toolTip1.SetToolTip(this.button2, "Remove display name");
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnRemoveColour.Enabled = false;
+            this.btnRemoveColour.Image = global::ARKViewer.Properties.Resources.button_remove;
+            this.btnRemoveColour.Location = new System.Drawing.Point(68, 514);
+            this.btnRemoveColour.Name = "btnRemoveColour";
+            this.btnRemoveColour.Size = new System.Drawing.Size(34, 27);
+            this.btnRemoveColour.TabIndex = 24;
+            this.toolTip1.SetToolTip(this.btnRemoveColour, "Remove display name");
+            this.btnRemoveColour.UseVisualStyleBackColor = true;
+            this.btnRemoveColour.Click += new System.EventHandler(this.btnRemoveColour_Click);
             // 
-            // button3
+            // btnNewColour
             // 
-            this.button3.Enabled = false;
-            this.button3.Image = global::ARKViewer.Properties.Resources.button_add;
-            this.button3.Location = new System.Drawing.Point(29, 514);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(34, 27);
-            this.button3.TabIndex = 23;
-            this.toolTip1.SetToolTip(this.button3, "Add new display name");
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnNewColour.Image = global::ARKViewer.Properties.Resources.button_add;
+            this.btnNewColour.Location = new System.Drawing.Point(29, 514);
+            this.btnNewColour.Name = "btnNewColour";
+            this.btnNewColour.Size = new System.Drawing.Size(34, 27);
+            this.btnNewColour.TabIndex = 23;
+            this.toolTip1.SetToolTip(this.btnNewColour, "Add new display name");
+            this.btnNewColour.UseVisualStyleBackColor = true;
+            this.btnNewColour.Click += new System.EventHandler(this.btnNewColour_Click);
             // 
             // lvwColours
             // 
@@ -773,6 +773,8 @@
             this.lvwColours.TabIndex = 22;
             this.lvwColours.UseCompatibleStateImageBehavior = false;
             this.lvwColours.View = System.Windows.Forms.View.Details;
+            this.lvwColours.SelectedIndexChanged += new System.EventHandler(this.lvwColours_SelectedIndexChanged);
+            this.lvwColours.Click += new System.EventHandler(this.lvwColours_Click);
             // 
             // columnHeader4
             // 
@@ -917,6 +919,7 @@
             this.chkApplyFilterStructures.TabIndex = 26;
             this.toolTip1.SetToolTip(this.chkApplyFilterStructures, "Apply/Remove filter");
             this.chkApplyFilterStructures.UseVisualStyleBackColor = true;
+            this.chkApplyFilterStructures.CheckedChanged += new System.EventHandler(this.chkApplyFilterStructures_CheckedChanged);
             // 
             // txtStructureFilter
             // 
@@ -937,6 +940,7 @@
             this.btnEditStructure.TabIndex = 24;
             this.toolTip1.SetToolTip(this.btnEditStructure, "Edit display name");
             this.btnEditStructure.UseVisualStyleBackColor = true;
+            this.btnEditStructure.Click += new System.EventHandler(this.btnEditStructure_Click);
             // 
             // btnRemoveStructure
             // 
@@ -948,7 +952,7 @@
             this.btnRemoveStructure.TabIndex = 23;
             this.toolTip1.SetToolTip(this.btnRemoveStructure, "Remove display name");
             this.btnRemoveStructure.UseVisualStyleBackColor = true;
-            this.btnRemoveStructure.Click += new System.EventHandler(this.button2_Click);
+            this.btnRemoveStructure.Click += new System.EventHandler(this.btnRemoveStructure_Click);
             // 
             // btnAddStructure
             // 
@@ -960,6 +964,7 @@
             this.btnAddStructure.TabIndex = 22;
             this.toolTip1.SetToolTip(this.btnAddStructure, "Add new display name");
             this.btnAddStructure.UseVisualStyleBackColor = true;
+            this.btnAddStructure.Click += new System.EventHandler(this.btnAddStructure_Click);
             // 
             // lvwStructureMap
             // 
@@ -968,15 +973,14 @@
             this.columnHeader6});
             this.lvwStructureMap.FullRowSelect = true;
             this.lvwStructureMap.HideSelection = false;
-            this.lvwStructureMap.LargeImageList = this.imageList1;
             this.lvwStructureMap.Location = new System.Drawing.Point(29, 25);
             this.lvwStructureMap.Name = "lvwStructureMap";
             this.lvwStructureMap.Size = new System.Drawing.Size(485, 482);
-            this.lvwStructureMap.SmallImageList = this.imageList1;
             this.lvwStructureMap.TabIndex = 21;
             this.lvwStructureMap.UseCompatibleStateImageBehavior = false;
             this.lvwStructureMap.View = System.Windows.Forms.View.Details;
             this.lvwStructureMap.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lvwStructureMap_ColumnClick);
+            this.lvwStructureMap.SelectedIndexChanged += new System.EventHandler(this.lvwStructureMap_SelectedIndexChanged);
             // 
             // columnHeader5
             // 
@@ -989,12 +993,6 @@
             this.columnHeader6.DisplayIndex = 0;
             this.columnHeader6.Text = "Display Name";
             this.columnHeader6.Width = 193;
-            // 
-            // imageList1
-            // 
-            this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
-            this.imageList1.ImageSize = new System.Drawing.Size(24, 24);
-            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // tpgItems
             // 
@@ -1076,11 +1074,9 @@
             this.columnHeader2});
             this.lvwItemMap.FullRowSelect = true;
             this.lvwItemMap.HideSelection = false;
-            this.lvwItemMap.LargeImageList = this.imageList1;
             this.lvwItemMap.Location = new System.Drawing.Point(29, 25);
             this.lvwItemMap.Name = "lvwItemMap";
             this.lvwItemMap.Size = new System.Drawing.Size(485, 482);
-            this.lvwItemMap.SmallImageList = this.imageList1;
             this.lvwItemMap.TabIndex = 7;
             this.lvwItemMap.UseCompatibleStateImageBehavior = false;
             this.lvwItemMap.View = System.Windows.Forms.View.Details;
@@ -1090,7 +1086,7 @@
             // columnHeader3
             // 
             this.columnHeader3.Text = "Category";
-            this.columnHeader3.Width = 95;
+            this.columnHeader3.Width = 119;
             // 
             // columnHeader1
             // 
@@ -1120,6 +1116,62 @@
             this.tpgPlayers.Text = "Options";
             this.tpgPlayers.UseVisualStyleBackColor = true;
             this.tpgPlayers.Click += new System.EventHandler(this.tpgPlayers_Click);
+            // 
+            // pnlCommandExportOptions
+            // 
+            this.pnlCommandExportOptions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlCommandExportOptions.BackColor = System.Drawing.Color.PowderBlue;
+            this.pnlCommandExportOptions.Controls.Add(this.optExportNoSort);
+            this.pnlCommandExportOptions.Controls.Add(this.optExportSort);
+            this.pnlCommandExportOptions.Controls.Add(this.lblCommandExportOptionTitle);
+            this.pnlCommandExportOptions.Controls.Add(this.lblCommandExportDescription);
+            this.pnlCommandExportOptions.Location = new System.Drawing.Point(20, 481);
+            this.pnlCommandExportOptions.Name = "pnlCommandExportOptions";
+            this.pnlCommandExportOptions.Size = new System.Drawing.Size(507, 73);
+            this.pnlCommandExportOptions.TabIndex = 21;
+            // 
+            // optExportNoSort
+            // 
+            this.optExportNoSort.AutoSize = true;
+            this.optExportNoSort.Checked = true;
+            this.optExportNoSort.Location = new System.Drawing.Point(347, 37);
+            this.optExportNoSort.Name = "optExportNoSort";
+            this.optExportNoSort.Size = new System.Drawing.Size(39, 17);
+            this.optExportNoSort.TabIndex = 5;
+            this.optExportNoSort.TabStop = true;
+            this.optExportNoSort.Text = "No";
+            this.optExportNoSort.UseVisualStyleBackColor = true;
+            // 
+            // optExportSort
+            // 
+            this.optExportSort.AutoSize = true;
+            this.optExportSort.Location = new System.Drawing.Point(440, 37);
+            this.optExportSort.Name = "optExportSort";
+            this.optExportSort.Size = new System.Drawing.Size(43, 17);
+            this.optExportSort.TabIndex = 3;
+            this.optExportSort.Text = "Yes";
+            this.optExportSort.UseVisualStyleBackColor = true;
+            // 
+            // lblCommandExportOptionTitle
+            // 
+            this.lblCommandExportOptionTitle.AutoSize = true;
+            this.lblCommandExportOptionTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCommandExportOptionTitle.Location = new System.Drawing.Point(10, 14);
+            this.lblCommandExportOptionTitle.Name = "lblCommandExportOptionTitle";
+            this.lblCommandExportOptionTitle.Size = new System.Drawing.Size(175, 18);
+            this.lblCommandExportOptionTitle.TabIndex = 2;
+            this.lblCommandExportOptionTitle.Text = "Command Line Export";
+            // 
+            // lblCommandExportDescription
+            // 
+            this.lblCommandExportDescription.AutoSize = true;
+            this.lblCommandExportDescription.Location = new System.Drawing.Point(10, 39);
+            this.lblCommandExportDescription.Name = "lblCommandExportDescription";
+            this.lblCommandExportDescription.Size = new System.Drawing.Size(175, 13);
+            this.lblCommandExportDescription.TabIndex = 0;
+            this.lblCommandExportDescription.Text = "Sort creature exports by class name";
             // 
             // pnlFtpSettingsCommands
             // 
@@ -1430,62 +1482,6 @@
             this.toolTip1.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.toolTip1.ToolTipTitle = "Information";
             // 
-            // pnlCommandExportOptions
-            // 
-            this.pnlCommandExportOptions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlCommandExportOptions.BackColor = System.Drawing.Color.PowderBlue;
-            this.pnlCommandExportOptions.Controls.Add(this.optExportNoSort);
-            this.pnlCommandExportOptions.Controls.Add(this.optExportSort);
-            this.pnlCommandExportOptions.Controls.Add(this.lblCommandExportOptionTitle);
-            this.pnlCommandExportOptions.Controls.Add(this.lblCommandExportDescription);
-            this.pnlCommandExportOptions.Location = new System.Drawing.Point(20, 481);
-            this.pnlCommandExportOptions.Name = "pnlCommandExportOptions";
-            this.pnlCommandExportOptions.Size = new System.Drawing.Size(507, 73);
-            this.pnlCommandExportOptions.TabIndex = 21;
-            // 
-            // optExportNoSort
-            // 
-            this.optExportNoSort.AutoSize = true;
-            this.optExportNoSort.Checked = true;
-            this.optExportNoSort.Location = new System.Drawing.Point(347, 37);
-            this.optExportNoSort.Name = "optExportNoSort";
-            this.optExportNoSort.Size = new System.Drawing.Size(39, 17);
-            this.optExportNoSort.TabIndex = 5;
-            this.optExportNoSort.TabStop = true;
-            this.optExportNoSort.Text = "No";
-            this.optExportNoSort.UseVisualStyleBackColor = true;
-            // 
-            // optExportSort
-            // 
-            this.optExportSort.AutoSize = true;
-            this.optExportSort.Location = new System.Drawing.Point(440, 37);
-            this.optExportSort.Name = "optExportSort";
-            this.optExportSort.Size = new System.Drawing.Size(43, 17);
-            this.optExportSort.TabIndex = 3;
-            this.optExportSort.Text = "Yes";
-            this.optExportSort.UseVisualStyleBackColor = true;
-            // 
-            // lblCommandExportOptionTitle
-            // 
-            this.lblCommandExportOptionTitle.AutoSize = true;
-            this.lblCommandExportOptionTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCommandExportOptionTitle.Location = new System.Drawing.Point(10, 14);
-            this.lblCommandExportOptionTitle.Name = "lblCommandExportOptionTitle";
-            this.lblCommandExportOptionTitle.Size = new System.Drawing.Size(175, 18);
-            this.lblCommandExportOptionTitle.TabIndex = 2;
-            this.lblCommandExportOptionTitle.Text = "Command Line Export";
-            // 
-            // lblCommandExportDescription
-            // 
-            this.lblCommandExportDescription.AutoSize = true;
-            this.lblCommandExportDescription.Location = new System.Drawing.Point(10, 39);
-            this.lblCommandExportDescription.Name = "lblCommandExportDescription";
-            this.lblCommandExportDescription.Size = new System.Drawing.Size(175, 13);
-            this.lblCommandExportDescription.TabIndex = 0;
-            this.lblCommandExportDescription.Text = "Sort creature exports by class name";
-            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1521,6 +1517,8 @@
             this.tpgItems.ResumeLayout(false);
             this.tpgItems.PerformLayout();
             this.tpgPlayers.ResumeLayout(false);
+            this.pnlCommandExportOptions.ResumeLayout(false);
+            this.pnlCommandExportOptions.PerformLayout();
             this.pnlFtpSettingsCommands.ResumeLayout(false);
             this.pnlFtpSettingsCommands.PerformLayout();
             this.pnlPlayerSettingsCommands.ResumeLayout(false);
@@ -1531,8 +1529,6 @@
             this.pnlPlayerSettingsTames.PerformLayout();
             this.pnlPlayerSettingsStuctures.ResumeLayout(false);
             this.pnlPlayerSettingsStuctures.PerformLayout();
-            this.pnlCommandExportOptions.ResumeLayout(false);
-            this.pnlCommandExportOptions.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1588,7 +1584,6 @@
         private System.Windows.Forms.ListView lvwItemMap;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
-        private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.TextBox txtCreatureFilter;
         private System.Windows.Forms.TextBox txtItemFilter;
@@ -1626,11 +1621,11 @@
         private System.Windows.Forms.ColumnHeader columnHeader5;
         private System.Windows.Forms.ColumnHeader columnHeader6;
         private System.Windows.Forms.TabPage tpgColours;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.CheckBox chkApplyFilterColours;
+        private System.Windows.Forms.TextBox txtFilterColour;
+        private System.Windows.Forms.Button btnEditColour;
+        private System.Windows.Forms.Button btnRemoveColour;
+        private System.Windows.Forms.Button btnNewColour;
         private System.Windows.Forms.ListView lvwColours;
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.ColumnHeader columnHeader7;

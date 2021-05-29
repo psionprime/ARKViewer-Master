@@ -38,7 +38,9 @@ namespace ArkSavegameToolkitNet
             IsPlayerCharacter = 1 << 14,
             IsStructurePaintingComponent = 1 << 15,
             IsDeathItemCache = 1 << 16,
-            IsSomethingElse = 1 << 17
+            IsSomethingElse = 1 << 17,
+            IsPlayerDroppedItem = 1 << 18
+
         }
 
         private static ILog _logger = LogManager.GetLogger(typeof(GameObject));
@@ -84,6 +86,8 @@ namespace ArkSavegameToolkitNet
         public bool IsStructurePaintingComponent => (_isFlags & GameObjectIs.IsStructurePaintingComponent) == GameObjectIs.IsStructurePaintingComponent;
         public bool IsDeathItemCache => (_isFlags & GameObjectIs.IsDeathItemCache) == GameObjectIs.IsDeathItemCache;
         public bool IsSomethingElse => (_isFlags & GameObjectIs.IsSomethingElse) == GameObjectIs.IsSomethingElse;
+
+        public bool IsPlayerDroppedItem => (_isFlags & GameObjectIs.IsDroppedItem) == GameObjectIs.IsPlayerDroppedItem;
 
         //public bool IsCreature { get; set; }
         //public bool IsTamedCreature { get; set; }
@@ -313,7 +317,7 @@ namespace ArkSavegameToolkitNet
                         targetingTeamId = targetingTeam.Value.GetValueOrDefault(0);
                     }
 
-                    if (Properties.ContainsKey(_tamedOnServer) || Properties.ContainsKey(_imprinterName) || (tamingTeamID >= 50000 && tamingTeamID < 2147483647))
+                    if (Properties.ContainsKey(_tamedOnServer) || Properties.ContainsKey(_imprinterName) || tamingTeamID >= 50000)
                     {
                         _isFlags |= GameObjectIs.IsTamedCreature;
                     }
@@ -332,16 +336,23 @@ namespace ArkSavegameToolkitNet
 
                 if (ClassName.Token.StartsWith("DroppedItemGeneric_") &! ClassName.Name.Contains("NoPhysics")) 
                 {
-                    
+
+                    bool playerTribeAssociated = false;
                     if (Properties.ContainsKey(_droppedByPlayerId))
                     {
+
                         PropertyInt64 selectedPlayerId = (PropertyInt64)Properties[_droppedByPlayerId];
 
                         if (selectedPlayerId.Value != 0)
                         {
-                            _isFlags |= GameObjectIs.IsDroppedItem;
+                            _isFlags |= GameObjectIs.IsPlayerDroppedItem;
+                            playerTribeAssociated = true;
                         }
 
+                    }
+                    if (!playerTribeAssociated)
+                    {
+                        _isFlags |= GameObjectIs.IsDroppedItem;
                     }
                 }
 
