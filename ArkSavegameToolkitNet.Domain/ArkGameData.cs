@@ -264,7 +264,7 @@ namespace ArkSavegameToolkitNet.Domain
         {
             if (_newData != null)
             {
-                ApplyNewData(_newData[0], _newData[1], _newData[2], _newData[3], _newData[4], _newData[5], _newData[6], _newData[7], _newData[8], decouple, _newData[8]);
+                ApplyNewData(_newData[0], _newData[1], _newData[2], _newData[3], _newData[4], _newData[5], _newData[6], _newData[7], _newData[8], decouple, _newData[9]);
                 _newData = null;
                 return true;
             }
