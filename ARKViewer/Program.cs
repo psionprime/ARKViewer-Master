@@ -47,7 +47,10 @@ namespace ARKViewer
             MarkerImageFolder = Path.Combine(appFolder, @"images\");
 
 
-            
+            //ensure image folders exist
+            if (!Directory.Exists(MarkerImageFolder)) Directory.CreateDirectory(MarkerImageFolder);
+            if (!Directory.Exists(ItemImageFolder)) Directory.CreateDirectory(ItemImageFolder);
+
 
             //support quoted command line arguments which doesn't seem to be supported with Environment.GetCommandLineArgs() 
             string[] commandArguments = Regex.Split(Environment.CommandLine.Trim(), " (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
@@ -1066,37 +1069,45 @@ namespace ARKViewer
             ItemImageKeyMap.Clear();
             ItemImageList.Images.Clear();
 
-            var itemImageFiles = Directory.GetFiles(ItemImageFolder, "*.png");
-            int imageIndex = 1;
-            foreach(string fullFilename in itemImageFiles)
+            if (Directory.Exists(ItemImageFolder))
             {
-                if (File.Exists(fullFilename))
+
+                var itemImageFiles = Directory.GetFiles(ItemImageFolder, "*.png");
+                int imageIndex = 1;
+                foreach (string fullFilename in itemImageFiles)
                 {
-                    Image itemImage = Image.FromFile(fullFilename);
-                    ItemImageList.Images.Add(itemImage);
+                    if (File.Exists(fullFilename))
+                    {
+                        Image itemImage = Image.FromFile(fullFilename);
+                        ItemImageList.Images.Add(itemImage);
 
-                    ItemImageKeyMap.Add(Path.GetFileName(fullFilename), imageIndex);
-                    imageIndex++;
+                        ItemImageKeyMap.Add(Path.GetFileName(fullFilename), imageIndex);
+                        imageIndex++;
+                    }
                 }
-            }
 
+            }
 
             MarkerImageKeyMap.Clear();
             MarkerImageList.Images.Clear();
 
-            var markerImageFiles = Directory.GetFiles(MarkerImageFolder, "*.png");
-            int markerIndex = 1;
-            foreach (string fullFilename in markerImageFiles)
+            if (Directory.Exists(MarkerImageFolder))
             {
-                if (File.Exists(fullFilename))
+                var markerImageFiles = Directory.GetFiles(MarkerImageFolder, "*.png");
+                int markerIndex = 1;
+                foreach (string fullFilename in markerImageFiles)
                 {
-                    Image itemImage = Image.FromFile(fullFilename);
-                    MarkerImageList.Images.Add(itemImage);
-                    MarkerImageKeyMap.Add(Path.GetFileName(fullFilename), markerIndex);
-                    markerIndex++;
+                    if (File.Exists(fullFilename))
+                    {
+                        Image itemImage = Image.FromFile(fullFilename);
+                        MarkerImageList.Images.Add(itemImage);
+                        MarkerImageKeyMap.Add(Path.GetFileName(fullFilename), markerIndex);
+                        markerIndex++;
+                    }
                 }
-            }
 
+
+            }
 
         }
 

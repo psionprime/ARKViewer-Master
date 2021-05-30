@@ -365,7 +365,7 @@ namespace ARKViewer
                     item.ClassName = itemObject.Value<string>("ClassName");
                     item.FriendlyName = itemObject.Value<string>("FriendlyName");
                     item.Category = itemObject.Value<string>("Category");
-                    item.Image = itemObject.Value<string>("Image");
+                    item.Image = itemObject.Value<string>("Image") ;
                     ItemMap.Add(item);
                 }
             }
