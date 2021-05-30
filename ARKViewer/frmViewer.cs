@@ -2419,69 +2419,9 @@ namespace ARKViewer
 
             ConcurrentBag<ListViewItem> listItems = new ConcurrentBag<ListViewItem>();
 
-            if (gd.DroppedItems != null && gd.DroppedItems.Count(c=>c.DroppedByPlayerId.HasValue) > 0)
-            {
 
 
-
-                var droppedItems = gd.DroppedItems.Where(s =>
-                                                                (s.ClassName == selectedClass || selectedClass.Length == 0)
-                                                                &&
-                                                                (s.DroppedByPlayerId == selectedPlayerId || selectedPlayerId == 0)
-                                                                && s.DroppedByPlayerId != 0
-
-                                                           );
-
-                //item, dropped by, lat, lon, tribe, player
-
-                if(droppedItems!=null && droppedItems.LongCount(d=>d.DroppedByPlayerId !=0) > 0)
-                {
-                    
-                    Parallel.ForEach(droppedItems,  droppedItem =>
-                    {
-                        string itemName = droppedItem.ClassName;
-                        ItemClassMap itemMap = Program.ProgramConfig.ItemMap.Where(m => m.ClassName == droppedItem.ClassName).FirstOrDefault();
-                        if (itemMap != null)
-                        {
-                            itemName = itemMap.FriendlyName;
-                        }
-                        //tribe name
-                        string tribeName = "";
-
-
-                        //player name
-                        string playerName = "";
-                        PlayerMap playerMap = allPlayers.Where(p => p.PlayerId == droppedItem.DroppedByPlayerId).FirstOrDefault();
-                        if (playerMap != null)
-                        {
-                            playerName = playerMap.PlayerName;
-                            TribeMap tribeMap = allTribes.Where(t => t.TribeId == playerMap.TribeId).FirstOrDefault();
-                            if (tribeMap != null)
-                            {
-                                tribeName = tribeMap.TribeName;
-                            }
-                        }
-                        else
-                        {
-                            //check tamed dinos
-
-                        }
-
-                        ListViewItem newItem = new ListViewItem(itemName);
-                        newItem.Tag = droppedItem;
-                        newItem.SubItems.Add(droppedItem.DroppedByName);
-                        newItem.SubItems.Add(droppedItem.Location == null ? "N/A" : droppedItem.Location.Latitude.Value.ToString("0.00"));
-                        newItem.SubItems.Add(droppedItem.Location == null ? "N/A" : droppedItem.Location.Longitude.Value.ToString("0.00"));
-                        newItem.SubItems.Add(tribeName);
-                        newItem.SubItems.Add(playerName);
-
-                        listItems.Add(newItem);
-
-                    });
-
-                }
-
-            }
+                
 
             if(selectedClass == "DeathItemCache_PlayerDeath_C")
             {
@@ -2523,33 +2463,103 @@ namespace ARKViewer
                 });
 
             }
-
-            var nonPlayerDrops = gd.DroppedItems.Where(d => d.DroppedByPlayerId == 0).ToList();
-
-            if (selectedPlayerId < 0)
+            else
             {
-                Parallel.ForEach(nonPlayerDrops, droppedItem =>
+
+                if (gd.DroppedItems != null && gd.DroppedItems.Count(c => c.DroppedByPlayerId.HasValue) > 0)
                 {
-                    string itemName = droppedItem.ClassName;
-                    ItemClassMap itemMap = Program.ProgramConfig.ItemMap.Where(m => m.ClassName == droppedItem.ClassName).FirstOrDefault();
-                    if (itemMap != null)
+
+                    var droppedItems = gd.DroppedItems.Where(s =>
+                                                                                    (s.ClassName == selectedClass || selectedClass.Length == 0)
+                                                                                    &&
+                                                                                    (s.DroppedByPlayerId == selectedPlayerId || selectedPlayerId == 0)
+                                                                                    && s.DroppedByPlayerId != 0
+
+                                                                               );
+
+                    //item, dropped by, lat, lon, tribe, player
+
+                    if (droppedItems != null)
                     {
-                        itemName = itemMap.FriendlyName;
+
+                        Parallel.ForEach(droppedItems, droppedItem =>
+                        {
+                            string itemName = droppedItem.ClassName;
+                            ItemClassMap itemMap = Program.ProgramConfig.ItemMap.Where(m => m.ClassName == droppedItem.ClassName).FirstOrDefault();
+                            if (itemMap != null)
+                            {
+                                itemName = itemMap.FriendlyName;
+                            }
+                            //tribe name
+                            string tribeName = "";
+
+
+                            //player name
+                            string playerName = "";
+                            PlayerMap playerMap = allPlayers.Where(p => p.PlayerId == droppedItem.DroppedByPlayerId).FirstOrDefault();
+                            if (playerMap != null)
+                            {
+                                playerName = playerMap.PlayerName;
+                                TribeMap tribeMap = allTribes.Where(t => t.TribeId == playerMap.TribeId).FirstOrDefault();
+                                if (tribeMap != null)
+                                {
+                                    tribeName = tribeMap.TribeName;
+                                }
+                            }
+                            else
+                            {
+                                //check tamed dinos
+
+                            }
+
+                            ListViewItem newItem = new ListViewItem(itemName);
+                            newItem.Tag = droppedItem;
+                            newItem.SubItems.Add(droppedItem.DroppedByName);
+                            newItem.SubItems.Add(droppedItem.Location == null ? "N/A" : droppedItem.Location.Latitude.Value.ToString("0.00"));
+                            newItem.SubItems.Add(droppedItem.Location == null ? "N/A" : droppedItem.Location.Longitude.Value.ToString("0.00"));
+                            newItem.SubItems.Add(tribeName);
+                            newItem.SubItems.Add(playerName);
+
+                            listItems.Add(newItem);
+
+                        });
+
                     }
 
-                    ListViewItem newItem = new ListViewItem(itemName);
-                    newItem.Tag = droppedItem;
-                    newItem.SubItems.Add(droppedItem.DroppedByName);
-                    newItem.SubItems.Add(droppedItem.Location == null ? "N/A" : droppedItem.Location.Latitude.Value.ToString("0.00"));
-                    newItem.SubItems.Add(droppedItem.Location == null ? "N/A" : droppedItem.Location.Longitude.Value.ToString("0.00"));
-                    newItem.SubItems.Add("n/a");
-                    newItem.SubItems.Add("n/a");
+                }
 
-                    listItems.Add(newItem);
 
-                });
+                var nonPlayerDrops = gd.DroppedItems.Where(d => d.DroppedByPlayerId == 0).ToList();
+
+                if (selectedPlayerId < 0)
+                {
+                    Parallel.ForEach(nonPlayerDrops, droppedItem =>
+                    {
+                        string itemName = droppedItem.ClassName;
+                        ItemClassMap itemMap = Program.ProgramConfig.ItemMap.Where(m => m.ClassName == droppedItem.ClassName).FirstOrDefault();
+                        if (itemMap != null)
+                        {
+                            itemName = itemMap.FriendlyName;
+                        }
+
+                        ListViewItem newItem = new ListViewItem(itemName);
+                        newItem.Tag = droppedItem;
+                        newItem.SubItems.Add(droppedItem.DroppedByName);
+                        newItem.SubItems.Add(droppedItem.Location == null ? "N/A" : droppedItem.Location.Latitude.Value.ToString("0.00"));
+                        newItem.SubItems.Add(droppedItem.Location == null ? "N/A" : droppedItem.Location.Longitude.Value.ToString("0.00"));
+                        newItem.SubItems.Add("n/a");
+                        newItem.SubItems.Add("n/a");
+
+                        listItems.Add(newItem);
+
+                    });
+
+                }
+
 
             }
+
+
 
 
             lvwDroppedItems.Items.AddRange(listItems.ToArray());

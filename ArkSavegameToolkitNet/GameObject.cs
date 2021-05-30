@@ -38,8 +38,7 @@ namespace ArkSavegameToolkitNet
             IsPlayerCharacter = 1 << 14,
             IsStructurePaintingComponent = 1 << 15,
             IsDeathItemCache = 1 << 16,
-            IsSomethingElse = 1 << 17,
-            IsPlayerDroppedItem = 1 << 18
+            IsSomethingElse = 1 << 17
 
         }
 
@@ -87,25 +86,6 @@ namespace ArkSavegameToolkitNet
         public bool IsDeathItemCache => (_isFlags & GameObjectIs.IsDeathItemCache) == GameObjectIs.IsDeathItemCache;
         public bool IsSomethingElse => (_isFlags & GameObjectIs.IsSomethingElse) == GameObjectIs.IsSomethingElse;
 
-        public bool IsPlayerDroppedItem => (_isFlags & GameObjectIs.IsDroppedItem) == GameObjectIs.IsPlayerDroppedItem;
-
-        //public bool IsCreature { get; set; }
-        //public bool IsTamedCreature { get; set; }
-        //public bool IsWildCreature { get; set; }
-        //public bool IsRaftCreature { get; set; }
-        //public bool IsStructure { get; set; }
-        //public bool IsInventory { get; set; }
-        //public bool IsTamedCreatureInventory { get; set; }
-        //public bool IsWildCreatureInventory { get; set; }
-        //public bool IsStructureInventory { get; set; }
-        //public bool IsPlayerCharacterInventory { get; set; }
-        //public bool IsStatusComponent { get; set; }
-        //public bool IsDinoStatusComponent { get; set; }
-        //public bool IsPlayerCharacterStatusComponent { get; set; }
-        //public bool IsDroppedItem { get; set; }
-        //public bool IsPlayerCharacter { get; set; }
-        //public bool IsStructurePaintingComponent { get; set; }
-        //public bool IsSomethingElse { get; set; }
 
         private ArkNameCache _arkNameCache;
 
@@ -337,23 +317,7 @@ namespace ArkSavegameToolkitNet
                 if (ClassName.Token.StartsWith("DroppedItemGeneric_") &! ClassName.Name.Contains("NoPhysics")) 
                 {
 
-                    bool playerTribeAssociated = false;
-                    if (Properties.ContainsKey(_droppedByPlayerId))
-                    {
-
-                        PropertyInt64 selectedPlayerId = (PropertyInt64)Properties[_droppedByPlayerId];
-
-                        if (selectedPlayerId.Value != 0)
-                        {
-                            _isFlags |= GameObjectIs.IsPlayerDroppedItem;
-                            playerTribeAssociated = true;
-                        }
-
-                    }
-                    if (!playerTribeAssociated)
-                    {
-                        _isFlags |= GameObjectIs.IsDroppedItem;
-                    }
+                    _isFlags |= GameObjectIs.IsDroppedItem;
 
                     goto SkipRest;
                 }
