@@ -5293,7 +5293,7 @@ namespace ARKViewer
 
                 switch (selectedItem.Tag)
                 {
-                    case ArkPlayerDroppedItem droppedItem:
+                    case ArkDroppedItem droppedItem:
                         selectedX = (decimal)droppedItem.Location.Longitude.GetValueOrDefault(0);
                         selectedY = (decimal)droppedItem.Location.Latitude.GetValueOrDefault(0);
 
@@ -5328,7 +5328,7 @@ namespace ARKViewer
                 ListViewItem selectedItem = lvwDroppedItems.SelectedItems[0];
                 switch (selectedItem.Tag)
                 {
-                    case ArkPlayerDroppedItem droppedItem:
+                    case ArkDroppedItem droppedItem:
                         if (droppedItem.Location != null)
                         {
                             commandText = commandText.Replace("<x>", System.FormattableString.Invariant($"{droppedItem.Location.X:0.00}"));
