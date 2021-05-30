@@ -10,14 +10,13 @@ namespace ArkSavegameToolkitNet.Domain
     public class ArkGameDataBase : IArkGameData
     {
         public ArkGameDataBase(
-            SaveState saveState = null, 
-            ArkTamedCreature[] tamed = null, 
-            ArkWildCreature[] wild = null, 
-            ArkPlayer[] players = null, 
-            ArkTribe[] tribes = null, 
+            SaveState saveState = null,
+            ArkTamedCreature[] tamed = null,
+            ArkWildCreature[] wild = null,
+            ArkPlayer[] players = null,
+            ArkTribe[] tribes = null,
             ArkItem[] items = null,
             ArkDroppedItem[] droppedItems = null,
-            ArkPlayerDroppedItem[] droppedPlayerItems = null,
             ArkStructure[] structures = null,
             ArkDeathCache[] deathCache = null)
         {
@@ -27,7 +26,7 @@ namespace ArkSavegameToolkitNet.Domain
             _players = players;
             _tribes = tribes;
             _items = items;
-            _playerDroppedItems = droppedPlayerItems;
+            _droppedItems = droppedItems;
             _structures = structures;
             _deathCache = deathCache;
         }
@@ -40,7 +39,7 @@ namespace ArkSavegameToolkitNet.Domain
         public ArkWildCreature[] WildCreatures => _wildCreatures ?? new ArkWildCreature[] { };
         internal ArkWildCreature[] _wildCreatures;
 
-        public ArkTribe[] Tribes =>_tribes ?? new ArkTribe[] { };
+        public ArkTribe[] Tribes => _tribes ?? new ArkTribe[] { };
         internal ArkTribe[] _tribes;
 
         public ArkPlayer[] Players => _players ?? new ArkPlayer[] { };
@@ -49,12 +48,8 @@ namespace ArkSavegameToolkitNet.Domain
         public ArkItem[] Items => _items ?? new ArkItem[] { };
         internal ArkItem[] _items;
 
-        public ArkPlayerDroppedItem[] PlayerDroppedItems => _playerDroppedItems ?? new ArkPlayerDroppedItem[] { };
-        internal ArkPlayerDroppedItem[] _playerDroppedItems;
-
         public ArkDroppedItem[] DroppedItems => _droppedItems ?? new ArkDroppedItem[] { };
         internal ArkDroppedItem[] _droppedItems;
-
         public ArkStructure[] Structures => _structures ?? new ArkStructure[] { };
         internal ArkStructure[] _structures;
 
@@ -131,7 +126,7 @@ namespace ArkSavegameToolkitNet.Domain
             other._players = _players;
             other._tribes = _tribes;
             other._items = _items;
-            other._playerDroppedItems = _playerDroppedItems;
+            other._droppedItems = _droppedItems;
             other._structures = _structures;
             other._playerTamedCreatures = _playerTamedCreatures;
             other._tribeTamedCreatures = _tribeTamedCreatures;
@@ -168,7 +163,7 @@ namespace ArkSavegameToolkitNet.Domain
 
             _inventoryItems = Items.Where(x => x.OwnerInventoryId.HasValue).GroupBy(x => x.OwnerInventoryId.Value).ToDictionary(x => x.Key, x => x.ToArray());
 
-        
+
             Rafts = TamedCreatures?.Where(x => x.ClassName.Equals("Raft_BP_C") || x.ClassName.Equals("MotorRaft_BP_C")).ToArray() ?? new ArkTamedCreature[] { };
             NoRafts = TamedCreatures?.Where(x => !x.ClassName.Equals("Raft_BP_C") && !x.ClassName.Equals("MotorRaft_BP_C")).ToArray() ?? new ArkTamedCreature[] { };
             CloudCreatures = clusterData?._cloudCreatures ?? new ArkTamedCreature[] { };

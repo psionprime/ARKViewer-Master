@@ -615,6 +615,7 @@ namespace ARKViewer
             if (gd == null) return;
 
             cboDroppedPlayer.Items.Clear();
+            cboDroppedPlayer.Items.Add(new ComboValuePair("-1", "[None Player]"));
             cboDroppedPlayer.Items.Add(new ComboValuePair("0", "[All Players]"));
 
             List<ComboValuePair> newItems = new List<ComboValuePair>();
@@ -651,7 +652,7 @@ namespace ARKViewer
             cboDroppedItem.Items.Add(new ComboValuePair() { Key = "", Value = "[Dropped Items]" });
             cboDroppedItem.Items.Add(new ComboValuePair() { Key = "DeathItemCache_PlayerDeath_C", Value = "[Death Cache]" });
 
-
+            /*
             if (gd.PlayerDroppedItems != null && gd.PlayerDroppedItems.Count() > 0)
             {
                 //player
@@ -692,7 +693,7 @@ namespace ARKViewer
 
 
             }
-
+            */
        
             if (newItems.Count > 0)
             {
@@ -1080,7 +1081,7 @@ namespace ARKViewer
                     if (marker.Name.ToLower().Contains(txtMarkerFilter.Text.ToLower()))
                     {
                         ListViewItem newItem = lvwMapMarkers.Items.Add(marker.Name);
-                        newItem.ImageIndex = Program.GetMarkerImageIndex(marker.Image);
+                        newItem.ImageIndex = Program.GetMarkerImageIndex(marker.Image) -  1;
                         newItem.SubItems.Add(marker.Lat.ToString("0.00"));
                         newItem.SubItems.Add(marker.Lon.ToString("0.00"));
                         newItem.Tag = marker;
@@ -2417,16 +2418,17 @@ namespace ARKViewer
             selectedClass = comboValue.Key;
 
             ConcurrentBag<ListViewItem> listItems = new ConcurrentBag<ListViewItem>();
-            if (gd.PlayerDroppedItems != null && gd.PlayerDroppedItems.Count() > 0)
+
+            if (gd.DroppedItems != null && gd.DroppedItems.Count(c=>c.DroppedByPlayerId.HasValue) > 0)
             {
 
 
 
-                var droppedItems = gd.PlayerDroppedItems.Where(s =>
+                var droppedItems = gd.DroppedItems.Where(s =>
                                                                 (s.ClassName == selectedClass || selectedClass.Length == 0)
                                                                 &&
                                                                 (s.DroppedByPlayerId == selectedPlayerId || selectedPlayerId == 0)
-                                                                && s.DroppedByPlayerId != null
+                                                                && s.DroppedByPlayerId != 0
 
                                                            );
 
@@ -2515,6 +2517,33 @@ namespace ARKViewer
                     newItem.SubItems.Add(playerCache.Location == null ? "N/A" : playerCache.Location.Longitude.Value.ToString("0.00"));
                     newItem.SubItems.Add(tribeName);
                     newItem.SubItems.Add(playerName);
+
+                    listItems.Add(newItem);
+
+                });
+
+            }
+
+            var nonPlayerDrops = gd.DroppedItems.Where(d => d.DroppedByPlayerId == 0).ToList();
+
+            if (selectedPlayerId < 0)
+            {
+                Parallel.ForEach(nonPlayerDrops, droppedItem =>
+                {
+                    string itemName = droppedItem.ClassName;
+                    ItemClassMap itemMap = Program.ProgramConfig.ItemMap.Where(m => m.ClassName == droppedItem.ClassName).FirstOrDefault();
+                    if (itemMap != null)
+                    {
+                        itemName = itemMap.FriendlyName;
+                    }
+
+                    ListViewItem newItem = new ListViewItem(itemName);
+                    newItem.Tag = droppedItem;
+                    newItem.SubItems.Add(droppedItem.DroppedByName);
+                    newItem.SubItems.Add(droppedItem.Location == null ? "N/A" : droppedItem.Location.Latitude.Value.ToString("0.00"));
+                    newItem.SubItems.Add(droppedItem.Location == null ? "N/A" : droppedItem.Location.Longitude.Value.ToString("0.00"));
+                    newItem.SubItems.Add("n/a");
+                    newItem.SubItems.Add("n/a");
 
                     listItems.Add(newItem);
 
@@ -3470,7 +3499,7 @@ namespace ARKViewer
             if (markerEditor.ShowDialog() == DialogResult.OK)
             {
                 ListViewItem newItem = lvwMapMarkers.Items.Add(markerEditor.EditingMarker.Name);
-                newItem.ImageIndex = Program.GetMarkerImageIndex(markerEditor.EditingMarker.Image);
+                newItem.ImageIndex = Program.GetMarkerImageIndex(markerEditor.EditingMarker.Image) -1;
                 newItem.SubItems.Add(markerEditor.EditingMarker.Lat.ToString("0.00"));
                 newItem.SubItems.Add(markerEditor.EditingMarker.Lon.ToString("0.00"));
                 newItem.Tag = markerEditor.EditingMarker;

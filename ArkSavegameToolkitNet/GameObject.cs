@@ -354,6 +354,8 @@ namespace ArkSavegameToolkitNet
                     {
                         _isFlags |= GameObjectIs.IsDroppedItem;
                     }
+
+                    goto SkipRest;
                 }
 
                 if (IsItem)
@@ -384,12 +386,6 @@ namespace ArkSavegameToolkitNet
                     goto SkipRest;
                 }
 
-                if (ClassName.Equals(_droppedItem))
-                {
-                    _isFlags |= GameObjectIs.IsDroppedItem;
-
-                    goto SkipRest;
-                }
 
                 if (ClassName.Equals(_male) || ClassName.Equals(_female))
                 {
