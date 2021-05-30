@@ -7,7 +7,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ARKViewer
+namespace ARKViewer.Configuration
 {
     [DataContract]
     public class ServerConfiguration

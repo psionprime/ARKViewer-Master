@@ -1,5 +1,7 @@
 ﻿using ArkSavegameToolkitNet.Domain;
 using ArkSavegameToolkitNet.Structs;
+using ARKViewer.Configuration;
+using ARKViewer.CustomNameMaps;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Concurrent;
@@ -794,9 +796,11 @@ namespace ARKViewer
 
                                                         jw.WriteEndObject();
                                                     }
+
+                                                    jw.WriteEndArray();
                                                 }
 
-                                                jw.WriteEndArray();
+            
 
                                                 jw.WritePropertyName("tames");
                                                 jw.WriteValue(playerTribe.TameCount);

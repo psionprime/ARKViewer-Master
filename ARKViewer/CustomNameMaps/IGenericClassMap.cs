@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ARKViewer
+namespace ARKViewer.CustomNameMaps
 {
     public interface IGenericClassMap
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ARKViewer
+namespace ARKViewer.CustomNameMaps
 {
     public class PlayerMap:IEquatable<PlayerMap>
     {

@@ -20,6 +20,8 @@ using FluentFTP;
 using System.Threading.Tasks;
 using System.Collections.Concurrent;
 using System.CodeDom;
+using ARKViewer.CustomNameMaps;
+using ARKViewer.Configuration;
 
 namespace ARKViewer
 {
@@ -652,23 +654,23 @@ namespace ARKViewer
             cboDroppedItem.Items.Add(new ComboValuePair() { Key = "", Value = "[Dropped Items]" });
             cboDroppedItem.Items.Add(new ComboValuePair() { Key = "DeathItemCache_PlayerDeath_C", Value = "[Death Cache]" });
 
-            /*
-            if (gd.PlayerDroppedItems != null && gd.PlayerDroppedItems.Count() > 0)
+            
+            if (gd.DroppedItems != null && gd.DroppedItems.Count() > 0)
             {
                 //player
                 ComboValuePair comboValue = (ComboValuePair)cboDroppedPlayer.SelectedItem;
                 int.TryParse(comboValue.Key, out int selectedPlayerId);
 
 
-                var playerStructureTypes = gd.PlayerDroppedItems.Where(s => (s.DroppedByPlayerId == selectedPlayerId || selectedPlayerId == 0))
+                var droppedItems = gd.DroppedItems.Where(s => (selectedPlayerId != 0 && s.DroppedByPlayerId == selectedPlayerId || selectedPlayerId == 0 && s.DroppedByPlayerId > 0 || s.DroppedByPlayerId == 0 && selectedPlayerId < 0))
                                                             .GroupBy(g => g.ClassName)
                                                             .Select(s => s.Key);
 
 
-                if (playerStructureTypes != null && playerStructureTypes.Count() > 0)
+                if (droppedItems != null && droppedItems.Count() > 0)
                 {
 
-                    foreach (var className in playerStructureTypes)
+                    foreach (var className in droppedItems)
                     {
                         var itemName = className;
                         var itemMap = Program.ProgramConfig.ItemMap.Where(i => i.ClassName == className).FirstOrDefault();
@@ -693,7 +695,6 @@ namespace ARKViewer
 
 
             }
-            */
        
             if (newItems.Count > 0)
             {
@@ -2419,10 +2420,6 @@ namespace ARKViewer
 
             ConcurrentBag<ListViewItem> listItems = new ConcurrentBag<ListViewItem>();
 
-
-
-                
-
             if(selectedClass == "DeathItemCache_PlayerDeath_C")
             {
                 Parallel.ForEach(gd.PlayerDeathCache, playerCache =>
@@ -2472,8 +2469,7 @@ namespace ARKViewer
                     var droppedItems = gd.DroppedItems.Where(s =>
                                                                                     (s.ClassName == selectedClass || selectedClass.Length == 0)
                                                                                     &&
-                                                                                    (s.DroppedByPlayerId == selectedPlayerId || selectedPlayerId == 0)
-                                                                                    && s.DroppedByPlayerId != 0
+                                                                                    (selectedPlayerId != 0 && s.DroppedByPlayerId == selectedPlayerId || selectedPlayerId == 0  && s.DroppedByPlayerId > 0 || s.DroppedByPlayerId == 0 && selectedPlayerId < 0)
 
                                                                                );
 
@@ -2491,11 +2487,11 @@ namespace ARKViewer
                                 itemName = itemMap.FriendlyName;
                             }
                             //tribe name
-                            string tribeName = "";
+                            string tribeName = "n/a";
 
 
                             //player name
-                            string playerName = "";
+                            string playerName = "n/a";
                             PlayerMap playerMap = allPlayers.Where(p => p.PlayerId == droppedItem.DroppedByPlayerId).FirstOrDefault();
                             if (playerMap != null)
                             {
@@ -2528,33 +2524,6 @@ namespace ARKViewer
 
                 }
 
-
-                var nonPlayerDrops = gd.DroppedItems.Where(d => d.DroppedByPlayerId == 0).ToList();
-
-                if (selectedPlayerId < 0)
-                {
-                    Parallel.ForEach(nonPlayerDrops, droppedItem =>
-                    {
-                        string itemName = droppedItem.ClassName;
-                        ItemClassMap itemMap = Program.ProgramConfig.ItemMap.Where(m => m.ClassName == droppedItem.ClassName).FirstOrDefault();
-                        if (itemMap != null)
-                        {
-                            itemName = itemMap.FriendlyName;
-                        }
-
-                        ListViewItem newItem = new ListViewItem(itemName);
-                        newItem.Tag = droppedItem;
-                        newItem.SubItems.Add(droppedItem.DroppedByName);
-                        newItem.SubItems.Add(droppedItem.Location == null ? "N/A" : droppedItem.Location.Latitude.Value.ToString("0.00"));
-                        newItem.SubItems.Add(droppedItem.Location == null ? "N/A" : droppedItem.Location.Longitude.Value.ToString("0.00"));
-                        newItem.SubItems.Add("n/a");
-                        newItem.SubItems.Add("n/a");
-
-                        listItems.Add(newItem);
-
-                    });
-
-                }
 
 
             }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.Runtime.Serialization;
 
-namespace ARKViewer
+namespace ARKViewer.CustomNameMaps
 {
     [DataContract]
     public class ColourMap

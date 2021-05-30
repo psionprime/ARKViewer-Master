@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ARKViewer.Configuration;
+using ARKViewer.CustomNameMaps;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -383,6 +385,7 @@ namespace ARKViewer
             lblSelectedMapSP.BackColor = optSinglePlayer.Checked?Color.Aqua:Color.LightGray;
             lblOfflineSave.BackColor = optOffline.Checked? Color.Aqua : Color.LightGray;
             lblFTPServer.BackColor = optServer.Checked ? Color.Aqua : Color.LightGray;
+            lblSelectedMapContentPack.BackColor = optContentPack.Checked ? Color.Aqua : Color.LightGray;
 
             chkUpdateNotificationSingle.Enabled = optSinglePlayer.Checked;
             chkUpdateNotificationFile.Enabled = optOffline.Checked;
@@ -395,6 +398,10 @@ namespace ARKViewer
             
             txtFilename.Enabled = optOffline.Checked;
             btnSelectSaveGame.Enabled = optOffline.Checked;
+
+            txtContentPackFilename.Enabled = optContentPack.Checked;
+            btnLoadContentPack.Enabled = optContentPack.Checked;
+
 
             cboFTPServer.Enabled = optServer.Checked;
             txtFTPAddress.Enabled = optServer.Checked && cboFTPServer.Visible == false;

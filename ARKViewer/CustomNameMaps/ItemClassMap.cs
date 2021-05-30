@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ARKViewer
+namespace ARKViewer.CustomNameMaps
 {
-    [DataContract]
-    public class DinoClassMap: IGenericClassMap
+    public class ItemClassMap
     {
-        [DataMember]
         public string ClassName { get; set; }
-        [DataMember]
         public string FriendlyName { get; set; }
+        public string Category { get; set; }
+        public string Image { get; set; } = "";
+
 
     }
 }

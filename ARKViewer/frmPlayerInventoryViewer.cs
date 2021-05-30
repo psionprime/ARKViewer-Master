@@ -1,4 +1,5 @@
 ﻿using ArkSavegameToolkitNet.Domain;
+using ARKViewer.CustomNameMaps;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;

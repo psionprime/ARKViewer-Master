@@ -76,5 +76,18 @@ namespace ARKViewer
             return gd.Tribes.Where(t => selectedTribeId == 0 || t.Id == selectedTribeId).ToList();
         }
 
+        public List<ArkDroppedItem> GetDroppedItems(int playerId, string className)
+        {
+
+            return new List<ArkDroppedItem>();
+
+
+        }
+
+        public List<ArkDeathCache> GetDeathCacheBags(int playerId)
+        {
+            return new List<ArkDeathCache>();
+        }
+
     }
 }

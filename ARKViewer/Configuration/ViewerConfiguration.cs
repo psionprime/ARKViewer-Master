@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using ARKViewer.CustomNameMaps;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ARKViewer
+namespace ARKViewer.Configuration
 {
 
 
