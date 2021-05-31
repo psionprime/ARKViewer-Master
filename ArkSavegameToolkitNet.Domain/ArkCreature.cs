@@ -83,7 +83,7 @@ namespace ArkSavegameToolkitNet.Domain
 
         public ArkCreature()
         {
-            Colors = new sbyte[_colorSetIndices.Length];
+            Colors = new byte[_colorSetIndices.Length];
             BaseStats = new byte[_numberOfLevelUpPointsApplied.Length];
         }
 
@@ -100,7 +100,7 @@ namespace ArkSavegameToolkitNet.Domain
             IsBaby = creature.GetPropertyValue<bool?>(_bIsBaby) ?? false;
             BabyAge = creature.GetPropertyValue<float?>(_babyAge);
             Gender = creature.GetPropertyValue<bool?>(_bIsFemale) == true ? ArkCreatureGender.Female : ArkCreatureGender.Male;
-            for (var i = 0; i < Colors.Length; i++) Colors[i] = creature.GetPropertyValue<sbyte?>(_colorSetIndices[i]) ?? 0;
+            for (var i = 0; i < Colors.Length; i++) Colors[i] = creature.GetPropertyValue<byte?>(_colorSetIndices[i]) ?? 0;
 
             if (status != null)
             {
@@ -122,7 +122,7 @@ namespace ArkSavegameToolkitNet.Domain
         public float? BabyAge { get; set; }
         [JsonConverter(typeof(StringEnumConverter))]
         public ArkCreatureGender Gender { get; set; }
-        public sbyte[] Colors { get; set; }
+        public byte[] Colors { get; set; }
         public byte[] BaseStats { get; set; }
         public ArkLocation Location { get; set; }
     }

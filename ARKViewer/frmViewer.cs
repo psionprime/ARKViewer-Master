@@ -22,6 +22,7 @@ using System.Collections.Concurrent;
 using System.CodeDom;
 using ARKViewer.CustomNameMaps;
 using ARKViewer.Configuration;
+using ARKViewer.Models;
 
 namespace ARKViewer
 {
@@ -56,23 +57,21 @@ namespace ARKViewer
         private int mapMouseDownY = 0;
         private int mapMouseDownZoom = 0;
         
-        
-        public frmViewer()
+        private void InitializeDefaults()
         {
-            InitializeComponent();
-
             isLoading = true;
 
             lvwMapMarkers.SmallImageList = Program.MarkerImageList;
             lvwMapMarkers.LargeImageList = Program.MarkerImageList;
-            
-            if(ARKViewer.Program.ProgramConfig.WindowHeight != 0)
+
+            if (ARKViewer.Program.ProgramConfig.WindowHeight != 0)
             {
                 this.Left = ARKViewer.Program.ProgramConfig.WindowLeft;
                 this.Top = ARKViewer.Program.ProgramConfig.WindowTop;
                 this.Width = ARKViewer.Program.ProgramConfig.WindowWidth;
                 this.Height = ARKViewer.Program.ProgramConfig.WindowHeight;
-            }else
+            }
+            else
             {
                 this.StartPosition = FormStartPosition.CenterScreen;
             }
@@ -81,20 +80,38 @@ namespace ARKViewer
             {
                 splitContainer1.SplitterDistance = ARKViewer.Program.ProgramConfig.SplitterDistance;
             }
-            UpdateZoomLevel(this, new EventArgs());
 
-            this.Show();
-            Application.DoEvents();
-
-            LoadData();
 
 
             if (ARKViewer.Program.ProgramConfig.Zoom > 0)
             {
                 trackZoom.Value = ARKViewer.Program.ProgramConfig.Zoom;
             }
+            else
+            {
+                UpdateZoomLevel(this, new EventArgs());
+            }
 
-            isLoading = false;            
+
+            Application.DoEvents();
+
+            isLoading = false;
+        }
+
+        public frmViewer(ContentPack loadedPack)
+        {
+            InitializeComponent();
+            InitializeDefaults();
+        }
+
+        public frmViewer()
+        {
+            InitializeComponent();
+            InitializeDefaults();
+            this.Show();
+            LoadData();
+            
+                    
         }
 
         private void ReloadCheck(object sender, EventArgs args)
@@ -6485,5 +6502,7 @@ namespace ARKViewer
         {
             picMap.Image = DrawMap(lastSelectedX, lastSelectedY);
         }
+
+
     }
 }

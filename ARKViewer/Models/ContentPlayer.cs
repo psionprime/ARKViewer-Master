@@ -13,6 +13,8 @@ namespace ARKViewer.Models
         [DataMember] public long Id { get; set; }
         [DataMember] public string CharacterName { get; set; }
         [DataMember] public string Name { get; set; }
+        [DataMember] public string Gender { get; set; }
+        [DataMember] public string SteamId { get; set; }
         [DataMember] public float? Latitude { get; set; }
         [DataMember] public float? Longitude { get; set; }
         [DataMember] public float? X { get; set; }
@@ -20,6 +22,7 @@ namespace ARKViewer.Models
         [DataMember] public float? Z { get; set; }
         [DataMember] public int? InventoryId { get; set; }
         [DataMember] public int Level { get; set; }
+        [DataMember] public byte[] Stats { get; set; }
         [DataMember] public DateTime? LastActive { get; set; }
         
 

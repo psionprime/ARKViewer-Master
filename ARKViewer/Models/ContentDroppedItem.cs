@@ -11,8 +11,12 @@ namespace ARKViewer.Models
     public class ContentDroppedItem
     {
         [DataMember] public string ClassName { get; set; }
+        [DataMember] public bool IsBlueprint { get; set; }
+        [DataMember] public bool IsEngram { get; set; }
+        [DataMember] public bool IsDeathCache { get; set; }
+
         [DataMember] public string DroppedByName { get; set; }
-        [DataMember] public long DroppedByPlayerId { get; set; }
+        [DataMember] public int DroppedByPlayerId { get; set; }
         [DataMember] public float? Latitude { get; set; }
         [DataMember] public float? Longitude { get; set; }
         [DataMember] public float? X { get; set; }

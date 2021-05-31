@@ -268,7 +268,7 @@ namespace ArkSavegameToolkitNet.Domain
             NextBabyDinoAncestorsMale = ArkTamedCreatureAncestor.FromPropertyValue(creature.GetPropertyValue<ArkArrayStruct>(_nextBabyDinoAncestorsMale));
             InventoryId = creature.GetPropertyValue<ObjectReference>(_myInventoryComponent)?.ObjectId;
 
-            TamedStats = new int[_numberOfLevelUpPointsAppliedTamed.Length];
+            TamedStats = new byte[_numberOfLevelUpPointsAppliedTamed.Length];
             if (status != null)
             {
                 for (var i = 0; i < TamedStats.Length; i++) TamedStats[i] = status.GetPropertyValue<byte?>(_numberOfLevelUpPointsAppliedTamed[i]) ?? 0;
@@ -283,7 +283,7 @@ namespace ArkSavegameToolkitNet.Domain
 
         private void Construct()
         {
-            TamedStats = new int[_numberOfLevelUpPointsAppliedTamed.Length];
+            TamedStats = new byte[_numberOfLevelUpPointsAppliedTamed.Length];
             CurrentStatusValues = new float?[_currentStatusValues.Length];
 
             // Relations
@@ -339,7 +339,7 @@ namespace ArkSavegameToolkitNet.Domain
         public DateTime? NextAllowedMatingTimeApprox => _saveState?.GetApproxDateTimeOf(NextAllowedMatingTime);
         public ArkTamedCreatureAncestor[] NextBabyDinoAncestors { get; set; }
         public ArkTamedCreatureAncestor[] NextBabyDinoAncestorsMale { get; set; }
-        public int[] TamedStats { get; set; }
+        public byte[] TamedStats { get; set; }
         public float? DinoImprintingQuality { get; set; }
         public float? ExperiencePoints { get; set; }
         public short ExtraCharacterLevel { get; set; }

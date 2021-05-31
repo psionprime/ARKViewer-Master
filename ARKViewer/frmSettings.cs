@@ -328,6 +328,10 @@ namespace ARKViewer
                     optOffline.Checked = true;
 
                     break;
+                case ViewerModes.Mode_ContentPack:
+                    optContentPack.Checked = true;
+
+                    break;
                 case ViewerModes.Mode_Ftp:
                     optServer.Checked = true;
 
@@ -342,6 +346,10 @@ namespace ARKViewer
             if (SavedConfig.Mode == ViewerModes.Mode_Offline)
             {
                 txtFilename.Text = SavedConfig.SelectedFile;
+            }
+            if(SavedConfig.Mode == ViewerModes.Mode_ContentPack)
+            {
+                txtContentPackFilename.Text = SavedConfig.SelectedFile;
             }
 
             cboFtpMap.Items.Clear();
@@ -516,7 +524,8 @@ namespace ARKViewer
             if(optPlayerCommandsPrefixNone.Checked)
             {
                 SavedConfig.CommandPrefix = 0;
-            }else if (optPlayerCommandsPrefixAdmincheat.Checked)
+            }
+            else if (optPlayerCommandsPrefixAdmincheat.Checked)
             {
                 SavedConfig.CommandPrefix = 1;
             }
@@ -566,6 +575,12 @@ namespace ARKViewer
 
                 SavedConfig.Mode = ViewerModes.Mode_Offline;
                 SavedConfig.SelectedFile = txtFilename.Text;
+            }
+
+            if (optContentPack.Checked)
+            {
+                SavedConfig.Mode = ViewerModes.Mode_ContentPack;
+                SavedConfig.SelectedFile = txtContentPackFilename.Text.Trim();
             }
 
             if (optServer.Checked)
@@ -1465,6 +1480,19 @@ namespace ARKViewer
         {
             btnRemoveColour.Enabled = lvwColours.SelectedItems.Count == 1;
             btnEditColour.Enabled = lvwColours.SelectedItems.Count == 1;
+        }
+
+        private void btnLoadContentPack_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog dialog = new OpenFileDialog())
+            {
+                dialog.Filter = "ASV Content Packs (*.asvpack)|*.asvpack";
+                dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                if(dialog.ShowDialog() == DialogResult.OK)
+                {
+                    txtContentPackFilename.Text = dialog.FileName;
+                }
+            }
         }
     }
 }

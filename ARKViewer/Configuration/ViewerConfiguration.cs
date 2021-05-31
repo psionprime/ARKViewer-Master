@@ -20,7 +20,8 @@ namespace ARKViewer.Configuration
     {
         Mode_SinglePlayer = 0,
         Mode_Offline = 1,
-        Mode_Ftp = 2
+        Mode_Ftp = 2,
+        Mode_ContentPack = 3
     }
 
     [DataContract]
@@ -318,9 +319,9 @@ namespace ARKViewer.Configuration
                     mapMarker.Map = markerObject.Value<string>("Map");
                     mapMarker.Lat = markerObject.Value<double>("Lat");
                     mapMarker.Lon = markerObject.Value<double>("Lon");
-                    mapMarker.X = markerObject.Value<float>("X");
-                    mapMarker.Y = markerObject.Value<float>("Y");
-                    mapMarker.Z = markerObject.Value<float>("Z");
+                    mapMarker.X = (float)Math.Round(markerObject.Value<float>("X"),2);
+                    mapMarker.Y = (float)Math.Round(markerObject.Value<float>("Y"),2);
+                    mapMarker.Z = (float)Math.Round(markerObject.Value<float>("Z"),2);
 
                     mapMarker.Colour = markerObject.Value<string>("Colour");
 
