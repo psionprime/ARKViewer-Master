@@ -10,7 +10,7 @@ namespace ARKViewer.Models
     [DataContract]
     public class ContentTribe
     {
-        [DataMember] public int TribeId { get; set; }
+        [DataMember] public long TribeId { get; set; }
         [DataMember] public string TribeName { get; set; }
         [DataMember] public DateTime? LastActive { get; set; }
         [DataMember] public List<ContentPlayer> Players { get; set; }

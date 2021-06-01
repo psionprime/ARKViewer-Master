@@ -164,6 +164,7 @@
     <Compile Include="Models\ContentDroppedItem.cs" />
     <Compile Include="Models\ContentInventory.cs" />
     <Compile Include="Models\ContentItem.cs" />
+    <Compile Include="Models\ContentMarker.cs" />
     <Compile Include="Models\ContentStructure.cs" />
     <Compile Include="Models\ContentPack.cs" />
     <Compile Include="Models\ContentPlayer.cs" />

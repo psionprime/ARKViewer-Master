@@ -1,5 +1,6 @@
 ﻿using ArkSavegameToolkitNet.Domain;
 using ARKViewer.CustomNameMaps;
+using ARKViewer.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,14 +15,14 @@ namespace ARKViewer
 {
     public partial class frmStructureExclusionFilter : Form
     {
-        private ArkGameData gd = null;
+        private List<ContentStructure> playerStructures = new List<ContentStructure>();
         private List<string> currentExclusions = new List<string>();
 
-        public frmStructureExclusionFilter(ArkGameData gameData)
+        public frmStructureExclusionFilter(List<ContentStructure> structures)
         {
             InitializeComponent();
             
-            gd = gameData;
+            playerStructures = structures;
             currentExclusions = Program.ProgramConfig.StructureExclusions;
 
             PopulateStructures();
@@ -29,10 +30,10 @@ namespace ARKViewer
 
         private void PopulateStructures()
         {
-            if (gd == null) return;
-            if (gd.Structures == null) return;
+            if (playerStructures == null) return;
+            if (playerStructures.Count == 0) return;
 
-            var playerStructureTypes = gd.Structures.Where(s => (s.OwningPlayerId!=null || s.TargetingTeam!=null))
+            var playerStructureTypes = playerStructures
                                             .GroupBy(g => g.ClassName)
                                             .Select(s => s.Key);
 

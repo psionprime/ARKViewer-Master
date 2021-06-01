@@ -269,6 +269,7 @@
             this.tabSettings.SelectedIndex = 0;
             this.tabSettings.Size = new System.Drawing.Size(553, 652);
             this.tabSettings.TabIndex = 8;
+            this.tabSettings.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tabSettings_Selecting);
             // 
             // tpgMap
             // 
@@ -294,10 +295,11 @@
             this.optContentPack.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.optContentPack.Location = new System.Drawing.Point(55, 210);
             this.optContentPack.Name = "optContentPack";
-            this.optContentPack.Size = new System.Drawing.Size(166, 17);
+            this.optContentPack.Size = new System.Drawing.Size(138, 17);
             this.optContentPack.TabIndex = 15;
-            this.optContentPack.Text = "Content Pack (.asvpack)";
+            this.optContentPack.Text = "Content Pack (.asv)";
             this.optContentPack.UseVisualStyleBackColor = true;
+            this.optContentPack.CheckedChanged += new System.EventHandler(this.optContentPack_CheckedChanged);
             // 
             // groupBox2
             // 
@@ -380,6 +382,7 @@
             this.optSinglePlayer.TabIndex = 12;
             this.optSinglePlayer.Text = "Single Player";
             this.optSinglePlayer.UseVisualStyleBackColor = true;
+            this.optSinglePlayer.CheckedChanged += new System.EventHandler(this.optSinglePlayer_CheckedChanged);
             // 
             // grpServer
             // 
@@ -698,6 +701,7 @@
             this.chkUpdateNotificationFile.TabIndex = 3;
             this.chkUpdateNotificationFile.Text = "Update notifications";
             this.chkUpdateNotificationFile.UseVisualStyleBackColor = true;
+            this.chkUpdateNotificationFile.Visible = false;
             // 
             // btnSelectSaveGame
             // 
@@ -756,6 +760,7 @@
             this.chkUpdateNotificationSingle.TabIndex = 2;
             this.chkUpdateNotificationSingle.Text = "Update notifications";
             this.chkUpdateNotificationSingle.UseVisualStyleBackColor = true;
+            this.chkUpdateNotificationSingle.Visible = false;
             // 
             // lblSelectedMapSP
             // 
@@ -1330,8 +1335,9 @@
             this.btnJsonExportPlayerStructures.Name = "btnJsonExportPlayerStructures";
             this.btnJsonExportPlayerStructures.Size = new System.Drawing.Size(34, 27);
             this.btnJsonExportPlayerStructures.TabIndex = 60;
-            this.toolTip1.SetToolTip(this.btnJsonExportPlayerStructures, "Add new server");
+            this.toolTip1.SetToolTip(this.btnJsonExportPlayerStructures, "Export structure data");
             this.btnJsonExportPlayerStructures.UseVisualStyleBackColor = true;
+            this.btnJsonExportPlayerStructures.Click += new System.EventHandler(this.btnJsonExportPlayerStructures_Click);
             // 
             // lblExportTamed
             // 
@@ -1350,8 +1356,9 @@
             this.btnJsonExportTamed.Name = "btnJsonExportTamed";
             this.btnJsonExportTamed.Size = new System.Drawing.Size(34, 27);
             this.btnJsonExportTamed.TabIndex = 58;
-            this.toolTip1.SetToolTip(this.btnJsonExportTamed, "Add new server");
+            this.toolTip1.SetToolTip(this.btnJsonExportTamed, "Export tamed data");
             this.btnJsonExportTamed.UseVisualStyleBackColor = true;
+            this.btnJsonExportTamed.Click += new System.EventHandler(this.btnJsonExportTamed_Click);
             // 
             // lblExportPlayers
             // 
@@ -1370,8 +1377,9 @@
             this.btnJsonExportPlayers.Name = "btnJsonExportPlayers";
             this.btnJsonExportPlayers.Size = new System.Drawing.Size(34, 27);
             this.btnJsonExportPlayers.TabIndex = 56;
-            this.toolTip1.SetToolTip(this.btnJsonExportPlayers, "Add new server");
+            this.toolTip1.SetToolTip(this.btnJsonExportPlayers, "Export player data");
             this.btnJsonExportPlayers.UseVisualStyleBackColor = true;
+            this.btnJsonExportPlayers.Click += new System.EventHandler(this.btnJsonExportPlayers_Click);
             // 
             // lblExportTribes
             // 
@@ -1390,8 +1398,9 @@
             this.btnJsonExportTribes.Name = "btnJsonExportTribes";
             this.btnJsonExportTribes.Size = new System.Drawing.Size(34, 27);
             this.btnJsonExportTribes.TabIndex = 54;
-            this.toolTip1.SetToolTip(this.btnJsonExportTribes, "Add new server");
+            this.toolTip1.SetToolTip(this.btnJsonExportTribes, "Export tribe data");
             this.btnJsonExportTribes.UseVisualStyleBackColor = true;
+            this.btnJsonExportTribes.Click += new System.EventHandler(this.btnJsonExportTribes_Click);
             // 
             // lblExportWild
             // 
@@ -1410,8 +1419,9 @@
             this.btnJsonExportWild.Name = "btnJsonExportWild";
             this.btnJsonExportWild.Size = new System.Drawing.Size(34, 27);
             this.btnJsonExportWild.TabIndex = 52;
-            this.toolTip1.SetToolTip(this.btnJsonExportWild, "Add new server");
+            this.toolTip1.SetToolTip(this.btnJsonExportWild, "Export wild data");
             this.btnJsonExportWild.UseVisualStyleBackColor = true;
+            this.btnJsonExportWild.Click += new System.EventHandler(this.btnJsonExportWild_Click);
             // 
             // lblExportAll
             // 
@@ -1430,8 +1440,9 @@
             this.btnJsonExportAll.Name = "btnJsonExportAll";
             this.btnJsonExportAll.Size = new System.Drawing.Size(34, 27);
             this.btnJsonExportAll.TabIndex = 49;
-            this.toolTip1.SetToolTip(this.btnJsonExportAll, "Add new server");
+            this.toolTip1.SetToolTip(this.btnJsonExportAll, "Export all data");
             this.btnJsonExportAll.UseVisualStyleBackColor = true;
+            this.btnJsonExportAll.Click += new System.EventHandler(this.btnJsonExportAll_Click);
             // 
             // lblHeaderJsonExport
             // 
@@ -1524,13 +1535,19 @@
             this.btnExportContentPack.Name = "btnExportContentPack";
             this.btnExportContentPack.Size = new System.Drawing.Size(34, 27);
             this.btnExportContentPack.TabIndex = 48;
-            this.toolTip1.SetToolTip(this.btnExportContentPack, "Add new server");
+            this.toolTip1.SetToolTip(this.btnExportContentPack, "Export content pack");
             this.btnExportContentPack.UseVisualStyleBackColor = true;
+            this.btnExportContentPack.Click += new System.EventHandler(this.btnExportContentPack_Click);
             // 
             // udExportRadius
             // 
             this.udExportRadius.DecimalPlaces = 2;
             this.udExportRadius.Location = new System.Drawing.Point(139, 323);
+            this.udExportRadius.Maximum = new decimal(new int[] {
+            250,
+            0,
+            0,
+            0});
             this.udExportRadius.Name = "udExportRadius";
             this.udExportRadius.Size = new System.Drawing.Size(64, 20);
             this.udExportRadius.TabIndex = 47;
@@ -1590,6 +1607,7 @@
             this.cboExportTribe.Name = "cboExportTribe";
             this.cboExportTribe.Size = new System.Drawing.Size(282, 21);
             this.cboExportTribe.TabIndex = 11;
+            this.cboExportTribe.SelectedIndexChanged += new System.EventHandler(this.cboExportTribe_SelectedIndexChanged);
             // 
             // lblFilterLon
             // 

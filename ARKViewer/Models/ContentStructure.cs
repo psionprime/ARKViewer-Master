@@ -13,9 +13,10 @@ namespace ARKViewer.Models
         [DataMember] public string ClassName { get; set; }
         [DataMember] public float? Latitude { get; set; }
         [DataMember] public float? Longitude { get; set; }
-        [DataMember] public float? X { get; set; }
-        [DataMember] public float? Y { get; set; }
-        [DataMember] public float? Z { get; set; }
-        [DataMember] public int? InventoryId { get; set; }
+        [DataMember] public float X { get; set; }
+        [DataMember] public float Y { get; set; }
+        [DataMember] public float Z { get; set; }
+        [DataMember] public long? InventoryId { get; set; }
+        [DataMember] public long TargetingTeam { get; set; }
     }
 }

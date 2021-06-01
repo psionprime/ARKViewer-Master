@@ -492,9 +492,9 @@
             // 
             this.lblMapDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblMapDate.ForeColor = System.Drawing.Color.CadetBlue;
-            this.lblMapDate.Location = new System.Drawing.Point(547, 557);
+            this.lblMapDate.Location = new System.Drawing.Point(592, 557);
             this.lblMapDate.Name = "lblMapDate";
-            this.lblMapDate.Size = new System.Drawing.Size(271, 21);
+            this.lblMapDate.Size = new System.Drawing.Size(226, 21);
             this.lblMapDate.TabIndex = 1;
             this.lblMapDate.Text = "n/a";
             this.lblMapDate.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1066,7 +1066,7 @@
             // 
             // chkCryo
             // 
-            this.chkCryo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.chkCryo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chkCryo.Appearance = System.Windows.Forms.Appearance.Button;
             this.chkCryo.BackgroundImage = global::ARKViewer.Properties.Resources.button_cryooff;
             this.chkCryo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
@@ -2635,13 +2635,12 @@
             // lblStatus
             // 
             this.lblStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lblStatus.AutoSize = true;
             this.lblStatus.BackColor = System.Drawing.Color.PowderBlue;
             this.lblStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblStatus.ForeColor = System.Drawing.Color.CadetBlue;
-            this.lblStatus.Location = new System.Drawing.Point(15, 563);
+            this.lblStatus.Location = new System.Drawing.Point(15, 561);
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(64, 13);
+            this.lblStatus.Size = new System.Drawing.Size(571, 22);
             this.lblStatus.TabIndex = 22;
             this.lblStatus.Text = "Loading...";
             // 

@@ -1,14 +1,10 @@
-﻿using ArkSavegameToolkitNet.Domain;
-using ARKViewer.CustomNameMaps;
+﻿using ARKViewer.CustomNameMaps;
+using ARKViewer.Models;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -16,16 +12,17 @@ namespace ARKViewer
 {
     public partial class frmStructureInventoryViewer : Form
     {
-        private ArkStructure selectedStructure = null;
+        ContentStructure loadedStructure = null;
+        List<ContentItem> loadedInventory = new List<ContentItem>();
 
-        public frmStructureInventoryViewer(ArkStructure structure)
+        public frmStructureInventoryViewer(ContentStructure structure, List<ContentItem> inventory)
         {
             InitializeComponent();
 
-            
-            selectedStructure = structure;
-            string structureName = structure.ClassName;
+            loadedStructure = structure;
+            loadedInventory = inventory;
 
+            string structureName = structure.ClassName;
             StructureClassMap classMap = Program.ProgramConfig.StructureMap.Where(d => d.ClassName == structure.ClassName).FirstOrDefault();
             if (classMap != null && classMap.FriendlyName.Length > 0)
             {
@@ -40,11 +37,11 @@ namespace ARKViewer
         private void PopulateStructureInventory()
         {
             lvwInventory.Items.Clear();
-            if (selectedStructure.Inventory != null)
+            if (loadedInventory != null)
             {
                 //var playerItems = selectedPlayer.Creatures;
                 ConcurrentBag<ListViewItem> listItems = new ConcurrentBag<ListViewItem>();
-                Parallel.ForEach(selectedStructure.Inventory, invItem =>
+                Parallel.ForEach(loadedInventory, invItem =>
                 {
                     string itemName = invItem.ClassName;
                     string categoryName = "Misc.";
@@ -58,24 +55,7 @@ namespace ARKViewer
                     }
 
                     if (invItem.IsBlueprint) itemName += " (Blueprint)";
-                    float currentDurability = invItem.SavedDurability.GetValueOrDefault(0f);
-                    float currentRating = invItem.Rating.GetValueOrDefault(0f);
-
-
-                    if (invItem.StatValues != null)
-                    {
-                        /*
-                            0 = Effectiveness
-                            1 = Armor
-                            2 = Max Durability
-                            3 = Weapon Damage
-                            4 = Weapon Clip Ammo
-                            5 = Hypothermic Insulation
-                            6 = Weight
-                            7 = Hyperthermic Insulation
-                        */
-
-                    }
+                    
 
                     if (itemName.ToLower().Contains(txtFilter.Text.ToLower()) || categoryName.ToLower().Contains(txtFilter.Text.ToLower()))
                     {

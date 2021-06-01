@@ -1,5 +1,6 @@
 ﻿using ArkSavegameToolkitNet.Domain;
 using ARKViewer.CustomNameMaps;
+using ARKViewer.Models;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -16,17 +17,19 @@ namespace ARKViewer
 {
     public partial class frmDeathCacheViewer : Form
     {
-        ArkItem[] inventoryItems;
+        ContentDroppedItem droppedItem = null;
+        List<ContentItem> droppedInventory = new List<ContentItem>();
 
-        public frmDeathCacheViewer(string playerName, string playerTribe, ArkItem[] inventory)
+        public frmDeathCacheViewer(ContentDroppedItem dropItem, List<ContentItem> contentItems)
         {
             InitializeComponent();
 
-            lblPlayerName.Text = playerName;
-            lblTribeName.Text = playerTribe;
-            inventoryItems = inventory;
+            droppedItem = dropItem;
+            droppedInventory = contentItems;
 
-
+            string droppedBy = dropItem.DroppedByName;
+            lblPlayerName.Text = droppedBy;
+            
             PopulateDeathCacheInventory();
 
 
@@ -36,10 +39,12 @@ namespace ARKViewer
         {
             
             lvwInventory.Items.Clear();
-            if (inventoryItems != null && inventoryItems.Length > 0)
+
+
+            if (droppedInventory!= null && droppedInventory.Count > 0)
             {
                 ConcurrentBag<ListViewItem> listItems = new ConcurrentBag<ListViewItem>();
-                Parallel.ForEach(inventoryItems, invItem =>
+                Parallel.ForEach(droppedInventory, invItem =>
                 {
                     string itemName = invItem.ClassName;
                     string categoryName = "Misc.";
@@ -53,24 +58,7 @@ namespace ARKViewer
                     }
 
                     if (invItem.IsBlueprint) itemName += " (Blueprint)";
-                    float currentDurability = invItem.SavedDurability.GetValueOrDefault(0f);
-                    float currentRating = invItem.Rating.GetValueOrDefault(0f);
 
-
-                    if (invItem.StatValues != null)
-                    {
-                        /*
-                            0 = Effectiveness
-                            1 = Armor
-                            2 = Max Durability
-                            3 = Weapon Damage
-                            4 = Weapon Clip Ammo
-                            5 = Hypothermic Insulation
-                            6 = Weight
-                            7 = Hyperthermic Insulation
-                        */
-
-                    }
 
                     if (itemName.ToLower().Contains(txtFilter.Text.ToLower()) || categoryName.ToLower().Contains(txtFilter.Text.ToLower()))
                     {

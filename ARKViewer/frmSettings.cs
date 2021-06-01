@@ -1,6 +1,8 @@
 ﻿using ARKViewer.Configuration;
 using ARKViewer.CustomNameMaps;
+using ARKViewer.Models;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -19,11 +21,14 @@ namespace ARKViewer
         private ColumnHeader SortingColumn_ItemMap = null;
         private ColumnHeader SortingColumn_StructureMap = null;
         string imageFolder = "";
+        ContentManager cm = null;
 
         public ViewerConfiguration SavedConfig { get; set; }
-        public frmSettings(ViewerConfiguration config)
+        public frmSettings(ContentManager manager)
         {
             InitializeComponent();
+
+            cm = manager;
 
             lvwItemMap.LargeImageList = Program.ItemImageList;
             lvwItemMap.SmallImageList = Program.ItemImageList;
@@ -34,9 +39,76 @@ namespace ARKViewer
                 Directory.CreateDirectory(imageFolder);
             }
 
-            SavedConfig = config;
+            PopulateExportTribes();
+
+            SavedConfig = Program.ProgramConfig;
         }
 
+        private void PopulateExportTribes()
+        {
+            this.Cursor = Cursors.WaitCursor;
+
+            cboExportTribe.Items.Clear();
+            cboExportTribe.Items.Add(new ComboValuePair("0", "[All Tribes]"));
+
+            ConcurrentBag<ComboValuePair> tribeBag = new ConcurrentBag<ComboValuePair>();
+            var tribes = cm.GetTribes(0);
+            Parallel.ForEach(tribes, tribe =>
+            {
+                bool shouldAdd = true;
+                if (Program.ProgramConfig.HideNoStructures && tribe.Structures.Count == 0) shouldAdd = false;
+                if (Program.ProgramConfig.HideNoBody && tribe.Players.All(p=>p.Longitude.GetValueOrDefault(0) ==0 && p.Latitude.GetValueOrDefault(0) == 0)) shouldAdd = false;
+                    
+                if(shouldAdd) tribeBag.Add(new ComboValuePair(tribe.TribeId.ToString(),tribe.TribeName));
+            });
+
+            if(tribeBag!=null &!tribeBag.IsEmpty)
+            {
+                cboExportTribe.Items.AddRange(tribeBag.ToArray());
+            }
+            
+            this.Cursor = Cursors.Default;
+            cboExportTribe.SelectedIndex = 0;
+      
+        }
+
+        private void PopulateExportPlayers(long tribeId)
+        {
+            this.Cursor = Cursors.WaitCursor;
+            cboExportPlayer.Items.Clear();
+            cboExportPlayer.Items.Add(new ComboValuePair("0", "[All Players]"));
+
+            ConcurrentBag<ComboValuePair> playerBag = new ConcurrentBag<ComboValuePair>();
+            var tribes = cm.GetTribes(tribeId);
+            Parallel.ForEach(tribes, tribe =>
+            {
+                bool shouldAdd = true;
+                if (Program.ProgramConfig.HideNoStructures && tribe.Structures.Count == 0) shouldAdd = false;
+                if (shouldAdd)
+                {
+                    var players = tribe.Players.Where(p => !(Program.ProgramConfig.HideNoBody && (p.Latitude.GetValueOrDefault(0) == 0 && p.Longitude.GetValueOrDefault(0) == 0))).ToList();
+                    if(players!=null && players.Count > 0)
+                    {
+                        foreach(var player in players)
+                        {
+                            playerBag.Add(new ComboValuePair(player.Id.ToString(), player.CharacterName));
+                        }                        
+                    }
+                }
+
+
+                
+            });
+
+            if (playerBag != null & !playerBag.IsEmpty)
+            {
+                cboExportPlayer.Items.AddRange(playerBag.ToArray());
+            }
+
+            cboExportPlayer.SelectedIndex = 0;
+
+            this.Cursor = Cursors.Default;
+        }
 
         private void PopulateColours()
         {
@@ -592,7 +664,9 @@ namespace ARKViewer
                 {
                     ServerConfiguration selectedConfig = (ServerConfiguration)cboFTPServer.SelectedItem;
                     SavedConfig.SelectedServer = selectedConfig.Name;
-                    SavedConfig.SelectedFile = selectedConfig.Map;
+
+                    string localFilename = Path.Combine(AppContext.BaseDirectory, $@"{selectedConfig.Name}\{selectedConfig.Map}");
+                    SavedConfig.SelectedFile = localFilename;
 
                     if (txtServerName.Visible)
                     {
@@ -1486,13 +1560,251 @@ namespace ARKViewer
         {
             using (OpenFileDialog dialog = new OpenFileDialog())
             {
-                dialog.Filter = "ASV Content Packs (*.asvpack)|*.asvpack";
+                dialog.Filter = "ASV Content Packs (*.asv)|*.asv";
                 dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
                 if(dialog.ShowDialog() == DialogResult.OK)
                 {
                     txtContentPackFilename.Text = dialog.FileName;
                 }
             }
+        }
+
+        private void tabSettings_Selecting(object sender, TabControlCancelEventArgs e)
+        {
+            if(e.TabPage.Name == "tpgExport")
+            {
+                if (!File.Exists(SavedConfig.SelectedFile))
+                {
+                    MessageBox.Show("Export options only available for .ARK save files.", "Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    e.Cancel = true;
+                    return;
+                }
+                if(Path.GetExtension(SavedConfig.SelectedFile).ToLower() != ".ark")
+                {
+                    MessageBox.Show("Export options only available for .ARK save files.", "Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    e.Cancel = true;
+                    return;
+                }
+
+            }
+
+        }
+
+        private void cboExportTribe_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cboExportTribe.SelectedItem == null) return;
+            ComboValuePair selectedValue = (ComboValuePair)cboExportTribe.SelectedItem;
+            int.TryParse(selectedValue.Key, out int tribeId);
+            PopulateExportPlayers(tribeId);
+        }
+
+        private void btnExportContentPack_Click(object sender, EventArgs e)
+        {
+            btnExportContentPack.Enabled = false;
+            
+            using(SaveFileDialog dialog = new SaveFileDialog())
+            {
+                dialog.Title = "Save ASV Content Pack";
+                dialog.Filter = "ASV Content Pack (*.asv)|*.asv";
+                dialog.InitialDirectory = AppContext.BaseDirectory;
+                if(dialog.ShowDialog() == DialogResult.OK)
+                {
+                    this.Cursor = Cursors.WaitCursor;
+                    string fileFolder = Path.GetDirectoryName(dialog.FileName);
+                    if (!Directory.Exists(fileFolder)) Directory.CreateDirectory(fileFolder);
+
+                    //re-load game data save
+                    var contentFile = Program.ProgramConfig.SelectedFile;
+                    if (File.Exists(contentFile))
+                    {
+                        var gd = Program.LoadArkData(contentFile);
+                        long tribeId = 0;
+                        if (cboExportTribe.SelectedItem == null)
+                        {
+                            ComboValuePair selectedValue = (ComboValuePair)cboExportTribe.SelectedItem;
+                            long.TryParse(selectedValue.Key, out tribeId);
+                        }
+
+                        long playerId = 0;
+                        if (cboExportPlayer.SelectedItem == null)
+                        {
+                            ComboValuePair selectedValue = (ComboValuePair)cboExportPlayer.SelectedItem;
+                            long.TryParse(selectedValue.Key, out playerId);
+                        }
+
+
+                        bool includeGameStructures = chkStructureLocations.Checked;
+                        bool includeGameStructureContent = chkStructureContents.Checked;
+                        bool includeTribesPlayers = chkTribesPlayers.Checked;
+                        bool includeTamed = chkTamedCreatures.Checked;
+                        bool includeWild = chkWildCreatures.Checked;
+                        bool includePlayerStructures = chkPlayerStructures.Checked;
+
+                        ContentPack contentPack = new ContentPack(gd, tribeId, playerId, udExportLat.Value, udExportLon.Value, udExportRadius.Value, includeGameStructures, includeGameStructureContent, includeTribesPlayers, includeTamed, includeWild, includePlayerStructures);
+                        ContentManager exportManager = new ContentManager(contentPack);
+                        try
+                        {
+                            exportManager.ExportContentPack(dialog.FileName);
+                            MessageBox.Show("Content pack exported successfully.", "Export Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message, "Export Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        finally
+                        {
+                            contentPack = null;
+                            exportManager = null;
+                        }
+
+                    }
+                    
+                    this.Cursor = Cursors.Default;
+
+                }
+            }
+            btnExportContentPack.Enabled = true;
+        }
+
+        private void btnJsonExportAll_Click(object sender, EventArgs e)
+        {
+            btnJsonExportAll.Enabled = false;
+
+            using (FolderBrowserDialog dialog = new FolderBrowserDialog())
+            {
+                dialog.SelectedPath= AppContext.BaseDirectory;
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    this.Cursor = Cursors.WaitCursor;
+                    if (!Directory.Exists(dialog.SelectedPath)) Directory.CreateDirectory(dialog.SelectedPath);
+                    cm.ExportAll(dialog.SelectedPath);
+                    this.Cursor = Cursors.Default;
+                    MessageBox.Show("All data exported successfully.", "Export Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                }
+            }
+
+            btnJsonExportAll.Enabled = true;
+        }
+
+        private void btnJsonExportWild_Click(object sender, EventArgs e)
+        {
+            btnJsonExportWild.Enabled = false;
+            using (SaveFileDialog dialog = new SaveFileDialog())
+            {
+                dialog.Title = "Export Wild";
+                dialog.Filter = "JSON text file(*.json)|*.json";
+                dialog.InitialDirectory = AppContext.BaseDirectory;
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    this.Cursor = Cursors.WaitCursor;
+                    if (!Directory.Exists(dialog.FileName)) Directory.CreateDirectory(dialog.FileName);
+                    cm.ExportWild(dialog.FileName);
+                    this.Cursor = Cursors.Default;
+                    MessageBox.Show("Wild data exported successfully.", "Export Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                }
+            }
+            btnJsonExportWild.Enabled = false;
+        }
+
+        private void btnJsonExportTamed_Click(object sender, EventArgs e)
+        {
+            btnJsonExportTamed.Enabled = false;
+            using (SaveFileDialog dialog = new SaveFileDialog())
+            {
+                dialog.Title = "Export Tamed";
+                dialog.Filter = "JSON text file(*.json)|*.json";
+                dialog.InitialDirectory = AppContext.BaseDirectory;
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    this.Cursor = Cursors.WaitCursor;
+                    if (!Directory.Exists(dialog.FileName)) Directory.CreateDirectory(dialog.FileName);
+                    cm.ExportTamed(dialog.FileName);
+                    this.Cursor = Cursors.Default;
+                    MessageBox.Show("Tamed data exported successfully.", "Export Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                }
+            }
+            btnJsonExportTamed.Enabled = true;
+        }
+
+        private void btnJsonExportTribes_Click(object sender, EventArgs e)
+        {
+            btnJsonExportTribes.Enabled = false;
+
+            using (SaveFileDialog dialog = new SaveFileDialog())
+            {
+                dialog.Title = "Export Tribes";
+                dialog.Filter = "JSON text file(*.json)|*.json";
+                dialog.InitialDirectory = AppContext.BaseDirectory;
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    this.Cursor = Cursors.WaitCursor;
+                    if (!Directory.Exists(dialog.FileName)) Directory.CreateDirectory(dialog.FileName);
+                    cm.ExportPlayerTribes(dialog.FileName);
+                    this.Cursor = Cursors.Default;
+                    MessageBox.Show("Tribe data exported successfully.", "Export Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                }
+            }
+
+            btnJsonExportTribes.Enabled = false;
+        }
+
+        private void btnJsonExportPlayers_Click(object sender, EventArgs e)
+        {
+            btnJsonExportPlayers.Enabled = false;
+
+            using (SaveFileDialog dialog = new SaveFileDialog())
+            {
+                dialog.Title = "Export Players";
+                dialog.Filter = "JSON text file(*.json)|*.json";
+                dialog.InitialDirectory = AppContext.BaseDirectory;
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    this.Cursor = Cursors.WaitCursor;
+                    if (!Directory.Exists(dialog.FileName)) Directory.CreateDirectory(dialog.FileName);
+                    cm.ExportPlayers(dialog.FileName);
+                    this.Cursor = Cursors.Default;
+                    MessageBox.Show("Player data exported successfully.", "Export Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                }
+            }
+
+            btnJsonExportPlayers.Enabled = true;
+
+        }
+
+        private void btnJsonExportPlayerStructures_Click(object sender, EventArgs e)
+        {
+            btnJsonExportPlayerStructures.Enabled = false;
+
+            using (SaveFileDialog dialog = new SaveFileDialog())
+            {
+                dialog.Title = "Export Structures";
+                dialog.Filter = "JSON text file(*.json)|*.json";
+                dialog.InitialDirectory = AppContext.BaseDirectory;
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    this.Cursor = Cursors.WaitCursor;
+                    if (!Directory.Exists(dialog.FileName)) Directory.CreateDirectory(dialog.FileName);
+                    cm.ExportPlayerStructures(dialog.FileName);
+                    this.Cursor = Cursors.Default;
+                    MessageBox.Show("Structure data exported successfully.", "Export Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                }
+            }
+            btnJsonExportPlayerStructures.Enabled = true;
+
+        }
+
+        private void optContentPack_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateDisplay();
         }
     }
 }

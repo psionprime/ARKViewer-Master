@@ -1,5 +1,6 @@
 ﻿using ArkSavegameToolkitNet.Domain;
 using ARKViewer.CustomNameMaps;
+using ARKViewer.Models;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -17,23 +18,23 @@ namespace ARKViewer
 {
     public partial class frmDinoInventoryViewer : Form
     {
-        private ArkTamedCreature currentCreature = null; 
+        List<ContentItem> loadedItems = new List<ContentItem>();
 
-        public frmDinoInventoryViewer(ArkGameData gameData, ArkTamedCreature selectedCreature)
+        public frmDinoInventoryViewer(ContentTamedCreature tame, List<ContentItem> items)
         {
             InitializeComponent();
 
             lvwCreatureInventory.LargeImageList = Program.ItemImageList;
             lvwCreatureInventory.SmallImageList = Program.ItemImageList;
 
-            currentCreature = selectedCreature;
+            loadedItems = items;
 
-            string dinoName = selectedCreature.Name != null ? selectedCreature.Name : string.Empty;
+            string dinoName = tame.Name;
 
             if(dinoName.Length == 0)
             {
-                dinoName = selectedCreature.ClassName;
-                DinoClassMap classMap = Program.ProgramConfig.DinoMap.Where(d => d.ClassName == selectedCreature.ClassName).FirstOrDefault();
+                dinoName = tame.ClassName;
+                DinoClassMap classMap = Program.ProgramConfig.DinoMap.Where(d => d.ClassName == tame.ClassName).FirstOrDefault();
                 if (classMap != null && classMap.FriendlyName.Length > 0)
                 {
                     dinoName = classMap.FriendlyName;
@@ -41,10 +42,9 @@ namespace ARKViewer
             }
 
             lblPlayerName.Text = dinoName;
-            lblPlayerLevel.Text = selectedCreature.Level.ToString();
-            lblTribeName.Text = selectedCreature.TribeName;
+            lblPlayerLevel.Text = tame.Level.ToString();
+            lblTribeName.Text = tame.TribeName;
 
-           
 
             PopulateCreatureInventory();
 
@@ -53,12 +53,12 @@ namespace ARKViewer
         private void PopulateCreatureInventory()
         {
             lvwCreatureInventory.Items.Clear();
-            if (currentCreature.Inventory != null)
+            if (loadedItems != null && loadedItems.Count > 0)
             {
                 //var playerItems = selectedPlayer.Creatures;
 
                 ConcurrentBag<ListViewItem> listItems = new ConcurrentBag<ListViewItem>();
-                Parallel.ForEach(currentCreature.Inventory, invItem =>
+                Parallel.ForEach(loadedItems, invItem =>
                 {
                     string itemName = invItem.ClassName;
                     string categoryName = "Misc.";
@@ -73,25 +73,7 @@ namespace ARKViewer
                     }
 
                     if (invItem.IsBlueprint) itemName += " (Blueprint)";
-                    float currentDurability = invItem.SavedDurability.GetValueOrDefault(0f);
-                    float currentRating = invItem.Rating.GetValueOrDefault(0f);
-
-
-                    if (invItem.StatValues != null)
-                    {
-                        /*
-                            0 = Effectiveness
-                            1 = Armor
-                            2 = Max Durability
-                            3 = Weapon Damage
-                            4 = Weapon Clip Ammo
-                            5 = Hypothermic Insulation
-                            6 = Weight
-                            7 = Hyperthermic Insulation
-                        */
-
-                    }
-
+                    
                     if (itemName.ToLower().Contains(txtCreatureFilter.Text.ToLower()) || categoryName.ToLower().Contains(txtCreatureFilter.Text.ToLower()))
                     {
                         if (!invItem.IsEngram)

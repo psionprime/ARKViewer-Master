@@ -1,4 +1,5 @@
-﻿using ArkSavegameToolkitNet.Domain;
+﻿using ARKViewer.CustomNameMaps;
+using ARKViewer.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,116 +15,30 @@ namespace ARKViewer
     public partial class frmStructureLocations : Form
     {
         private ColumnHeader SortingColumn_Markers = null;
-        private List<ArkItem> usedEggs = new List<ArkItem>();
-
         public event EventHandler<StructureMarker> HighlightStructure;
+        ContentManager cm = null;
 
-        public frmStructureLocations(List<StructureMarker> structureList, string windowTitle, Image structureIcon)
-        {
-            InitializeComponent();
-
-            lblType.Text = windowTitle;
-            if (structureIcon != null)
-            {
-                picType.Image = structureIcon;
-            }
-            
-            lvwMapMarkers.Items.Clear();
-
-            foreach (var structure in structureList)
-            {
-                ListViewItem newItem = lvwMapMarkers.Items.Add(structure.Lat.ToString("0.00"));
-                newItem.SubItems.Add(structure.Lon.ToString("0.00"));
-                newItem.Tag = structure;
-            }
-
-
-        }
-
-        public frmStructureLocations(ArkGameData gameData, string className, string title, Image icon)
+        public frmStructureLocations(ContentManager manager, List<ContentStructure> structures, string title, Image icon)
         {
             InitializeComponent();
 
             lblType.Text = title;
             picType.Image = icon;
+            cm = manager;
 
             lvwMapMarkers.Items.Clear();
 
-            var structureList = gameData.Structures.Where(s => s.ClassName.StartsWith(className));
-            foreach(var structure in structureList)
+            
+            foreach(var structure in structures)
             {
-                ListViewItem newItem = lvwMapMarkers.Items.Add(structure.Location.Latitude.Value.ToString("0.00"));
-                newItem.SubItems.Add(structure.Location.Longitude.Value.ToString("0.00"));
+                ListViewItem newItem = lvwMapMarkers.Items.Add(structure.Latitude.Value.ToString("0.00"));
+                newItem.SubItems.Add(structure.Longitude.Value.ToString("0.00"));
                 newItem.Tag = structure;
 
-
-                if (structure.ClassName == "RockDrakeNest_C")
+                var inventory = cm.GetInventory(structure.InventoryId.GetValueOrDefault(0));
+                if (inventory!=null && inventory.Items.Count > 0)
                 {
-                    ArkItem fertileEgg = gameData.Items.Where(i => i.ClassName == "PrimalItemConsumable_Egg_RockDrake_Fertilized_C" && i.Location != null && i.Location.Latitude.Value.ToString("0.00").Equals(structure.Location.Latitude.Value.ToString("0.00")) && i.Location.Longitude.Value.ToString("0.00").Equals(structure.Location.Longitude.Value.ToString("0.00")) && i.OwnerInventoryId == null).FirstOrDefault();
-                    if (fertileEgg != null)
-                    {
-                        newItem.BackColor = Color.LightGreen;
-                        newItem.ToolTipText = $"{fertileEgg.CustomDescription}";
-                    }
-                }
-                else if (structure.ClassName == "DeinonychusNest_C")
-                {
-                    ArkItem fertileEgg = gameData.Items.Where(i => i.ClassName == "PrimalItemConsumable_Egg_Deinonychus_Fertilized_C" && i.Location != null && i.Location.Latitude.Value.ToString("0.00").Equals(structure.Location.Latitude.Value.ToString("0.00")) && i.Location.Longitude.Value.ToString("0.00").Equals(structure.Location.Longitude.Value.ToString("0.00")) && i.OwnerInventoryId == null).FirstOrDefault();
-                    if (fertileEgg != null)
-                    {
-                        newItem.BackColor = Color.LightGreen;
-                        newItem.ToolTipText = $"{fertileEgg.CustomDescription}";
-                    }
-                }
-                else if (structure.ClassName == "CherufeNest_C")
-                {
-                    ArkItem fertileEgg = gameData.Items.Where(i => i.ClassName == "PrimalItemConsumable_Egg_Cherufe_Fertilized_C" && i.Location != null && (Math.Abs(Math.Round(i.Location.Latitude.Value,1) - Math.Round(structure.Location.Latitude.Value,1)) <= 0.2) && (Math.Abs(Math.Round(i.Location.Longitude.Value, 1) - Math.Round(structure.Location.Longitude.Value, 1)) <= 0.2) && i.OwnerInventoryId == null && usedEggs.LongCount(e=>e.Id == i.Id) == 0).FirstOrDefault();
-                    if (fertileEgg != null)
-                    {
-                        usedEggs.Add(fertileEgg);
-                        newItem.BackColor = Color.LightGreen;
-                        newItem.ToolTipText = $"{fertileEgg.CustomDescription}";
-                    }
-                }
-                else if (structure.ClassName.StartsWith("WyvernNest_"))
-                {
-                    var fertileEggs= gameData.Items.Where(i =>  i.ClassName.ToLower().Contains("egg") && i.Location != null && i.Location.Latitude.Value.ToString("0.00").Equals(structure.Location.Latitude.Value.ToString("0.00")) && i.Location.Longitude.Value.ToString("0.00").Equals(structure.Location.Longitude.Value.ToString("0.00")) && i.OwnerInventoryId == null);
-                    if (fertileEggs != null && fertileEggs.Count() > 0)
-                    {
-                        newItem.BackColor = Color.LightGreen;
-                        newItem.ToolTipText = $"{fertileEggs.First().CustomDescription}";
-                    }
-                }
-                else
-                {
-
-                    if (structure.Inventory != null)
-                    {
-                        //tooltip the inventory contents
-                        var itemSummary = structure.Inventory.Where(s => s.ClassName != "PrimalItem_PowerNodeCharge_C").GroupBy(i => i.ClassName).Select(g => new { ClassName = g.Key, FriendlyName = Program.ProgramConfig.ItemMap.Count(im => im.ClassName == g.Key) > 0 ? Program.ProgramConfig.ItemMap.FirstOrDefault(im => im.ClassName == g.Key).FriendlyName : g.Key, Quantity = g.Sum(s => s.Quantity) });
-                        if(itemSummary!=null && itemSummary.Count() > 0)
-                        {
-                            newItem.BackColor = Color.LightGreen;
-                            
-                            string tooltipText = "";
-                            foreach (var summary in itemSummary)
-                            {
-                                if (tooltipText.Length != 0)
-                                {
-                                    tooltipText = $"{tooltipText}\n";
-                                }
-
-                                string summaryText = $"{summary.FriendlyName} x {summary.Quantity.ToString()}";
-                                tooltipText = $"{tooltipText}{summaryText}";
-
-                            }
-
-                            newItem.ToolTipText = tooltipText;
-
-                        }
-
-
-                    }
+                    newItem.BackColor = Color.LightGreen;    
                 }
 
             }
@@ -136,23 +51,40 @@ namespace ARKViewer
             ListViewItem selectedItem = lvwMapMarkers.SelectedItems[0];
 
             StructureMarker selectedMarker = new StructureMarker();
-            if(selectedItem.Tag is ArkStructure)
-            {
-                ArkStructure selectedStructure = (ArkStructure)selectedItem.Tag;
-                selectedMarker.Colour = "White";
-                selectedMarker.Lat = (double)selectedStructure.Location?.Latitude.GetValueOrDefault(0);
-                selectedMarker.Lon = (double)selectedStructure.Location?.Longitude.GetValueOrDefault(0);
-                selectedMarker.X = selectedStructure.Location.X;
-                selectedMarker.Y = selectedStructure.Location.Y;
-                selectedMarker.Z = selectedStructure.Location.Z;
+            
+            ContentStructure selectedStructure = (ContentStructure)selectedItem.Tag;
+            selectedMarker.Colour = "White";
+            selectedMarker.Lat = (double)selectedStructure.Latitude.GetValueOrDefault(0);
+            selectedMarker.Lon = (double)selectedStructure.Longitude.GetValueOrDefault(0);
+            selectedMarker.X = selectedStructure.X;
+            selectedMarker.Y = selectedStructure.Y;
+            selectedMarker.Z = selectedStructure.Z;
 
-            }
-            else if(selectedItem.Tag is StructureMarker)
+            StringBuilder inventString = new StringBuilder();
+            var inventory = cm.GetInventory(selectedStructure.InventoryId.GetValueOrDefault(0));
+            if(inventory!=null && inventory.Items.Count > 0)
             {
-                selectedMarker = (StructureMarker)selectedItem.Tag;
-            }
+                foreach(var item in inventory.Items)
+                {
+                    string friendlyName = item.CustomName == null? "": item.CustomName;
+                    if(friendlyName.Length == 0)
+                    {
+                        var map = Program.ProgramConfig.ItemMap.FirstOrDefault<ItemClassMap>(m => m.ClassName == item.ClassName);
+                        if (map != null) friendlyName = map.FriendlyName;
+                    }
 
-            txtContents.Text = selectedItem.ToolTipText.Replace("\n", Environment.NewLine);
+                    if (friendlyName.Contains(Environment.NewLine))
+                    {
+                        inventString.AppendLine($"{friendlyName}");
+                    }
+                    else
+                    {
+                        inventString.AppendLine($"{friendlyName} x {item.Quantity}");
+                    }
+                    
+                }
+            }
+            txtContents.Text = inventString.ToString();
             
             HighlightStructure?.Invoke(this, selectedMarker);
         }
@@ -243,20 +175,15 @@ namespace ARKViewer
             ListViewItem selectedItem = lvwMapMarkers.SelectedItems[0];
             StructureMarker selectedMarker = new StructureMarker();
 
-            if(selectedItem.Tag is ArkStructure)
-            {
-                ArkStructure selectedStructure = (ArkStructure)selectedItem.Tag;
-                selectedMarker.Colour = "White";
-                selectedMarker.Lat = (double)selectedStructure.Location?.Latitude.GetValueOrDefault(0);
-                selectedMarker.Lon = (double)selectedStructure.Location?.Latitude.GetValueOrDefault(0);
-                selectedMarker.X = selectedStructure.Location.X;
-                selectedMarker.Y = selectedStructure.Location.Y;
-                selectedMarker.Z = selectedStructure.Location.Z;
-            }
-            else if(selectedItem.Tag is StructureMarker)
-            {
-                selectedMarker = (StructureMarker)selectedItem.Tag;
-            }
+
+            ContentStructure selectedStructure = (ContentStructure)selectedItem.Tag;
+            selectedMarker.Colour = "White";
+            selectedMarker.Lat = (double)selectedStructure.Latitude.GetValueOrDefault(0);
+            selectedMarker.Lon = (double)selectedStructure.Latitude.GetValueOrDefault(0);
+            selectedMarker.X = selectedStructure.X;
+            selectedMarker.Y = selectedStructure.Y;
+            selectedMarker.Z = selectedStructure.Z;
+
             
             var commandText = cboConsoleCommands.SelectedItem.ToString();
             if (commandText != null)

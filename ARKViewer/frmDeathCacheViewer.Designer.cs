@@ -39,7 +39,6 @@ namespace ARKViewer
             this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lblWindowTitle = new System.Windows.Forms.Label();
             this.btnClose = new System.Windows.Forms.Button();
-            this.lblTribeName = new System.Windows.Forms.Label();
             this.lblPlayerName = new System.Windows.Forms.Label();
             this.pnlCreatureInventory.SuspendLayout();
             this.SuspendLayout();
@@ -53,9 +52,9 @@ namespace ARKViewer
             this.pnlCreatureInventory.Controls.Add(this.lblCreatureFilter);
             this.pnlCreatureInventory.Controls.Add(this.txtFilter);
             this.pnlCreatureInventory.Controls.Add(this.lvwInventory);
-            this.pnlCreatureInventory.Location = new System.Drawing.Point(12, 71);
+            this.pnlCreatureInventory.Location = new System.Drawing.Point(12, 45);
             this.pnlCreatureInventory.Name = "pnlCreatureInventory";
-            this.pnlCreatureInventory.Size = new System.Drawing.Size(669, 346);
+            this.pnlCreatureInventory.Size = new System.Drawing.Size(669, 372);
             this.pnlCreatureInventory.TabIndex = 25;
             // 
             // chkApplyFilter
@@ -63,7 +62,7 @@ namespace ARKViewer
             this.chkApplyFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.chkApplyFilter.Appearance = System.Windows.Forms.Appearance.Button;
             this.chkApplyFilter.Image = global::ARKViewer.Properties.Resources.button_filter;
-            this.chkApplyFilter.Location = new System.Drawing.Point(616, 311);
+            this.chkApplyFilter.Location = new System.Drawing.Point(616, 337);
             this.chkApplyFilter.Name = "chkApplyFilter";
             this.chkApplyFilter.Size = new System.Drawing.Size(33, 27);
             this.chkApplyFilter.TabIndex = 22;
@@ -144,19 +143,6 @@ namespace ARKViewer
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             // 
-            // lblTribeName
-            // 
-            this.lblTribeName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblTribeName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTribeName.ForeColor = System.Drawing.Color.DimGray;
-            this.lblTribeName.Location = new System.Drawing.Point(14, 42);
-            this.lblTribeName.Name = "lblTribeName";
-            this.lblTribeName.Size = new System.Drawing.Size(389, 19);
-            this.lblTribeName.TabIndex = 27;
-            this.lblTribeName.Text = "Tribe Name";
-            this.lblTribeName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // lblPlayerName
             // 
             this.lblPlayerName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -179,7 +165,6 @@ namespace ARKViewer
             this.Controls.Add(this.pnlCreatureInventory);
             this.Controls.Add(this.lblWindowTitle);
             this.Controls.Add(this.btnClose);
-            this.Controls.Add(this.lblTribeName);
             this.Controls.Add(this.lblPlayerName);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
@@ -205,7 +190,6 @@ namespace ARKViewer
         private System.Windows.Forms.ColumnHeader columnHeader12;
         private System.Windows.Forms.Label lblWindowTitle;
         private System.Windows.Forms.Button btnClose;
-        private System.Windows.Forms.Label lblTribeName;
         private System.Windows.Forms.Label lblPlayerName;
     }
 }

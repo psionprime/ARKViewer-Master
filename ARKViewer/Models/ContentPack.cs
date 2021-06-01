@@ -19,8 +19,8 @@ namespace ARKViewer.Models
     public class ContentPack
     {
         [DataMember] public string MapFilename { get; set; } = "TheIsland.ark";
-        [DataMember] public int ExportedForTribe { get; set; } = 0;
-        [DataMember] public int ExportedForPlayer { get; set; } = 0;
+        [DataMember] public long ExportedForTribe { get; set; } = 0;
+        [DataMember] public long ExportedForPlayer { get; set; } = 0;
         [DataMember] public DateTime ExportedTimestamp { get; set; } = DateTime.Now;
         [DataMember] public List<ContentStructure> TerminalMarkers { get; set; }
         [DataMember] public List<ContentStructure> GlitchMarkers { get; set; }
@@ -29,13 +29,16 @@ namespace ARKViewer.Models
         [DataMember] public List<ContentStructure> WyvernNests { get; set; }
         [DataMember] public List<ContentStructure> DrakeNests { get; set; }
         [DataMember] public List<ContentStructure> MagmaNests { get; set; }
+        [DataMember] public List<ContentStructure> DeinoNests { get; set; }
         [DataMember] public List<ContentStructure> OilVeins { get; set; }
         [DataMember] public List<ContentStructure> WaterVeins { get; set; }
         [DataMember] public List<ContentStructure> GasVeins { get; set; }
         [DataMember] public List<ContentStructure> Artifacts { get; set; }
+        [DataMember] public List<ContentStructure> PlantZ { get; set; }
         [DataMember] public List<ContentInventory> Inventories { get; set; }
         [DataMember] public List<ContentDroppedItem> DroppedItems { get; set; }
         [DataMember] public List<ContentWildCreature> WildCreatures { get; set; }
+
         [DataMember] public List<ContentTribe> Tribes { get; set; }
 
         bool IncludeGameStructures { get; set; } = true;
@@ -47,6 +50,7 @@ namespace ARKViewer.Models
         decimal FilterLatitude { get; set; } = 50;
         decimal FilterLongitude { get; set; } = 50;
         decimal FilterRadius { get; set; } = 100;
+        public DateTime ContentDate { get; internal set; }
 
 
         public ContentPack()
@@ -66,17 +70,19 @@ namespace ARKViewer.Models
             WyvernNests = new List<ContentStructure>();
             DrakeNests = new List<ContentStructure>();
             MagmaNests = new List<ContentStructure>();
+            DeinoNests = new List<ContentStructure>();
             OilVeins = new List<ContentStructure>();
             WaterVeins = new List<ContentStructure>();
             GasVeins = new List<ContentStructure>();
             Artifacts = new List<ContentStructure>();
+            PlantZ = new List<ContentStructure>();
             Inventories = new List<ContentInventory>();
             WildCreatures = new List<ContentWildCreature>();
             Tribes = new List<ContentTribe>();
             DroppedItems = new List<ContentDroppedItem>();
         }
 
-        public ContentPack(ArkGameData gd, int selectedTribeId, int selectedPlayerId, decimal lat, decimal lon, decimal rad, bool includeGameStructures, bool includeGameStructureContent, bool includeCustomMarkers, bool includeTribesPlayers, bool includeTamed, bool includeWild, bool includePlayerStructures): this()
+        public ContentPack(ArkGameData gd, long selectedTribeId, long selectedPlayerId, decimal lat, decimal lon, decimal rad, bool includeGameStructures, bool includeGameStructureContent, bool includeTribesPlayers, bool includeTamed, bool includeWild, bool includePlayerStructures): this()
         {
             ExportedForTribe = selectedTribeId;
             ExportedForPlayer = selectedPlayerId;
@@ -95,7 +101,7 @@ namespace ARKViewer.Models
             LoadGameData(gd);
         }
 
-        public ContentPack(ArkGameData gd, int selectedTribeId, int selectedPlayerId, decimal lat, decimal lon, decimal rad): this(gd, selectedTribeId, selectedPlayerId, lat, lon, rad,true,true,true,true,true,true,true)
+        public ContentPack(ArkGameData gd, int selectedTribeId, int selectedPlayerId, decimal lat, decimal lon, decimal rad): this(gd, selectedTribeId, selectedPlayerId, lat, lon, rad,true,true,true,true,true,true)
         {
 
         }
@@ -130,6 +136,7 @@ namespace ARKViewer.Models
                 WaterVeins = loaded.WaterVeins;
                 GasVeins = loaded.GasVeins;
                 Artifacts = loaded.Artifacts;
+                PlantZ = loaded.PlantZ;
                 Inventories = loaded.Inventories;
                 WildCreatures = loaded.WildCreatures;
                 Tribes = loaded.Tribes;
@@ -151,7 +158,19 @@ namespace ARKViewer.Models
 
             string jsonContent = JsonConvert.SerializeObject(this);
             var compressedContent = Zip(jsonContent);
-            File.WriteAllBytes(fileName, compressedContent);
+            try
+            {
+                using(var writer = new FileStream(fileName,FileMode.CreateNew))
+                {
+                    writer.Write(compressedContent, 0, compressedContent.Length);
+                    writer.Flush();
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            
         }
 
 
@@ -213,6 +232,29 @@ namespace ARKViewer.Models
                 });
                 if (!loadedStructures.IsEmpty) TerminalMarkers.AddRange(loadedStructures.ToList());
 
+                //Charge nodes
+                loadedStructures = new ConcurrentBag<ContentStructure>();
+                var chargeNodes = gd.Structures
+                    .Where(s =>
+                        s.ClassName.StartsWith("PrimalItem_PowerNodeCharge")
+                        && (Math.Abs((decimal)s.Location.Latitude - FilterLatitude) <= FilterRadius)
+                        && (Math.Abs((decimal)s.Location.Longitude - FilterLongitude) <= FilterRadius)
+                    ).ToList();
+
+                Parallel.ForEach(chargeNodes, chargeNode =>
+                {
+                    loadedStructures.Add(new ContentStructure()
+                    {
+                        ClassName = "ASV_ChargeNode",
+                        Latitude = chargeNode.Location.Latitude.GetValueOrDefault(0),
+                        Longitude = chargeNode.Location.Longitude.GetValueOrDefault(0),
+                        X = chargeNode.Location.X,
+                        Y = chargeNode.Location.Y,
+                        Z = chargeNode.Location.Z,
+                        InventoryId = addInventory(chargeNode.Inventory)
+                    }); ;
+                });
+                if (!loadedStructures.IsEmpty) ChargeNodes.AddRange(loadedStructures.ToList());
 
                 //GlitchMarkers
                 loadedStructures = new ConcurrentBag<ContentStructure>();
@@ -249,12 +291,12 @@ namespace ARKViewer.Models
                         && (Math.Abs((decimal)s.Location.Longitude - FilterLongitude) <= FilterRadius)
                     ).ToList();
 
-
+                 
                 Parallel.ForEach(beaverHouses, house =>
                 {
                     var loadedStructure = new ContentStructure()
                     {
-                        ClassName = "ASV_Beaver",
+                        ClassName = "ASV_BeaverDam",
                         Latitude = (float)house.Location.Latitude,
                         Longitude = (float)house.Location.Longitude,
                         X = house.Location.X,
@@ -278,8 +320,6 @@ namespace ARKViewer.Models
                         && (Math.Abs((decimal)s.Location.Latitude - FilterLatitude) <= FilterRadius)
                         && (Math.Abs((decimal)s.Location.Longitude - FilterLongitude) <= FilterRadius)
                     ).ToList();
-
-
                 Parallel.ForEach(wyvernNests, nest =>
                 {
                     var loadedStructure = new ContentStructure()
@@ -294,6 +334,20 @@ namespace ARKViewer.Models
                     };
 
                     //check for egg and create inventory if found
+                    ArkItem fertileEgg = gd.Items.FirstOrDefault(
+                        i => i.ClassName.ToLower().Contains("egg") 
+                                && i.OwnerInventoryId == null 
+                                && i.OwnerContainerId == null 
+                                &&i.Location!=null
+                                && i.Location.Latitude.Value.ToString("0.00").Equals(nest.Location.Latitude.Value.ToString("0.00")) 
+                                && i.Location.Longitude.Value.ToString("0.00").Equals(nest.Location.Longitude.Value.ToString("0.00")));
+                    if (fertileEgg != null)
+                    {
+                        ArkItem[] items = new ArkItem[] { fertileEgg };
+                        fertileEgg.CustomName = fertileEgg.CustomDescription.Replace("\n", Environment.NewLine);
+                        loadedStructure.InventoryId = addInventory(items);
+                    }
+
 
                     loadedStructures.Add(loadedStructure);
 
@@ -310,7 +364,7 @@ namespace ARKViewer.Models
                         && (Math.Abs((decimal)s.Location.Longitude - FilterLongitude) <= FilterRadius)
                     ).ToList();
                 
-                Parallel.ForEach (wyvernNests,  nest => 
+                Parallel.ForEach (drakeNests,  nest => 
                 {
                     var loadedStructure = new ContentStructure()
                     {
@@ -324,12 +378,69 @@ namespace ARKViewer.Models
                     };
 
                     //check for egg and create inventory if found
+                    ArkItem fertileEgg = gd.Items.FirstOrDefault<ArkItem>(
+                        i => i.ClassName.ToLower().Contains("egg")
+                                && i.OwnerInventoryId == null
+                                && i.OwnerContainerId == null
+                                && i.Location!=null
+                                && i.Location.Latitude.GetValueOrDefault(0).ToString("0.00").Equals(nest.Location.Latitude.GetValueOrDefault(0).ToString("0.00"))
+                                && i.Location.Longitude.GetValueOrDefault(0).ToString("0.00").Equals(nest.Location.Longitude.GetValueOrDefault(0).ToString("0.00")));
+                    if (fertileEgg != null)
+                    {
+                        fertileEgg.CustomName = fertileEgg.CustomDescription.Replace("\n", Environment.NewLine);
+
+                        ArkItem[] items = new ArkItem[] { fertileEgg };
+                        loadedStructure.InventoryId = addInventory(items);
+                    }
 
                     loadedStructures.Add(loadedStructure);
 
                 });
                 if (!loadedStructures.IsEmpty) DrakeNests.AddRange(loadedStructures.ToList());
 
+
+                //Deino nests
+                loadedStructures = new ConcurrentBag<ContentStructure>();
+                var deinoNests = gd.Structures
+                    .Where(s =>
+                        s.ClassName.StartsWith("DeinonychusNest_C")
+                        && (Math.Abs((decimal)s.Location.Latitude - FilterLatitude) <= FilterRadius)
+                        && (Math.Abs((decimal)s.Location.Longitude - FilterLongitude) <= FilterRadius)
+                    ).ToList();
+
+                Parallel.ForEach(deinoNests, nest =>
+                {
+                    var loadedStructure = new ContentStructure()
+                    {
+                        ClassName = "ASV_DeinoNest",
+                        Latitude = (float)nest.Location.Latitude,
+                        Longitude = (float)nest.Location.Longitude,
+                        X = nest.Location.X,
+                        Y = nest.Location.Y,
+                        Z = nest.Location.Z,
+                        InventoryId = 0
+                    };
+
+                    //check for egg and create inventory if found
+                    ArkItem fertileEgg = gd.Items.FirstOrDefault(
+                        i => i.ClassName.ToLower().Contains("egg")
+                                && i.OwnerInventoryId == null
+                                && i.OwnerContainerId == null
+                                && i.Location != null
+                                && i.Location.Latitude.Value.ToString("0.00").Equals(nest.Location.Latitude.Value.ToString("0.00"))
+                                && i.Location.Longitude.Value.ToString("0.00").Equals(nest.Location.Longitude.Value.ToString("0.00")));
+                    if (fertileEgg != null)
+                    {
+                        ArkItem[] items = new ArkItem[] { fertileEgg };
+                        fertileEgg.CustomName = fertileEgg.CustomDescription.Replace("\n", Environment.NewLine);
+
+                        loadedStructure.InventoryId = addInventory(items);
+                    }
+
+                    loadedStructures.Add(loadedStructure);
+
+                });
+                if (!loadedStructures.IsEmpty) DeinoNests.AddRange(loadedStructures.ToList());
 
                 //MagmaNests 
                 loadedStructures = new ConcurrentBag<ContentStructure>();
@@ -340,7 +451,7 @@ namespace ARKViewer.Models
                         && (Math.Abs((decimal)s.Location.Longitude - FilterLongitude) <= FilterRadius)
                     ).ToList();
 
-                Parallel.ForEach(wyvernNests, nest =>
+                Parallel.ForEach(magmaNests, nest =>
                 {
                     
                     var loadedStructure = new ContentStructure()
@@ -355,6 +466,20 @@ namespace ARKViewer.Models
                     };
 
                     //check for egg and create inventory if found
+                    ArkItem fertileEgg = gd.Items.FirstOrDefault(
+                        i => i.ClassName.ToLower().Contains("egg")
+                                && i.OwnerInventoryId == null
+                                && i.OwnerContainerId == null
+                                && i.Location != null
+                                && i.Location.Latitude.Value.ToString("0.00").Equals(nest.Location.Latitude.Value.ToString("0.00"))
+                                && i.Location.Longitude.Value.ToString("0.00").Equals(nest.Location.Longitude.Value.ToString("0.00")));
+                    if (fertileEgg != null)
+                    {
+                        ArkItem[] items = new ArkItem[] { fertileEgg };
+                        fertileEgg.CustomName = fertileEgg.CustomDescription.Replace("\n", Environment.NewLine);
+
+                        loadedStructure.InventoryId = addInventory(items);
+                    }
 
                     loadedStructures.Add(loadedStructure);
 
@@ -453,6 +578,30 @@ namespace ARKViewer.Models
                     });
                 });
                 if (!loadedStructures.IsEmpty) Artifacts.AddRange(loadedStructures.ToList());
+
+                //PlantZ
+                //Artifacts 
+                loadedStructures = new ConcurrentBag<ContentStructure>();
+                var plants = gd.Structures
+                    .Where(s =>
+                        s.ClassName.StartsWith("Structure_PlantSpeciesZ")
+                        && (Math.Abs((decimal)s.Location.Latitude - FilterLatitude) <= FilterRadius)
+                        && (Math.Abs((decimal)s.Location.Longitude - FilterLongitude) <= FilterRadius)
+                    ).ToList();
+
+                Parallel.ForEach(plants, plant =>
+                {
+                    loadedStructures.Add(new ContentStructure()
+                    {
+                        ClassName = "ASV_PlantZ",
+                        Latitude = (float)plant.Location.Latitude,
+                        Longitude = (float)plant.Location.Longitude,
+                        X = plant.Location.X,
+                        Y = plant.Location.Y,
+                        Z = plant.Location.Z
+                    });
+                });
+                if (!loadedStructures.IsEmpty) PlantZ.AddRange(loadedStructures.ToList());
 
             }
 
@@ -636,9 +785,33 @@ namespace ARKViewer.Models
                             X = structure.Location.X,
                             Y = structure.Location.Y,
                             Z = structure.Location.Z,
+                            TargetingTeam = tribe.TribeId,
                             InventoryId = addInventory(structure.Inventory)
                         });
                     });
+
+                    //add rafts which for some reason are under "Tamed" in the toolkit.
+                    var rafts = gd.Rafts
+                        .Where(t =>
+                            (t.TargetingTeam == tribe.TribeId || tribe.Players.Any(p => p.Id == t.OwningPlayerId || p.Id == t.ImprinterPlayerDataId))
+                            && (Math.Abs((decimal)t.Location.Latitude - FilterLatitude) <= FilterRadius)
+                            && (Math.Abs((decimal)t.Location.Longitude - FilterLongitude) <= FilterRadius)
+                            
+                        ).ToList();
+                    Parallel.ForEach(rafts, structure =>
+                    {
+                        loadedStructures.Add(new ContentStructure()
+                        {
+                            ClassName = structure.ClassName,
+                            Latitude = structure.Location.Latitude,
+                            Longitude = structure.Location.Longitude,
+                            X = structure.Location.X,
+                            Y = structure.Location.Y,
+                            Z = structure.Location.Z,
+                            InventoryId = addInventory(structure.Inventory)
+                        });
+                    });
+
 
                     if (!loadedStructures.IsEmpty) tribe.Structures.AddRange(loadedStructures.ToList());
                 }
@@ -647,7 +820,7 @@ namespace ARKViewer.Models
                 {
                     //tamed
                     ConcurrentBag<ContentTamedCreature> loadedTames = new ConcurrentBag<ContentTamedCreature>();
-                    var tamed = gd.TamedCreatures
+                    var tamed = gd.NoRafts
                         .Where(t =>
                             (t.TargetingTeam == tribe.TribeId || tribe.Players.Any(p=>p.Id == t.OwningPlayerId || p.Id == t.ImprinterPlayerDataId))
                             && (Math.Abs((decimal)t.Location.Latitude - FilterLatitude) <= FilterRadius)
@@ -775,6 +948,9 @@ namespace ARKViewer.Models
                 invItems.Add(new ContentItem()
                 {
                     ClassName = item.ClassName,
+                    CustomName = item.CustomName,
+                    CraftedByPlayer = item.CraftedPlayerName,
+                    CraftedByTribe = item.CraftedTribeName,
                     IsBlueprint = item.IsBlueprint,
                     Quantity = (int)item.Quantity
                 });

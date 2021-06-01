@@ -1,27 +1,119 @@
 ﻿using ArkSavegameToolkitNet.Domain;
+using ARKViewer.Configuration;
 using ARKViewer.Models;
+using FluentFTP;
 using Newtonsoft.Json;
+using Renci.SshNet;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ARKViewer
 {
     public class ContentManager
     {
         ContentPack pack = null;
-        
+
+        public DateTime ContentDate { 
+            get
+            {
+                if (pack == null) return DateTime.MinValue;
+                return pack.ContentDate;
+            }
+        }
+
+        public string MapName {
+            get
+            {
+                if (pack == null) return "";
+                return pack.MapFilename;
+            }
+        }
+
+        public Image MapImage { get; internal set; }
+        public bool MapTerminals { get; set; } = true;
+        public bool MapOilVeins { get; set; } = true;
+        public bool MapGasVeins { get; set; } = true;
+        public bool MapWaterVeins { get; set; } = true;
+        public bool MapChargeNodes { get; set; } = true;
+        public bool MapArtifacts { get; set; } = true;
+        public bool MapWyvernNests { get; set; } = true;
+        public bool MapDeinoNests { get; set; } = true;
+        public bool MapDrakeNests { get; set; } = true;
+        public bool MapMagmaNests { get; set; } = true;
+        public bool MapBeaverDams { get; set; } = true;
+        public bool MapGlitches { get; set; } = true;
+
+        private void InitMapImage()
+        {
+            switch (MapName.ToLower())
+            {
+                case "thecenter":
+                    MapImage = new Bitmap(ARKViewer.Properties.Resources.map_thecenter, new Size(1024, 1024));
+                    break;
+                case "theisland":
+                    MapImage = new Bitmap(ARKViewer.Properties.Resources.map_theisland, new Size(1024, 1024));
+                    break;
+                case "scorchedearth_p":
+                    MapImage = new Bitmap(ARKViewer.Properties.Resources.map_scorchedearth, new Size(1024, 1024));
+                    break;
+                case "aberration_p":
+                    MapImage = new Bitmap(ARKViewer.Properties.Resources.map_aberration, new Size(1024, 1024));
+                    break;
+                case "ragnarok":
+                    MapImage = new Bitmap(ARKViewer.Properties.Resources.map_ragnarok, new Size(1024, 1024));
+                    break;
+                case "extinction":
+                    MapImage = new Bitmap(ARKViewer.Properties.Resources.map_extinction, new Size(1024, 1024));
+                    break;
+                case "valguero_p":
+                    MapImage = new Bitmap(ARKViewer.Properties.Resources.map_valguero, new Size(1024, 1024));
+                    break;
+                case "crystalisles":
+                    MapImage = new Bitmap(ARKViewer.Properties.Resources.map_crystalisles, new Size(1024, 1024));
+                    break;
+                case "tunguska_p":
+                    MapImage = new Bitmap(ARKViewer.Properties.Resources.map_tunguska, new Size(1024, 1024));
+                    break;
+                case "caballus_p":
+                    MapImage = new Bitmap(ARKViewer.Properties.Resources.map_caballus, new Size(1024, 1024));
+                    break;
+                case "genesis":
+                    MapImage = new Bitmap(ARKViewer.Properties.Resources.map_genesis, new Size(1024, 1024));
+                    break;
+                case "astralark":
+                    MapImage = new Bitmap(ARKViewer.Properties.Resources.map_astralark, new Size(1024, 1024));
+                    break;
+                case "hope":
+                    MapImage = new Bitmap(ARKViewer.Properties.Resources.map_hope, new Size(1024, 1024));
+                    break;
+                case "viking_p":
+                    MapImage = new Bitmap(ARKViewer.Properties.Resources.map_fjordur, new Size(1024, 1024));
+                    break;
+                case "tiamatprime":
+                    MapImage = new Bitmap(ARKViewer.Properties.Resources.map_tiamat, new Size(1024, 1024));
+                    break;
+                default:
+                    MapImage = new Bitmap(1024, 1024);
+                    break;
+            }
+        }
+
         public ContentManager(ArkGameData data)
         {
             pack = new ContentPack(data,0,0,50,50,100);
+            InitMapImage();
         }
 
         public ContentManager(ContentPack data)
         {
             pack = data;
+            InitMapImage();
         }
 
         ~ContentManager()
@@ -29,6 +121,14 @@ namespace ARKViewer
             pack = null;
         }
 
+
+        public ContentInventory GetInventory(long inventoryId)
+        {
+            if (pack == null) return new ContentInventory();
+            var inventory = pack.Inventories.FirstOrDefault<ContentInventory>(i => i.InventoryId == inventoryId);
+            if (inventory == null) inventory = new ContentInventory();
+            return inventory;
+        }
 
         //Query options
         public List<ContentWildCreature> GetWildCreatures(int minLevel, int maxLevel, float fromLat, float fromLon, float fromRadius, string selectedClass)
@@ -41,7 +141,7 @@ namespace ARKViewer
         }
 
 
-        public List<ContentTamedCreature> GetTamedCreatures(string selectedClass, int selectedTribeId, int selectedPlayerId, bool includeCryoVivarium)
+        public List<ContentTamedCreature> GetTamedCreatures(string selectedClass, long selectedTribeId, long selectedPlayerId, bool includeCryoVivarium)
         {
             return pack.Tribes
                 .Where(t => (t.TribeId == selectedTribeId || selectedTribeId == 0) || t.Players.Any(p => p.Id == selectedPlayerId))
@@ -56,11 +156,74 @@ namespace ARKViewer
 
         }
 
-        public List<ContentStructure> GetPlayerStructures(int selectedTribeId, int selectedPlayerId, string selectedClass)
+        public List<ContentStructure> GetTerminals() 
+        {
+            if (pack == null) return new List<ContentStructure>();
+            return pack.TerminalMarkers;
+        }
+        public List<ContentStructure> GetGlitchMarkers() 
+        {
+            if (pack == null) return new List<ContentStructure>();
+            return pack.GlitchMarkers;
+        }
+        public List<ContentStructure> GetChargeNodes() 
+        {
+            if (pack == null) return new List<ContentStructure>();
+            return pack.ChargeNodes;
+        }
+        public List<ContentStructure> GetBeaverDams() 
+        {
+            if (pack == null) return new List<ContentStructure>();
+            return pack.BeaverDams;
+        }
+        public List<ContentStructure> GetWyvernNests() 
+        {
+            if (pack == null) return new List<ContentStructure>();
+            return pack.WyvernNests;
+        }
+        public List<ContentStructure> GetDrakeNests() 
+        {
+            if (pack == null) return new List<ContentStructure>();
+            return pack.DrakeNests;
+        }
+
+        public List<ContentStructure> GetDeinoNests()
+        {
+            if (pack == null) return new List<ContentStructure>();
+            return pack.DeinoNests;
+        }
+        public List<ContentStructure> GetMagmaNests() 
+        {
+            if (pack == null) return new List<ContentStructure>();
+            return pack.MagmaNests;
+        }
+        public List<ContentStructure> GetOilVeins() 
+        {
+            if (pack == null) return new List<ContentStructure>();
+            return pack.OilVeins;
+        }
+        public List<ContentStructure> GetWaterVeins() 
+        {
+            if (pack == null) return new List<ContentStructure>();
+            return pack.WaterVeins;
+        }
+        public List<ContentStructure> GetGasVeins() 
+        {
+            if (pack == null) return new List<ContentStructure>();
+            return pack.GasVeins;
+        }
+        public List<ContentStructure> GetArtifacts() 
+        {
+            if (pack == null) return new List<ContentStructure>();
+            return pack.Artifacts;
+        }
+
+        public List<ContentStructure> GetPlayerStructures(long selectedTribeId, long selectedPlayerId, string selectedClass)
         {
             var tribeStructures = pack.Tribes
                 .Where(t =>
-                    t.TribeId == selectedTribeId || selectedTribeId == 0
+                    (t.TribeId == selectedTribeId || (selectedTribeId == 0 && selectedPlayerId==0))
+                    || t.Players.Any(p=>p.Id == selectedPlayerId)
                 ).SelectMany(s =>
                     s.Structures.Where(x =>
                         (selectedClass.Length == 0 || x.ClassName == selectedClass)
@@ -73,7 +236,7 @@ namespace ARKViewer
             return tribeStructures;
         }
 
-        public List<ContentPlayer> GetPlayers(int selectedTribeId, int selectedPlayerId)
+        public List<ContentPlayer> GetPlayers(long selectedTribeId, long selectedPlayerId)
         {
             var tribePlayers = pack.Tribes
                 .Where(t =>
@@ -87,32 +250,51 @@ namespace ARKViewer
             return tribePlayers;
         }
 
-        public List<ContentTribe> GetTribes(int selectedTribeId)
+        public List<ContentTribe> GetTribes(long selectedTribeId)
         {
             return pack.Tribes.Where(t => selectedTribeId == 0 || t.TribeId == selectedTribeId).ToList();
         }
 
-        public List<ContentDroppedItem> GetDroppedItems(int playerId, string className)
+        public ContentTribe GetPlayerTribe(long playerId)
         {
-            return new List<ContentDroppedItem>();
-        }
-
-        public List<ContentDroppedItem> GetDeathCacheBags(int playerId)
-        {
-            return new List<ContentDroppedItem>();
+            return pack.Tribes.FirstOrDefault<ContentTribe>(t => t.Players.Any(p => p.Id == playerId));
         }
 
 
+        public List<ContentDroppedItem> GetDroppedItems(long playerId, string className)
+        {
+            var foundItems = pack.DroppedItems
+                .Where(d =>
+                    d.IsDeathCache == false
+                    && (d.DroppedByPlayerId == playerId || playerId == 0)
+                    && (d.ClassName == className || className == "")
+                ).ToList();
 
+            return foundItems;
+        }
 
-
-
-
+        public List<ContentDroppedItem> GetDeathCacheBags(long playerId)
+        {
+            return pack.DroppedItems
+                .Where(d => 
+                    d.IsDeathCache
+                    && (d.DroppedByPlayerId == playerId || playerId ==0)
+                ).ToList();
+        }
 
         // Export options
+        public void ExportContentPack(string exportFilename)
+        {
+            pack.ExportPack(exportFilename);
+        }
+
         public void ExportAll(string exportPath)
         {
-
+            ExportWild(Path.Combine(exportPath, "ASV_Wild.json"));
+            ExportTamed(Path.Combine(exportPath, "ASV_Tamed.json"));
+            ExportPlayerTribes(Path.Combine(exportPath, "ASV_Tribes.json"));
+            ExportPlayers(Path.Combine(exportPath, "ASV_Players.json"));
+            ExportPlayerStructures(Path.Combine(exportPath, "ASV_Structures.json"));
         }
 
         public void ExportWild(string exportFilename)
@@ -145,10 +327,10 @@ namespace ARKViewer
                             jw.WriteValue(creature.BaseLevel);
 
                             jw.WritePropertyName("lat");
-                            jw.WriteValue(creature.Latitude);
+                            jw.WriteValue(creature.Latitude.GetValueOrDefault(0));
 
                             jw.WritePropertyName("lon");
-                            jw.WriteValue(creature.Longitude);
+                            jw.WriteValue(creature.Longitude.GetValueOrDefault(0));
 
                             jw.WritePropertyName("hp");
                             jw.WriteValue(creature.BaseStats[0]);
@@ -261,10 +443,10 @@ namespace ARKViewer
                             jw.WriteValue(creature.Level);
 
                             jw.WritePropertyName("lat");
-                            jw.WriteValue(creature.Latitude);
+                            jw.WriteValue(creature.Latitude.GetValueOrDefault(0));
 
                             jw.WritePropertyName("lon");
-                            jw.WriteValue(creature.Longitude);
+                            jw.WriteValue(creature.Longitude.GetValueOrDefault(0));
 
                             jw.WritePropertyName("hp-w");
                             jw.WriteValue(creature.BaseStats[0]);
@@ -430,10 +612,10 @@ namespace ARKViewer
                                 jw.WriteValue(structure.ClassName);
 
                                 jw.WritePropertyName("lat");
-                                jw.WriteValue(structure.Latitude);
+                                jw.WriteValue(structure.Latitude.GetValueOrDefault(0));
 
                                 jw.WritePropertyName("lon");
-                                jw.WriteValue(structure.Longitude);
+                                jw.WriteValue(structure.Longitude.GetValueOrDefault(0));
 
                                 jw.WritePropertyName("ccc");
                                 jw.WriteValue($"{structure.X} {structure.Y} {structure.Z}");
@@ -603,10 +785,10 @@ namespace ARKViewer
                                 jw.WriteValue(player.Level);
 
                                 jw.WritePropertyName("lat");
-                                jw.WriteValue(player.Latitude);
+                                jw.WriteValue(player.Latitude.GetValueOrDefault(0));
 
                                 jw.WritePropertyName("lon");
-                                jw.WriteValue(player.Longitude);
+                                jw.WriteValue(player.Longitude.GetValueOrDefault(0));
 
 
 
@@ -714,6 +896,461 @@ namespace ARKViewer
 
             }
         }
+
+        public List<ContentStructure> GetPlantZ()
+        {
+            if (pack == null) return new List<ContentStructure>();
+            return pack.PlantZ;
+
+
+        }
+
+
+
+        public Bitmap GetMapImageWild(string className, int minLevel, int maxLevel, decimal filterLat, decimal filterLon, decimal filterRadius, decimal? selectedLat, decimal? selectedLon, List<ContentMarker> customMarkers)
+        {
+            Bitmap bitmap = new Bitmap(1024, 1024);
+            Graphics graphics = Graphics.FromImage(bitmap);
+            graphics.DrawImage(MapImage, new Rectangle(0, 0, 1024, 1024));
+            graphics = AddMapStructures(graphics);
+
+
+
+            
+            if(customMarkers!=null && customMarkers.Count > 0)
+            {
+                graphics = AddCustomMarkers(graphics, customMarkers);
+            }
+
+            graphics = AddCurrentMarker(graphics, selectedLat, selectedLon);
+
+            return bitmap;
+        }
+
+        public Bitmap GetMapImageTamed(string className, bool includeStored, long tribeId, long playerId, decimal? selectedLat, decimal? selectedLon, List<ContentMarker> customMarkers)
+        {
+            Bitmap bitmap = new Bitmap(1024, 1024);
+            Graphics graphics = Graphics.FromImage(bitmap);
+            graphics.DrawImage(MapImage, new Rectangle(0, 0, 1024, 1024));
+            graphics = AddMapStructures(graphics);
+
+
+
+
+            if (customMarkers != null && customMarkers.Count > 0)
+            {
+                graphics = AddCustomMarkers(graphics, customMarkers);
+            }
+
+            graphics = AddCurrentMarker(graphics, selectedLat, selectedLon);
+
+            return bitmap;
+        }
+
+        public Bitmap GetMapImagePlayerStructures(string className, long tribeId, long playerId, decimal? selectedLat, decimal? selectedLon, List<ContentMarker> customMarkers)
+        {
+            Bitmap bitmap = new Bitmap(1024, 1024);
+            Graphics graphics = Graphics.FromImage(bitmap);
+            graphics.DrawImage(MapImage, new Rectangle(0, 0, 1024, 1024));
+            graphics = AddMapStructures(graphics);
+
+
+
+
+            if (customMarkers != null && customMarkers.Count > 0)
+            {
+                graphics = AddCustomMarkers(graphics, customMarkers);
+            }
+
+            graphics = AddCurrentMarker(graphics, selectedLat, selectedLon);
+
+            return bitmap;
+        }
+
+        public Bitmap GetMapImageTribes(List<ContentMarker> customMarkers)
+        {
+            Bitmap bitmap = new Bitmap(1024, 1024);
+            Graphics graphics = Graphics.FromImage(bitmap);
+            graphics.DrawImage(MapImage, new Rectangle(0, 0, 1024, 1024));
+            graphics = AddMapStructures(graphics);
+
+
+
+
+            if (customMarkers != null && customMarkers.Count > 0)
+            {
+                graphics = AddCustomMarkers(graphics, customMarkers);
+            }
+
+            graphics = AddCurrentMarker(graphics, null, null);
+
+            return bitmap;
+        }
+
+        public Bitmap GetMapImagePlayers(long tribeId, long playerId, decimal? selectedLat, decimal? selectedLon, List<ContentMarker> customMarkers)
+        {
+            Bitmap bitmap = new Bitmap(1024, 1024);
+            Graphics graphics = Graphics.FromImage(bitmap);
+            graphics.DrawImage(MapImage, new Rectangle(0, 0, 1024, 1024));
+            graphics = AddMapStructures(graphics);
+
+
+
+
+            if (customMarkers != null && customMarkers.Count > 0)
+            {
+                graphics = AddCustomMarkers(graphics, customMarkers);
+            }
+
+            graphics = AddCurrentMarker(graphics, selectedLat, selectedLon);
+
+            return bitmap;
+        }
+
+        public Bitmap GetMapDroppedItems(long playerId, decimal? selectedLat, decimal? selectedLon, List<ContentMarker> customMarkers)
+        {
+            Bitmap bitmap = new Bitmap(1024, 1024);
+            Graphics graphics = Graphics.FromImage(bitmap);
+            graphics.DrawImage(MapImage, new Rectangle(0, 0, 1024, 1024));
+            graphics = AddMapStructures(graphics);
+
+
+
+
+            if (customMarkers != null && customMarkers.Count > 0)
+            {
+                graphics = AddCustomMarkers(graphics, customMarkers);
+            }
+
+            graphics = AddCurrentMarker(graphics, selectedLat, selectedLon);
+
+            return bitmap;
+        }
+
+        private Graphics AddMapStructures(Graphics g)
+        {
+
+            return g;
+        }
+        private Graphics AddCustomMarkers(Graphics g, List<ContentMarker> markers)
+        {
+
+            return g;
+        }
+
+        private Graphics AddCurrentMarker(Graphics g, decimal? lat, decimal? lon)
+        {
+
+            return g;
+        }
+
+        public string Download()
+        {
+            ServerConfiguration selectedServer = ARKViewer.Program.ProgramConfig.ServerList.Where(s => s.Name == ARKViewer.Program.ProgramConfig.SelectedServer).FirstOrDefault();
+            if (selectedServer == null) return "";
+
+            switch (selectedServer.Mode)
+            {
+                case 0:
+                    //ftp
+                    return DownloadFtp();
+
+                case 1:
+                    //sftp
+                    return DownloadSFtp();
+
+            }
+
+            return "";
+
+        }
+
+
+        private string DownloadSFtp()
+        {
+            string downloadFilename = "";
+            ServerConfiguration selectedServer = ARKViewer.Program.ProgramConfig.ServerList.Where(s => s.Name == ARKViewer.Program.ProgramConfig.SelectedServer).FirstOrDefault();
+            if (selectedServer == null) return downloadFilename;
+
+            string ftpServerUrl = $"{selectedServer.Address}";
+            string serverUsername = selectedServer.Username;
+            string serverPassword = selectedServer.Password;
+            string downloadPath = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), selectedServer.Name);
+            if (!Directory.Exists(downloadPath))
+            {
+                Directory.CreateDirectory(downloadPath);
+            }
+
+            if (Program.ProgramConfig.FtpDownloadMode == 1)
+            {
+                //clear any previous .arktribe, .arkprofile files
+                var profileFiles = Directory.GetFiles(downloadPath, "*.arkprofile");
+                foreach (var profileFile in profileFiles)
+                {
+                    File.Delete(profileFile);
+                }
+
+                var tribeFiles = Directory.GetFiles(downloadPath, "*.arktribe");
+                foreach (var tribeFile in tribeFiles)
+                {
+                    File.Delete(tribeFile);
+                }
+
+            }
+
+            string mapFilename = ARKViewer.Program.ProgramConfig.SelectedFile;
+
+            try
+            {
+                using (var sftp = new SftpClient(selectedServer.Address, selectedServer.Port, selectedServer.Username, selectedServer.Password))
+                {
+                    sftp.Connect();
+                    var files = sftp.ListDirectory(selectedServer.SaveGamePath).Where(f => f.IsRegularFile);
+                    foreach (var serverFile in files)
+                    {
+
+
+                        if (Path.GetExtension(serverFile.Name).StartsWith(".ark"))
+                        {
+
+                            string localFilename = Path.Combine(downloadPath, serverFile.Name);
+
+
+                            if (File.Exists(localFilename) && Program.ProgramConfig.FtpDownloadMode == 1)
+                            {
+                                File.Delete(localFilename);
+                            }
+
+                            bool shouldDownload = true;
+
+                            if (serverFile.Name.EndsWith(".ark"))
+                            {
+                                downloadFilename = localFilename;
+
+                                if (serverFile.Name.ToLower() != selectedServer.Map.ToLower())
+                                {
+                                    shouldDownload = false;
+                                }
+                                else
+                                {
+                                    if (File.Exists(localFilename) && Program.ProgramConfig.FtpDownloadMode == 0 && File.GetLastWriteTimeUtc(localFilename) >= serverFile.LastAccessTimeUtc)
+                                    {
+                                        shouldDownload = false;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                if (File.Exists(localFilename) && Program.ProgramConfig.FtpDownloadMode == 0 && File.GetLastWriteTimeUtc(localFilename) >= serverFile.LastAccessTimeUtc)
+                                {
+                                    shouldDownload = false;
+                                }
+                            }
+
+                            if (shouldDownload)
+                            {
+                                //delete local if any
+                                if (File.Exists(localFilename))
+                                {
+                                    File.Delete(localFilename);
+                                }
+
+                                using (FileStream outputStream = new FileStream(localFilename, FileMode.CreateNew))
+                                {
+                                    sftp.DownloadFile(serverFile.FullName, outputStream);
+                                    outputStream.Flush();
+                                }
+                                DateTime saveTime = serverFile.LastWriteTimeUtc;
+                                File.SetLastWriteTime(localFilename, saveTime);
+
+                            }
+                        }
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+
+            }
+
+            return downloadFilename;
+        }
+
+        private string DownloadFtp()
+        {
+            string downloadedFilename = "";
+            ServerConfiguration selectedServer = ARKViewer.Program.ProgramConfig.ServerList.Where(s => s.Name == ARKViewer.Program.ProgramConfig.SelectedServer).FirstOrDefault();
+            if (selectedServer == null) return downloadedFilename;
+
+            selectedServer.Address = selectedServer.Address.Trim();
+            selectedServer.SaveGamePath = selectedServer.SaveGamePath.Trim();
+            if (!selectedServer.SaveGamePath.EndsWith("/"))
+            {
+                selectedServer.SaveGamePath = selectedServer.SaveGamePath.Trim() + "/";
+            }
+
+
+            using (FtpClient ftpClient = new FtpClient(selectedServer.Address))
+            {
+
+                ftpClient.Credentials.UserName = selectedServer.Username;
+                ftpClient.Credentials.Password = selectedServer.Password;
+                ftpClient.Port = selectedServer.Port;
+
+                string downloadPath = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), selectedServer.Name);
+                if (!Directory.Exists(downloadPath))
+                {
+                    Directory.CreateDirectory(downloadPath);
+                }
+
+
+                // try remove existing local copies                
+
+                if (Program.ProgramConfig.FtpDownloadMode == 1)
+                {
+                    //clean download
+                    // ... arkprofile(s)
+                    var profileFiles = Directory.GetFiles(downloadPath, "*.arkprofile");
+                    foreach (var profileFilename in profileFiles)
+                    {
+                        try
+                        {
+                            File.Delete(profileFilename);
+                        }
+                        finally
+                        {
+                            //ignore, issue deleting the file but not concerned.
+                        }
+                    }
+
+                    // ... arktribe(s)
+                    var tribeFiles = Directory.GetFiles(downloadPath, "*.arktribe");
+                    foreach (var tribeFilename in tribeFiles)
+                    {
+                        try
+                        {
+                            File.Delete(tribeFilename);
+                        }
+                        finally
+                        {
+                            //ignore, issue deleting the file but not concerned.
+                        }
+                    }
+                }
+
+                ftpClient.Connect();
+                var serverFiles = ftpClient.GetListing(selectedServer.SaveGamePath);
+                string localFilename = "";
+
+                //get correct casing for the selected map file
+                var serverSaveFile = serverFiles.Where(f => f.Name.ToLower() == selectedServer.Map.ToLower()).FirstOrDefault();
+                if (serverSaveFile != null)
+                {
+                    localFilename = Path.Combine(downloadPath, serverSaveFile.Name);
+                    downloadedFilename = localFilename;
+                    bool shouldDownload = true;
+
+
+                    if (File.Exists(localFilename) && serverSaveFile.Modified.ToUniversalTime() <= File.GetLastWriteTimeUtc(localFilename))
+                    {
+                        if (Program.ProgramConfig.FtpDownloadMode == 0)
+                        {
+                            shouldDownload = false;
+                        }
+
+                    }
+
+                    if (shouldDownload)
+                    {
+                        using (FileStream outputStream = new FileStream(localFilename, FileMode.Create))
+                        {
+                            ftpClient.Download(outputStream, serverSaveFile.FullName);
+                            outputStream.Flush();
+                        }
+                        File.SetLastWriteTimeUtc(localFilename, serverSaveFile.Modified.ToUniversalTime());
+                    }
+
+
+
+                    //get .arktribe files
+                    var serverTribeFiles = serverFiles.Where(f => f.Name.EndsWith(".arktribe"));
+                    if (serverTribeFiles != null && serverTribeFiles.Count() > 0)
+                    {
+                        foreach (var serverTribeFile in serverTribeFiles)
+                        {
+                            localFilename = Path.Combine(downloadPath, serverTribeFile.Name);
+                            shouldDownload = true;
+                            if (File.Exists(localFilename) && serverTribeFile.Modified.ToUniversalTime() <= File.GetLastWriteTimeUtc(localFilename))
+                            {
+                                if (Program.ProgramConfig.FtpDownloadMode == 0)
+                                {
+                                    shouldDownload = false;
+                                }
+
+                            }
+
+
+                            if (shouldDownload)
+                            {
+                                using (FileStream outputStream = new FileStream(localFilename, FileMode.Create))
+                                {
+                                    ftpClient.Download(outputStream, serverTribeFile.FullName);
+                                    outputStream.Flush();
+                                }
+                                File.SetLastWriteTimeUtc(localFilename, serverTribeFile.Modified.ToUniversalTime());
+                            }
+
+                        }
+
+                    }
+
+
+                    //get .arkprofile files
+                    var serverProfileFiles = serverFiles.Where(f => f.Name.EndsWith(".arkprofile"));
+                    if (serverProfileFiles != null && serverProfileFiles.Count() > 0)
+                    {
+                        foreach (var serverProfileFile in serverProfileFiles)
+                        {
+
+                            localFilename = Path.Combine(downloadPath, serverProfileFile.Name);
+                            shouldDownload = true;
+                            if (File.Exists(localFilename) && serverProfileFile.Modified.ToUniversalTime() <= File.GetLastWriteTimeUtc(localFilename))
+                            {
+                                if (Program.ProgramConfig.FtpDownloadMode == 0)
+                                {
+                                    shouldDownload = false;
+                                }
+
+                            }
+                            if (shouldDownload)
+                            {
+                                using (FileStream outputStream = new FileStream(localFilename, FileMode.Create))
+                                {
+                                    ftpClient.Download(outputStream, serverProfileFile.FullName);
+                                    outputStream.Flush();
+                                }
+                                File.SetLastWriteTimeUtc(localFilename, serverProfileFile.Modified.ToUniversalTime());
+                            }
+                        }
+
+                    }
+                }
+                else
+                {
+                    //save file not found on server.
+
+
+                }
+            }
+
+            return downloadedFilename;
+
+        }
+
+
 
     }
 }

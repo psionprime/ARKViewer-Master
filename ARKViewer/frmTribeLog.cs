@@ -1,4 +1,5 @@
 ﻿using ArkSavegameToolkitNet.Domain;
+using ARKViewer.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,7 +18,7 @@ namespace ARKViewer
         private ColumnHeader SortingColumn_Markers = null;
         private string[] logData = null;
 
-        public frmTribeLog(ArkTribe tribe)
+        public frmTribeLog(ContentTribe tribe)
         {
             InitializeComponent();
 
@@ -25,7 +26,7 @@ namespace ARKViewer
             Color overrideBackColour = standardBackColour;
             lvwLog.BackColor = overrideBackColour;
 
-            lblPlayerName.Text = tribe.Name;
+            lblPlayerName.Text = tribe.TribeName;
             lblPlayerLevelLabel.Visible = false;
             lblPlayerLevel.Text = "";
             lblTribeName.Text = "";
@@ -38,7 +39,7 @@ namespace ARKViewer
                 LoadLog();
             }
         }
-        public frmTribeLog(ArkPlayer player)
+        public frmTribeLog(ContentTribe tribe, ContentPlayer player)
         {
             InitializeComponent();
 
@@ -51,16 +52,16 @@ namespace ARKViewer
             lvwLog.ForeColor = overrideTimestampColour;
 
             lblPlayerName.Text = player.CharacterName;
-            lblPlayerLevel.Text = player.CharacterLevel.ToString();
+            lblPlayerLevel.Text = player.Level.ToString();
             lblPlayerLevelLabel.Visible = true;
 
-            lblTribeName.Text = player.Tribe != null ? player.Tribe.Name : "";
-            picPlayerGender.Image = player.Gender == ArkPlayerGender.Male ? ARKViewer.Properties.Resources.marker_28 : ARKViewer.Properties.Resources.marker_29;
+            lblTribeName.Text = tribe.TribeName;
+            picPlayerGender.Image = player.Gender == "Male"? ARKViewer.Properties.Resources.marker_28 : ARKViewer.Properties.Resources.marker_29;
 
             lvwLog.Items.Clear();
-            if(player.Tribe!=null && player.Tribe.Logs.Count() > 0)
+            if(tribe!=null && tribe.Logs.Count() > 0)
             {
-                logData = player.Tribe.Logs;
+                logData = tribe.Logs;
                 LoadLog();
             }
 

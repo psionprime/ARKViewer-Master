@@ -2,6 +2,7 @@
 using ArkSavegameToolkitNet.Structs;
 using ARKViewer.Configuration;
 using ARKViewer.CustomNameMaps;
+using ARKViewer.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Concurrent;
@@ -28,6 +29,7 @@ namespace ARKViewer
         public static string ItemImageFolder { get; set; } = "";
         public static string MarkerImageFolder { get; set; } = "";
 
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -37,21 +39,22 @@ namespace ARKViewer
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-
             Application.ThreadException += Application_ThreadException;
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
-            ProgramConfig = new ViewerConfiguration();
-
+            //param setup
             string appFolder = AppContext.BaseDirectory;
-            string logFilename = Path.Combine(appFolder, @"ARKViewer.log");
+            string logFilename = Path.Combine(appFolder, @"ASV.log");
+
             ItemImageFolder = Path.Combine(appFolder, @"images\icons\");
             MarkerImageFolder = Path.Combine(appFolder, @"images\");
 
-
-            //ensure image folders exist
             if (!Directory.Exists(MarkerImageFolder)) Directory.CreateDirectory(MarkerImageFolder);
             if (!Directory.Exists(ItemImageFolder)) Directory.CreateDirectory(ItemImageFolder);
+
+
+            //load config
+            ProgramConfig = new ViewerConfiguration();
 
 
             //support quoted command line arguments which doesn't seem to be supported with Environment.GetCommandLineArgs() 
@@ -61,9 +64,10 @@ namespace ARKViewer
             commandArguments = commandArguments.Where(a => string.IsNullOrEmpty(a) == false).ToArray();
             if (commandArguments != null && commandArguments.Length > 1)
             {
+                //arguments provided, export and exit
                 using (TextWriter logWriter = new StreamWriter(logFilename))
                 {
-                    logWriter.WriteLine($"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")} - ArkViewer Command Line Started: {commandArguments.Length}");
+                    logWriter.WriteLine($"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")} - ASV Command Line Started: {commandArguments.Length}");
 
                     int argIndex = 0;
                     foreach (string arg in commandArguments)
@@ -73,970 +77,92 @@ namespace ARKViewer
                     }
 
                     //command line, load save game data for export
-                    string savePath = "";
-                    string saveFilename = "";
-                    bool shouldSort = ProgramConfig.SortCommandLineExport;
-
+                    string saveFullFilename = "";
 
                     if (commandArguments.Length > 3)
                     {
                         //ark save game specified
-                        saveFilename = commandArguments[3].ToString().Trim().Replace("\"", "");
-                        savePath = Path.GetDirectoryName(saveFilename);
+                        saveFullFilename = commandArguments[3].ToString().Trim().Replace("\"", "");
                     }
                     else
                     {
-                        //use last configured save
-                        switch (ARKViewer.Program.ProgramConfig.Mode)
+                        //use configured
+                        saveFullFilename = ARKViewer.Program.ProgramConfig.SelectedFile;
+                    }
+
+                    if (File.Exists(saveFullFilename))
+                    {
+                        ContentPack loadedPack = null;
+                        switch (Path.GetExtension(saveFullFilename).ToLower())
                         {
-                            case ViewerModes.Mode_SinglePlayer:
-                                if (ARKViewer.Program.ProgramConfig.SelectedFile.Length > 0)
-                                {
-                                    savePath = Path.GetFullPath(ARKViewer.Program.ProgramConfig.SelectedFile);
-                                    saveFilename = ARKViewer.Program.ProgramConfig.SelectedFile;
-                                }
-
+                            case "asvpack":
+                                loadedPack = new ContentPack(File.ReadAllBytes(saveFullFilename));
+                                loadedPack.ContentDate = File.GetLastWriteTimeUtc(saveFullFilename);
                                 break;
-                            case ViewerModes.Mode_Offline:
-                                if (ARKViewer.Program.ProgramConfig.SelectedFile.Length > 0)
-                                {
-                                    savePath = Path.GetFullPath(ARKViewer.Program.ProgramConfig.SelectedFile);
-                                    saveFilename = ARKViewer.Program.ProgramConfig.SelectedFile;
-                                }
-                                break;
-                            case ViewerModes.Mode_Ftp:
-                                savePath = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), ARKViewer.Program.ProgramConfig.SelectedServer);
-
-                                if (ARKViewer.Program.ProgramConfig.SelectedFile.Length > 0)
-                                {
-                                    saveFilename = Path.Combine(savePath, ARKViewer.Program.ProgramConfig.SelectedFile);
-                                }
-                                break;
-
                             default:
+                                //non asv pack, load from toolkit
+                                ArkGameData gd = new ArkGameData(saveFullFilename, loadOnlyPropertiesInDomain: false);
 
+                                if (gd.Update(CancellationToken.None, null, true)?.Success == true)
+                                {
+                                    gd.ApplyPreviousUpdate();
+                                    loadedPack = new ContentPack(gd, 0, 0, 50, 100, 100);
+                                    loadedPack.ContentDate = File.GetLastWriteTimeUtc(saveFullFilename);
+                                }
+
+                                gd = null;
                                 break;
                         }
 
-                    }
+                        ContentManager contentManager = new ContentManager(loadedPack);
 
+                        string commandOptionCheck = commandArguments[1].ToString().Trim().ToLower();
+                        string exportFilePath = AppContext.BaseDirectory;
+                        string exportFilename = Path.Combine(exportFilePath,"");
 
-                    if (File.Exists(saveFilename))
-                    {
-                        try
+                        if (commandArguments.Length > 2)
                         {
+                            //export filename
+                            exportFilename = commandArguments[2].ToString().Trim().Replace("\"", "");
+                            exportFilePath = Path.GetDirectoryName(exportFilePath);
+                        }
+                        if (!Directory.Exists(exportFilePath)) Directory.CreateDirectory(exportFilePath);
 
-
-                            ArkGameData gd = new ArkGameData(saveFilename, loadOnlyPropertiesInDomain: false);
-                            List<TribeMap> allTribes = new List<TribeMap>();
-                            List<PlayerMap> allPlayers = new List<PlayerMap>();
-
-                            if (gd.Update(CancellationToken.None, null, true)?.Success == true)
-                            {
-
-                                gd.ApplyPreviousUpdate();
-
-                                //get structures
-                                if (commandArguments[1].ToString().Trim().ToLower() == "structures" || commandArguments[1].ToString().Trim().ToLower() == "tribes" || commandArguments[1].ToString().Trim().ToString() == "all")
-                                {
-                                    if (gd.Structures != null && gd.Structures.Count() > 0)
-                                    {
-                                        var structureTribes = gd.Structures.Where(s => s.OwnerName != null && s.TargetingTeam.GetValueOrDefault(0) != 0).Select(s => new TribeMap() { TribeId = s.TargetingTeam.GetValueOrDefault(0), TribeName = s.OwnerName }).Distinct().ToList();
-
-                                        if (structureTribes != null)
-                                        {
-                                            if (gd.Tribes != null && gd.Tribes.Count() > 0)
-                                            {
-                                                var serverTribes = gd.Tribes.Where(t => structureTribes.LongCount(s => s.TribeId == t.Id) == 0 && t.Id != 0)
-                                                                            .Select(i => new TribeMap() { TribeId = i.Id, TribeName = i.Name, ContainsLog = i.Logs.Count() > 0 });
-
-                                                if (serverTribes != null)
-                                                {
-                                                    structureTribes.AddRange(serverTribes.ToArray());
-                                                }
-
-                                            }
-                                            allTribes = structureTribes.Distinct().ToList();
-                                        }
-                                        else
-                                        {
-                                            if (gd.Tribes != null && gd.Tribes.Count() > 0)
-                                            {
-                                                var serverTribes = gd.Tribes.Where(t => structureTribes.LongCount(s => s.TribeId == t.Id) == 0)
-                                                                            .Select(i => new TribeMap() { TribeId = i.Id, TribeName = i.Name });
-
-                                                allTribes = serverTribes.Distinct().ToList();
-                                            }
-
-
-                                        }
-
-                                        if (gd.Players != null && gd.Players.Count() > 0)
-                                        {
-
-                                            var serverPlayers = gd.Players.Select(i => new PlayerMap() { TribeId = (long)i.TribeId.GetValueOrDefault(0), PlayerId = (long)i.Id, PlayerName = i.CharacterName != null ? i.CharacterName : i.Name });
-                                            if (serverPlayers != null)
-                                            {
-                                                foreach (var serverPlayer in serverPlayers.Where(p => p.TribeId == 0))
-                                                {
-                                                    var testTribe = gd.Tribes.Where(t => t.MemberIds.Contains((int)serverPlayer.PlayerId)).FirstOrDefault();
-                                                    if (testTribe != null)
-                                                    {
-                                                        serverPlayer.TribeId = testTribe.Id;
-                                                    }
-                                                }
-
-                                                allPlayers = serverPlayers.Where(p => p.TribeId != 0).ToList();
-                                            }
-
-
-                                        }
-
-                                        var structurePlayers = gd.Structures.Where(s => s.TargetingTeam.GetValueOrDefault(0) != 0 && s.OwningPlayerName != null && allPlayers.LongCount(c => c.PlayerId == s.OwningPlayerId) == 0).Select(s => new PlayerMap() { TribeId = s.TargetingTeam.Value, PlayerId = (long)s.OwningPlayerId, PlayerName = s.OwningPlayerName }).Distinct().OrderBy(o => o.PlayerName).ToList();
-                                        if (structurePlayers != null && structurePlayers.Count() > 0)
-                                        {
-                                            allPlayers.AddRange(structurePlayers.ToArray());
-                                        }
-
-
-                                        foreach (var tribe in allTribes)
-                                        {
-                                            int playerCount = allPlayers.Count(p => p.TribeId == tribe.TribeId);
-                                            int tribePlayerCount = gd.Tribes.Where(t => t.Id == tribe.TribeId).Select(m => m.Members).Count();
-
-                                            tribe.PlayerCount = playerCount > tribePlayerCount ? playerCount : tribePlayerCount;
-                                            tribe.StructureCount = gd.Structures.LongCount(s => s.TargetingTeam.GetValueOrDefault(0) == tribe.TribeId);
-                                            tribe.TameCount = gd.TamedCreatures.LongCount(t => t.TargetingTeam == tribe.TribeId);
-
-                                            var tribeTames = gd.NoRafts.Where(t => t.TargetingTeam == tribe.TribeId);
-                                            if (tribeTames != null && tribeTames.Count() > 0)
-                                            {
-                                                TimeSpan noTime = new TimeSpan();
-
-                                                var lastTamedCreature = tribeTames.Where(t => t.TamedAtTime != null).OrderBy(o => o?.TamedForApprox.GetValueOrDefault(noTime).TotalSeconds).FirstOrDefault();
-                                                if (lastTamedCreature != null)
-                                                {
-                                                    var tamedTime = lastTamedCreature.TamedForApprox.GetValueOrDefault(noTime);
-                                                    tribe.LastActive = DateTime.Now.Subtract(tamedTime);
-                                                }
-                                            }
-                                            if (gd.Players != null && gd.Players.Count() > 0)
-                                            {
-                                                var tribePlayers = gd.Players.Where(p => p.TribeId == tribe.TribeId);
-                                                if (tribePlayers != null && tribePlayers.Count() > 0)
-                                                {
-                                                    var lastActivePlayer = tribePlayers.OrderBy(p => p.LastActiveTime).First();
-                                                    if (lastActivePlayer.LastActiveTime > tribe.LastActive)
-                                                    {
-                                                        tribe.LastActive = lastActivePlayer.LastActiveTime;
-                                                    }
-                                                }
-
-                                            }
-
-                                            if (gd.Tribes != null && gd.Tribes.Count() > 0)
-                                            {
-                                                var actualTribe = gd.Tribes.FirstOrDefault(t => t.Id == tribe.TribeId);
-                                                if (actualTribe != null)
-                                                {
-                                                    if (actualTribe.LastActiveTime > tribe.LastActive)
-                                                    {
-                                                        tribe.LastActive = actualTribe.LastActiveTime;
-                                                        tribe.TribeName = actualTribe.Name;
-                                                    }
-                                                    //error reported by @mjfro2 - crash when tribe has no log data
-                                                    long logCount = actualTribe.Logs == null ? 0 : actualTribe.Logs.Count();
-                                                    tribe.ContainsLog = logCount > 0;
-                                                }
-                                            }
-
-
-                                        }
-
-                                    }
-                                }
-
-
-                            }
-                            else
-                            {
-                                gd = null;
-                            }
-
-                            string exportFilePath = AppDomain.CurrentDomain.BaseDirectory;
-                            string exportFilename = "";
-
-                            string commandOptionCheck = commandArguments[1].ToString().Trim().ToLower();
-
-                            if (commandArguments.Length > 2)
-                            {
-                                //export filename
-                                exportFilename = commandArguments[2].ToString().Trim().Replace("\"", "");
-
-                                //use path only if "all"
-                                if (commandOptionCheck == "all")
-                                {
-                                    exportFilePath = Path.GetDirectoryName(exportFilename);
-                                    exportFilename = "";
-
-                                }
-                            }
-
-                            if (commandOptionCheck == "wild" || commandOptionCheck == "all")
-                            {
-                                //Wild 
+                        switch (commandOptionCheck)
+                        {
+                            case "all":
+                                contentManager.ExportAll(exportFilePath);
+                                break;
+                            case "wild":
                                 exportFilename = exportFilename.Length > 0 ? exportFilename : Path.Combine(exportFilePath, "ARKViewer_Export_Wild.json");
-
-                                using (FileStream fs = File.Create(exportFilename))
-                                {
-                                    using (StreamWriter sw = new StreamWriter(fs))
-                                    {
-                                        using (JsonTextWriter jw = new JsonTextWriter(sw))
-                                        {
-                                            var creatureList = shouldSort ? gd.WildCreatures.OrderBy(o => o.ClassName).Cast<ArkWildCreature>() : gd.WildCreatures;
-
-                                            jw.WriteStartArray();
-
-                                            //Creature, Sex, Lvl, Lat, Lon, HP, Stam, Weight, Speed, Food, Oxygen, Craft, C0, C1, C2, C3, C4, C5              
-                                            foreach (var creature in creatureList)
-                                            {
-                                                jw.WriteStartObject();
-
-                                                jw.WritePropertyName("id");
-                                                jw.WriteValue(creature.Id);
-
-                                                jw.WritePropertyName("creature");
-                                                jw.WriteValue(creature.ClassName);
-
-                                                jw.WritePropertyName("sex");
-                                                jw.WriteValue(creature.Gender);
-
-                                                jw.WritePropertyName("lvl");
-                                                jw.WriteValue(creature.BaseLevel);
-
-                                                jw.WritePropertyName("lat");
-                                                if (creature.Location != null && creature.Location.Latitude != null)
-                                                {
-                                                    jw.WriteValue(creature.Location.Latitude);
-                                                }
-                                                else
-                                                {
-                                                    jw.WriteValue(0);
-                                                }
-
-                                                jw.WritePropertyName("lon");
-                                                if (creature.Location != null && creature.Location.Longitude != null)
-                                                {
-                                                    jw.WriteValue(creature.Location.Longitude);
-                                                }
-                                                else
-                                                {
-                                                    jw.WriteValue(0);
-                                                }
-
-                                                jw.WritePropertyName("hp");
-                                                jw.WriteValue(creature.BaseStats[0]);
-
-                                                jw.WritePropertyName("stam");
-                                                jw.WriteValue(creature.BaseStats[1]);
-
-                                                jw.WritePropertyName("melee");
-                                                jw.WriteValue(creature.BaseStats[8]);
-
-                                                jw.WritePropertyName("weight");
-                                                jw.WriteValue(creature.BaseStats[7]);
-
-                                                jw.WritePropertyName("speed");
-                                                jw.WriteValue(creature.BaseStats[9]);
-
-                                                jw.WritePropertyName("food");
-                                                jw.WriteValue(creature.BaseStats[4]);
-
-                                                jw.WritePropertyName("oxy");
-                                                jw.WriteValue(creature.BaseStats[3]);
-
-                                                jw.WritePropertyName("craft");
-                                                jw.WriteValue(creature.BaseStats[11]);
-
-                                                jw.WritePropertyName("c0");
-                                                jw.WriteValue(creature.Colors[0]);
-
-                                                jw.WritePropertyName("c1");
-                                                jw.WriteValue(creature.Colors[1]);
-
-                                                jw.WritePropertyName("c2");
-                                                jw.WriteValue(creature.Colors[2]);
-
-                                                jw.WritePropertyName("c3");
-                                                jw.WriteValue(creature.Colors[3]);
-
-                                                jw.WritePropertyName("c4");
-                                                jw.WriteValue(creature.Colors[4]);
-
-                                                jw.WritePropertyName("c5");
-                                                jw.WriteValue(creature.Colors[5]);
-
-                                                jw.WritePropertyName("ccc");
-                                                if (creature.Location != null)
-                                                {
-                                                    jw.WriteValue($"{creature.Location.X} {creature.Location.Y} {creature.Location.Z}");
-
-                                                }
-                                                else
-                                                {
-                                                    jw.WriteValue("");
-                                                }
-
-                                                jw.WriteEnd();
-                                            }
-
-                                            jw.WriteEndArray();
-                                        }
-
-                                    }
-
-                                }
-
-
-                            }
-                            if (commandOptionCheck == "tamed" || commandOptionCheck == "all")
-                            {
-                                //Tamed
-                                exportFilename = exportFilename.Length > 0 && commandOptionCheck != "all" ? exportFilename : Path.Combine(exportFilePath, "ARKViewer_Export_Tamed.json");
-
-                                using (FileStream fs = File.Create(exportFilename))
-                                {
-                                    using (StreamWriter sw = new StreamWriter(fs))
-                                    {
-                                        using (JsonTextWriter jw = new JsonTextWriter(sw))
-                                        {
-
-                                            var creatureList = shouldSort ? gd.TamedCreatures.OrderBy(o => o.ClassName).Cast<ArkTamedCreature>() : gd.TamedCreatures;
-
-                                            jw.WriteStartArray();
-
-                                            foreach (var creature in creatureList)
-                                            {
-
-                                                jw.WriteStartObject();
-                                                jw.WritePropertyName("id");
-                                                jw.WriteValue(creature.Id);
-
-                                                jw.WritePropertyName("tribeid");
-                                                jw.WriteValue(creature.TargetingTeam);
-
-                                                jw.WritePropertyName("tribe");
-                                                jw.WriteValue(creature.TribeName);
-
-                                                jw.WritePropertyName("tamer");
-                                                jw.WriteValue(creature.TamerName);
-
-                                                jw.WritePropertyName("imprinter");
-                                                jw.WriteValue(creature.ImprinterName);
-
-
-                                                jw.WritePropertyName("imprint");
-                                                jw.WriteValue(creature.DinoImprintingQuality);
-
-                                                jw.WritePropertyName("creature");
-                                                jw.WriteValue(creature.ClassName);
-
-                                                jw.WritePropertyName("name");
-                                                jw.WriteValue(creature.Name != null ? creature.Name : "");
-
-
-                                                jw.WritePropertyName("sex");
-                                                jw.WriteValue(creature.Gender);
-
-                                                jw.WritePropertyName("base");
-                                                jw.WriteValue(creature.BaseLevel);
-
-
-                                                jw.WritePropertyName("lvl");
-                                                jw.WriteValue(creature.Level);
-
-                                                jw.WritePropertyName("lat");
-                                                if (creature.Location != null && creature.Location.Latitude != null)
-                                                {
-                                                    jw.WriteValue(creature.Location.Latitude);
-                                                }
-                                                else
-                                                {
-                                                    jw.WriteValue(0);
-                                                }
-
-                                                jw.WritePropertyName("lon");
-                                                if (creature.Location != null && creature.Location.Longitude != null)
-                                                {
-                                                    jw.WriteValue(creature.Location.Longitude);
-                                                }
-                                                else
-                                                {
-                                                    jw.WriteValue(0);
-                                                }
-
-                                                jw.WritePropertyName("hp-w");
-                                                jw.WriteValue(creature.BaseStats[0]);
-
-                                                jw.WritePropertyName("stam-w");
-                                                jw.WriteValue(creature.BaseStats[1]);
-
-                                                jw.WritePropertyName("melee-w");
-                                                jw.WriteValue(creature.BaseStats[8]);
-
-                                                jw.WritePropertyName("weight-w");
-                                                jw.WriteValue(creature.BaseStats[7]);
-
-                                                jw.WritePropertyName("speed-w");
-                                                jw.WriteValue(creature.BaseStats[9]);
-
-                                                jw.WritePropertyName("food-w");
-                                                jw.WriteValue(creature.BaseStats[4]);
-
-                                                jw.WritePropertyName("oxy-w");
-                                                jw.WriteValue(creature.BaseStats[3]);
-
-                                                jw.WritePropertyName("craft-w");
-                                                jw.WriteValue(creature.BaseStats[11]);
-
-                                                jw.WritePropertyName("hp-t");
-                                                jw.WriteValue(creature.TamedStats[0]);
-
-                                                jw.WritePropertyName("stam-t");
-                                                jw.WriteValue(creature.TamedStats[1]);
-
-                                                jw.WritePropertyName("melee-t");
-                                                jw.WriteValue(creature.TamedStats[8]);
-
-                                                jw.WritePropertyName("weight-t");
-                                                jw.WriteValue(creature.TamedStats[7]);
-
-                                                jw.WritePropertyName("speed-t");
-                                                jw.WriteValue(creature.TamedStats[9]);
-
-                                                jw.WritePropertyName("food-t");
-                                                jw.WriteValue(creature.TamedStats[4]);
-
-                                                jw.WritePropertyName("oxy-t");
-                                                jw.WriteValue(creature.TamedStats[3]);
-
-                                                jw.WritePropertyName("craft-t");
-                                                jw.WriteValue(creature.TamedStats[11]);
-
-
-                                                jw.WritePropertyName("c0");
-                                                jw.WriteValue(creature.Colors[0]);
-
-                                                jw.WritePropertyName("c1");
-                                                jw.WriteValue(creature.Colors[1]);
-
-                                                jw.WritePropertyName("c2");
-                                                jw.WriteValue(creature.Colors[2]);
-
-                                                jw.WritePropertyName("c3");
-                                                jw.WriteValue(creature.Colors[3]);
-
-                                                jw.WritePropertyName("c4");
-                                                jw.WriteValue(creature.Colors[4]);
-
-                                                jw.WritePropertyName("c5");
-                                                jw.WriteValue(creature.Colors[5]);
-
-                                                jw.WritePropertyName("mut-f");
-                                                jw.WriteValue(creature.RandomMutationsFemale);
-
-                                                jw.WritePropertyName("mut-m");
-                                                jw.WriteValue(creature.RandomMutationsMale);
-
-                                                jw.WritePropertyName("cryo");
-                                                jw.WriteValue(creature.IsCryo);
-
-                                                jw.WritePropertyName("viv");
-                                                jw.WriteValue(creature.IsVivarium);
-
-                                                jw.WritePropertyName("ccc");
-                                                if (creature.Location != null)
-                                                {
-                                                    jw.WriteValue($"{creature.Location.X} {creature.Location.Y} {creature.Location.Z}");
-                                                }
-                                                else
-                                                {
-                                                    jw.WriteValue("");
-                                                }
-
-
-                                                if (ProgramConfig.ExportInventories)
-                                                {
-                                                    jw.WritePropertyName("inventory");
-                                                    jw.WriteStartArray();
-                                                    foreach (var invItem in creature.Inventory)
-                                                    {
-                                                        if (!invItem.IsEngram)
-                                                        {
-                                                            jw.WriteStartObject();
-
-                                                            jw.WritePropertyName("itemId");
-                                                            jw.WriteValue(invItem.ClassName);
-
-                                                            jw.WritePropertyName("qty");
-                                                            jw.WriteValue(invItem.Quantity);
-
-
-                                                            jw.WritePropertyName("blueprint");
-                                                            jw.WriteValue(invItem.IsBlueprint);
-
-                                                            var itemMap = ProgramConfig.ItemMap.FirstOrDefault(m => m.ClassName == invItem.ClassName);
-                                                            if (itemMap != null)
-                                                            {
-                                                                jw.WritePropertyName("category");
-                                                                jw.WriteValue(itemMap.Category);
-                                                            }
-
-                                                            jw.WriteEndObject();
-                                                        }
-
-                                                    }
-
-
-                                                    jw.WriteEndArray();
-                                                }
-
-                                                jw.WriteEnd();
-                                            }
-
-                                            jw.WriteEndArray();
-                                        }
-
-                                    }
-
-                                }
-                            }
-
-                            if (commandOptionCheck == "structures" || commandOptionCheck == "all")
-                            {
-                                //Structures
-                                exportFilename = exportFilename.Length > 0 && commandOptionCheck != "all" ? exportFilename : Path.Combine(exportFilePath, "ARKViewer_Export_Structures.json");
-
-                                //Player, Tribe, Structure, Lat, Lon
-                                using (FileStream fs = File.Create(exportFilename))
-                                {
-                                    using (StreamWriter sw = new StreamWriter(fs))
-                                    {
-                                        using (JsonTextWriter jw = new JsonTextWriter(sw))
-                                        {
-                                            jw.WriteStartArray();
-
-                                            foreach (var structure in gd.Structures)
-                                            {
-                                                jw.WriteStartObject();
-
-                                                jw.WritePropertyName("tribeid");
-                                                jw.WriteValue(structure.TargetingTeam.GetValueOrDefault(0));
-
-                                                jw.WritePropertyName("playerid");
-                                                if (structure.OwningPlayerId == structure.TargetingTeam.GetValueOrDefault(0))
-                                                {
-                                                    jw.WriteValue(0);
-                                                }
-                                                else
-                                                {
-                                                    jw.WriteValue(structure.OwningPlayerId.GetValueOrDefault(0));
-                                                }
-
-
-                                                jw.WritePropertyName("tribe");
-                                                if (allTribes.Count(t => t.TribeId == structure.TargetingTeam.GetValueOrDefault(0)) > 0)
-                                                {
-                                                    jw.WriteValue(allTribes.First(t => t.TribeId == structure.TargetingTeam.GetValueOrDefault(0)).TribeName);
-                                                }
-                                                else
-                                                {
-                                                    jw.WriteValue("");
-                                                }
-
-
-                                                jw.WritePropertyName("player");
-                                                jw.WriteValue(structure.OwningPlayerName == "null" ? "" : structure.OwningPlayerName);
-
-                                                jw.WritePropertyName("struct");
-                                                jw.WriteValue(structure.ClassName);
-
-                                                jw.WritePropertyName("lat");
-                                                if (structure.Location != null && structure.Location.Latitude != null)
-                                                {
-                                                    jw.WriteValue(structure.Location.Latitude);
-                                                }
-                                                else
-                                                {
-                                                    jw.WriteValue(0);
-                                                }
-
-
-                                                jw.WritePropertyName("lon");
-                                                if (structure.Location != null && structure.Location.Longitude != null)
-                                                {
-                                                    jw.WriteValue(structure.Location.Longitude);
-                                                }
-                                                else
-                                                {
-                                                    jw.WriteValue(0);
-                                                }
-
-                                                jw.WritePropertyName("ccc");
-                                                if (structure.Location != null)
-                                                {
-                                                    jw.WriteValue($"{structure.Location.X} {structure.Location.Y} {structure.Location.Z}");
-                                                }
-                                                else
-                                                {
-                                                    jw.WriteValue("");
-                                                }
-
-                                                if (ProgramConfig.ExportInventories)
-                                                {
-                                                    jw.WritePropertyName("inventory");
-                                                    jw.WriteStartArray();
-                                                    foreach (var invItem in structure.Inventory)
-                                                    {
-                                                        if (!invItem.IsEngram)
-                                                        {
-                                                            jw.WriteStartObject();
-
-                                                            jw.WritePropertyName("itemId");
-                                                            jw.WriteValue(invItem.ClassName);
-
-                                                            jw.WritePropertyName("qty");
-                                                            jw.WriteValue(invItem.Quantity);
-
-
-                                                            jw.WritePropertyName("blueprint");
-                                                            jw.WriteValue(invItem.IsBlueprint);
-
-                                                            var itemMap = ProgramConfig.ItemMap.FirstOrDefault(m => m.ClassName == invItem.ClassName);
-                                                            if (itemMap != null)
-                                                            {
-                                                                jw.WritePropertyName("category");
-                                                                jw.WriteValue(itemMap.Category);
-                                                            }
-
-
-                                                            jw.WriteEndObject();
-                                                        }
-
-                                                    }
-
-
-                                                    jw.WriteEndArray();
-                                                }
-
-
-                                                jw.WriteEnd();
-                                            }
-
-                                            jw.WriteEndArray();
-                                        }
-
-                                    }
-
-                                }
-                            }
-
-
-                            if (commandOptionCheck == "tribes" || commandOptionCheck == "all")
-                            {
-                                //Tribes
-                                exportFilename = exportFilename.Length > 0 && commandOptionCheck != "all" ? exportFilename : Path.Combine(exportFilePath, "ARKViewer_Export_Tribes.json");
-
-                                //Id, Name, Players, Tames, Structures, Last Active
-                                using (FileStream fs = File.Create(exportFilename))
-                                {
-                                    using (StreamWriter sw = new StreamWriter(fs))
-                                    {
-                                        using (JsonTextWriter jw = new JsonTextWriter(sw))
-                                        {
-                                            jw.WriteStartArray();
-
-                                            foreach (var playerTribe in allTribes)
-                                            {
-                                                jw.WriteStartObject();
-
-                                                jw.WritePropertyName("tribeid");
-                                                jw.WriteValue(playerTribe.TribeId);
-
-                                                jw.WritePropertyName("tribe");
-                                                jw.WriteValue(playerTribe.TribeName);
-
-                                                jw.WritePropertyName("players");
-                                                jw.WriteValue(playerTribe.PlayerCount);
-
-
-                                                var tribePlayers = gd.Players.Where(p => p.TribeId == playerTribe.TribeId).ToList();
-                                                if (tribePlayers != null && tribePlayers.Count > 0)
-                                                {
-                                                    jw.WritePropertyName("members");
-                                                    jw.WriteStartArray();
-                                                    foreach (var tribePlayer in tribePlayers)
-                                                    {
-                                                        jw.WriteStartObject();
-
-                                                        jw.WritePropertyName("ign");
-                                                        jw.WriteValue(tribePlayer.CharacterName);
-
-                                                        jw.WritePropertyName("lvl");
-                                                        jw.WriteValue(tribePlayer.CharacterLevel.ToString());
-
-                                                        jw.WritePropertyName("playerid");
-                                                        jw.WriteValue(tribePlayer.Id.ToString());
-
-                                                        jw.WritePropertyName("playername");
-                                                        jw.WriteValue(tribePlayer.Name);
-
-                                                        jw.WritePropertyName("steamid");
-                                                        jw.WriteValue(tribePlayer.SteamId);
-
-                                                        jw.WriteEndObject();
-                                                    }
-
-                                                    jw.WriteEndArray();
-                                                }
-
-            
-
-                                                jw.WritePropertyName("tames");
-                                                jw.WriteValue(playerTribe.TameCount);
-
-                                                jw.WritePropertyName("structures");
-                                                jw.WriteValue(playerTribe.StructureCount);
-
-                                                jw.WritePropertyName("active");
-                                                jw.WriteValue(playerTribe.LastActive);
-
-
-                                                jw.WriteEnd();
-                                            }
-
-                                            jw.WriteEndArray();
-                                        }
-
-                                    }
-
-                                }
-                            }
-
-
-                            if (commandOptionCheck == "all" || commandOptionCheck == "players")
-                            {
-                                //Players
-                                exportFilename = exportFilename.Length > 0 && commandOptionCheck != "all" ? exportFilename : Path.Combine(exportFilePath, "ARKViewer_Export_Players.json");
-
-                                //Id, Name, Tribe, Sex, Lvl, Lat, Lon, HP, Stam, Melee, Weight, Speed, Food, Water, Oxygen, Crafting, Fortitude, Steam, Last Online
-                                using (FileStream fs = File.Create(exportFilename))
-                                {
-                                    using (StreamWriter sw = new StreamWriter(fs))
-                                    {
-                                        using (JsonTextWriter jw = new JsonTextWriter(sw))
-                                        {
-                                            jw.WriteStartArray();
-
-                                            foreach (var player in gd.Players)
-                                            {
-                                                jw.WriteStartObject();
-
-                                                jw.WritePropertyName("playerid");
-                                                jw.WriteValue(player.Id);
-
-                                                jw.WritePropertyName("steam");
-                                                jw.WriteValue(player.Name);
-
-                                                jw.WritePropertyName("name");
-                                                jw.WriteValue(player.CharacterName);
-
-                                                jw.WritePropertyName("tribeid");
-                                                jw.WriteValue(player.TribeId);
-
-                                                jw.WritePropertyName("tribe");
-                                                if (player.Tribe != null && player.Tribe.Name != null)
-                                                {
-                                                    jw.WriteValue(player.Tribe.Name);
-                                                }
-                                                else
-                                                {
-                                                    jw.WriteValue("");
-                                                }
-
-                                                jw.WritePropertyName("sex");
-                                                jw.WriteValue(player.Gender);
-
-                                                jw.WritePropertyName("lvl");
-                                                jw.WriteValue(player.CharacterLevel);
-
-                                                jw.WritePropertyName("lat");
-                                                if (player.Location != null)
-                                                {
-                                                    jw.WriteValue(player.Location.Latitude);
-                                                }
-                                                else
-                                                {
-                                                    jw.WriteValue(0);
-                                                }
-
-                                                jw.WritePropertyName("lon");
-                                                if (player.Location != null)
-                                                {
-                                                    jw.WriteValue(player.Location.Longitude);
-
-                                                }
-                                                else
-                                                {
-                                                    jw.WriteValue(0);
-                                                }
-
-
-                                                //0=health
-                                                //1=stamina
-                                                //2=torpor
-                                                //3=oxygen
-                                                //4=food
-                                                //5=water
-                                                //6=temperature
-                                                //7=weight
-                                                //8=melee damage
-                                                //9=movement speed
-                                                //10=fortitude
-                                                //11=crafting speed
-                                                jw.WritePropertyName("hp");
-                                                jw.WriteValue(player.Stats[0]);
-
-                                                jw.WritePropertyName("stam");
-                                                jw.WriteValue(player.Stats[1]);
-
-                                                jw.WritePropertyName("melee");
-                                                jw.WriteValue(player.Stats[8]);
-
-                                                jw.WritePropertyName("weight");
-                                                jw.WriteValue(player.Stats[7]);
-
-                                                jw.WritePropertyName("speed");
-                                                jw.WriteValue(player.Stats[9]);
-
-                                                jw.WritePropertyName("food");
-                                                jw.WriteValue(player.Stats[4]);
-
-                                                jw.WritePropertyName("water");
-                                                jw.WriteValue(player.Stats[5]);
-
-                                                jw.WritePropertyName("oxy");
-                                                jw.WriteValue(player.Stats[3]);
-
-                                                jw.WritePropertyName("craft");
-                                                jw.WriteValue(player.Stats[11]);
-
-                                                jw.WritePropertyName("fort");
-                                                jw.WriteValue(player.Stats[10]);
-
-                                                jw.WritePropertyName("active");
-                                                jw.WriteValue(player.LastActiveTime);
-
-                                                jw.WritePropertyName("ccc");
-                                                if (player.Location != null)
-                                                {
-                                                    jw.WriteValue($"{player.Location.X} {player.Location.Y} {player.Location.Z}");
-                                                }
-                                                else
-                                                {
-                                                    jw.WriteValue("");
-                                                }
-
-                                                jw.WritePropertyName("steamid");
-                                                jw.WriteValue(player.SteamId);
-
-                                                if (ProgramConfig.ExportInventories)
-                                                {
-                                                    jw.WritePropertyName("inventory");
-                                                    jw.WriteStartArray();
-                                                    foreach (var invItem in player.Inventory)
-                                                    {
-                                                        if (!invItem.IsEngram && invItem.ClassName != "PrimalItem_StartingNote_C")
-                                                        {
-                                                            jw.WriteStartObject();
-
-                                                            jw.WritePropertyName("itemId");
-                                                            jw.WriteValue(invItem.ClassName);
-
-                                                            jw.WritePropertyName("qty");
-                                                            jw.WriteValue(invItem.Quantity);
-
-                                                            jw.WritePropertyName("blueprint");
-                                                            jw.WriteValue(invItem.IsBlueprint);
-
-                                                            var itemMap = ProgramConfig.ItemMap.FirstOrDefault(m => m.ClassName == invItem.ClassName);
-                                                            if (itemMap != null)
-                                                            {
-                                                                jw.WritePropertyName("category");
-                                                                jw.WriteValue(itemMap.Category);
-                                                            }
-
-                                                            jw.WriteEndObject();
-                                                        }
-
-                                                    }
-
-
-                                                    jw.WriteEndArray();
-                                                }
-
-
-                                                jw.WriteEnd();
-                                            }
-
-                                            jw.WriteEndArray();
-                                        }
-
-                                    }
-
-                                }
-
-                            }
-
-                            //success
-                            Environment.ExitCode = 0;
-                        }
-                        catch (Exception ex)
-                        {
-                            string traceLog = ex.StackTrace;
-                            string errorMessage = ex.Message;
-
-                            try
-                            {
-
-
-                                StringBuilder errorData = new StringBuilder();
-
-                                errorData.AppendLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
-                                errorData.AppendLine($"Error: {errorMessage}");
-                                errorData.AppendLine($"Trace: {traceLog}");
-                                errorData.AppendLine("");
-
-                                logWriter.Write(errorData.ToString());
-                            }
-                            catch
-                            {
-                                //couldn't write to error.log
-                            }
-
-                            Console.Out.WriteLine($"Error : {ex.Message.ToString()}");
-
-                            //error
-                            Environment.ExitCode = -1;
-
+                                contentManager.ExportWild(exportFilename);
+                                break;
+                            case "tamed":
+                                exportFilename = exportFilename.Length > 0 ? exportFilename : Path.Combine(exportFilePath, "ARKViewer_Export_Tamed.json");
+                                contentManager.ExportTamed(exportFilename);
+                                break;
+                            case "structures":
+                                exportFilename = exportFilename.Length > 0 ? exportFilename : Path.Combine(exportFilePath, "ARKViewer_Export_Structures.json");
+                                contentManager.ExportPlayerStructures(exportFilename);
+                                break;
+                            case "tribes":
+                                exportFilename = exportFilename.Length > 0 ? exportFilename : Path.Combine(exportFilePath, "ARKViewer_Export_Tribes.json");
+                                contentManager.ExportPlayerTribes(exportFilename);
+                                break;
+                            case "players":
+                                exportFilename = exportFilename.Length > 0 ? exportFilename : Path.Combine(exportFilePath, "ARKViewer_Export_Players.json");
+                                contentManager.ExportPlayers(exportFilename);
+                                break;
                         }
 
+                        //success
+                        Environment.ExitCode = 0;
+                        return;
                     }
                     else
                     {
-                        //no save file found or inaccessible
-                        logWriter.Write($"Unable to find or access save game file: {saveFilename}");
-                        Environment.ExitCode = -2;
+                        //input file not found
+                        Environment.ExitCode = -1;
                     }
 
 
@@ -1048,13 +174,95 @@ namespace ARKViewer
             }
             else
             {
-                //no command line options - load image lists for UI
+                frmViewer mainForm = new frmViewer();
                 PopulateImageLists();
-                
 
+
+                if (!File.Exists(ProgramConfig.SelectedFile))
+                {
+                    frmSettings checkSettings = new frmSettings(new ContentManager(LoadContentPack("")));
+                    if(checkSettings.ShowDialog() != DialogResult.OK)
+                    {
+                        MessageBox.Show("Unable to continue without a valid map file.", "ASV Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+                }
+
+                mainForm.Show();
+                mainForm.Cursor = Cursors.WaitCursor;
+                mainForm.UpdateProgress("Loading content pack...");
+                Application.DoEvents();
+
+                
+                ContentPack loadedPack = null;
+                string saveFullFilename = ProgramConfig.SelectedFile;
+
+                loadedPack = LoadContentPack(saveFullFilename);
+
+                ContentManager contentManager = new ContentManager(loadedPack);
+                mainForm.LoadContent(contentManager);
+                mainForm.Cursor = Cursors.Default;
                 //run viewer
-                Application.Run(new frmViewer());
+
+                Application.Run(mainForm);
             }
+        }
+
+
+        public static ArkGameData LoadArkData(string contentFilename)
+        {
+            if (File.Exists(contentFilename))
+            {
+                ArkGameData gd = new ArkGameData(contentFilename, loadOnlyPropertiesInDomain: false);
+
+                if (gd.Update(CancellationToken.None, null, true)?.Success == true)
+                {
+                    gd.ApplyPreviousUpdate();
+                }
+
+                return gd;
+            }
+
+            return null;
+        }
+
+        public static ContentPack LoadContentPack(string contentFilename)
+        {
+            ContentPack loadedPack = null;
+            switch (Path.GetExtension(contentFilename).ToLower())
+            {
+                case ".asv":
+
+                    loadedPack = new ContentPack(File.ReadAllBytes(contentFilename));
+                    loadedPack.ContentDate = File.GetLastWriteTimeUtc(contentFilename);
+                    break;
+                default:
+                    //non asv pack, load from toolkit
+
+                    ArkGameData gd = LoadArkData(contentFilename);
+                    if (gd!=null)
+                    {
+                        if (gd.Update(CancellationToken.None, null, true)?.Success == true)
+                        {
+                            Application.DoEvents();
+                            gd.ApplyPreviousUpdate();
+                            loadedPack = new ContentPack(gd, 0, 0, 50, 100, 100);
+                            loadedPack.ContentDate = File.GetLastWriteTimeUtc(contentFilename);
+                        }
+                        gd = null;
+                    }
+                    else
+                    {
+                        loadedPack = new ContentPack()
+                        {
+                            MapFilename = Path.GetFileNameWithoutExtension(contentFilename),
+                            ContentDate = new DateTime()                          
+                        };
+                    }
+
+                    break;
+            }
+            return loadedPack;
         }
 
         internal static void AddItemImageMap(string imageName)
