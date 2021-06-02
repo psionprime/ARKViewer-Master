@@ -39,6 +39,7 @@ namespace ARKViewer
         private ColumnHeader SortingColumn_Players = null;
         private ColumnHeader SortingColumn_Structures = null;
         private ColumnHeader SortingColumn_Tribes = null;
+        private ColumnHeader SortingColumn_Drops = null;
 
         private string savePath = Path.GetDirectoryName(Application.ExecutablePath);
         private string saveFilename = "TheIsland.ark";
@@ -237,7 +238,6 @@ namespace ARKViewer
 
             cboTameTribes.Items.Clear();
             cboTameTribes.Items.Add(new ComboValuePair("0", "[All Tribes]"));
-            cboTameTribes.Items.Add(new ComboValuePair("2000000000", "[Unclaimed Creatures]"));
 
             List<ComboValuePair> newItems = new List<ComboValuePair>();
 
@@ -252,7 +252,6 @@ namespace ARKViewer
                     {
                         addItem = (
                                     tribe.Tames != null
-                                    && tribe.Tames.LongCount(t => !(t.ClassName == "MotorRaft_BP_C" || t.ClassName == "Raft_BP_C")) > 0
                                   );
                     }
 
@@ -351,7 +350,7 @@ namespace ARKViewer
             {
                 foreach (var player in allPlayers)
                 {
-                    ComboValuePair valuePair = new ComboValuePair(player.Id.ToString(), player.Name);
+                    ComboValuePair valuePair = new ComboValuePair(player.Id.ToString(), player.CharacterName != null && player.CharacterName.Length > 0 ? player.CharacterName : player.Name);
                     newItems.Add(valuePair);
                 }
             }
@@ -380,7 +379,14 @@ namespace ARKViewer
             cboDroppedItem.Items.Add(new ComboValuePair() { Key = "0", Value = "[Dropped Items]" });
             cboDroppedItem.Items.Add(new ComboValuePair() { Key = "-1", Value = "[Death Cache]" });
 
-            var droppedItems = cm.GetDroppedItems(0, "");
+            long playerId = 0;
+            if (cboDroppedPlayer.SelectedItem != null)
+            {
+                var selectedValue = (ComboValuePair)cboDroppedPlayer.SelectedItem;
+                long.TryParse(selectedValue.Key, out playerId);
+            }
+
+            var droppedItems = cm.GetDroppedItems(playerId, "");
             if (droppedItems!=null && droppedItems.Count() > 0)
             {
                 //player
@@ -925,762 +931,155 @@ namespace ARKViewer
             lastSelectedX = selectedX;
             lastSelectedY = selectedY;
 
-            Bitmap originalImage = null;
-            switch (cm.MapName.ToLower())
-            {
-                case "thecenter":
-                    originalImage = new Bitmap(ARKViewer.Properties.Resources.map_thecenter, new Size(1024, 1024));
-                    break;
-                case "theisland":
-                    //originalImage = new Bitmap(ArkSavegameToolkitNet.Domain.MapResources.topo_map_TheIsland, new Size(1024, 1024));
-                    originalImage = new Bitmap(ARKViewer.Properties.Resources.map_theisland, new Size(1024, 1024));
-                    break;
-                case "scorchedearth_p":
-                    originalImage = new Bitmap(ARKViewer.Properties.Resources.map_scorchedearth, new Size(1024, 1024));
-                    break;
-                case "aberration_p":
-                    originalImage = new Bitmap(ARKViewer.Properties.Resources.map_aberration, new Size(1024, 1024));
-                    break;
-                case "ragnarok":
-                    originalImage = new Bitmap(ARKViewer.Properties.Resources.map_ragnarok, new Size(1024, 1024));
-                    break;
-
-                case "extinction":
-                    originalImage = new Bitmap(ARKViewer.Properties.Resources.map_extinction, new Size(1024, 1024));
-                    break;
-                case "valguero_p":
-                    originalImage = new Bitmap(ARKViewer.Properties.Resources.map_valguero, new Size(1024, 1024));
-                    break;
-
-                case "crystalisles":
-                    originalImage = new Bitmap(ARKViewer.Properties.Resources.map_crystalisles, new Size(1024, 1024));
-                    break;
-                case "tunguska_p":
-
-                    originalImage = new Bitmap(ARKViewer.Properties.Resources.map_tunguska, new Size(1024, 1024));
-                    break;
-
-                case "caballus_p":
-
-                    originalImage = new Bitmap(ARKViewer.Properties.Resources.map_caballus, new Size(1024, 1024));
-                    break;
-
-                case "genesis":
-                    originalImage = new Bitmap(ARKViewer.Properties.Resources.map_genesis, new Size(1024, 1024));
-                    break;
-                case "astralark":
-                    originalImage = new Bitmap(ARKViewer.Properties.Resources.map_astralark, new Size(1024, 1024));
-                    break;
-                case "hope":
-                    originalImage = new Bitmap(ARKViewer.Properties.Resources.map_hope, new Size(1024, 1024));
-                    break;
-
-                case "viking_p":
-
-                    originalImage = new Bitmap(ARKViewer.Properties.Resources.map_fjordur, new Size(1024, 1024));
-                    break;
-                case "tiamatprime":
-                    originalImage = new Bitmap(ARKViewer.Properties.Resources.map_tiamat, new Size(1024, 1024));
-                    break;
-                default:
-                    originalImage = new Bitmap(1024,1024);
-                    break;
-            }
-
-
             Bitmap bitmap = new Bitmap(1024, 1024);
             Graphics graphics = Graphics.FromImage(bitmap);
-            graphics.DrawImage(originalImage, new Rectangle(0, 0, 1024, 1024));
+            decimal markerX = 0;
+            decimal markerY = 0;
 
-            decimal markerX = 0m;
-            decimal markerY = 0m;
-
-            Tuple<int, int, decimal, decimal, decimal, decimal> mapvals = Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m);
-
-            //obelisks/tribute terminals
-
-            if (ARKViewer.Program.ProgramConfig.Obelisks)
+            List<ContentMarker> customMarkers = new List<ContentMarker>();
+            foreach(ListViewItem item in lvwMapMarkers.CheckedItems)
             {
-                var terminalMarkers = ARKViewer.Program.ProgramConfig.TerminalMarkers.Where(t => t.Map.ToLower() == Path.GetFileName(ARKViewer.Program.ProgramConfig.SelectedFile).ToLower());
-                foreach (var terminal in terminalMarkers)
+                MapMarker marker = (MapMarker)item.Tag;
+                customMarkers.Add(new ContentMarker()
                 {
-
-                    //attempt to determine colour from class name
-                    Color brushColor = Color.Silver;
-                    string colourName = terminal.Colour;
-
-                    try
-                    {
-                        brushColor = Color.FromName(colourName);
-                    }
-                    catch
-                    {
-                        brushColor = Color.WhiteSmoke;
-                    }
-                    
-
-                    markerX = ((decimal)terminal.Lon - mapvals.Item4) * mapvals.Item1 / (mapvals.Item5 - mapvals.Item4);
-                    markerY = ((decimal)terminal.Lat - mapvals.Item3) * mapvals.Item2 / (mapvals.Item6 - mapvals.Item3);
-
-
-                    graphics.FillEllipse(new SolidBrush(brushColor), (float)markerX - 25f, (float)markerY - 25f, 50, 50);
-                    graphics.DrawEllipse(new Pen(Color.White, 2), (float)markerX - 25f, (float)markerY - 25f, 50, 50);
-
-                    Bitmap mapMarker = new Bitmap(ARKViewer.Properties.Resources.structure_marker_obelisk, new Size(40, 40));
-                    graphics.DrawImage(mapMarker, (float)markerX - 20f, (float)markerY - 20f);
-
-
-                }
-            }
-
-            if (ARKViewer.Program.ProgramConfig.Glitches)
-            {
-                foreach (var glitch in ARKViewer.Program.ProgramConfig.GlitchMarkers.Where(g => g.Map.ToLower() == Path.GetFileName(ARKViewer.Program.ProgramConfig.SelectedFile).ToLower()))
-                {
-                    //attempt to determine colour from class name
-                    Color brushColor = Color.Silver;
-                    string colourName = glitch.Colour;
-
-                    try
-                    {
-                        brushColor = Color.FromName(colourName);
-                    }
-                    catch
-                    {
-                        brushColor = Color.WhiteSmoke;
-                    }
-                    
-
-                    markerX = ((decimal)glitch.Lon - mapvals.Item4) * mapvals.Item1 / (mapvals.Item5 - mapvals.Item4);
-                    markerY = ((decimal)glitch.Lat - mapvals.Item3) * mapvals.Item2 / (mapvals.Item6 - mapvals.Item3);
-
-                    float markerSize = 25;
-
-                    graphics.FillEllipse(new SolidBrush(brushColor), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
-                    graphics.DrawEllipse(new Pen(Color.White, 2), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
-
-                    float iconSize = 18.75f;
-                    Bitmap mapMarker = new Bitmap(ARKViewer.Properties.Resources.structure_marker_glitch, new Size((int)iconSize, (int)iconSize));
-                    graphics.DrawImage(mapMarker, (float)markerX - (iconSize / 2), (float)markerY - (iconSize / 2));
-                }
-            }
-
-            //map markers
-            if (lvwMapMarkers.CheckedItems.Count > 0)
-            {
-                foreach(ListViewItem checkedItem in lvwMapMarkers.CheckedItems)
-                {
-                    MapMarker selectedMarker = (MapMarker)checkedItem.Tag;
-
-                    markerX = ((decimal)selectedMarker.Lon - mapvals.Item4) * mapvals.Item1 / (mapvals.Item5 - mapvals.Item4);
-                    markerY = ((decimal)selectedMarker.Lat - mapvals.Item3) * mapvals.Item2 / (mapvals.Item6 - mapvals.Item3);
-
-                    Color markerBackGround = Color.FromArgb(selectedMarker.Colour);
-                    graphics.FillEllipse(new SolidBrush(markerBackGround), (float)markerX - 17.5f, (float)markerY - 17.5f, 35, 35);
-
-
-                    if (selectedMarker.Image.Length > 0)
-                    {
-                        string imageFilename = Path.Combine(imageFolder, selectedMarker.Image);
-                        if (File.Exists(imageFilename))
-                        {
-                            Image markerImage = Image.FromFile(imageFilename);
-                            graphics.DrawImage(new Bitmap(markerImage, 28, 28), (float)markerX - 14.0f, (float)markerY - 14.0f, 28.0f, 28.0f);
-                        }
-                    }
-
-                    if (selectedMarker.BorderWidth > 0)
-                    {
-                        Color markerBorder = Color.FromArgb(selectedMarker.BorderColour);
-                        graphics.DrawEllipse(new Pen(markerBorder, selectedMarker.BorderWidth), (float)markerX - 17.5f, (float)markerY - 17.5f, 35, 35);
-                    }
-                }
-
-                
-
-            }
-
-
-            //charge nodes?
-            if (ARKViewer.Program.ProgramConfig.ChargeNodes) {
-                var chargeNodeList = cm.GetChargeNodes();
-
-                foreach (var chargeNode in chargeNodeList)
-                {
-                    markerX = ((decimal)Math.Round(chargeNode.Longitude.Value, 2) - mapvals.Item4) * mapvals.Item1 / (mapvals.Item5 - mapvals.Item4);
-                    markerY = ((decimal)Math.Round(chargeNode.Latitude.Value, 2) - mapvals.Item3) * mapvals.Item2 / (mapvals.Item6 - mapvals.Item3);
-
-                    graphics.FillEllipse(new SolidBrush(Color.White), (float)markerX - 15f, (float)markerY - 15f, 30, 30);
-
-                    Color borderColor = Color.Red;
-                    ContentInventory chargeInventory = cm.GetInventory(chargeNode.InventoryId.GetValueOrDefault(0));
-                    if(chargeInventory.Items!=null && chargeInventory.Items.Count > 0)
-                    {
-                        borderColor = Color.Green;
-                    }
-                    
-                    graphics.DrawEllipse(new Pen(borderColor, 2), (float)markerX - 15f, (float)markerY - 15f, 30, 30);
-                    Bitmap chargeMarker = new Bitmap(ARKViewer.Properties.Resources.structure_marker_battery, new Size(20, 20));
-                    graphics.DrawImage(chargeMarker, (float)markerX - 10.0f, (float)markerY - 10.0f);
-                }
-
-
-            }
-
-
-            //beaver dams
-            if (ARKViewer.Program.ProgramConfig.BeaverDams)
-            {
-                var beaverDamList = cm.GetBeaverDams();
-                foreach (var beaverDam in beaverDamList)
-                {
-                    markerX = ((decimal)Math.Round(beaverDam.Longitude.Value,2) - mapvals.Item4) * mapvals.Item1 / (mapvals.Item5 - mapvals.Item4);
-                    markerY = ((decimal)Math.Round(beaverDam.Latitude.Value,2) - mapvals.Item3) * mapvals.Item2 / (mapvals.Item6 - mapvals.Item3);
-
-                    graphics.FillEllipse(new SolidBrush(Color.White), (float)markerX - 15f, (float)markerY - 15f, 30, 30);
-
-                    Color borderColor = Color.Red;
-                    ContentInventory beaverInvent = cm.GetInventory(beaverDam.InventoryId.GetValueOrDefault(0));
-                    if(beaverInvent.Items !=null && beaverInvent.Items.Count > 0)
-                    {
-                        borderColor = Color.Green;
-                    }
-                    graphics.DrawEllipse(new Pen(borderColor, 2), (float)markerX - 15f, (float)markerY - 15f, 30, 30);
-                    Bitmap beaverMarker = new Bitmap(ARKViewer.Properties.Resources.structure_marker_beaver, new Size(20, 20));
-                    graphics.DrawImage(beaverMarker, (float)markerX -10.0f, (float)markerY -10.0f);
-                }
-            }
-
-            //deino nests
-            if (ARKViewer.Program.ProgramConfig.DeinoNests)
-            {
-                var deinoNestList = cm.GetDeinoNests();
-                foreach (var deinoNest in deinoNestList)
-                {
-                    markerX = ((decimal)Math.Round(deinoNest.Longitude.Value,2) - mapvals.Item4) * mapvals.Item1 / (mapvals.Item5 - mapvals.Item4);
-                    markerY = ((decimal)Math.Round(deinoNest.Latitude.Value,2) - mapvals.Item3) * mapvals.Item2 / (mapvals.Item6 - mapvals.Item3);
-                    graphics.FillEllipse(new SolidBrush(Color.White), (float)markerX - 15f, (float)markerY - 15f, 30, 30);
-
-                    
-                    Color borderColor = Color.Red;
-                    if (deinoNest.InventoryId.GetValueOrDefault(0) !=0)
-                    {
-                        borderColor = Color.Green;
-                    }
-                    graphics.DrawEllipse(new Pen(borderColor, 2), (float)markerX - 15f, (float)markerY - 15f, 30, 30);
-
-                    Bitmap deinoMarker = new Bitmap(ARKViewer.Properties.Resources.structure_marker_deino, new Size(20, 20));
-                    graphics.DrawImage(deinoMarker, (float)markerX -10.0f, (float)markerY -10.0f);
-
-                }
-            }
-
-            //wyvern nests
-            if (ARKViewer.Program.ProgramConfig.WyvernNests)
-            {
-
-                var wyvernNestList = cm.GetWyvernNests(); //gd.Structures.Where(f => f.ClassName.StartsWith("WyvernNest_"));
-                //var allNests = gd.Structures.Where(f => f.ClassName.Contains("heir"));
-                foreach (var wyvernNest in wyvernNestList)
-                {
-                    markerX = ((decimal)Math.Round(wyvernNest.Longitude.Value,2) - mapvals.Item4) * mapvals.Item1 / (mapvals.Item5 - mapvals.Item4);
-                    markerY = ((decimal)Math.Round(wyvernNest.Latitude.Value,2) - mapvals.Item3) * mapvals.Item2 / (mapvals.Item6 - mapvals.Item3);
-                    graphics.FillEllipse(new SolidBrush(Color.White), (float)markerX - 15f, (float)markerY - 15f, 30, 30);
-
-                    Color borderColor = Color.Red;
-                    if (wyvernNest.InventoryId.GetValueOrDefault(0)!=0 )
-                    {
-
-                        borderColor = Color.Green;
-                    }
-
-
-                    graphics.DrawEllipse(new Pen(borderColor, 2), (float)markerX - 15f, (float)markerY - 15f, 30, 30);
-
-                    Bitmap wyvernMarker = new Bitmap(ARKViewer.Properties.Resources.structure_marker_wyvern, new Size(20, 20));
-                    graphics.DrawImage(wyvernMarker, (float)markerX -10.0f, (float)markerY -10.0f);
-
-                }
-            }
-
-            //rock drakes (RockDrakeNest_C)
-            if (ARKViewer.Program.ProgramConfig.DrakeNests)
-            {
-
-                var drakeNestList = cm.GetDrakeNests(); //gd.Structures.Where(f => f.ClassName == "RockDrakeNest_C");
-                foreach (var drakeNest in drakeNestList)
-                {
-
-
-
-                    markerX = ((decimal)Math.Round(drakeNest.Longitude.Value, 2) - mapvals.Item4) * mapvals.Item1 / (mapvals.Item5 - mapvals.Item4);
-                    markerY = ((decimal)Math.Round(drakeNest.Latitude.Value, 2) - mapvals.Item3) * mapvals.Item2 / (mapvals.Item6 - mapvals.Item3);
-                    Color markerColor = Color.White;
-                    graphics.FillEllipse(new SolidBrush(markerColor), (float)markerX - 15f, (float)markerY - 15f, 30, 30);
-
-
-                    Color borderColor = Color.Red;
-                    if (drakeNest.InventoryId.GetValueOrDefault(0) != 0)
-                    {
-                        borderColor = Color.Green;
-                    }
-                    graphics.DrawEllipse(new Pen(borderColor, 2), (float)markerX - 15f, (float)markerY - 15f, 30, 30);
-
-                    Bitmap wyvernMarker = new Bitmap(ARKViewer.Properties.Resources.structure_marker_rockdrake, new Size(20, 20));
-                    graphics.DrawImage(wyvernMarker, (float)markerX - 10.0f, (float)markerY - 10.0f);
-
-                }
-            }
-
-            //magmasaur nests
-            if (ARKViewer.Program.ProgramConfig.MagmaNests)
-            {
-                var magmaNests = cm.GetMagmaNests(); //gd.Structures.Where(f => f.ClassName == "CherufeNest_C");
-                foreach (var magmaNest in magmaNests)
-                {
-
-                    markerX = ((decimal)Math.Round(magmaNest.Longitude.Value, 2) - mapvals.Item4) * mapvals.Item1 / (mapvals.Item5 - mapvals.Item4);
-                    markerY = ((decimal)Math.Round(magmaNest.Latitude.Value, 2) - mapvals.Item3) * mapvals.Item2 / (mapvals.Item6 - mapvals.Item3);
-                    Color markerColor = Color.White;
-                    graphics.FillEllipse(new SolidBrush(markerColor), (float)markerX - 15f, (float)markerY - 15f, 30, 30);
-
-                    Color borderColor = Color.Red;
-
-                    if (magmaNest.InventoryId.GetValueOrDefault(0)!=0)
-                    {
-                        borderColor = Color.Green;
-                    }
-                    graphics.DrawEllipse(new Pen(borderColor, 2), (float)markerX - 15f, (float)markerY - 15f, 30, 30);
-
-                    Bitmap magmaMarker = new Bitmap(ARKViewer.Properties.Resources.structure_marker_magmasaur, new Size(20, 20));
-                    graphics.DrawImage(magmaMarker, (float)markerX - 10.0f, (float)markerY - 10.0f);
-
-                }
-            }
-            
-
-
-            //oil veins (OilVein_)
-            if (ARKViewer.Program.ProgramConfig.OilVeins)
-            {
-                var oilVeinList = cm.GetOilVeins(); //gd.Structures.Where(f => f.ClassName.StartsWith("OilVein_"));
-                foreach (var oilVein in oilVeinList)
-                {
-                    markerX = ((decimal)Math.Round(oilVein.Longitude.Value,2) - mapvals.Item4) * mapvals.Item1 / (mapvals.Item5 - mapvals.Item4);
-                    markerY = ((decimal)Math.Round(oilVein.Latitude.Value,2) - mapvals.Item3) * mapvals.Item2 / (mapvals.Item6 - mapvals.Item3);
-                    
-                    graphics.FillEllipse(new SolidBrush(Color.White), (float)markerX - 15f, (float)markerY - 15f, 30, 30);
-                    graphics.DrawEllipse(new Pen(Color.Black, 2), (float)markerX - 15f, (float)markerY - 15f, 30, 30);
-
-                    Bitmap oilMarker = new Bitmap(ARKViewer.Properties.Resources.structure_marker_oil, new Size(20, 20));
-                    graphics.DrawImage(oilMarker, (float)markerX -10.0f, (float)markerY -10.0f);
-
-                }
-
-            }
-
-            //water veins (WaterVein_)
-            if (ARKViewer.Program.ProgramConfig.WaterVeins)
-            {
-                var waterVeinList = cm.GetWaterVeins(); // gd.Structures.Where(f => f.ClassName.StartsWith("WaterVein_"));
-                foreach (var waterVein in waterVeinList)
-                {
-                    markerX = ((decimal)Math.Round(waterVein.Longitude.Value,2) - mapvals.Item4) * mapvals.Item1 / (mapvals.Item5 - mapvals.Item4);
-                    markerY = ((decimal)Math.Round(waterVein.Latitude.Value,2) - mapvals.Item3) * mapvals.Item2 / (mapvals.Item6 - mapvals.Item3);
-
-                    graphics.FillEllipse(new SolidBrush(Color.White), (float)markerX - 15f, (float)markerY - 15f, 30, 30);
-                    graphics.DrawEllipse(new Pen(Color.Black, 2), (float)markerX - 15f, (float)markerY - 15f, 30, 30);
-
-                    Bitmap waterMarker = new Bitmap(ARKViewer.Properties.Resources.structure_marker_water, new Size(20, 20));
-                    graphics.DrawImage(waterMarker, (float)markerX -10.0f, (float)markerY - 10.0f);
-
-                }
-
-            }
-
-            //gas veins (GasVein_)
-            if (ARKViewer.Program.ProgramConfig.GasVeins)
-            {
-                var gasVeinList = cm.GetGasVeins(); // gd.Structures.Where(f => f.ClassName.StartsWith("GasVein_"));
-                foreach (var gasVein in gasVeinList)
-                {
-                    markerX = ((decimal)Math.Round(gasVein.Longitude.Value,2) - mapvals.Item4) * mapvals.Item1 / (mapvals.Item5 - mapvals.Item4);
-                    markerY = ((decimal)Math.Round(gasVein.Latitude.Value,2) - mapvals.Item3) * mapvals.Item2 / (mapvals.Item6 - mapvals.Item3);
-
-                    graphics.FillEllipse(new SolidBrush(Color.White), (float)markerX - 15f, (float)markerY - 15f, 30, 30);
-
-                    Color borderColor = Color.WhiteSmoke;
-                    graphics.DrawEllipse(new Pen(borderColor, 2), (float)markerX - 15f, (float)markerY - 15f, 30, 30);
-
-                    Bitmap gasMarker = new Bitmap(ARKViewer.Properties.Resources.structure_marker_gas, new Size(20, 20));
-                    graphics.DrawImage(gasMarker, (float)markerX -10.0f, (float)markerY - 10.0f);
-
-                }
-            }
-
-            //artifacts
-            if (ARKViewer.Program.ProgramConfig.Artifacts)
-            {
-                var artifactList = cm.GetArtifacts(); //gd.Structures.Where(f => f.ClassName.StartsWith("ArtifactCrate_"));
-                foreach (var artifact in artifactList)
-                {
-                    markerX = ((decimal)Math.Round(artifact.Longitude.Value,2) - mapvals.Item4) * mapvals.Item1 / (mapvals.Item5 - mapvals.Item4);
-                    markerY = ((decimal)Math.Round(artifact.Latitude.Value,2) - mapvals.Item3) * mapvals.Item2 / (mapvals.Item6 - mapvals.Item3);
-                    graphics.FillEllipse(new SolidBrush(Color.FloralWhite), (float)markerX - 15.0f, (float)markerY - 15.0f, 30, 30);
-                    graphics.DrawEllipse(new Pen(Color.Yellow, 1), (float)markerX - 15.0f, (float)markerY - 15.0f, 30, 30);
-
-                    Bitmap gasMarker = new Bitmap(ARKViewer.Properties.Resources.structure_marker_trophy, new Size(20, 20));
-                    graphics.DrawImage(gasMarker, (float)markerX - 10.0f, (float)markerY - 10.0f);
-
-                }
-
+                    BorderColour = marker.BorderColour,
+                    BorderWidth = marker.BorderWidth,
+                    Colour = marker.Colour,
+                    Image = marker.Image,
+                    Lat = marker.Lat,
+                    Lon = marker.Lon,
+                    Name = marker.Name
+                });
             }
 
             switch (tabFeatures.SelectedTab.Name)
             {
                 case "tpgWild":
-                    if (cboWildClass.SelectedItem != null)
+                    string wildClass = "";
+                    if(cboWildClass.SelectedItem != null)
                     {
-
-                        DinoSummary selectedSummary = (DinoSummary)cboWildClass.SelectedItem;
-                        string className = selectedSummary.ClassName;
-                        float markerSize = 10f;
-
-                        int minLevel = (int)udWildMin.Value;
-                        int maxLevel = (int)udWildMax.Value;
-                        float selectedLat = (float)udWildLat.Value;
-                        float selectedLon = (float)udWildLon.Value;
-                        float selectedRad = (float)udWildRadius.Value;
-
-                        foreach(ListViewItem item in lvwWildDetail.Items)
-                        {
-                            
-                            decimal.TryParse(item.SubItems[4].Text, out decimal latWild);
-                            decimal.TryParse(item.SubItems[5].Text, out decimal lonWild);
-
-                            markerX = ((decimal)Math.Round(lonWild, 2) - mapvals.Item4) * mapvals.Item1 / (mapvals.Item5 - mapvals.Item4);
-                            markerY = ((decimal)Math.Round(latWild, 2) - mapvals.Item3) * mapvals.Item2 / (mapvals.Item6 - mapvals.Item3);
-
-                            Color markerColor = Color.Blue;
-
-                            graphics.FillEllipse(new SolidBrush(markerColor), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
-
-                        }
+                        DinoSummary selectedValue = (DinoSummary)cboWildClass.SelectedItem;
+                        wildClass = selectedValue.ClassName;
                     }
+
+                    bitmap = cm.GetMapImageWild(wildClass, (int)udWildMin.Value, (int)udWildMax.Value, (float)udWildLat.Value,(float)udWildLon.Value,(float)udWildRadius.Value,selectedY,selectedX,chkObelisks.Checked,chkGlitches.Checked,chkChargeNodes.Checked,chkBeaverDams.Checked,chkDeinoNests.Checked,chkWyvernNests.Checked,chkDrakeNests.Checked,chkMagmasaurNests.Checked,chkOilVeins.Checked,chkWaterVeins.Checked,chkGasVeins.Checked,chkArtifacts.Checked, customMarkers);
 
                     break;
                 case "tpgTamed":
 
-                    
-
-                    if(lvwTameDetail.Items.Count > 0)
+                    string tameClass = "";
+                    if (cboTameClass.SelectedItem != null)
                     {
-                        float markerSize = 10f;
-
-                        foreach (ListViewItem item in lvwTameDetail.Items)
-                        {
-
-                            decimal.TryParse(item.SubItems[6].Text, out decimal longtitude);
-                            decimal.TryParse(item.SubItems[5].Text, out decimal latitude);
-
-                            markerX = ((decimal)Math.Round(longtitude, 2) - mapvals.Item4) * mapvals.Item1 / (mapvals.Item5 - mapvals.Item4);
-                            markerY = ((decimal)Math.Round(latitude, 2) - mapvals.Item3) * mapvals.Item2 / (mapvals.Item6 - mapvals.Item3);
-
-                            Color markerColor = Color.Blue;
-
-                            graphics.FillEllipse(new SolidBrush(markerColor), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
-                        }
-
+                        DinoSummary selectedValue = (DinoSummary)cboTameClass.SelectedItem;
+                        tameClass = selectedValue.ClassName;
                     }
+
+                    long tribeId = 0;
+                    if (cboTameTribes.SelectedItem != null)
+                    {
+                        ComboValuePair selectedTribe = (ComboValuePair)cboTameTribes.SelectedItem;
+                        long.TryParse(selectedTribe.Key, out tribeId);
+                    }
+
+                    long playerId = 0;
+                    if (cboTamePlayers.SelectedItem != null)
+                    {
+                        ComboValuePair selectedPlayer = (ComboValuePair)cboTamePlayers.SelectedItem;
+                        long.TryParse(selectedPlayer.Key, out playerId);
+                    }
+
+                    bitmap = cm.GetMapImageTamed(tameClass,chkCryo.Checked, tribeId,playerId,selectedY, selectedX, chkObelisks.Checked, chkGlitches.Checked, chkChargeNodes.Checked, chkBeaverDams.Checked, chkDeinoNests.Checked, chkWyvernNests.Checked, chkDrakeNests.Checked, chkMagmasaurNests.Checked, chkOilVeins.Checked, chkWaterVeins.Checked, chkGasVeins.Checked, chkArtifacts.Checked, customMarkers);
+
 
 
                     break;
                 case "tpgStructures":
                     //map out player structures
-                    if(lvwStructureLocations.Items.Count > 0)
+                    string structureClass = "";
+                    if (cboStructureStructure.SelectedItem != null)
                     {
-
-                        foreach (ListViewItem item in lvwStructureLocations.Items)
-                        {
-                            
-                            ContentStructure structure = (ContentStructure)item.Tag;
-                            if (!(structure.Latitude.GetValueOrDefault(0) == 0 && structure.Longitude.GetValueOrDefault(0) == 0))
-                            {
-                                float markerSize = 10f;
-
-                                markerX = ((decimal)Math.Round(structure.Longitude.Value, 2) - mapvals.Item4) * mapvals.Item1 / (mapvals.Item5 - mapvals.Item4);
-                                markerY = ((decimal)Math.Round(structure.Latitude.Value, 2) - mapvals.Item3) * mapvals.Item2 / (mapvals.Item6 - mapvals.Item3);
-                                graphics.FillEllipse(new SolidBrush(Color.AliceBlue), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
-
-
-                                Color borderColour = Color.Blue;
-                                int borderSize = 1;
-                                if (item.Selected)
-                                {
-                                    borderColour = Color.Red;
-                                    borderSize = 1;
-                                }
-                                graphics.DrawEllipse(new Pen(borderColour, borderSize), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
-                            }
-                            
-                        }
-
-                        if (lvwStructureLocations.SelectedItems.Count > 0)
-                        {
-                            ListViewItem item = lvwStructureLocations.SelectedItems[0];
-              
-                            ContentStructure structure = (ContentStructure)lvwStructureLocations.SelectedItems[0].Tag;
-
-                            if (!(structure.Latitude.GetValueOrDefault(0) == 0 && structure.Longitude.GetValueOrDefault(0) == 0))
-                            {
-                                float markerSize = 10f;
-
-                                markerX = ((decimal)Math.Round(structure.Longitude.Value, 2) - mapvals.Item4) * mapvals.Item1 / (mapvals.Item5 - mapvals.Item4);
-                                markerY = ((decimal)Math.Round(structure.Latitude.Value, 2) - mapvals.Item3) * mapvals.Item2 / (mapvals.Item6 - mapvals.Item3);
-                                graphics.FillEllipse(new SolidBrush(Color.IndianRed), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
-
-
-                                Color borderColour = Color.Red;
-                                int borderSize = 1;
-                                graphics.DrawEllipse(new Pen(borderColour, borderSize), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
-                            }
-                            
-                        }
-
+                        ComboValuePair selectedStructure = (ComboValuePair)cboStructureStructure.SelectedItem;
+                        structureClass = selectedStructure.Key;
                     }
+                    long structureTribe = 0;
+                    if (cboStructureTribe.SelectedItem != null)
+                    {
+                        ComboValuePair selectedTribe = (ComboValuePair)cboStructureTribe.SelectedItem;
+                        long.TryParse(selectedTribe.Key, out structureTribe);
+                    }
+
+                    long structurePlayer = 0;
+                    if (cboStructurePlayer.SelectedItem != null)
+                    {
+                        ComboValuePair selectedPlayer = (ComboValuePair)cboStructurePlayer.SelectedItem;
+                        long.TryParse(selectedPlayer.Key, out tribeId);
+                    }
+
+                    bitmap = cm.GetMapImagePlayerStructures(structureClass, structureTribe, structurePlayer, selectedY, selectedX, chkObelisks.Checked, chkGlitches.Checked, chkChargeNodes.Checked, chkBeaverDams.Checked, chkDeinoNests.Checked, chkWyvernNests.Checked, chkDrakeNests.Checked, chkMagmasaurNests.Checked, chkOilVeins.Checked, chkWaterVeins.Checked, chkGasVeins.Checked, chkArtifacts.Checked, customMarkers);
 
                     break;
                 case "tpgPlayers":
                     //players
-                    if (lvwPlayers.Items.Count > 0)
+                    long playerTribe = 0;
+                    if (cboTribes.SelectedItem != null)
                     {
-                        foreach (ListViewItem playerItem in lvwPlayers.Items)
-                        {
-                            ContentPlayer player = (ContentPlayer)playerItem.Tag;
-
-                            if (!(player.Latitude.GetValueOrDefault(0) == 0 && player.Longitude.GetValueOrDefault(0) == 0))
-                            {
-                                markerX = ((decimal)Math.Round(player.Longitude.Value, 2) - mapvals.Item4) * mapvals.Item1 / (mapvals.Item5 - mapvals.Item4);
-                                markerY = ((decimal)Math.Round(player.Latitude.Value, 2) - mapvals.Item3) * mapvals.Item2 / (mapvals.Item6 - mapvals.Item3);
-                                graphics.FillEllipse(new SolidBrush(Color.FloralWhite), (float)markerX - 15.0f, (float)markerY - 15.0f, 30, 30);
-
-
-                                Color borderColour = Color.Blue;
-                                int borderSize = 1;
-                                if (playerItem.Selected)
-                                {
-                                    borderColour = Color.Red;
-                                    borderSize = 2;
-                                }
-                                graphics.DrawEllipse(new Pen(borderColour, borderSize), (float)markerX - 15.0f, (float)markerY - 15.0f, 30, 30);
-
-                                Bitmap playerMarker = new Bitmap(ARKViewer.Properties.Resources.marker_28, new Size(20, 20));
-                                if (player.Gender == "Female")
-                                {
-                                    playerMarker = new Bitmap(ARKViewer.Properties.Resources.marker_29, new Size(20, 20));
-                                }
-                                graphics.DrawImage(playerMarker, (float)markerX - 10.0f, (float)markerY - 10.0f);
-                            }
-
-
-                        }
-
-
-                        //re-draw selected in-case it's been drawn over by somebody in same area
-                        if (lvwPlayers.SelectedItems.Count > 0)
-                        {
-                            ListViewItem playerItem = lvwPlayers.SelectedItems[0];
-                            ContentPlayer player = (ContentPlayer)playerItem.Tag;
-
-                            if (!(player.Latitude.GetValueOrDefault(0) == 0 && player.Longitude.GetValueOrDefault(0) == 0))
-                            {
-                                markerX = ((decimal)Math.Round(player.Longitude.Value, 2) - mapvals.Item4) * mapvals.Item1 / (mapvals.Item5 - mapvals.Item4);
-                                markerY = ((decimal)Math.Round(player.Latitude.Value, 2) - mapvals.Item3) * mapvals.Item2 / (mapvals.Item6 - mapvals.Item3);
-                                graphics.FillEllipse(new SolidBrush(Color.FloralWhite), (float)markerX - 15.0f, (float)markerY - 15.0f, 30, 30);
-
-
-                                Color borderColour = Color.Blue;
-                                int borderSize = 1;
-                                if (playerItem.Selected)
-                                {
-                                    borderColour = Color.Red;
-                                    borderSize = 2;
-                                }
-                                graphics.DrawEllipse(new Pen(borderColour, borderSize), (float)markerX - 15.0f, (float)markerY - 15.0f, 30, 30);
-
-                                Bitmap playerMarker = new Bitmap(ARKViewer.Properties.Resources.marker_28, new Size(20, 20));
-                                if (player.Gender == "Female")
-                                {
-                                    playerMarker = new Bitmap(ARKViewer.Properties.Resources.marker_29, new Size(20, 20));
-                                }
-                                graphics.DrawImage(playerMarker, (float)markerX - 10.0f, (float)markerY - 10.0f);
-
-                            }
-
-
-                        }
-
-
-
-
+                        ComboValuePair selectedTribe = (ComboValuePair)cboTribes.SelectedItem;
+                        long.TryParse(selectedTribe.Key, out playerTribe);
                     }
+
+                    long currentId = 0;
+                    if (cboPlayers.SelectedItem != null)
+                    {
+                        ComboValuePair selectedPlayer = (ComboValuePair)cboPlayers.SelectedItem;
+                        long.TryParse(selectedPlayer.Key, out currentId);
+                    }
+
+                    bitmap = cm.GetMapImagePlayers(playerTribe, currentId, selectedY, selectedX, chkObelisks.Checked, chkGlitches.Checked, chkChargeNodes.Checked, chkBeaverDams.Checked, chkDeinoNests.Checked, chkWyvernNests.Checked, chkDrakeNests.Checked, chkMagmasaurNests.Checked, chkOilVeins.Checked, chkWaterVeins.Checked, chkGasVeins.Checked, chkArtifacts.Checked, customMarkers);
 
 
                     break;
                 case "tpgDroppedItems":
 
-                    
-                    if (lvwDroppedItems.Items.Count > 0)
+                    long droppedPlayerId = 0;
+                    if (cboDroppedPlayer.SelectedItem != null)
                     {
-                        float markerSize = 10f;
-
-                        foreach (ListViewItem item in lvwDroppedItems.Items)
-                        {
-
-                            decimal.TryParse(item.SubItems[2].Text, out decimal latitude);
-                            decimal.TryParse(item.SubItems[3].Text, out decimal longtitude);
-
-                            markerX = ((decimal)Math.Round(longtitude, 2) - mapvals.Item4) * mapvals.Item1 / (mapvals.Item5 - mapvals.Item4);
-                            markerY = ((decimal)Math.Round(latitude, 2) - mapvals.Item3) * mapvals.Item2 / (mapvals.Item6 - mapvals.Item3);
-
-                            Color markerColor = Color.Blue;
-
-                            graphics.FillEllipse(new SolidBrush(markerColor), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
-                        }
-
+                        ComboValuePair selectedPlayer = (ComboValuePair)cboDroppedPlayer.SelectedItem;
+                        long.TryParse(selectedPlayer.Key, out droppedPlayerId);
+                    }
+                    string droppedClass = "";
+                    if (cboDroppedItem.SelectedItem != null)
+                    {
+                        ComboValuePair droppedValue = (ComboValuePair)cboDroppedItem.SelectedItem;
+                        droppedClass = droppedValue.Key;
                     }
 
+                    if (droppedClass == "-1")
+                    {
+                        bitmap = cm.GetMapImageDropBags(droppedPlayerId, selectedY, selectedX, chkObelisks.Checked, chkGlitches.Checked, chkChargeNodes.Checked, chkBeaverDams.Checked, chkDeinoNests.Checked, chkWyvernNests.Checked, chkDrakeNests.Checked, chkMagmasaurNests.Checked, chkOilVeins.Checked, chkWaterVeins.Checked, chkGasVeins.Checked, chkArtifacts.Checked, customMarkers);
+                    }
+                    else
+                    {
+                        if (droppedClass == "0") droppedClass = "";
+                        bitmap = cm.GetMapImageDroppedItems(droppedPlayerId, droppedClass, selectedY, selectedX, chkObelisks.Checked, chkGlitches.Checked, chkChargeNodes.Checked, chkBeaverDams.Checked, chkDeinoNests.Checked, chkWyvernNests.Checked, chkDrakeNests.Checked, chkMagmasaurNests.Checked, chkOilVeins.Checked, chkWaterVeins.Checked, chkGasVeins.Checked, chkArtifacts.Checked, customMarkers);
+                    }
+                    
 
                     break;
                 case "tpgTribes":
+                    long summaryTribeId = 0;
+
                     if(lvwTribes.SelectedItems.Count > 0)
                     {
-                        
-
-                        if (chkTribeTames.Checked)
-                        {
-                            foreach(ListViewItem selectedItem in lvwTribes.SelectedItems)
-                            {
-                                ContentTribe selectedTribe = (ContentTribe)selectedItem.Tag;
-                                //gold
-
-
-                                var tribeTames = cm.GetTribes(selectedTribe.TribeId).SelectMany(a => a.Tames).ToList(); ;
-                                if (tribeTames.Count() > 0)
-                                {
-                                    foreach (var tame in tribeTames)
-                                    {
-                                        if (!(tame.Latitude.GetValueOrDefault(0) ==0 &&  tame.Longitude.GetValueOrDefault(0) ==0))
-                                        {
-                                            float markerSize = 10f;
-
-                                            markerX = ((decimal)Math.Round(tame.Longitude.Value, 2) - mapvals.Item4) * mapvals.Item1 / (mapvals.Item5 - mapvals.Item4);
-                                            markerY = ((decimal)Math.Round(tame.Latitude.Value, 2) - mapvals.Item3) * mapvals.Item2 / (mapvals.Item6 - mapvals.Item3);
-                                            graphics.FillEllipse(new SolidBrush(Color.Gold), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
-
-
-                                            Color borderColour = Color.Black;
-                                            int borderSize = 1;
-                                            graphics.DrawEllipse(new Pen(borderColour, borderSize), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
-                                        }
-
-
-                                    }
-                                }
-                            }
-                            
-
-                        }
-
-                        if (chkTribeStructures.Checked)
-                        {
-                            //pale green
-                            foreach (ListViewItem selectedItem in lvwTribes.SelectedItems)
-                            {
-                                ContentTribe selectedTribe = (ContentTribe)selectedItem.Tag;
-
-                                var tribeStructures = cm.GetTribes(selectedTribe.TribeId).SelectMany(a => a.Structures).ToList(); // gd.Structures.Where(s => s.TargetingTeam.GetValueOrDefault(0) == selectedTribe.TribeId);
-                                if (tribeStructures.Count() > 0)
-                                {
-                                    foreach (var structure in tribeStructures)
-                                    {
-                                        if (!(structure.Latitude.GetValueOrDefault(0) ==0 && structure.Longitude.GetValueOrDefault(0) == 0))
-                                        {
-                                            float markerSize = 10f;
-
-                                            markerX = ((decimal)Math.Round(structure.Longitude.Value, 2) - mapvals.Item4) * mapvals.Item1 / (mapvals.Item5 - mapvals.Item4);
-                                            markerY = ((decimal)Math.Round(structure.Latitude.Value, 2) - mapvals.Item3) * mapvals.Item2 / (mapvals.Item6 - mapvals.Item3);
-                                            graphics.FillEllipse(new SolidBrush(Color.PaleGreen), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
-
-
-                                            Color borderColour = Color.Black;
-                                            int borderSize = 1;
-                                            graphics.DrawEllipse(new Pen(borderColour, borderSize), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
-                                        }
-
-
-                                    }
-                                }
-                            }
-                            
-
-                        }
-
-                        if (chkTribePlayers.Checked)
-                        {
-                            foreach (ListViewItem selectedItem in lvwTribes.SelectedItems)
-                            {
-                                ContentTribe selectedTribe = (ContentTribe)selectedItem.Tag;
-
-                                var tribePlayers = cm.GetTribes(selectedTribe.TribeId).SelectMany(t => t.Players).ToList(); // gd.Players.Where(p => p.TribeId.GetValueOrDefault(0) == selectedTribe.TribeId);
-                                if (tribePlayers != null && tribePlayers.Count() > 0)
-                                {
-                                    foreach (var player in tribePlayers)
-                                    {
-                                        if (!(player.Latitude.GetValueOrDefault(0) == 0 && player.Longitude.GetValueOrDefault(0) ==0))
-                                        {
-                                            markerX = ((decimal)Math.Round(player.Longitude.Value, 2) - mapvals.Item4) * mapvals.Item1 / (mapvals.Item5 - mapvals.Item4);
-                                            markerY = ((decimal)Math.Round(player.Latitude.Value, 2) - mapvals.Item3) * mapvals.Item2 / (mapvals.Item6 - mapvals.Item3);
-                                            graphics.FillEllipse(new SolidBrush(Color.FloralWhite), (float)markerX - 15.0f, (float)markerY - 15.0f, 30, 30);
-
-                                            Color borderColour = Color.Blue;
-                                            int borderSize = 1;
-                                            graphics.DrawEllipse(new Pen(borderColour, borderSize), (float)markerX - 15.0f, (float)markerY - 15.0f, 30, 30);
-
-                                            Bitmap playerMarker = new Bitmap(ARKViewer.Properties.Resources.marker_28, new Size(20, 20));
-                                            if (player.Gender.ToLower() == "female")
-                                            {
-                                                playerMarker = new Bitmap(ARKViewer.Properties.Resources.marker_29, new Size(20, 20));
-                                            }
-                                            graphics.DrawImage(playerMarker, (float)markerX - 10.0f, (float)markerY - 10.0f);
-                                        }
-                                    }
-                                }
-                            }
-                            
-                            
-                        }
-
+                        ListViewItem selectedItem = lvwTribes.SelectedItems[0];
+                        ContentTribe selectedTribe = (ContentTribe)selectedItem.Tag;
+                        summaryTribeId = selectedTribe.TribeId;
                     }
+                    bitmap = cm.GetMapImageTribes(summaryTribeId, chkTribeStructures.Checked,chkTribePlayers.Checked,chkTribeTames.Checked, selectedY, selectedX, chkObelisks.Checked, chkGlitches.Checked, chkChargeNodes.Checked, chkBeaverDams.Checked, chkDeinoNests.Checked, chkWyvernNests.Checked, chkDrakeNests.Checked, chkMagmasaurNests.Checked, chkOilVeins.Checked, chkWaterVeins.Checked, chkGasVeins.Checked, chkArtifacts.Checked, customMarkers);
 
                     break;
                 default:
 
                     break;
-            }
-
-
-            
-            if (selectedX != 0 && selectedY != 0)
-            {
-                
-                markerX = ((decimal)Math.Round(selectedX, 2) - mapvals.Item4) * mapvals.Item1 / (mapvals.Item5 - mapvals.Item4);
-                markerY = ((decimal)Math.Round(selectedY, 2) - mapvals.Item3) * mapvals.Item2 / (mapvals.Item6 - mapvals.Item3);
-
-                Color markerColor = Color.Red;
-
-                graphics.FillEllipse(new SolidBrush(markerColor), (float)markerX - 5.0f, (float)markerY - 5.0f, 10, 10);
-
             }
 
             lblStatus.Text = "Map display updated.";
@@ -1742,6 +1141,14 @@ namespace ARKViewer
                 {
                     string itemName = "Player Cache";
 
+                    //get tribe/player
+                    var playerTribe = cm.GetPlayerTribe(playerCache.DroppedByPlayerId);
+                    if (playerTribe != null)
+                    {
+                        var player = playerTribe.Players.First(p => p.Id == playerCache.DroppedByPlayerId);
+                        tribeName = playerTribe.TribeName;
+                        playerName = player.CharacterName;
+                    }
 
                     ListViewItem newItem = new ListViewItem(itemName);
                     newItem.Tag = playerCache;
@@ -1771,6 +1178,15 @@ namespace ARKViewer
                         if (itemMap != null)
                         {
                             itemName = itemMap.FriendlyName;
+                        }
+
+                        //get tribe/player
+                        var playerTribe = cm.GetPlayerTribe(droppedItem.DroppedByPlayerId);
+                        if (playerTribe != null)
+                        {
+                            var player = playerTribe.Players.First(p => p.Id == droppedItem.DroppedByPlayerId);
+                            tribeName = playerTribe.TribeName;
+                            playerName = player.CharacterName;
                         }
 
                         ListViewItem newItem = new ListViewItem(itemName);
@@ -2545,7 +1961,7 @@ namespace ARKViewer
             LoadWildDetail();
         }
 
-        private void LvwDetail_ColumnClick(object sender, ColumnClickEventArgs e)
+        private void lvwWildDetail_ColumnClick(object sender, ColumnClickEventArgs e)
         {
             // Get the new sorting column.
             ColumnHeader new_sorting_column = lvwWildDetail.Columns[e.Column];
@@ -3090,7 +2506,18 @@ namespace ARKViewer
 
         private void lvwPlayers_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+            decimal selectedX = 0;
+            decimal selectedY = 0;
+
+            if(lvwPlayers.SelectedItems.Count > 0)
+            {
+                ListViewItem selectedItem = lvwPlayers.SelectedItems[0];
+                ContentPlayer selectedPlayer = (ContentPlayer)selectedItem.Tag;
+                selectedX = (decimal)selectedPlayer.Longitude.GetValueOrDefault(0);
+                selectedY = (decimal)selectedPlayer.Latitude.GetValueOrDefault(0);
+            }
+
+            DrawMap(selectedX, selectedY);
 
         }
 
@@ -3264,7 +2691,7 @@ namespace ARKViewer
             int.TryParse(comboValue.Key, out int selectedPlayerId);
 
 
-            var playerStructureTypes = cm.GetPlayerStructures(selectedTribeId, selectedPlayerId, "")
+            var playerStructureTypes = cm.GetPlayerStructures(selectedTribeId, selectedPlayerId, "",false)
                                                         .Where(s => 
                                                             Program.ProgramConfig.StructureExclusions == null 
                                                             || (Program.ProgramConfig.StructureExclusions != null & !Program.ProgramConfig.StructureExclusions.Contains(s.ClassName))
@@ -3386,7 +2813,7 @@ namespace ARKViewer
             if(comboValue!=null) selectedClass = comboValue.Key;
 
 
-            var playerStructures = cm.GetPlayerStructures(selectedTribeId, selectedPlayerId, selectedClass)
+            var playerStructures = cm.GetPlayerStructures(selectedTribeId, selectedPlayerId, selectedClass,false)
                 .Where(s => (!Program.ProgramConfig.StructureExclusions.Contains(s.ClassName))).ToList();
 
             lblStructureTotal.Text = $"Count: {playerStructures.Count()}";
@@ -3529,12 +2956,15 @@ namespace ARKViewer
             {
                 ListViewItem selectedItem = lvwStructureLocations.SelectedItems[0];
                 ContentStructure selectedStructure = (ContentStructure)selectedItem.Tag;
+                
+                picMap.Image = DrawMap((decimal)selectedStructure.Longitude.GetValueOrDefault(0), (decimal)selectedStructure.Latitude.GetValueOrDefault(0));
 
                 var inventory = cm.GetInventory(selectedStructure.InventoryId.GetValueOrDefault(0));
                 btnStructureInventory.Enabled = inventory != null && inventory.Items.Count > 0;
+                
             }
 
-            picMap.Image = DrawMap(lastSelectedY, lastSelectedY);
+
         }
 
         private void cboStructureStructure_SelectedIndexChanged(object sender, EventArgs e)
@@ -3554,7 +2984,7 @@ namespace ARKViewer
         {
             if (cm == null) return;
 
-            var structureList = cm.GetPlayerStructures(0, 0, "");
+            var structureList = cm.GetPlayerStructures(0, 0, "",true);
             if (structureList != null && structureList.Count > 0)
             {
                 frmStructureExclusionFilter exclusionEditor = new frmStructureExclusionFilter(structureList);
@@ -4068,7 +3498,7 @@ namespace ARKViewer
             {
                 if (isLoading) return;
 
-                picMap.Image = DrawMap(lastSelectedX, lastSelectedY);
+                //picMap.Image = DrawMap(lastSelectedX, lastSelectedY);
                 btnPlayerInventory.Enabled = lvwPlayers.SelectedItems.Count == 1;
                 btnPlayerTribeLog.Enabled = lvwPlayers.SelectedItems.Count == 1;
                 btnCopyCommandPlayer.Enabled = lvwPlayers.SelectedItems.Count > 0 && cboConsoleCommandsPlayerTribe.SelectedIndex >= 0;
@@ -4278,7 +3708,7 @@ namespace ARKViewer
 
         private void lvwTribes_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+            DrawMap(0, 0);
 
         }
 
@@ -4472,11 +3902,6 @@ namespace ARKViewer
                 btnTribeLog.Enabled = false;
                 btnTribeCopyCommand.Enabled = lvwTribes.SelectedItems.Count > 0;
 
-                if (tabFeatures.SelectedTab.Name == "tpgTribes")
-                {
-
-                    picMap.Image = DrawMap(0, 0);
-                }
 
                 if (lvwTribes.SelectedItems.Count != 1) return;
 
@@ -5400,6 +4825,60 @@ namespace ARKViewer
             picMap.Image = DrawMap(lastSelectedX, lastSelectedY);
         }
 
+        private void lvwDroppedItems_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            // Get the new sorting column.
+            ColumnHeader new_sorting_column = lvwDroppedItems.Columns[e.Column];
 
+            // Figure out the new sorting order.
+            System.Windows.Forms.SortOrder sort_order;
+            if (SortingColumn_Drops == null)
+            {
+                // New column. Sort ascending.
+                sort_order = SortOrder.Ascending;
+            }
+            else
+            {
+                // See if this is the same column.
+                if (new_sorting_column == SortingColumn_Drops)
+                {
+                    // Same column. Switch the sort order.
+                    if (SortingColumn_Drops.Text.StartsWith("> "))
+                    {
+                        sort_order = SortOrder.Descending;
+                    }
+                    else
+                    {
+                        sort_order = SortOrder.Ascending;
+                    }
+                }
+                else
+                {
+                    // New column. Sort ascending.
+                    sort_order = SortOrder.Ascending;
+                }
+
+                // Remove the old sort indicator.
+                SortingColumn_Drops.Text = SortingColumn_Drops.Text.Substring(2);
+            }
+
+            // Display the new sort order.
+            SortingColumn_Drops = new_sorting_column;
+            if (sort_order == SortOrder.Ascending)
+            {
+                SortingColumn_Drops.Text = "> " + SortingColumn_Drops.Text;
+            }
+            else
+            {
+                SortingColumn_Drops.Text = "< " + SortingColumn_Drops.Text;
+            }
+
+            // Create a comparer.
+            lvwDroppedItems.ListViewItemSorter =
+                new ListViewComparer(e.Column, sort_order);
+
+            // Sort.
+            lvwDroppedItems.Sort();
+        }
     }
 }

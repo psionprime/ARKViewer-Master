@@ -753,11 +753,23 @@ namespace ARKViewer.Models
 
                 });
 
+                //[Unclaimed Bucket]
+                var unclaimedTribe = new ContentTribe()
+                {
+                    TribeId = 2000000000,
+                    TribeName = $"[Unclaimed Creatures]",
+                    LastActive = DateTime.Now,
+                    Logs = new string[0],
+                    Players = new List<ContentPlayer>(),
+                    Structures = new List<ContentStructure>(),
+                    Tames = new List<ContentTamedCreature>()
+                };
+                loadedTribes.Add(unclaimedTribe);
+
                 if (!loadedTribes.IsEmpty) Tribes.AddRange(loadedTribes.ToList());
             }
 
-
-
+            
             //player structures            
             Parallel.ForEach(Tribes, tribe =>
             {
@@ -868,11 +880,6 @@ namespace ARKViewer.Models
                 }
 
             });
-             
-
-
-            
-
 
             //Dropped items
             ConcurrentBag<ContentDroppedItem> loadedDroppedItems = new ConcurrentBag<ContentDroppedItem>();
@@ -935,6 +942,8 @@ namespace ARKViewer.Models
             if (!loadedDroppedItems.IsEmpty) DroppedItems.AddRange(loadedDroppedItems.ToList());
 
             //Inventories - should have been populated by the previous steps through structure/tribe/player/tame/dropped items loading
+
+            
         }
 
         private int addInventory(ArkItem[] items)
@@ -967,6 +976,24 @@ namespace ARKViewer.Models
         }
 
 
+        private string GetOrphansTribeName(ArkTamedCreature tame)
+        {
+            if(tame.TribeName != null && tame.TribeName.Length >0)
+            {
+                return tame.TribeName;
+            }
+
+            if (tame.ImprinterName != null && tame.ImprinterName.Length > 0)
+            {
+                return tame.ImprinterName;
+            }
+
+            if (tame.OwningPlayerName  != null && tame.OwningPlayerName.Length > 0)
+            {
+                return tame.OwningPlayerName;
+            }
+            return "";
+        }
 
         private void CopyTo(Stream src, Stream dest)
         {

@@ -21,6 +21,7 @@ namespace ArkSavegameToolkitNet
         private static readonly ArkName _myCharacterStatusComponent = ArkName.Create("MyCharacterStatusComponent");
         private static readonly ArkName _ownerInventory = ArkName.Create("OwnerInventory");
         private static readonly ArkName _myInventoryComponent = ArkName.Create("MyInventoryComponent");
+        private static readonly ArkName _targetingTeam = ArkName.Create("TargetingTeam");
 
         private static readonly ArkName _customDataBytesIdentifier = ArkName.Create("CustomDataBytes");
         private static readonly ArkName _byteArraysIdentifier = ArkName.Create("ByteArrays");
@@ -201,7 +202,7 @@ namespace ArkSavegameToolkitNet
             
             //Now parse out cryo creature data
             var cryoPodEntries = Objects.Where(WhereEmptyCryopodHasCustomItemDataBytesArrayBytes).ToList();
-            
+
             nextObjectId = Objects.Count();
 
             if (cryoPodEntries != null && cryoPodEntries.Count() > 0)
@@ -230,6 +231,7 @@ namespace ArkSavegameToolkitNet
 
                             int nextCryoId = nextObjectId + podIndex + 1;
                             var result = UpdateCryoCreatureStatus(cryoArchive,nextCryoId);
+
                             var ownerInventoryRef = cryoPod.GetProperty<PropertyObject>(_ownerInventory);
 
                             if (ownerInventoryRef != null && ownerInventoryRef.Value?.ObjectId != null)
@@ -240,6 +242,12 @@ namespace ArkSavegameToolkitNet
                                     var ownerContainer = Objects.FirstOrDefault(o => o.Properties.ContainsKey(_myInventoryComponent) && o.GetProperty<PropertyObject>(_myInventoryComponent).Value.ObjectId == ownerContainerInventory.ObjectId);
                                     if (ownerContainer != null && ownerContainer.Location != null)
                                     {
+                                        //check and update targetingteam
+                                        var currentTarget = (PropertyInt32)result.Item1.Properties[_targetingTeam];
+                                        var currentContainer = (PropertyInt32)ownerContainer.Properties[_targetingTeam];
+
+                                        if (currentContainer.Value != currentTarget.Value) currentTarget.Value = currentContainer.Value;
+
                                         result.Item1.Location = ownerContainer.Location;
                                     }
                                 }
@@ -266,14 +274,14 @@ namespace ArkSavegameToolkitNet
             
             return true;
 
-            bool WhereEmptyCryopodHasCustomItemDataBytesArrayBytes(GameObject o) => (o.ClassName.Name == "PrimalItem_WeaponEmptyCryopod_C" || o.ClassName.Name == "PrimalItem_WeaponEmptyCryopod_PE_C")
+            bool WhereEmptyCryopodHasCustomItemDataBytesArrayBytes(GameObject o) => (o.ClassName.Name.Contains("Cryopod"))
                 && o.GetProperty<PropertyArray>(_customItemData)?.Value[0] is StructPropertyList customProperties
-                && customProperties.GetProperty<PropertyStruct>(_customDataBytesIdentifier) is PropertyStruct customDataBytes
-                && customDataBytes.Value is StructPropertyList byteArrays
-                && byteArrays.GetProperty<PropertyArray>(_byteArraysIdentifier)?.Value.Count > 0 && byteArrays.GetProperty<PropertyArray>(_byteArraysIdentifier)?.Value[0] is StructPropertyList bytes
-                && bytes != null && bytes.GetProperty<PropertyArray>(_bytesIdentifier) is PropertyArray byteList
-                && byteList != null && byteList.Value.Count > 0;
-
+                //&& customProperties.GetProperty<PropertyStruct>(_customDataBytesIdentifier) is PropertyStruct customDataBytes
+                //&& customDataBytes.Value is StructPropertyList byteArrays
+                //&& byteArrays.GetProperty<PropertyArray>(_byteArraysIdentifier)?.Value.Count > 0 && byteArrays.GetProperty<PropertyArray>(_byteArraysIdentifier)?.Value[0] is StructPropertyList bytes
+                //&& bytes != null && bytes.GetProperty<PropertyArray>(_bytesIdentifier) is PropertyArray byteList
+                //&& byteList != null && byteList.Value.Count > 0
+                ;
 
             PropertyArray SelectCustomDataBytesArrayBytes(GameObject o) => ((StructPropertyList)((StructPropertyList)((StructPropertyList)o.GetProperty<PropertyArray>(_customItemData).Value[0]).GetProperty<PropertyStruct>(_customDataBytesIdentifier).Value).GetProperty<PropertyArray>(_byteArraysIdentifier).Value[0]).GetProperty<PropertyArray>(_bytesIdentifier);
 

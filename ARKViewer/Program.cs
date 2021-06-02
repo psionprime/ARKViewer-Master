@@ -246,7 +246,7 @@ namespace ARKViewer
                         {
                             Application.DoEvents();
                             gd.ApplyPreviousUpdate();
-                            loadedPack = new ContentPack(gd, 0, 0, 50, 100, 100);
+                            loadedPack = new ContentPack(gd, 0, 0, 50, 50, 250);
                             loadedPack.ContentDate = File.GetLastWriteTimeUtc(contentFilename);
                         }
                         gd = null;

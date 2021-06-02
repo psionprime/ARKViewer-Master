@@ -73,7 +73,6 @@ namespace ArkSavegameToolkitNet.Domain
                 save = new ArkSavegame(_saveFilePath, null, _savegameMaxDegreeOfParallelism, exclusivePropertyNameTree);
                 save.LoadEverything();
 
-
                 ct.ThrowIfCancellationRequested();
 
                 var arktribes = Directory.GetFiles(directoryPath, "*.arktribe", SearchOption.TopDirectoryOnly).Select(x =>
@@ -114,8 +113,7 @@ namespace ArkSavegameToolkitNet.Domain
                 // Map all game data into domain model
                 // Note: objects.GroupBy(x => x.Names.Last().Token) would also get creature, status- and inventory component together
                 var statusComponents = objects.Where(x => x.IsDinoStatusComponent).ToDictionary(x => x.ObjectId, x => x);
-
-
+                
 
                 var tamed = objects.Where(x => x.IsTamedCreature).Select(x =>
                 {
@@ -125,7 +123,6 @@ namespace ArkSavegameToolkitNet.Domain
 
                     return returnValue;
                 }).ToArray();
-
 
                 var wild = objects.Where(x => x.IsWildCreature).Select(x =>
                 {

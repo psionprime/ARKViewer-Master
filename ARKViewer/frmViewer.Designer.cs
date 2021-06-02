@@ -329,7 +329,7 @@
             this.lvwWildDetail.TabIndex = 11;
             this.lvwWildDetail.UseCompatibleStateImageBehavior = false;
             this.lvwWildDetail.View = System.Windows.Forms.View.Details;
-            this.lvwWildDetail.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.LvwDetail_ColumnClick);
+            this.lvwWildDetail.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lvwWildDetail_ColumnClick);
             this.lvwWildDetail.SelectedIndexChanged += new System.EventHandler(this.LvwWildDetail_SelectedIndexChanged);
             this.lvwWildDetail.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lvwWildDetail_MouseClick);
             // 
@@ -519,7 +519,7 @@
             this.picMap.Location = new System.Drawing.Point(4, 5);
             this.picMap.Margin = new System.Windows.Forms.Padding(0);
             this.picMap.Name = "picMap";
-            this.picMap.Size = new System.Drawing.Size(10, 10);
+            this.picMap.Size = new System.Drawing.Size(100, 100);
             this.picMap.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picMap.TabIndex = 1;
             this.picMap.TabStop = false;
@@ -2499,6 +2499,7 @@
             this.lvwDroppedItems.TabIndex = 38;
             this.lvwDroppedItems.UseCompatibleStateImageBehavior = false;
             this.lvwDroppedItems.View = System.Windows.Forms.View.Details;
+            this.lvwDroppedItems.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lvwDroppedItems_ColumnClick);
             this.lvwDroppedItems.SelectedIndexChanged += new System.EventHandler(this.lvwDroppedItems_SelectedIndexChanged);
             // 
             // lvwDroppedItems_Item

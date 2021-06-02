@@ -305,6 +305,7 @@ namespace ArkSavegameToolkitNet
 
                 if (IsCreature && !IsTamedCreature)
                 {
+
                     _isFlags |= GameObjectIs.IsWildCreature;
                 }
                 if (IsTamedCreature && (ClassName.Equals(_raft_bp_c) || ClassName.Equals(_motorraft_bp_c))) _isFlags |= GameObjectIs.IsRaftCreature;
