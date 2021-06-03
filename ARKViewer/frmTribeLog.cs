@@ -1,4 +1,5 @@
 ﻿using ArkSavegameToolkitNet.Domain;
+using ARKViewer.Configuration;
 using ARKViewer.Models;
 using System;
 using System.Collections.Generic;
@@ -18,9 +19,48 @@ namespace ARKViewer
         private ColumnHeader SortingColumn_Markers = null;
         private string[] logData = null;
 
+        private void LoadWindowSettings()
+        {
+            var savedWindow = ARKViewer.Program.ProgramConfig.Windows.FirstOrDefault(w => w.Name == this.Name);
+
+
+            if (savedWindow != null)
+            {
+                this.StartPosition = FormStartPosition.Manual;
+                this.Left = savedWindow.Left;
+                this.Top = savedWindow.Top;
+                this.Width = savedWindow.Width;
+                this.Height = savedWindow.Height;
+            }
+        }
+
+        private void UpdateWindowSettings()
+        {
+            //only save location if normal window, do not save location/size if minimized/maximized
+            if (this.WindowState == FormWindowState.Normal)
+            {
+                var savedWindow = ARKViewer.Program.ProgramConfig.Windows.FirstOrDefault(w => w.Name == this.Name);
+                if (savedWindow == null)
+                {
+                    savedWindow = new ViewerWindow();
+                    savedWindow.Name = this.Name;
+                    ARKViewer.Program.ProgramConfig.Windows.Add(savedWindow);
+                }
+
+                if (savedWindow != null)
+                {
+                    savedWindow.Left = this.Left;
+                    savedWindow.Top = this.Top;
+                    savedWindow.Width = this.Width;
+                    savedWindow.Height = this.Height;
+                }
+            }
+        }
+
         public frmTribeLog(ContentTribe tribe)
         {
             InitializeComponent();
+            LoadWindowSettings();
 
             Color standardBackColour = Color.FromArgb(64, 64, 64);
             Color overrideBackColour = standardBackColour;
@@ -42,7 +82,7 @@ namespace ARKViewer
         public frmTribeLog(ContentTribe tribe, ContentPlayer player)
         {
             InitializeComponent();
-
+            LoadWindowSettings();
             Color standardBackColour = Color.FromArgb(64, 64, 64);
             Color overrideBackColour = standardBackColour;
             lvwLog.BackColor = overrideBackColour;
@@ -233,12 +273,18 @@ namespace ARKViewer
             {
                 colourEditor = new frmTribeLogColourMap(lvwLog.BackColor, lvwLog.ForeColor);
             }
+            colourEditor.Owner = this;
 
             if (colourEditor.ShowDialog() == DialogResult.OK)
             {
                 LoadLog();
             }
 
+        }
+
+        private void frmTribeLog_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            UpdateWindowSettings();
         }
     }
 }

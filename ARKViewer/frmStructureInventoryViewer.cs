@@ -1,4 +1,5 @@
-﻿using ARKViewer.CustomNameMaps;
+﻿using ARKViewer.Configuration;
+using ARKViewer.CustomNameMaps;
 using ARKViewer.Models;
 using System;
 using System.Collections.Concurrent;
@@ -15,10 +16,48 @@ namespace ARKViewer
         ContentStructure loadedStructure = null;
         List<ContentItem> loadedInventory = new List<ContentItem>();
 
+        private void LoadWindowSettings()
+        {
+            var savedWindow = ARKViewer.Program.ProgramConfig.Windows.FirstOrDefault(w => w.Name == this.Name);
+
+
+            if (savedWindow != null)
+            {
+                this.StartPosition = FormStartPosition.Manual;
+                this.Left = savedWindow.Left;
+                this.Top = savedWindow.Top;
+                this.Width = savedWindow.Width;
+                this.Height = savedWindow.Height;
+            }
+        }
+
+        private void UpdateWindowSettings()
+        {
+            //only save location if normal window, do not save location/size if minimized/maximized
+            if (this.WindowState == FormWindowState.Normal)
+            {
+                var savedWindow = ARKViewer.Program.ProgramConfig.Windows.FirstOrDefault(w => w.Name == this.Name);
+                if (savedWindow == null)
+                {
+                    savedWindow = new ViewerWindow();
+                    savedWindow.Name = this.Name;
+                    ARKViewer.Program.ProgramConfig.Windows.Add(savedWindow);
+                }
+
+                if (savedWindow != null)
+                {
+                    savedWindow.Left = this.Left;
+                    savedWindow.Top = this.Top;
+                    savedWindow.Width = this.Width;
+                    savedWindow.Height = this.Height;
+                }
+            }
+        }
+
         public frmStructureInventoryViewer(ContentStructure structure, List<ContentItem> inventory)
         {
             InitializeComponent();
-
+            LoadWindowSettings();
             loadedStructure = structure;
             loadedInventory = inventory;
 
@@ -89,6 +128,11 @@ namespace ARKViewer
             }
 
             PopulateStructureInventory();
+        }
+
+        private void frmStructureInventoryViewer_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            UpdateWindowSettings();
         }
     }
 }

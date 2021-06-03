@@ -1,4 +1,5 @@
 ﻿using ArkSavegameToolkitNet.Domain;
+using ARKViewer.Configuration;
 using ARKViewer.CustomNameMaps;
 using ARKViewer.Models;
 using System;
@@ -20,9 +21,47 @@ namespace ARKViewer
         ContentDroppedItem droppedItem = null;
         List<ContentItem> droppedInventory = new List<ContentItem>();
 
+        private void LoadWindowSettings()
+        {
+            var savedWindow = ARKViewer.Program.ProgramConfig.Windows.FirstOrDefault(w => w.Name == this.Name);
+
+
+            if (savedWindow != null)
+            {
+                this.StartPosition = FormStartPosition.Manual;
+                this.Left = savedWindow.Left;
+                this.Top = savedWindow.Top;
+                this.Width = savedWindow.Width;
+                this.Height = savedWindow.Height;
+            }
+        }
+
+        private void UpdateWindowSettings()
+        {
+            //only save location if normal window, do not save location/size if minimized/maximized
+            if (this.WindowState == FormWindowState.Normal)
+            {
+                var savedWindow = ARKViewer.Program.ProgramConfig.Windows.FirstOrDefault(w => w.Name == this.Name);
+                if (savedWindow == null)
+                {
+                    savedWindow = new ViewerWindow();
+                    savedWindow.Name = this.Name;
+                    ARKViewer.Program.ProgramConfig.Windows.Add(savedWindow);
+                }
+
+                if (savedWindow != null)
+                {
+                    savedWindow.Left = this.Left;
+                    savedWindow.Top = this.Top;
+                    savedWindow.Width = this.Width;
+                    savedWindow.Height = this.Height;
+                }
+            }
+        }
         public frmDeathCacheViewer(ContentDroppedItem dropItem, List<ContentItem> contentItems)
         {
             InitializeComponent();
+            LoadWindowSettings();
 
             droppedItem = dropItem;
             droppedInventory = contentItems;
@@ -94,6 +133,11 @@ namespace ARKViewer
                 txtFilter.Focus();
             }
             PopulateDeathCacheInventory();
+        }
+
+        private void frmDeathCacheViewer_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            UpdateWindowSettings();
         }
     }
 }

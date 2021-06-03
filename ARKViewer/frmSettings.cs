@@ -23,6 +23,25 @@ namespace ARKViewer
         string imageFolder = "";
         ContentManager cm = null;
 
+        Dictionary<string, string> mapFilenameMap = new Dictionary<string, string>
+            {
+                { "theisland.ark", "The Island" },
+                { "thecenter.ark", "The Center" },
+                { "scorchedearth_p.ark","Scorched Earth"},
+                { "aberration_p.ark", "Aberration"},
+                { "extinction.ark", "Extinction"},
+                { "ragnarok.ark", "Ragnarok"},
+                { "valguero_p.ark", "Valguero" },
+                { "crystalisles.ark", "Crystal Isles" },
+                { "genesis.ark", "Genesis" },
+                { "astralark.ark", "AstralARK" },
+                { "hope.ark", "Hope"},
+                { "tunguska_p.ark", "Tunguska"},
+                { "caballus_p.ark", "Caballus"},
+                { "viking_p.ark", "Fjördur"},
+                { "tiamatprime.ark", "Tiamat Prime"}
+            };
+
         public ViewerConfiguration SavedConfig { get; set; }
         public frmSettings(ContentManager manager)
         {
@@ -267,6 +286,93 @@ namespace ARKViewer
             this.Cursor = Cursors.Default;
         }
 
+        private void PopulateSinglePlayerGames()
+        {
+
+            //get registry path for steam apps 
+            cboMapSinglePlayer.Items.Clear();
+            string directoryCheck = "";
+
+            try
+            {
+                string steamRoot = Microsoft.Win32.Registry.GetValue(@"HKEY_CURRENT_USER\Software\Valve\Steam", "SteamPath", "").ToString();
+
+                if (steamRoot != null && steamRoot.Length > 0)
+                {
+                    steamRoot = steamRoot.Replace(@"/", @"\");
+                    steamRoot = Path.Combine(steamRoot, @"steamapps\libraryfolders.vdf");
+                    if (File.Exists(steamRoot))
+                    {
+                        string fileText = File.ReadAllText(steamRoot).Replace("\"LibraryFolders\"", "");
+
+                        foreach (string line in fileText.Split('\n'))
+                        {
+                            if (line.Contains("\t"))
+                            {
+                                string[] lineContent = line.Split('\t');
+                                if (lineContent.Length == 4)
+                                {
+                                    //check 4th param as a path
+                                    directoryCheck = lineContent[3].ToString().Replace("\"", "").Replace(@"\\", @"\") + @"\SteamApps\Common\ARK\ShooterGame\Saved\";
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                //permission access to registry or unavailable?
+
+            }
+
+            if(directoryCheck.Length == 0)
+            {
+                //no directory found for steam from registry, ask user.
+                if(MessageBox.Show("Unable to determine Steam library folder.\n\nWould you like to select it yourself?", "Steam Not Found", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+
+
+
+
+
+                }
+            }
+
+            if (Directory.Exists(directoryCheck))
+            {
+
+                var saveFiles = Directory.GetFiles(directoryCheck, "*.ark", SearchOption.AllDirectories);
+                foreach (string saveFilename in saveFiles)
+                {
+                    string fileName = Path.GetFileName(saveFilename);
+                    if (mapFilenameMap.ContainsKey(fileName.ToLower()))
+                    {
+                        string knownMapName = mapFilenameMap[fileName.ToLower()];
+                        if (knownMapName.Length > 0)
+                        {
+                            ComboValuePair comboValue = new ComboValuePair(saveFilename, knownMapName);
+                            int newIndex = cboMapSinglePlayer.Items.Add(comboValue);
+
+                            if (SavedConfig.Mode == ViewerModes.Mode_SinglePlayer)
+                            {
+                                if (SavedConfig.SelectedFile == saveFilename)
+                                {
+                                    cboMapSinglePlayer.SelectedIndex = newIndex;
+                                }
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
         private void frmSettings_Load(object sender, EventArgs e)
         {
             PopulateColours();
@@ -274,25 +380,7 @@ namespace ARKViewer
             PopulateStructureClassMap("");
             PopulateItemClassMap("");
             
-            var mapFilenameMap = new Dictionary<string,string>
-            {
-                { "theisland.ark", "The Island" },
-                { "thecenter.ark", "The Center" },
-                { "scorchedearth_p.ark","Scorched Earth"},
-                { "aberration_p.ark", "Aberration"},
-                { "extinction.ark", "Extinction"},
-                { "ragnarok.ark", "Ragnarok"},
-                { "valguero_p.ark", "Valguero" },
-                { "crystalisles.ark", "Crystal Isles" },
-                { "genesis.ark", "Genesis" },
-                { "astralark.ark", "AstralARK" },
-                { "hope.ark", "Hope"},
-                { "tunguska_p.ark", "Tunguska"},
-                { "caballus_p.ark", "Caballus"},
-                { "viking_p.ark", "Fjördur"},
-                { "tiamatprime.ark", "Tiamat Prime"}
-
-            };
+            
 
             chkUpdateNotificationFile.Checked = SavedConfig.UpdateNotificationFile;
             chkUpdateNotificationSingle.Checked = SavedConfig.UpdateNotificationSingle;
@@ -326,65 +414,6 @@ namespace ARKViewer
 
                     break;
             }
-
-            //get registry path for steam apps
-            string steamRoot = Microsoft.Win32.Registry.GetValue(@"HKEY_CURRENT_USER\Software\Valve\Steam", "SteamPath", "").ToString();
-
-            if (steamRoot!=null && steamRoot.Length > 0)
-            {
-                steamRoot = steamRoot.Replace(@"/", @"\");
-                steamRoot = Path.Combine(steamRoot, @"steamapps\libraryfolders.vdf");
-                if (File.Exists(steamRoot))
-                {
-                    string fileText = File.ReadAllText(steamRoot).Replace("\"LibraryFolders\"", "");
-
-                    foreach (string line in fileText.Split('\n'))
-                    {
-                        if (line.Contains("\t"))
-                        {
-                            string[] lineContent = line.Split('\t');
-                            if (lineContent.Length == 4)
-                            {
-                                //check 4th param as a path
-                                string directoryCheck = lineContent[3].ToString().Replace("\"", "").Replace(@"\\", @"\") + @"\SteamApps\Common\ARK\ShooterGame\Saved\";
-                                if (Directory.Exists(directoryCheck))
-                                {
-
-                                    var saveFiles = Directory.GetFiles(directoryCheck, "*.ark", SearchOption.AllDirectories);
-                                    foreach (string saveFilename in saveFiles)
-                                    {
-                                        string fileName = Path.GetFileName(saveFilename);
-                                        if (mapFilenameMap.ContainsKey(fileName.ToLower()))
-                                        {
-                                            string knownMapName = mapFilenameMap[fileName.ToLower()];
-                                            if (knownMapName.Length > 0)
-                                            {
-                                                ComboValuePair comboValue = new ComboValuePair(saveFilename, knownMapName);
-                                                int newIndex = cboMapSinglePlayer.Items.Add(comboValue);
-
-                                                if (SavedConfig.Mode == ViewerModes.Mode_SinglePlayer)
-                                                {
-                                                    if (SavedConfig.SelectedFile == saveFilename)
-                                                    {
-                                                        cboMapSinglePlayer.SelectedIndex = newIndex;
-                                                    }
-                                                }
-
-                                            }
-
-                                        }
-
-                                    }
-
-                                }
-                            }
-
-                        }
-                    }
-                }
-            }
-
-            optSinglePlayer.Enabled = cboMapSinglePlayer.Items.Count > 0;
 
             switch (SavedConfig.Mode)
             {
@@ -459,6 +488,11 @@ namespace ARKViewer
 
         private void UpdateDisplay()
         {
+
+            if (optSinglePlayer.Checked && cboMapSinglePlayer.Items.Count ==0)
+            {
+                PopulateSinglePlayerGames();
+            }
 
             DisplayServerSettings();
 
@@ -871,6 +905,7 @@ namespace ARKViewer
         private void btnAddDinoClass_Click(object sender, EventArgs e)
         {
             frmGenericClassMap mapEditor = new frmGenericClassMap(new DinoClassMap());
+            mapEditor.Owner = this;
             if(mapEditor.ShowDialog() == DialogResult.OK)
             {
                 //if line already exist for this class update the friendly name.
@@ -896,6 +931,7 @@ namespace ARKViewer
             DinoClassMap selectedDinoMap = (DinoClassMap)lvwDinoClasses.SelectedItems[0].Tag;
 
             frmGenericClassMap mapEditor = new frmGenericClassMap(selectedDinoMap);
+            mapEditor.Owner = this;
             if (mapEditor.ShowDialog() == DialogResult.OK)
             {
                 //if line already exist for this class update the friendly name.
@@ -1140,6 +1176,7 @@ namespace ARKViewer
         {
 
             frmItemClassMap mapEditor = new frmItemClassMap();
+            mapEditor.Owner = this;
             if (mapEditor.ShowDialog() == DialogResult.OK)
             {
                 //if line already exist for this class update the friendly name.
@@ -1167,6 +1204,7 @@ namespace ARKViewer
             ItemClassMap itemMap = (ItemClassMap)selectedItem.Tag;
 
             frmItemClassMap mapEditor = new frmItemClassMap(itemMap);
+            mapEditor.Owner = this;
             if(mapEditor.ShowDialog() == DialogResult.OK)
             {
 
@@ -1359,6 +1397,7 @@ namespace ARKViewer
             ColourMap selectedMap = (ColourMap)selectedItem.Tag;
             using(frmColourEditor colourEditor = new frmColourEditor(selectedMap))
             {
+                colourEditor.Owner = this;
                 if(colourEditor.ShowDialog() == DialogResult.OK)
                 {
                     ColourMap existingMap = Program.ProgramConfig.ColourMap.FirstOrDefault(m => m.Id == colourEditor.SelectedMap.Id);
@@ -1383,6 +1422,7 @@ namespace ARKViewer
             StructureClassMap selectedStructureMap = (StructureClassMap)lvwStructureMap.SelectedItems[0].Tag;
 
             frmGenericClassMap mapEditor = new frmGenericClassMap(selectedStructureMap);
+            mapEditor.Owner = this;
             if (mapEditor.ShowDialog() == DialogResult.OK)
             {
                 //if line already exist for this class update the friendly name.
@@ -1437,6 +1477,7 @@ namespace ARKViewer
         private void btnAddStructure_Click(object sender, EventArgs e)
         {
             frmGenericClassMap mapEditor = new frmGenericClassMap(new StructureClassMap());
+            mapEditor.Owner = this;
             if (mapEditor.ShowDialog() == DialogResult.OK)
             {
                 //if line already exist for this class update the friendly name.
@@ -1520,6 +1561,7 @@ namespace ARKViewer
         {
             using (frmColourEditor colourEditor = new frmColourEditor())
             {
+                colourEditor.Owner = this;
                 if (colourEditor.ShowDialog() == DialogResult.OK)
                 {
                     ColourMap existingMap = Program.ProgramConfig.ColourMap.FirstOrDefault(m => m.Id == colourEditor.SelectedMap.Id);

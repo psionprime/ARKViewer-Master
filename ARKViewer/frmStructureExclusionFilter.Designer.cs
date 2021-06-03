@@ -30,12 +30,12 @@
         {
             this.btnCancel = new System.Windows.Forms.Button();
             this.pnlCreatureInventory = new System.Windows.Forms.Panel();
+            this.lstStructureFilter = new System.Windows.Forms.CheckedListBox();
             this.chkApplyFilter = new System.Windows.Forms.CheckBox();
             this.lblCreatureFilter = new System.Windows.Forms.Label();
             this.txtFilter = new System.Windows.Forms.TextBox();
             this.lblWindowTitle = new System.Windows.Forms.Label();
             this.btnApply = new System.Windows.Forms.Button();
-            this.lstStructureFilter = new System.Windows.Forms.CheckedListBox();
             this.pnlCreatureInventory.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -65,6 +65,18 @@
             this.pnlCreatureInventory.Name = "pnlCreatureInventory";
             this.pnlCreatureInventory.Size = new System.Drawing.Size(359, 420);
             this.pnlCreatureInventory.TabIndex = 16;
+            // 
+            // lstStructureFilter
+            // 
+            this.lstStructureFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lstStructureFilter.FormattingEnabled = true;
+            this.lstStructureFilter.Location = new System.Drawing.Point(18, 15);
+            this.lstStructureFilter.Name = "lstStructureFilter";
+            this.lstStructureFilter.Size = new System.Drawing.Size(321, 364);
+            this.lstStructureFilter.TabIndex = 23;
+            this.lstStructureFilter.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.lstStructureFilter_ItemCheck);
             // 
             // chkApplyFilter
             // 
@@ -121,18 +133,6 @@
             this.btnApply.UseVisualStyleBackColor = true;
             this.btnApply.Click += new System.EventHandler(this.btnApply_Click);
             // 
-            // lstStructureFilter
-            // 
-            this.lstStructureFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lstStructureFilter.FormattingEnabled = true;
-            this.lstStructureFilter.Location = new System.Drawing.Point(18, 15);
-            this.lstStructureFilter.Name = "lstStructureFilter";
-            this.lstStructureFilter.Size = new System.Drawing.Size(321, 364);
-            this.lstStructureFilter.TabIndex = 23;
-            this.lstStructureFilter.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.lstStructureFilter_ItemCheck);
-            // 
             // frmStructureExclusionFilter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -144,8 +144,9 @@
             this.Controls.Add(this.pnlCreatureInventory);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Name = "frmStructureExclusionFilter";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Structure Exclusions";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmStructureExclusionFilter_FormClosed);
             this.pnlCreatureInventory.ResumeLayout(false);
             this.pnlCreatureInventory.PerformLayout();
             this.ResumeLayout(false);

@@ -29,7 +29,6 @@ namespace ARKViewer
         public static string ItemImageFolder { get; set; } = "";
         public static string MarkerImageFolder { get; set; } = "";
 
-
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -124,7 +123,7 @@ namespace ARKViewer
                         {
                             //export filename
                             exportFilename = commandArguments[2].ToString().Trim().Replace("\"", "");
-                            exportFilePath = Path.GetDirectoryName(exportFilePath);
+                            exportFilePath = Path.GetDirectoryName(exportFilename);
                         }
                         if (!Directory.Exists(exportFilePath)) Directory.CreateDirectory(exportFilePath);
 
@@ -330,6 +329,7 @@ namespace ARKViewer
             string errorMessage = ex.Message;
 
             frmErrorReport report = new frmErrorReport(errorMessage, traceLog);
+            
             report.ShowDialog();
 
 

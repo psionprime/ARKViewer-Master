@@ -2120,7 +2120,7 @@
             this.MinimizeBox = false;
             this.Name = "frmSettings";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Settings";
             this.Load += new System.EventHandler(this.frmSettings_Load);
             this.tabSettings.ResumeLayout(false);

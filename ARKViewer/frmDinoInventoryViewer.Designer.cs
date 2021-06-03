@@ -224,8 +224,9 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmDinoInventoryViewer";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Creature Inventory View";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmDinoInventoryViewer_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.picWindowIcon)).EndInit();
             this.pnlCreatureInventory.ResumeLayout(false);
             this.pnlCreatureInventory.PerformLayout();

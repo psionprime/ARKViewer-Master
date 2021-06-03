@@ -712,8 +712,9 @@
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(760, 600);
             this.Name = "frmPlayerInventoryViewer";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Player Explorer";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmPlayerInventoryViewer_FormClosed);
             this.pnlPlayerInventory.ResumeLayout(false);
             this.pnlPlayerInventory.PerformLayout();
             this.tabInventory.ResumeLayout(false);

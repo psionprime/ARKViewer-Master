@@ -60,6 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\ViewerWindow.cs" />
     <Compile Include="CustomNameMaps\ColourMap.cs" />
     <Compile Include="ContentManager.cs" />
     <Compile Include="frmColourEditor.cs">
@@ -101,6 +102,24 @@
     <Compile Include="frmItemClassMap.Designer.cs">
       <DependentUpon>frmItemClassMap.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmMapToolboxMarkers.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMapToolboxMarkers.Designer.cs">
+      <DependentUpon>frmMapToolboxMarkers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmMapToolboxStructures.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMapToolboxStructures.Designer.cs">
+      <DependentUpon>frmMapToolboxStructures.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmMapView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMapView.Designer.cs">
+      <DependentUpon>frmMapView.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmMarkerEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -136,12 +155,6 @@
     </Compile>
     <Compile Include="frmStructureExclusionFilter.Designer.cs">
       <DependentUpon>frmStructureExclusionFilter.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmStructureLocations.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmStructureLocations.Designer.cs">
-      <DependentUpon>frmStructureLocations.cs</DependentUpon>
     </Compile>
     <Compile Include="frmTribeLogColourMap.cs">
       <SubType>Form</SubType>
@@ -206,6 +219,15 @@
     <EmbeddedResource Include="frmItemClassMap.resx">
       <DependentUpon>frmItemClassMap.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmMapToolboxMarkers.resx">
+      <DependentUpon>frmMapToolboxMarkers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMapToolboxStructures.resx">
+      <DependentUpon>frmMapToolboxStructures.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMapView.resx">
+      <DependentUpon>frmMapView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmMarkerEditor.resx">
       <DependentUpon>frmMarkerEditor.cs</DependentUpon>
     </EmbeddedResource>
@@ -223,9 +245,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmStructureExclusionFilter.resx">
       <DependentUpon>frmStructureExclusionFilter.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmStructureLocations.resx">
-      <DependentUpon>frmStructureLocations.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmTribeLogColourMap.resx">
       <DependentUpon>frmTribeLogColourMap.cs</DependentUpon>
@@ -537,6 +556,8 @@
   <ItemGroup>
     <None Include="Resources\iconfinder_themes_1419100.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\ModernXP-73-Globe-icon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

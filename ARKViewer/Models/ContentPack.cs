@@ -160,6 +160,8 @@ namespace ARKViewer.Models
             var compressedContent = Zip(jsonContent);
             try
             {
+                if (File.Exists(fileName)) File.Delete(fileName);
+
                 using(var writer = new FileStream(fileName,FileMode.CreateNew))
                 {
                     writer.Write(compressedContent, 0, compressedContent.Length);

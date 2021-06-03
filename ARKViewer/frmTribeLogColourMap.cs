@@ -1,4 +1,5 @@
-﻿using ARKViewer.CustomNameMaps;
+﻿using ARKViewer.Configuration;
+using ARKViewer.CustomNameMaps;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,7 +14,47 @@ namespace ARKViewer
 {
     public partial class frmTribeLogColourMap : Form
     {
-        private  void PopulateMap()
+
+        private void LoadWindowSettings()
+        {
+            var savedWindow = ARKViewer.Program.ProgramConfig.Windows.FirstOrDefault(w => w.Name == this.Name);
+
+
+            if (savedWindow != null)
+            {
+                this.StartPosition = FormStartPosition.Manual;
+                this.Left = savedWindow.Left;
+                this.Top = savedWindow.Top;
+                this.Width = savedWindow.Width;
+                this.Height = savedWindow.Height;
+            }
+        }
+
+        private void UpdateWindowSettings()
+        {
+            //only save location if normal window, do not save location/size if minimized/maximized
+            if (this.WindowState == FormWindowState.Normal)
+            {
+                var savedWindow = ARKViewer.Program.ProgramConfig.Windows.FirstOrDefault(w => w.Name == this.Name);
+                if (savedWindow == null)
+                {
+                    savedWindow = new ViewerWindow();
+                    savedWindow.Name = this.Name;
+                    ARKViewer.Program.ProgramConfig.Windows.Add(savedWindow);
+                }
+
+                if (savedWindow != null)
+                {
+                    savedWindow.Left = this.Left;
+                    savedWindow.Top = this.Top;
+                    savedWindow.Width = this.Width;
+                    savedWindow.Height = this.Height;
+                }
+            }
+        }
+
+
+        private void PopulateMap()
         {
             lvwTextColours.Items.Clear();
             if (Program.ProgramConfig.TribeLogColours != null)
@@ -35,6 +76,7 @@ namespace ARKViewer
         public frmTribeLogColourMap(Color backColour, Color foreColour)
         {
             InitializeComponent();
+            LoadWindowSettings();
             PopulateMap();
             pnlBackground.BackColor = backColour;
             pnlForeground.BackColor = foreColour;
@@ -44,6 +86,7 @@ namespace ARKViewer
         public frmTribeLogColourMap(Color backColour, Color foreColour, Color standardColour, Color newColour)
         {
             InitializeComponent();
+            LoadWindowSettings();
             PopulateMap();
 
 
@@ -184,6 +227,11 @@ namespace ARKViewer
             btnAddUpdate.Enabled = true;
             pnlGameColour.Enabled = true;
             pnlCustomColour.Enabled = true;
+        }
+
+        private void frmTribeLogColourMap_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            UpdateWindowSettings();
         }
     }
 }

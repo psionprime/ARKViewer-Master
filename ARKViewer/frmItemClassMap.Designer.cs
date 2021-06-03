@@ -176,8 +176,9 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmItemClassMap";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Item Class Map Editor";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmItemClassMap_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.picIcon)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

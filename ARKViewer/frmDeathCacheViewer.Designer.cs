@@ -170,8 +170,9 @@ namespace ARKViewer
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmDeathCacheViewer";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Death Cache Inventory";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmDeathCacheViewer_FormClosed);
             this.pnlCreatureInventory.ResumeLayout(false);
             this.pnlCreatureInventory.PerformLayout();
             this.ResumeLayout(false);

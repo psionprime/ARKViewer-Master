@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ARKViewer.Configuration;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -18,9 +19,47 @@ namespace ARKViewer
         private List<MapMarker> markerList = new List<MapMarker>();
         string imageFolder = "";
 
+        private void LoadWindowSettings()
+        {
+            var savedWindow = ARKViewer.Program.ProgramConfig.Windows.FirstOrDefault(w => w.Name == this.Name);
+
+
+            if (savedWindow != null)
+            {
+                this.StartPosition = FormStartPosition.Manual;
+                this.Left = savedWindow.Left;
+                this.Top = savedWindow.Top;
+                this.Width = savedWindow.Width;
+                this.Height = savedWindow.Height;
+            }
+        }
+
+        private void UpdateWindowSettings()
+        {
+            //only save location if normal window, do not save location/size if minimized/maximized
+            if (this.WindowState == FormWindowState.Normal)
+            {
+                var savedWindow = ARKViewer.Program.ProgramConfig.Windows.FirstOrDefault(w => w.Name == this.Name);
+                if (savedWindow == null)
+                {
+                    savedWindow = new ViewerWindow();
+                    savedWindow.Name = this.Name;
+                    ARKViewer.Program.ProgramConfig.Windows.Add(savedWindow);
+                }
+
+                if (savedWindow != null)
+                {
+                    savedWindow.Left = this.Left;
+                    savedWindow.Top = this.Top;
+                    savedWindow.Width = this.Width;
+                    savedWindow.Height = this.Height;
+                }
+            }
+        }
         public frmMarkerEditor(string currentMapFile, List<MapMarker> currentMarkers, string selectedMarkerName)
         {
             InitializeComponent();
+            LoadWindowSettings();
 
             imageFolder = Path.Combine(AppContext.BaseDirectory, @"images\");
             if (!Directory.Exists(imageFolder)) Directory.CreateDirectory(imageFolder);
@@ -183,6 +222,11 @@ namespace ARKViewer
         private void udLon_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void frmMarkerEditor_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            UpdateWindowSettings();
         }
     }
 }

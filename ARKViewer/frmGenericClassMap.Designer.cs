@@ -127,8 +127,9 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmGenericClassMap";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Class Map Editor";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmGenericClassMap_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
 

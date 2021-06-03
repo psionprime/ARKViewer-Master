@@ -186,8 +186,9 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmTribeLog";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Tribe Log Viewer";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmTribeLog_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.picPlayerGender)).EndInit();
             this.pnlPlayerInventory.ResumeLayout(false);
             this.ResumeLayout(false);

@@ -32,9 +32,9 @@
             this.lblPlayerName = new System.Windows.Forms.Label();
             this.picPlayerGender = new System.Windows.Forms.PictureBox();
             this.pnlPlayerInventory = new System.Windows.Forms.Panel();
+            this.rtbError = new System.Windows.Forms.RichTextBox();
             this.btnClose = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.rtbError = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.picPlayerGender)).BeginInit();
             this.pnlPlayerInventory.SuspendLayout();
             this.SuspendLayout();
@@ -73,6 +73,15 @@
             this.pnlPlayerInventory.Size = new System.Drawing.Size(635, 217);
             this.pnlPlayerInventory.TabIndex = 15;
             // 
+            // rtbError
+            // 
+            this.rtbError.Location = new System.Drawing.Point(9, 9);
+            this.rtbError.Name = "rtbError";
+            this.rtbError.ReadOnly = true;
+            this.rtbError.Size = new System.Drawing.Size(615, 196);
+            this.rtbError.TabIndex = 0;
+            this.rtbError.Text = "";
+            // 
             // btnClose
             // 
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -99,15 +108,6 @@
     "port the below information back to @MirageUK on the forum.";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // rtbError
-            // 
-            this.rtbError.Location = new System.Drawing.Point(9, 9);
-            this.rtbError.Name = "rtbError";
-            this.rtbError.ReadOnly = true;
-            this.rtbError.Size = new System.Drawing.Size(615, 196);
-            this.rtbError.TabIndex = 0;
-            this.rtbError.Text = "";
-            // 
             // frmErrorReport
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -119,7 +119,7 @@
             this.Controls.Add(this.lblPlayerName);
             this.Controls.Add(this.picPlayerGender);
             this.Name = "frmErrorReport";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Error Report";
             ((System.ComponentModel.ISupportInitialize)(this.picPlayerGender)).EndInit();
             this.pnlPlayerInventory.ResumeLayout(false);

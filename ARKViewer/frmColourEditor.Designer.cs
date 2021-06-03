@@ -187,8 +187,9 @@ namespace ARKViewer
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmColourEditor";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Colour Editor";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmColourEditor_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.udId)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udR)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udG)).EndInit();

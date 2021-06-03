@@ -278,8 +278,9 @@
             this.Controls.Add(this.picIcon);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "frmMarkerEditor";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Marker Editor";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmMarkerEditor_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.picIcon)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udBorderSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udLat)).EndInit();

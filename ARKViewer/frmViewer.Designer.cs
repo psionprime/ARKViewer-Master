@@ -60,42 +60,10 @@
             this.lblWildTotal = new System.Windows.Forms.Label();
             this.lblMapDate = new System.Windows.Forms.Label();
             this.cboWildClass = new System.Windows.Forms.ComboBox();
-            this.picMap = new System.Windows.Forms.PictureBox();
-            this.pnlMap = new System.Windows.Forms.Panel();
-            this.trackZoom = new System.Windows.Forms.TrackBar();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.btnZoomPlus = new System.Windows.Forms.Button();
-            this.btnZoomMinus = new System.Windows.Forms.Button();
             this.btnRefresh = new System.Windows.Forms.Button();
-            this.lvwMapMarkers = new System.Windows.Forms.ListView();
-            this.lvwMapMarkers_Name = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.lvwMapMarkers_Lat = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.lvwMapMarkers_Lon = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.lblMapMarkerHeader = new System.Windows.Forms.Label();
-            this.btnRemoveMarker = new System.Windows.Forms.Button();
-            this.btnAddMarker = new System.Windows.Forms.Button();
-            this.btnEditMarker = new System.Windows.Forms.Button();
-            this.picArtifacts = new System.Windows.Forms.PictureBox();
-            this.chkArtifacts = new System.Windows.Forms.CheckBox();
-            this.picWyvernNests = new System.Windows.Forms.PictureBox();
-            this.chkWyvernNests = new System.Windows.Forms.CheckBox();
-            this.picObelisks = new System.Windows.Forms.PictureBox();
-            this.chkObelisks = new System.Windows.Forms.CheckBox();
-            this.picWaterVeins = new System.Windows.Forms.PictureBox();
-            this.chkWaterVeins = new System.Windows.Forms.CheckBox();
-            this.picOilVeins = new System.Windows.Forms.PictureBox();
-            this.chkOilVeins = new System.Windows.Forms.CheckBox();
-            this.picGasVeins = new System.Windows.Forms.PictureBox();
-            this.chkGasVeins = new System.Windows.Forms.CheckBox();
-            this.picDeinoNests = new System.Windows.Forms.PictureBox();
-            this.chkDeinoNests = new System.Windows.Forms.CheckBox();
-            this.picBeaverDams = new System.Windows.Forms.PictureBox();
-            this.chkBeaverDams = new System.Windows.Forms.CheckBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.btnSettings = new System.Windows.Forms.Button();
             this.btnPlayerInventory = new System.Windows.Forms.Button();
-            this.picChargeNodes = new System.Windows.Forms.PictureBox();
-            this.picDrakeNests = new System.Windows.Forms.PictureBox();
             this.btnPlayerTribeLog = new System.Windows.Forms.Button();
             this.btnStructureExclusionFilter = new System.Windows.Forms.Button();
             this.btnCopyCommandPlayer = new System.Windows.Forms.Button();
@@ -108,12 +76,10 @@
             this.btnCopyCommandDropped = new System.Windows.Forms.Button();
             this.btnTribeCopyCommand = new System.Windows.Forms.Button();
             this.btnTribeLog = new System.Windows.Forms.Button();
-            this.picMagmasaurNests = new System.Windows.Forms.PictureBox();
-            this.picGlitches = new System.Windows.Forms.PictureBox();
             this.btnStructureInventory = new System.Windows.Forms.Button();
             this.btnDeletePlayer = new System.Windows.Forms.Button();
             this.btnDropInventory = new System.Windows.Forms.Button();
-            this.txtMarkerFilter = new System.Windows.Forms.TextBox();
+            this.btnViewMap = new System.Windows.Forms.Button();
             this.tabFeatures = new System.Windows.Forms.TabControl();
             this.tpgWild = new System.Windows.Forms.TabPage();
             this.lblWildRadius = new System.Windows.Forms.Label();
@@ -131,6 +97,7 @@
             this.lblSelectedWildTotal = new System.Windows.Forms.Label();
             this.lblWildClass = new System.Windows.Forms.Label();
             this.tpgTamed = new System.Windows.Forms.TabPage();
+            this.label1 = new System.Windows.Forms.Label();
             this.lblTamedCommand = new System.Windows.Forms.Label();
             this.cboConsoleCommandsTamed = new System.Windows.Forms.ComboBox();
             this.cboTameTribes = new System.Windows.Forms.ComboBox();
@@ -185,7 +152,6 @@
             this.cboStructureTribe = new System.Windows.Forms.ComboBox();
             this.cboStructurePlayer = new System.Windows.Forms.ComboBox();
             this.lvwStructureLocations = new System.Windows.Forms.ListView();
-            this.lvwStructureLocations_Player = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lvwStructureLocations_Tribe = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lvwStructureLocations_Structure = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lvwStructureLocations_Lat = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -246,32 +212,11 @@
             this.lvwDroppedItems_Lon = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lvwDroppedItems_Tribe = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lvwDroppedItems_Player = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.pnlStructures = new System.Windows.Forms.Panel();
-            this.chkGlitches = new System.Windows.Forms.CheckBox();
-            this.chkMagmasaurNests = new System.Windows.Forms.CheckBox();
-            this.chkDrakeNests = new System.Windows.Forms.CheckBox();
-            this.chkChargeNodes = new System.Windows.Forms.CheckBox();
-            this.lblStructureMarkers = new System.Windows.Forms.Label();
-            this.chkApplyFilterMarkers = new System.Windows.Forms.CheckBox();
             this.lblStatus = new System.Windows.Forms.Label();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.picIcon = new System.Windows.Forms.PictureBox();
+            this.lblTitle = new System.Windows.Forms.Label();
+            this.lblSubTitle = new System.Windows.Forms.Label();
             this.mnuContext.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picMap)).BeginInit();
-            this.pnlMap.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackZoom)).BeginInit();
-            this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picArtifacts)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picWyvernNests)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picObelisks)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picWaterVeins)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picOilVeins)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picGasVeins)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picDeinoNests)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picBeaverDams)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picChargeNodes)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picDrakeNests)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picMagmasaurNests)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picGlitches)).BeginInit();
             this.tabFeatures.SuspendLayout();
             this.tpgWild.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udWildRadius)).BeginInit();
@@ -285,11 +230,7 @@
             this.tpgTribes.SuspendLayout();
             this.tpgPlayers.SuspendLayout();
             this.tpgDroppedItems.SuspendLayout();
-            this.pnlStructures.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picIcon)).BeginInit();
             this.SuspendLayout();
             // 
             // lvwWildDetail
@@ -325,7 +266,7 @@
             this.lvwWildDetail.Location = new System.Drawing.Point(11, 77);
             this.lvwWildDetail.MultiSelect = false;
             this.lvwWildDetail.Name = "lvwWildDetail";
-            this.lvwWildDetail.Size = new System.Drawing.Size(773, 115);
+            this.lvwWildDetail.Size = new System.Drawing.Size(982, 342);
             this.lvwWildDetail.TabIndex = 11;
             this.lvwWildDetail.UseCompatibleStateImageBehavior = false;
             this.lvwWildDetail.View = System.Windows.Forms.View.Details;
@@ -481,7 +422,7 @@
             this.lblWildTotal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblWildTotal.BackColor = System.Drawing.Color.PowderBlue;
             this.lblWildTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblWildTotal.Location = new System.Drawing.Point(655, 197);
+            this.lblWildTotal.Location = new System.Drawing.Point(864, 429);
             this.lblWildTotal.Name = "lblWildTotal";
             this.lblWildTotal.Size = new System.Drawing.Size(130, 30);
             this.lblWildTotal.TabIndex = 9;
@@ -492,9 +433,9 @@
             // 
             this.lblMapDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblMapDate.ForeColor = System.Drawing.Color.CadetBlue;
-            this.lblMapDate.Location = new System.Drawing.Point(592, 557);
+            this.lblMapDate.Location = new System.Drawing.Point(769, 577);
             this.lblMapDate.Name = "lblMapDate";
-            this.lblMapDate.Size = new System.Drawing.Size(226, 21);
+            this.lblMapDate.Size = new System.Drawing.Size(205, 21);
             this.lblMapDate.TabIndex = 1;
             this.lblMapDate.Text = "n/a";
             this.lblMapDate.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -508,395 +449,22 @@
             this.cboWildClass.FormattingEnabled = true;
             this.cboWildClass.Location = new System.Drawing.Point(82, 45);
             this.cboWildClass.Name = "cboWildClass";
-            this.cboWildClass.Size = new System.Drawing.Size(701, 21);
+            this.cboWildClass.Size = new System.Drawing.Size(910, 21);
             this.cboWildClass.TabIndex = 10;
             this.cboWildClass.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.cboSelected_DrawItem);
             this.cboWildClass.SelectedIndexChanged += new System.EventHandler(this.CboWildClass_SelectedIndexChanged);
-            // 
-            // picMap
-            // 
-            this.picMap.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picMap.Location = new System.Drawing.Point(4, 5);
-            this.picMap.Margin = new System.Windows.Forms.Padding(0);
-            this.picMap.Name = "picMap";
-            this.picMap.Size = new System.Drawing.Size(100, 100);
-            this.picMap.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picMap.TabIndex = 1;
-            this.picMap.TabStop = false;
-            this.picMap.Click += new System.EventHandler(this.picMap_Click);
-            this.picMap.MouseClick += new System.Windows.Forms.MouseEventHandler(this.picMap_MouseClick);
-            this.picMap.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picMap_MouseDown);
-            this.picMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.picMap_MouseMove);
-            // 
-            // pnlMap
-            // 
-            this.pnlMap.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlMap.AutoScroll = true;
-            this.pnlMap.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlMap.Controls.Add(this.picMap);
-            this.pnlMap.Location = new System.Drawing.Point(3, 34);
-            this.pnlMap.Name = "pnlMap";
-            this.pnlMap.Size = new System.Drawing.Size(542, 512);
-            this.pnlMap.TabIndex = 14;
-            this.pnlMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlMap_MouseMove);
-            // 
-            // trackZoom
-            // 
-            this.trackZoom.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.trackZoom.AutoSize = false;
-            this.trackZoom.LargeChange = 10;
-            this.trackZoom.Location = new System.Drawing.Point(34, 4);
-            this.trackZoom.Maximum = 200;
-            this.trackZoom.Minimum = 25;
-            this.trackZoom.Name = "trackZoom";
-            this.trackZoom.Size = new System.Drawing.Size(479, 23);
-            this.trackZoom.TabIndex = 3;
-            this.trackZoom.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.trackZoom.Value = 50;
-            this.trackZoom.Scroll += new System.EventHandler(this.UpdateZoomLevel);
-            this.trackZoom.ValueChanged += new System.EventHandler(this.UpdateZoomLevel);
-            // 
-            // panel2
-            // 
-            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel2.Controls.Add(this.btnZoomPlus);
-            this.panel2.Controls.Add(this.btnZoomMinus);
-            this.panel2.Controls.Add(this.trackZoom);
-            this.panel2.Location = new System.Drawing.Point(3, 549);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(550, 31);
-            this.panel2.TabIndex = 15;
-            // 
-            // btnZoomPlus
-            // 
-            this.btnZoomPlus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnZoomPlus.Image = ((System.Drawing.Image)(resources.GetObject("btnZoomPlus.Image")));
-            this.btnZoomPlus.Location = new System.Drawing.Point(514, 2);
-            this.btnZoomPlus.Name = "btnZoomPlus";
-            this.btnZoomPlus.Size = new System.Drawing.Size(33, 27);
-            this.btnZoomPlus.TabIndex = 20;
-            this.toolTip1.SetToolTip(this.btnZoomPlus, "Zoom In");
-            this.btnZoomPlus.UseVisualStyleBackColor = true;
-            this.btnZoomPlus.Click += new System.EventHandler(this.btnZoomPlus_Click);
-            // 
-            // btnZoomMinus
-            // 
-            this.btnZoomMinus.Image = ((System.Drawing.Image)(resources.GetObject("btnZoomMinus.Image")));
-            this.btnZoomMinus.Location = new System.Drawing.Point(0, 2);
-            this.btnZoomMinus.Name = "btnZoomMinus";
-            this.btnZoomMinus.Size = new System.Drawing.Size(33, 27);
-            this.btnZoomMinus.TabIndex = 19;
-            this.toolTip1.SetToolTip(this.btnZoomMinus, "Zoom Out");
-            this.btnZoomMinus.UseVisualStyleBackColor = true;
-            this.btnZoomMinus.Click += new System.EventHandler(this.btnZoomMinus_Click);
             // 
             // btnRefresh
             // 
             this.btnRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRefresh.Image = ((System.Drawing.Image)(resources.GetObject("btnRefresh.Image")));
-            this.btnRefresh.Location = new System.Drawing.Point(1346, 3);
+            this.btnRefresh.Location = new System.Drawing.Point(858, 8);
             this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(33, 27);
+            this.btnRefresh.Size = new System.Drawing.Size(50, 50);
             this.btnRefresh.TabIndex = 18;
             this.toolTip1.SetToolTip(this.btnRefresh, "Load latest save");
             this.btnRefresh.UseVisualStyleBackColor = true;
             this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
-            // 
-            // lvwMapMarkers
-            // 
-            this.lvwMapMarkers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lvwMapMarkers.CheckBoxes = true;
-            this.lvwMapMarkers.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.lvwMapMarkers_Name,
-            this.lvwMapMarkers_Lat,
-            this.lvwMapMarkers_Lon});
-            this.lvwMapMarkers.FullRowSelect = true;
-            this.lvwMapMarkers.HideSelection = false;
-            this.lvwMapMarkers.Location = new System.Drawing.Point(455, 34);
-            this.lvwMapMarkers.Name = "lvwMapMarkers";
-            this.lvwMapMarkers.Size = new System.Drawing.Size(359, 221);
-            this.lvwMapMarkers.TabIndex = 2;
-            this.lvwMapMarkers.UseCompatibleStateImageBehavior = false;
-            this.lvwMapMarkers.View = System.Windows.Forms.View.Details;
-            this.lvwMapMarkers.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lvwMapMarkers_ColumnClick);
-            this.lvwMapMarkers.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.lvwMapMarkers_ItemChecked);
-            this.lvwMapMarkers.SelectedIndexChanged += new System.EventHandler(this.lvwMapMarkers_SelectedIndexChanged);
-            this.lvwMapMarkers.Click += new System.EventHandler(this.lvwMapMarkers_Click);
-            // 
-            // lvwMapMarkers_Name
-            // 
-            this.lvwMapMarkers_Name.Text = "Name";
-            this.lvwMapMarkers_Name.Width = 214;
-            // 
-            // lvwMapMarkers_Lat
-            // 
-            this.lvwMapMarkers_Lat.Text = "Lat";
-            // 
-            // lvwMapMarkers_Lon
-            // 
-            this.lvwMapMarkers_Lon.Text = "Lon";
-            // 
-            // lblMapMarkerHeader
-            // 
-            this.lblMapMarkerHeader.AutoSize = true;
-            this.lblMapMarkerHeader.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMapMarkerHeader.Location = new System.Drawing.Point(455, 16);
-            this.lblMapMarkerHeader.Name = "lblMapMarkerHeader";
-            this.lblMapMarkerHeader.Size = new System.Drawing.Size(80, 13);
-            this.lblMapMarkerHeader.TabIndex = 1;
-            this.lblMapMarkerHeader.Text = "Map Markers";
-            // 
-            // btnRemoveMarker
-            // 
-            this.btnRemoveMarker.Enabled = false;
-            this.btnRemoveMarker.Image = global::ARKViewer.Properties.Resources.button_remove;
-            this.btnRemoveMarker.Location = new System.Drawing.Point(491, 258);
-            this.btnRemoveMarker.Name = "btnRemoveMarker";
-            this.btnRemoveMarker.Size = new System.Drawing.Size(30, 30);
-            this.btnRemoveMarker.TabIndex = 4;
-            this.toolTip1.SetToolTip(this.btnRemoveMarker, "Remove Marker");
-            this.btnRemoveMarker.UseVisualStyleBackColor = true;
-            this.btnRemoveMarker.Click += new System.EventHandler(this.btnRemoveMarker_Click);
-            // 
-            // btnAddMarker
-            // 
-            this.btnAddMarker.Image = global::ARKViewer.Properties.Resources.button_add;
-            this.btnAddMarker.Location = new System.Drawing.Point(455, 258);
-            this.btnAddMarker.Name = "btnAddMarker";
-            this.btnAddMarker.Size = new System.Drawing.Size(30, 30);
-            this.btnAddMarker.TabIndex = 3;
-            this.toolTip1.SetToolTip(this.btnAddMarker, "New Marker");
-            this.btnAddMarker.UseVisualStyleBackColor = true;
-            this.btnAddMarker.Click += new System.EventHandler(this.btnAddMarker_Click);
-            // 
-            // btnEditMarker
-            // 
-            this.btnEditMarker.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnEditMarker.Enabled = false;
-            this.btnEditMarker.Image = ((System.Drawing.Image)(resources.GetObject("btnEditMarker.Image")));
-            this.btnEditMarker.Location = new System.Drawing.Point(784, 258);
-            this.btnEditMarker.Name = "btnEditMarker";
-            this.btnEditMarker.Size = new System.Drawing.Size(30, 30);
-            this.btnEditMarker.TabIndex = 6;
-            this.toolTip1.SetToolTip(this.btnEditMarker, "Edit Marker");
-            this.btnEditMarker.UseVisualStyleBackColor = true;
-            this.btnEditMarker.Click += new System.EventHandler(this.btnEditMarker_Click);
-            // 
-            // picArtifacts
-            // 
-            this.picArtifacts.BackColor = System.Drawing.Color.Cornsilk;
-            this.picArtifacts.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picArtifacts.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picArtifacts.Image = ((System.Drawing.Image)(resources.GetObject("picArtifacts.Image")));
-            this.picArtifacts.Location = new System.Drawing.Point(34, 209);
-            this.picArtifacts.Name = "picArtifacts";
-            this.picArtifacts.Size = new System.Drawing.Size(32, 32);
-            this.picArtifacts.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picArtifacts.TabIndex = 15;
-            this.picArtifacts.TabStop = false;
-            this.toolTip1.SetToolTip(this.picArtifacts, "Artifact Locations");
-            this.picArtifacts.Click += new System.EventHandler(this.picArtifacts_Click);
-            // 
-            // chkArtifacts
-            // 
-            this.chkArtifacts.AutoSize = true;
-            this.chkArtifacts.Location = new System.Drawing.Point(85, 217);
-            this.chkArtifacts.Name = "chkArtifacts";
-            this.chkArtifacts.Size = new System.Drawing.Size(64, 17);
-            this.chkArtifacts.TabIndex = 7;
-            this.chkArtifacts.Text = "Artifacts";
-            this.chkArtifacts.UseVisualStyleBackColor = true;
-            this.chkArtifacts.CheckedChanged += new System.EventHandler(this.Structure_CheckedChanged);
-            // 
-            // picWyvernNests
-            // 
-            this.picWyvernNests.BackColor = System.Drawing.Color.White;
-            this.picWyvernNests.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picWyvernNests.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picWyvernNests.Image = global::ARKViewer.Properties.Resources.structure_marker_wyvern;
-            this.picWyvernNests.Location = new System.Drawing.Point(364, 12);
-            this.picWyvernNests.Name = "picWyvernNests";
-            this.picWyvernNests.Size = new System.Drawing.Size(32, 32);
-            this.picWyvernNests.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picWyvernNests.TabIndex = 13;
-            this.picWyvernNests.TabStop = false;
-            this.toolTip1.SetToolTip(this.picWyvernNests, "Wyvern Nest Locations");
-            this.picWyvernNests.Click += new System.EventHandler(this.picWyvernNests_Click);
-            // 
-            // chkWyvernNests
-            // 
-            this.chkWyvernNests.AutoSize = true;
-            this.chkWyvernNests.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.chkWyvernNests.Location = new System.Drawing.Point(254, 18);
-            this.chkWyvernNests.Name = "chkWyvernNests";
-            this.chkWyvernNests.Size = new System.Drawing.Size(93, 17);
-            this.chkWyvernNests.TabIndex = 2;
-            this.chkWyvernNests.Text = "Wyvern Nests";
-            this.chkWyvernNests.UseVisualStyleBackColor = true;
-            this.chkWyvernNests.CheckedChanged += new System.EventHandler(this.Structure_CheckedChanged);
-            // 
-            // picObelisks
-            // 
-            this.picObelisks.BackColor = System.Drawing.Color.Green;
-            this.picObelisks.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picObelisks.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picObelisks.Image = ((System.Drawing.Image)(resources.GetObject("picObelisks.Image")));
-            this.picObelisks.Location = new System.Drawing.Point(34, 10);
-            this.picObelisks.Name = "picObelisks";
-            this.picObelisks.Size = new System.Drawing.Size(32, 32);
-            this.picObelisks.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picObelisks.TabIndex = 11;
-            this.picObelisks.TabStop = false;
-            this.toolTip1.SetToolTip(this.picObelisks, "Obelisk Locations");
-            this.picObelisks.Click += new System.EventHandler(this.picObelisks_Click);
-            // 
-            // chkObelisks
-            // 
-            this.chkObelisks.AutoSize = true;
-            this.chkObelisks.Location = new System.Drawing.Point(85, 18);
-            this.chkObelisks.Name = "chkObelisks";
-            this.chkObelisks.Size = new System.Drawing.Size(122, 17);
-            this.chkObelisks.TabIndex = 6;
-            this.chkObelisks.Text = "Obelisks / Terminals";
-            this.chkObelisks.UseVisualStyleBackColor = true;
-            this.chkObelisks.CheckedChanged += new System.EventHandler(this.Structure_CheckedChanged);
-            // 
-            // picWaterVeins
-            // 
-            this.picWaterVeins.BackColor = System.Drawing.Color.White;
-            this.picWaterVeins.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picWaterVeins.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picWaterVeins.Image = global::ARKViewer.Properties.Resources.structure_marker_water;
-            this.picWaterVeins.Location = new System.Drawing.Point(34, 128);
-            this.picWaterVeins.Name = "picWaterVeins";
-            this.picWaterVeins.Size = new System.Drawing.Size(32, 32);
-            this.picWaterVeins.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picWaterVeins.TabIndex = 9;
-            this.picWaterVeins.TabStop = false;
-            this.toolTip1.SetToolTip(this.picWaterVeins, "Water Vein Locations");
-            this.picWaterVeins.Click += new System.EventHandler(this.picWaterVeins_Click);
-            // 
-            // chkWaterVeins
-            // 
-            this.chkWaterVeins.AutoSize = true;
-            this.chkWaterVeins.Location = new System.Drawing.Point(85, 136);
-            this.chkWaterVeins.Name = "chkWaterVeins";
-            this.chkWaterVeins.Size = new System.Drawing.Size(84, 17);
-            this.chkWaterVeins.TabIndex = 4;
-            this.chkWaterVeins.Text = "Water Veins";
-            this.chkWaterVeins.UseVisualStyleBackColor = true;
-            this.chkWaterVeins.CheckedChanged += new System.EventHandler(this.Structure_CheckedChanged);
-            // 
-            // picOilVeins
-            // 
-            this.picOilVeins.BackColor = System.Drawing.Color.White;
-            this.picOilVeins.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picOilVeins.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picOilVeins.Image = global::ARKViewer.Properties.Resources.structure_marker_oil;
-            this.picOilVeins.Location = new System.Drawing.Point(34, 50);
-            this.picOilVeins.Name = "picOilVeins";
-            this.picOilVeins.Size = new System.Drawing.Size(32, 32);
-            this.picOilVeins.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picOilVeins.TabIndex = 7;
-            this.picOilVeins.TabStop = false;
-            this.toolTip1.SetToolTip(this.picOilVeins, "Oil Vein Locations");
-            this.picOilVeins.Click += new System.EventHandler(this.picOilVeins_Click);
-            // 
-            // chkOilVeins
-            // 
-            this.chkOilVeins.AutoSize = true;
-            this.chkOilVeins.Location = new System.Drawing.Point(85, 56);
-            this.chkOilVeins.Name = "chkOilVeins";
-            this.chkOilVeins.Size = new System.Drawing.Size(67, 17);
-            this.chkOilVeins.TabIndex = 5;
-            this.chkOilVeins.Text = "Oil Veins";
-            this.chkOilVeins.UseVisualStyleBackColor = true;
-            this.chkOilVeins.CheckedChanged += new System.EventHandler(this.Structure_CheckedChanged);
-            // 
-            // picGasVeins
-            // 
-            this.picGasVeins.BackColor = System.Drawing.Color.White;
-            this.picGasVeins.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picGasVeins.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picGasVeins.Image = global::ARKViewer.Properties.Resources.structure_marker_gas;
-            this.picGasVeins.Location = new System.Drawing.Point(34, 88);
-            this.picGasVeins.Name = "picGasVeins";
-            this.picGasVeins.Size = new System.Drawing.Size(32, 32);
-            this.picGasVeins.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picGasVeins.TabIndex = 5;
-            this.picGasVeins.TabStop = false;
-            this.toolTip1.SetToolTip(this.picGasVeins, "Gas Vein Locations");
-            this.picGasVeins.Click += new System.EventHandler(this.picGasVeins_Click);
-            // 
-            // chkGasVeins
-            // 
-            this.chkGasVeins.AutoSize = true;
-            this.chkGasVeins.Location = new System.Drawing.Point(85, 97);
-            this.chkGasVeins.Name = "chkGasVeins";
-            this.chkGasVeins.Size = new System.Drawing.Size(74, 17);
-            this.chkGasVeins.TabIndex = 3;
-            this.chkGasVeins.Text = "Gas Veins";
-            this.chkGasVeins.UseVisualStyleBackColor = true;
-            this.chkGasVeins.CheckedChanged += new System.EventHandler(this.Structure_CheckedChanged);
-            // 
-            // picDeinoNests
-            // 
-            this.picDeinoNests.BackColor = System.Drawing.Color.White;
-            this.picDeinoNests.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picDeinoNests.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picDeinoNests.Image = global::ARKViewer.Properties.Resources.structure_marker_deino;
-            this.picDeinoNests.Location = new System.Drawing.Point(364, 50);
-            this.picDeinoNests.Name = "picDeinoNests";
-            this.picDeinoNests.Size = new System.Drawing.Size(32, 32);
-            this.picDeinoNests.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picDeinoNests.TabIndex = 3;
-            this.picDeinoNests.TabStop = false;
-            this.toolTip1.SetToolTip(this.picDeinoNests, "Deinonychus Nest Locations");
-            this.picDeinoNests.Click += new System.EventHandler(this.picDeinoNests_Click);
-            // 
-            // chkDeinoNests
-            // 
-            this.chkDeinoNests.AutoSize = true;
-            this.chkDeinoNests.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.chkDeinoNests.Location = new System.Drawing.Point(229, 59);
-            this.chkDeinoNests.Name = "chkDeinoNests";
-            this.chkDeinoNests.Size = new System.Drawing.Size(118, 17);
-            this.chkDeinoNests.TabIndex = 1;
-            this.chkDeinoNests.Text = "Deinonychus Nests";
-            this.chkDeinoNests.UseVisualStyleBackColor = true;
-            this.chkDeinoNests.CheckedChanged += new System.EventHandler(this.Structure_CheckedChanged);
-            // 
-            // picBeaverDams
-            // 
-            this.picBeaverDams.BackColor = System.Drawing.Color.White;
-            this.picBeaverDams.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picBeaverDams.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picBeaverDams.Image = global::ARKViewer.Properties.Resources.structure_marker_beaver;
-            this.picBeaverDams.Location = new System.Drawing.Point(364, 170);
-            this.picBeaverDams.Name = "picBeaverDams";
-            this.picBeaverDams.Size = new System.Drawing.Size(32, 32);
-            this.picBeaverDams.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picBeaverDams.TabIndex = 1;
-            this.picBeaverDams.TabStop = false;
-            this.toolTip1.SetToolTip(this.picBeaverDams, "Beaver Dam Locations");
-            this.picBeaverDams.Click += new System.EventHandler(this.picBeaverDams_Click);
-            // 
-            // chkBeaverDams
-            // 
-            this.chkBeaverDams.AutoSize = true;
-            this.chkBeaverDams.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.chkBeaverDams.Location = new System.Drawing.Point(257, 178);
-            this.chkBeaverDams.Name = "chkBeaverDams";
-            this.chkBeaverDams.Size = new System.Drawing.Size(90, 17);
-            this.chkBeaverDams.TabIndex = 0;
-            this.chkBeaverDams.Text = "Beaver Dams";
-            this.chkBeaverDams.UseVisualStyleBackColor = true;
-            this.chkBeaverDams.CheckedChanged += new System.EventHandler(this.Structure_CheckedChanged);
             // 
             // toolTip1
             // 
@@ -912,9 +480,9 @@
             // 
             this.btnSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSettings.Image = global::ARKViewer.Properties.Resources.button_settings;
-            this.btnSettings.Location = new System.Drawing.Point(1307, 3);
+            this.btnSettings.Location = new System.Drawing.Point(970, 8);
             this.btnSettings.Name = "btnSettings";
-            this.btnSettings.Size = new System.Drawing.Size(33, 27);
+            this.btnSettings.Size = new System.Drawing.Size(50, 50);
             this.btnSettings.TabIndex = 19;
             this.toolTip1.SetToolTip(this.btnSettings, "View and edit settings");
             this.btnSettings.UseVisualStyleBackColor = true;
@@ -925,7 +493,7 @@
             this.btnPlayerInventory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnPlayerInventory.Enabled = false;
             this.btnPlayerInventory.Image = global::ARKViewer.Properties.Resources.button_family;
-            this.btnPlayerInventory.Location = new System.Drawing.Point(426, 196);
+            this.btnPlayerInventory.Location = new System.Drawing.Point(426, 426);
             this.btnPlayerInventory.Name = "btnPlayerInventory";
             this.btnPlayerInventory.Size = new System.Drawing.Size(30, 30);
             this.btnPlayerInventory.TabIndex = 21;
@@ -933,42 +501,12 @@
             this.btnPlayerInventory.UseVisualStyleBackColor = true;
             this.btnPlayerInventory.Click += new System.EventHandler(this.btnPlayerInventory_Click);
             // 
-            // picChargeNodes
-            // 
-            this.picChargeNodes.BackColor = System.Drawing.Color.White;
-            this.picChargeNodes.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picChargeNodes.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picChargeNodes.Image = global::ARKViewer.Properties.Resources.structure_marker_battery;
-            this.picChargeNodes.Location = new System.Drawing.Point(34, 170);
-            this.picChargeNodes.Name = "picChargeNodes";
-            this.picChargeNodes.Size = new System.Drawing.Size(32, 32);
-            this.picChargeNodes.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picChargeNodes.TabIndex = 17;
-            this.picChargeNodes.TabStop = false;
-            this.toolTip1.SetToolTip(this.picChargeNodes, "Charge Node Locations");
-            this.picChargeNodes.Click += new System.EventHandler(this.picChargeNodes_Click);
-            // 
-            // picDrakeNests
-            // 
-            this.picDrakeNests.BackColor = System.Drawing.Color.White;
-            this.picDrakeNests.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picDrakeNests.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picDrakeNests.Image = global::ARKViewer.Properties.Resources.structure_marker_rockdrake;
-            this.picDrakeNests.Location = new System.Drawing.Point(364, 90);
-            this.picDrakeNests.Name = "picDrakeNests";
-            this.picDrakeNests.Size = new System.Drawing.Size(32, 32);
-            this.picDrakeNests.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picDrakeNests.TabIndex = 23;
-            this.picDrakeNests.TabStop = false;
-            this.toolTip1.SetToolTip(this.picDrakeNests, "Rock Drake Nest Locations");
-            this.picDrakeNests.Click += new System.EventHandler(this.picDrakeNests_Click);
-            // 
             // btnPlayerTribeLog
             // 
             this.btnPlayerTribeLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnPlayerTribeLog.Enabled = false;
             this.btnPlayerTribeLog.Image = global::ARKViewer.Properties.Resources.button_notepad;
-            this.btnPlayerTribeLog.Location = new System.Drawing.Point(388, 196);
+            this.btnPlayerTribeLog.Location = new System.Drawing.Point(388, 426);
             this.btnPlayerTribeLog.Name = "btnPlayerTribeLog";
             this.btnPlayerTribeLog.Size = new System.Drawing.Size(30, 30);
             this.btnPlayerTribeLog.TabIndex = 24;
@@ -980,7 +518,7 @@
             // 
             this.btnStructureExclusionFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnStructureExclusionFilter.Image = ((System.Drawing.Image)(resources.GetObject("btnStructureExclusionFilter.Image")));
-            this.btnStructureExclusionFilter.Location = new System.Drawing.Point(754, 15);
+            this.btnStructureExclusionFilter.Location = new System.Drawing.Point(956, 15);
             this.btnStructureExclusionFilter.Name = "btnStructureExclusionFilter";
             this.btnStructureExclusionFilter.Size = new System.Drawing.Size(31, 25);
             this.btnStructureExclusionFilter.TabIndex = 29;
@@ -993,7 +531,7 @@
             this.btnCopyCommandPlayer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnCopyCommandPlayer.Enabled = false;
             this.btnCopyCommandPlayer.Image = global::ARKViewer.Properties.Resources.button_document;
-            this.btnCopyCommandPlayer.Location = new System.Drawing.Point(350, 196);
+            this.btnCopyCommandPlayer.Location = new System.Drawing.Point(350, 426);
             this.btnCopyCommandPlayer.Name = "btnCopyCommandPlayer";
             this.btnCopyCommandPlayer.Size = new System.Drawing.Size(30, 30);
             this.btnCopyCommandPlayer.TabIndex = 27;
@@ -1006,7 +544,7 @@
             this.btnCopyCommandStructure.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnCopyCommandStructure.Enabled = false;
             this.btnCopyCommandStructure.Image = global::ARKViewer.Properties.Resources.button_document;
-            this.btnCopyCommandStructure.Location = new System.Drawing.Point(350, 197);
+            this.btnCopyCommandStructure.Location = new System.Drawing.Point(345, 428);
             this.btnCopyCommandStructure.Name = "btnCopyCommandStructure";
             this.btnCopyCommandStructure.Size = new System.Drawing.Size(30, 30);
             this.btnCopyCommandStructure.TabIndex = 32;
@@ -1018,7 +556,7 @@
             // 
             this.btnDinoAncestors.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnDinoAncestors.Image = global::ARKViewer.Properties.Resources.button_family;
-            this.btnDinoAncestors.Location = new System.Drawing.Point(553, 194);
+            this.btnDinoAncestors.Location = new System.Drawing.Point(553, 427);
             this.btnDinoAncestors.Name = "btnDinoAncestors";
             this.btnDinoAncestors.Size = new System.Drawing.Size(30, 30);
             this.btnDinoAncestors.TabIndex = 26;
@@ -1030,7 +568,7 @@
             // 
             this.btnDinoInventory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnDinoInventory.Image = ((System.Drawing.Image)(resources.GetObject("btnDinoInventory.Image")));
-            this.btnDinoInventory.Location = new System.Drawing.Point(587, 194);
+            this.btnDinoInventory.Location = new System.Drawing.Point(587, 427);
             this.btnDinoInventory.Name = "btnDinoInventory";
             this.btnDinoInventory.Size = new System.Drawing.Size(30, 30);
             this.btnDinoInventory.TabIndex = 25;
@@ -1043,7 +581,7 @@
             this.btnCopyCommandWild.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnCopyCommandWild.Enabled = false;
             this.btnCopyCommandWild.Image = global::ARKViewer.Properties.Resources.button_document;
-            this.btnCopyCommandWild.Location = new System.Drawing.Point(350, 197);
+            this.btnCopyCommandWild.Location = new System.Drawing.Point(350, 429);
             this.btnCopyCommandWild.Name = "btnCopyCommandWild";
             this.btnCopyCommandWild.Size = new System.Drawing.Size(30, 30);
             this.btnCopyCommandWild.TabIndex = 35;
@@ -1056,7 +594,7 @@
             this.btnCopyCommandTamed.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnCopyCommandTamed.Enabled = false;
             this.btnCopyCommandTamed.Image = global::ARKViewer.Properties.Resources.button_document;
-            this.btnCopyCommandTamed.Location = new System.Drawing.Point(518, 195);
+            this.btnCopyCommandTamed.Location = new System.Drawing.Point(518, 428);
             this.btnCopyCommandTamed.Name = "btnCopyCommandTamed";
             this.btnCopyCommandTamed.Size = new System.Drawing.Size(30, 30);
             this.btnCopyCommandTamed.TabIndex = 35;
@@ -1066,11 +604,10 @@
             // 
             // chkCryo
             // 
-            this.chkCryo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chkCryo.Appearance = System.Windows.Forms.Appearance.Button;
             this.chkCryo.BackgroundImage = global::ARKViewer.Properties.Resources.button_cryooff;
             this.chkCryo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.chkCryo.Location = new System.Drawing.Point(762, 15);
+            this.chkCryo.Location = new System.Drawing.Point(816, 16);
             this.chkCryo.Name = "chkCryo";
             this.chkCryo.Size = new System.Drawing.Size(23, 22);
             this.chkCryo.TabIndex = 36;
@@ -1083,7 +620,7 @@
             this.btnCopyCommandDropped.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnCopyCommandDropped.Enabled = false;
             this.btnCopyCommandDropped.Image = global::ARKViewer.Properties.Resources.button_document;
-            this.btnCopyCommandDropped.Location = new System.Drawing.Point(350, 197);
+            this.btnCopyCommandDropped.Location = new System.Drawing.Point(350, 428);
             this.btnCopyCommandDropped.Name = "btnCopyCommandDropped";
             this.btnCopyCommandDropped.Size = new System.Drawing.Size(30, 30);
             this.btnCopyCommandDropped.TabIndex = 43;
@@ -1096,7 +633,7 @@
             this.btnTribeCopyCommand.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnTribeCopyCommand.Enabled = false;
             this.btnTribeCopyCommand.Image = global::ARKViewer.Properties.Resources.button_document;
-            this.btnTribeCopyCommand.Location = new System.Drawing.Point(350, 196);
+            this.btnTribeCopyCommand.Location = new System.Drawing.Point(350, 426);
             this.btnTribeCopyCommand.Name = "btnTribeCopyCommand";
             this.btnTribeCopyCommand.Size = new System.Drawing.Size(30, 30);
             this.btnTribeCopyCommand.TabIndex = 32;
@@ -1109,7 +646,7 @@
             this.btnTribeLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnTribeLog.Enabled = false;
             this.btnTribeLog.Image = global::ARKViewer.Properties.Resources.button_notepad;
-            this.btnTribeLog.Location = new System.Drawing.Point(388, 196);
+            this.btnTribeLog.Location = new System.Drawing.Point(388, 426);
             this.btnTribeLog.Name = "btnTribeLog";
             this.btnTribeLog.Size = new System.Drawing.Size(30, 30);
             this.btnTribeLog.TabIndex = 29;
@@ -1117,42 +654,12 @@
             this.btnTribeLog.UseVisualStyleBackColor = true;
             this.btnTribeLog.Click += new System.EventHandler(this.btnTribeLog_Click);
             // 
-            // picMagmasaurNests
-            // 
-            this.picMagmasaurNests.BackColor = System.Drawing.Color.White;
-            this.picMagmasaurNests.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picMagmasaurNests.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picMagmasaurNests.Image = global::ARKViewer.Properties.Resources.structure_marker_magmasaur;
-            this.picMagmasaurNests.Location = new System.Drawing.Point(364, 130);
-            this.picMagmasaurNests.Name = "picMagmasaurNests";
-            this.picMagmasaurNests.Size = new System.Drawing.Size(32, 32);
-            this.picMagmasaurNests.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picMagmasaurNests.TabIndex = 25;
-            this.picMagmasaurNests.TabStop = false;
-            this.toolTip1.SetToolTip(this.picMagmasaurNests, "Magmasaur Nest Locations");
-            this.picMagmasaurNests.Click += new System.EventHandler(this.picMagmasaurNests_Click);
-            // 
-            // picGlitches
-            // 
-            this.picGlitches.BackColor = System.Drawing.Color.White;
-            this.picGlitches.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picGlitches.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picGlitches.Image = global::ARKViewer.Properties.Resources.structure_marker_glitch;
-            this.picGlitches.Location = new System.Drawing.Point(364, 209);
-            this.picGlitches.Name = "picGlitches";
-            this.picGlitches.Size = new System.Drawing.Size(32, 32);
-            this.picGlitches.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picGlitches.TabIndex = 27;
-            this.picGlitches.TabStop = false;
-            this.toolTip1.SetToolTip(this.picGlitches, "Glitch Locations");
-            this.picGlitches.Click += new System.EventHandler(this.picGlitches_Click);
-            // 
             // btnStructureInventory
             // 
             this.btnStructureInventory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnStructureInventory.Enabled = false;
             this.btnStructureInventory.Image = ((System.Drawing.Image)(resources.GetObject("btnStructureInventory.Image")));
-            this.btnStructureInventory.Location = new System.Drawing.Point(386, 197);
+            this.btnStructureInventory.Location = new System.Drawing.Point(381, 428);
             this.btnStructureInventory.Name = "btnStructureInventory";
             this.btnStructureInventory.Size = new System.Drawing.Size(30, 30);
             this.btnStructureInventory.TabIndex = 34;
@@ -1165,7 +672,7 @@
             this.btnDeletePlayer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnDeletePlayer.Enabled = false;
             this.btnDeletePlayer.Image = global::ARKViewer.Properties.Resources.button_remove;
-            this.btnDeletePlayer.Location = new System.Drawing.Point(464, 196);
+            this.btnDeletePlayer.Location = new System.Drawing.Point(464, 426);
             this.btnDeletePlayer.Name = "btnDeletePlayer";
             this.btnDeletePlayer.Size = new System.Drawing.Size(30, 30);
             this.btnDeletePlayer.TabIndex = 29;
@@ -1178,7 +685,7 @@
             this.btnDropInventory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnDropInventory.Enabled = false;
             this.btnDropInventory.Image = ((System.Drawing.Image)(resources.GetObject("btnDropInventory.Image")));
-            this.btnDropInventory.Location = new System.Drawing.Point(386, 197);
+            this.btnDropInventory.Location = new System.Drawing.Point(386, 428);
             this.btnDropInventory.Name = "btnDropInventory";
             this.btnDropInventory.Size = new System.Drawing.Size(30, 30);
             this.btnDropInventory.TabIndex = 49;
@@ -1186,16 +693,17 @@
             this.btnDropInventory.UseVisualStyleBackColor = true;
             this.btnDropInventory.Click += new System.EventHandler(this.btnDropInventory_Click);
             // 
-            // txtMarkerFilter
+            // btnViewMap
             // 
-            this.txtMarkerFilter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtMarkerFilter.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMarkerFilter.Location = new System.Drawing.Point(530, 261);
-            this.txtMarkerFilter.Name = "txtMarkerFilter";
-            this.txtMarkerFilter.Size = new System.Drawing.Size(212, 22);
-            this.txtMarkerFilter.TabIndex = 5;
-            this.txtMarkerFilter.TextChanged += new System.EventHandler(this.txtMarkerFilter_TextChanged);
+            this.btnViewMap.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnViewMap.Image = global::ARKViewer.Properties.Resources.ModernXP_73_Globe_icon;
+            this.btnViewMap.Location = new System.Drawing.Point(914, 8);
+            this.btnViewMap.Name = "btnViewMap";
+            this.btnViewMap.Size = new System.Drawing.Size(50, 50);
+            this.btnViewMap.TabIndex = 42;
+            this.toolTip1.SetToolTip(this.btnViewMap, "View and edit settings");
+            this.btnViewMap.UseVisualStyleBackColor = true;
+            this.btnViewMap.Click += new System.EventHandler(this.btnViewMap_Click);
             // 
             // tabFeatures
             // 
@@ -1208,10 +716,11 @@
             this.tabFeatures.Controls.Add(this.tpgTribes);
             this.tabFeatures.Controls.Add(this.tpgPlayers);
             this.tabFeatures.Controls.Add(this.tpgDroppedItems);
-            this.tabFeatures.Location = new System.Drawing.Point(12, 291);
+            this.tabFeatures.HotTrack = true;
+            this.tabFeatures.Location = new System.Drawing.Point(9, 69);
             this.tabFeatures.Name = "tabFeatures";
             this.tabFeatures.SelectedIndex = 0;
-            this.tabFeatures.Size = new System.Drawing.Size(806, 258);
+            this.tabFeatures.Size = new System.Drawing.Size(1015, 496);
             this.tabFeatures.TabIndex = 16;
             this.tabFeatures.SelectedIndexChanged += new System.EventHandler(this.tabFeatures_SelectedIndexChanged);
             // 
@@ -1238,17 +747,18 @@
             this.tpgWild.Location = new System.Drawing.Point(4, 22);
             this.tpgWild.Name = "tpgWild";
             this.tpgWild.Padding = new System.Windows.Forms.Padding(3);
-            this.tpgWild.Size = new System.Drawing.Size(798, 232);
+            this.tpgWild.Size = new System.Drawing.Size(1007, 470);
             this.tpgWild.TabIndex = 0;
             this.tpgWild.Text = "Wild Creatures";
             this.tpgWild.UseVisualStyleBackColor = true;
+            this.tpgWild.Click += new System.EventHandler(this.tpgWild_Click);
             // 
             // lblWildRadius
             // 
             this.lblWildRadius.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblWildRadius.AutoSize = true;
             this.lblWildRadius.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblWildRadius.Location = new System.Drawing.Point(665, 18);
+            this.lblWildRadius.Location = new System.Drawing.Point(874, 18);
             this.lblWildRadius.Name = "lblWildRadius";
             this.lblWildRadius.Size = new System.Drawing.Size(50, 13);
             this.lblWildRadius.TabIndex = 45;
@@ -1258,7 +768,7 @@
             // 
             this.udWildRadius.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.udWildRadius.DecimalPlaces = 2;
-            this.udWildRadius.Location = new System.Drawing.Point(719, 15);
+            this.udWildRadius.Location = new System.Drawing.Point(928, 15);
             this.udWildRadius.Name = "udWildRadius";
             this.udWildRadius.Size = new System.Drawing.Size(64, 20);
             this.udWildRadius.TabIndex = 44;
@@ -1274,7 +784,7 @@
             this.lblWildLon.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblWildLon.AutoSize = true;
             this.lblWildLon.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblWildLon.Location = new System.Drawing.Point(550, 18);
+            this.lblWildLon.Location = new System.Drawing.Point(759, 18);
             this.lblWildLon.Name = "lblWildLon";
             this.lblWildLon.Size = new System.Drawing.Size(32, 13);
             this.lblWildLon.TabIndex = 43;
@@ -1284,7 +794,7 @@
             // 
             this.udWildLon.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.udWildLon.DecimalPlaces = 2;
-            this.udWildLon.Location = new System.Drawing.Point(586, 15);
+            this.udWildLon.Location = new System.Drawing.Point(795, 15);
             this.udWildLon.Name = "udWildLon";
             this.udWildLon.Size = new System.Drawing.Size(64, 20);
             this.udWildLon.TabIndex = 42;
@@ -1300,7 +810,7 @@
             this.lblWildLat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblWildLat.AutoSize = true;
             this.lblWildLat.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblWildLat.Location = new System.Drawing.Point(428, 18);
+            this.lblWildLat.Location = new System.Drawing.Point(637, 18);
             this.lblWildLat.Name = "lblWildLat";
             this.lblWildLat.Size = new System.Drawing.Size(29, 13);
             this.lblWildLat.TabIndex = 41;
@@ -1310,7 +820,7 @@
             // 
             this.udWildLat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.udWildLat.DecimalPlaces = 2;
-            this.udWildLat.Location = new System.Drawing.Point(464, 15);
+            this.udWildLat.Location = new System.Drawing.Point(673, 15);
             this.udWildLat.Name = "udWildLat";
             this.udWildLat.Size = new System.Drawing.Size(64, 20);
             this.udWildLat.TabIndex = 40;
@@ -1392,7 +902,7 @@
             this.lblWildCommand.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblWildCommand.AutoSize = true;
             this.lblWildCommand.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblWildCommand.Location = new System.Drawing.Point(14, 204);
+            this.lblWildCommand.Location = new System.Drawing.Point(14, 436);
             this.lblWildCommand.Name = "lblWildCommand";
             this.lblWildCommand.Size = new System.Drawing.Size(65, 13);
             this.lblWildCommand.TabIndex = 34;
@@ -1407,7 +917,7 @@
             "DestroyAll <ClassName>",
             "GMSummon \"<ClassName>\" <Level> ",
             "SetPlayerPos  <x> <y> <z>"});
-            this.cboConsoleCommandsWild.Location = new System.Drawing.Point(82, 201);
+            this.cboConsoleCommandsWild.Location = new System.Drawing.Point(82, 433);
             this.cboConsoleCommandsWild.Name = "cboConsoleCommandsWild";
             this.cboConsoleCommandsWild.Size = new System.Drawing.Size(262, 21);
             this.cboConsoleCommandsWild.TabIndex = 33;
@@ -1417,7 +927,7 @@
             this.lblSelectedWildTotal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblSelectedWildTotal.BackColor = System.Drawing.Color.PowderBlue;
             this.lblSelectedWildTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSelectedWildTotal.Location = new System.Drawing.Point(528, 197);
+            this.lblSelectedWildTotal.Location = new System.Drawing.Point(737, 429);
             this.lblSelectedWildTotal.Name = "lblSelectedWildTotal";
             this.lblSelectedWildTotal.Size = new System.Drawing.Size(123, 30);
             this.lblSelectedWildTotal.TabIndex = 32;
@@ -1436,6 +946,7 @@
             // 
             // tpgTamed
             // 
+            this.tpgTamed.Controls.Add(this.label1);
             this.tpgTamed.Controls.Add(this.chkCryo);
             this.tpgTamed.Controls.Add(this.btnCopyCommandTamed);
             this.tpgTamed.Controls.Add(this.lblTamedCommand);
@@ -1453,17 +964,27 @@
             this.tpgTamed.Controls.Add(this.cboTameClass);
             this.tpgTamed.Location = new System.Drawing.Point(4, 22);
             this.tpgTamed.Name = "tpgTamed";
-            this.tpgTamed.Size = new System.Drawing.Size(798, 232);
+            this.tpgTamed.Size = new System.Drawing.Size(1007, 470);
             this.tpgTamed.TabIndex = 3;
             this.tpgTamed.Text = "Tamed Creatures";
             this.tpgTamed.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(762, 21);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(48, 13);
+            this.label1.TabIndex = 37;
+            this.label1.Text = "Stored:";
             // 
             // lblTamedCommand
             // 
             this.lblTamedCommand.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblTamedCommand.AutoSize = true;
             this.lblTamedCommand.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTamedCommand.Location = new System.Drawing.Point(192, 202);
+            this.lblTamedCommand.Location = new System.Drawing.Point(192, 435);
             this.lblTamedCommand.Name = "lblTamedCommand";
             this.lblTamedCommand.Size = new System.Drawing.Size(65, 13);
             this.lblTamedCommand.TabIndex = 34;
@@ -1480,7 +1001,7 @@
             "GMSummon \"<ClassName>\"  <Level>",
             "TakeTribe <TribeID>",
             "SetPlayerPos  <x> <y> <z>"});
-            this.cboConsoleCommandsTamed.Location = new System.Drawing.Point(260, 199);
+            this.cboConsoleCommandsTamed.Location = new System.Drawing.Point(260, 432);
             this.cboConsoleCommandsTamed.Name = "cboConsoleCommandsTamed";
             this.cboConsoleCommandsTamed.Size = new System.Drawing.Size(248, 21);
             this.cboConsoleCommandsTamed.TabIndex = 33;
@@ -1576,7 +1097,7 @@
             this.lvwTameDetail.Location = new System.Drawing.Point(11, 51);
             this.lvwTameDetail.MultiSelect = false;
             this.lvwTameDetail.Name = "lvwTameDetail";
-            this.lvwTameDetail.Size = new System.Drawing.Size(774, 138);
+            this.lvwTameDetail.Size = new System.Drawing.Size(976, 365);
             this.lvwTameDetail.TabIndex = 15;
             this.lvwTameDetail.UseCompatibleStateImageBehavior = false;
             this.lvwTameDetail.View = System.Windows.Forms.View.Details;
@@ -1729,7 +1250,7 @@
             this.lblTameTotal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTameTotal.BackColor = System.Drawing.Color.PowderBlue;
             this.lblTameTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTameTotal.Location = new System.Drawing.Point(662, 195);
+            this.lblTameTotal.Location = new System.Drawing.Point(864, 426);
             this.lblTameTotal.Name = "lblTameTotal";
             this.lblTameTotal.Size = new System.Drawing.Size(123, 30);
             this.lblTameTotal.TabIndex = 13;
@@ -1743,7 +1264,7 @@
             this.panel3.Controls.Add(this.lblStats);
             this.panel3.Controls.Add(this.optStatsTamed);
             this.panel3.Controls.Add(this.optStatsBase);
-            this.panel3.Location = new System.Drawing.Point(11, 193);
+            this.panel3.Location = new System.Drawing.Point(11, 426);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(175, 34);
             this.panel3.TabIndex = 16;
@@ -1782,8 +1303,6 @@
             // 
             // cboTameClass
             // 
-            this.cboTameClass.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.cboTameClass.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboTameClass.FormattingEnabled = true;
             this.cboTameClass.Location = new System.Drawing.Point(532, 16);
@@ -1809,7 +1328,7 @@
             this.tpgStructures.Controls.Add(this.lvwStructureLocations);
             this.tpgStructures.Location = new System.Drawing.Point(4, 22);
             this.tpgStructures.Name = "tpgStructures";
-            this.tpgStructures.Size = new System.Drawing.Size(798, 232);
+            this.tpgStructures.Size = new System.Drawing.Size(1007, 470);
             this.tpgStructures.TabIndex = 2;
             this.tpgStructures.Text = "Player Structures";
             this.tpgStructures.UseVisualStyleBackColor = true;
@@ -1819,7 +1338,7 @@
             this.lblStructureTotal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblStructureTotal.BackColor = System.Drawing.Color.PowderBlue;
             this.lblStructureTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblStructureTotal.Location = new System.Drawing.Point(662, 196);
+            this.lblStructureTotal.Location = new System.Drawing.Point(864, 426);
             this.lblStructureTotal.Name = "lblStructureTotal";
             this.lblStructureTotal.Size = new System.Drawing.Size(123, 30);
             this.lblStructureTotal.TabIndex = 33;
@@ -1831,7 +1350,7 @@
             this.lblCommandStructure.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblCommandStructure.AutoSize = true;
             this.lblCommandStructure.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCommandStructure.Location = new System.Drawing.Point(14, 204);
+            this.lblCommandStructure.Location = new System.Drawing.Point(9, 435);
             this.lblCommandStructure.Name = "lblCommandStructure";
             this.lblCommandStructure.Size = new System.Drawing.Size(65, 13);
             this.lblCommandStructure.TabIndex = 31;
@@ -1849,7 +1368,7 @@
             "DestroyTribeIdStructures <TribeID>",
             "TakeTribe <TribeID>",
             "SetPlayerPos  <x> <y> <z>"});
-            this.cboConsoleCommandsStructure.Location = new System.Drawing.Point(82, 201);
+            this.cboConsoleCommandsStructure.Location = new System.Drawing.Point(77, 432);
             this.cboConsoleCommandsStructure.Name = "cboConsoleCommandsStructure";
             this.cboConsoleCommandsStructure.Size = new System.Drawing.Size(262, 21);
             this.cboConsoleCommandsStructure.TabIndex = 30;
@@ -1873,7 +1392,7 @@
             this.cboStructureStructure.FormattingEnabled = true;
             this.cboStructureStructure.Location = new System.Drawing.Point(553, 16);
             this.cboStructureStructure.Name = "cboStructureStructure";
-            this.cboStructureStructure.Size = new System.Drawing.Size(196, 21);
+            this.cboStructureStructure.Size = new System.Drawing.Size(397, 21);
             this.cboStructureStructure.TabIndex = 26;
             this.cboStructureStructure.SelectedIndexChanged += new System.EventHandler(this.cboStructureStructure_SelectedIndexChanged);
             // 
@@ -1923,7 +1442,6 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lvwStructureLocations.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.lvwStructureLocations_Player,
             this.lvwStructureLocations_Tribe,
             this.lvwStructureLocations_Structure,
             this.lvwStructureLocations_Lat,
@@ -1934,7 +1452,7 @@
             this.lvwStructureLocations.Location = new System.Drawing.Point(12, 51);
             this.lvwStructureLocations.MultiSelect = false;
             this.lvwStructureLocations.Name = "lvwStructureLocations";
-            this.lvwStructureLocations.Size = new System.Drawing.Size(773, 137);
+            this.lvwStructureLocations.Size = new System.Drawing.Size(975, 369);
             this.lvwStructureLocations.TabIndex = 21;
             this.lvwStructureLocations.UseCompatibleStateImageBehavior = false;
             this.lvwStructureLocations.View = System.Windows.Forms.View.Details;
@@ -1942,30 +1460,25 @@
             this.lvwStructureLocations.SelectedIndexChanged += new System.EventHandler(this.lvwStructureLocations_SelectedIndexChanged);
             this.lvwStructureLocations.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lvwStructureLocations_MouseClick);
             // 
-            // lvwStructureLocations_Player
-            // 
-            this.lvwStructureLocations_Player.Text = "Player";
-            this.lvwStructureLocations_Player.Width = 177;
-            // 
             // lvwStructureLocations_Tribe
             // 
             this.lvwStructureLocations_Tribe.Text = "Tribe";
-            this.lvwStructureLocations_Tribe.Width = 172;
+            this.lvwStructureLocations_Tribe.Width = 236;
             // 
             // lvwStructureLocations_Structure
             // 
             this.lvwStructureLocations_Structure.Text = "Structure";
-            this.lvwStructureLocations_Structure.Width = 206;
+            this.lvwStructureLocations_Structure.Width = 219;
             // 
             // lvwStructureLocations_Lat
             // 
             this.lvwStructureLocations_Lat.Text = "Lat";
-            this.lvwStructureLocations_Lat.Width = 65;
+            this.lvwStructureLocations_Lat.Width = 79;
             // 
             // lvwStructureLocations_Lon
             // 
             this.lvwStructureLocations_Lon.Text = "Lon";
-            this.lvwStructureLocations_Lon.Width = 62;
+            this.lvwStructureLocations_Lon.Width = 71;
             // 
             // tpgTribes
             // 
@@ -1979,7 +1492,7 @@
             this.tpgTribes.Controls.Add(this.lvwTribes);
             this.tpgTribes.Location = new System.Drawing.Point(4, 22);
             this.tpgTribes.Name = "tpgTribes";
-            this.tpgTribes.Size = new System.Drawing.Size(798, 232);
+            this.tpgTribes.Size = new System.Drawing.Size(1007, 470);
             this.tpgTribes.TabIndex = 5;
             this.tpgTribes.Text = "Tribes";
             this.tpgTribes.UseVisualStyleBackColor = true;
@@ -1991,7 +1504,7 @@
             this.chkTribeStructures.CheckAlign = System.Drawing.ContentAlignment.TopCenter;
             this.chkTribeStructures.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.chkTribeStructures.ForeColor = System.Drawing.Color.ForestGreen;
-            this.chkTribeStructures.Location = new System.Drawing.Point(664, 197);
+            this.chkTribeStructures.Location = new System.Drawing.Point(664, 427);
             this.chkTribeStructures.Name = "chkTribeStructures";
             this.chkTribeStructures.Size = new System.Drawing.Size(121, 29);
             this.chkTribeStructures.TabIndex = 35;
@@ -2007,7 +1520,7 @@
             this.chkTribeTames.CheckAlign = System.Drawing.ContentAlignment.TopCenter;
             this.chkTribeTames.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.chkTribeTames.ForeColor = System.Drawing.Color.Chocolate;
-            this.chkTribeTames.Location = new System.Drawing.Point(553, 198);
+            this.chkTribeTames.Location = new System.Drawing.Point(553, 428);
             this.chkTribeTames.Name = "chkTribeTames";
             this.chkTribeTames.Size = new System.Drawing.Size(105, 29);
             this.chkTribeTames.TabIndex = 34;
@@ -2025,7 +1538,7 @@
             this.chkTribePlayers.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkTribePlayers.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.chkTribePlayers.ForeColor = System.Drawing.Color.LightCyan;
-            this.chkTribePlayers.Location = new System.Drawing.Point(433, 197);
+            this.chkTribePlayers.Location = new System.Drawing.Point(433, 427);
             this.chkTribePlayers.Name = "chkTribePlayers";
             this.chkTribePlayers.Size = new System.Drawing.Size(114, 31);
             this.chkTribePlayers.TabIndex = 33;
@@ -2039,7 +1552,7 @@
             this.lblTribeCopyCommand.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblTribeCopyCommand.AutoSize = true;
             this.lblTribeCopyCommand.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTribeCopyCommand.Location = new System.Drawing.Point(14, 203);
+            this.lblTribeCopyCommand.Location = new System.Drawing.Point(14, 433);
             this.lblTribeCopyCommand.Name = "lblTribeCopyCommand";
             this.lblTribeCopyCommand.Size = new System.Drawing.Size(65, 13);
             this.lblTribeCopyCommand.TabIndex = 31;
@@ -2061,7 +1574,7 @@
             "TribeDinoAudit  <TribeID>",
             "RM <FileCsvList>",
             "DEL <FileCsvList>"});
-            this.cboTribeCopyCommand.Location = new System.Drawing.Point(82, 200);
+            this.cboTribeCopyCommand.Location = new System.Drawing.Point(82, 430);
             this.cboTribeCopyCommand.Name = "cboTribeCopyCommand";
             this.cboTribeCopyCommand.Size = new System.Drawing.Size(262, 21);
             this.cboTribeCopyCommand.TabIndex = 30;
@@ -2083,7 +1596,7 @@
             this.lvwTribes.HideSelection = false;
             this.lvwTribes.Location = new System.Drawing.Point(12, 19);
             this.lvwTribes.Name = "lvwTribes";
-            this.lvwTribes.Size = new System.Drawing.Size(773, 170);
+            this.lvwTribes.Size = new System.Drawing.Size(981, 401);
             this.lvwTribes.TabIndex = 28;
             this.lvwTribes.UseCompatibleStateImageBehavior = false;
             this.lvwTribes.View = System.Windows.Forms.View.Details;
@@ -2138,7 +1651,7 @@
             this.tpgPlayers.Location = new System.Drawing.Point(4, 22);
             this.tpgPlayers.Name = "tpgPlayers";
             this.tpgPlayers.Padding = new System.Windows.Forms.Padding(3);
-            this.tpgPlayers.Size = new System.Drawing.Size(798, 232);
+            this.tpgPlayers.Size = new System.Drawing.Size(1007, 470);
             this.tpgPlayers.TabIndex = 1;
             this.tpgPlayers.Text = "Players";
             this.tpgPlayers.UseVisualStyleBackColor = true;
@@ -2148,7 +1661,7 @@
             this.lblPlayerTotal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblPlayerTotal.BackColor = System.Drawing.Color.PowderBlue;
             this.lblPlayerTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPlayerTotal.Location = new System.Drawing.Point(662, 196);
+            this.lblPlayerTotal.Location = new System.Drawing.Point(864, 426);
             this.lblPlayerTotal.Name = "lblPlayerTotal";
             this.lblPlayerTotal.Size = new System.Drawing.Size(123, 30);
             this.lblPlayerTotal.TabIndex = 28;
@@ -2160,7 +1673,7 @@
             this.lblCommandPlayer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblCommandPlayer.AutoSize = true;
             this.lblCommandPlayer.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCommandPlayer.Location = new System.Drawing.Point(14, 203);
+            this.lblCommandPlayer.Location = new System.Drawing.Point(14, 433);
             this.lblCommandPlayer.Name = "lblCommandPlayer";
             this.lblCommandPlayer.Size = new System.Drawing.Size(65, 13);
             this.lblCommandPlayer.TabIndex = 26;
@@ -2203,7 +1716,7 @@
             "UnbanPlayer <SteamID>",
             "RM <FileCsvList>",
             "DEL <FileCsvList>"});
-            this.cboConsoleCommandsPlayerTribe.Location = new System.Drawing.Point(82, 200);
+            this.cboConsoleCommandsPlayerTribe.Location = new System.Drawing.Point(82, 430);
             this.cboConsoleCommandsPlayerTribe.Name = "cboConsoleCommandsPlayerTribe";
             this.cboConsoleCommandsPlayerTribe.Size = new System.Drawing.Size(262, 21);
             this.cboConsoleCommandsPlayerTribe.TabIndex = 25;
@@ -2213,7 +1726,7 @@
             // 
             this.lblPlayersPlayer.AutoSize = true;
             this.lblPlayersPlayer.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPlayersPlayer.Location = new System.Drawing.Point(414, 18);
+            this.lblPlayersPlayer.Location = new System.Drawing.Point(347, 18);
             this.lblPlayersPlayer.Name = "lblPlayersPlayer";
             this.lblPlayersPlayer.Size = new System.Drawing.Size(46, 13);
             this.lblPlayersPlayer.TabIndex = 20;
@@ -2235,19 +1748,17 @@
             this.cboTribes.FormattingEnabled = true;
             this.cboTribes.Location = new System.Drawing.Point(60, 15);
             this.cboTribes.Name = "cboTribes";
-            this.cboTribes.Size = new System.Drawing.Size(287, 21);
+            this.cboTribes.Size = new System.Drawing.Size(269, 21);
             this.cboTribes.TabIndex = 14;
             this.cboTribes.SelectedIndexChanged += new System.EventHandler(this.cboTribes_SelectedIndexChanged);
             // 
             // cboPlayers
             // 
-            this.cboPlayers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.cboPlayers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboPlayers.FormattingEnabled = true;
-            this.cboPlayers.Location = new System.Drawing.Point(466, 15);
+            this.cboPlayers.Location = new System.Drawing.Point(399, 15);
             this.cboPlayers.Name = "cboPlayers";
-            this.cboPlayers.Size = new System.Drawing.Size(317, 21);
+            this.cboPlayers.Size = new System.Drawing.Size(260, 21);
             this.cboPlayers.TabIndex = 13;
             this.cboPlayers.SelectedIndexChanged += new System.EventHandler(this.cboPlayers_SelectedIndexChanged);
             // 
@@ -2281,7 +1792,7 @@
             this.lvwPlayers.HideSelection = false;
             this.lvwPlayers.Location = new System.Drawing.Point(12, 52);
             this.lvwPlayers.Name = "lvwPlayers";
-            this.lvwPlayers.Size = new System.Drawing.Size(773, 137);
+            this.lvwPlayers.Size = new System.Drawing.Size(975, 365);
             this.lvwPlayers.TabIndex = 12;
             this.lvwPlayers.UseCompatibleStateImageBehavior = false;
             this.lvwPlayers.View = System.Windows.Forms.View.Details;
@@ -2396,18 +1907,16 @@
             this.tpgDroppedItems.Controls.Add(this.lvwDroppedItems);
             this.tpgDroppedItems.Location = new System.Drawing.Point(4, 22);
             this.tpgDroppedItems.Name = "tpgDroppedItems";
-            this.tpgDroppedItems.Size = new System.Drawing.Size(798, 232);
+            this.tpgDroppedItems.Size = new System.Drawing.Size(1007, 470);
             this.tpgDroppedItems.TabIndex = 4;
             this.tpgDroppedItems.Text = "Dropped Items";
             this.tpgDroppedItems.UseVisualStyleBackColor = true;
             // 
             // cboDroppedItem
             // 
-            this.cboDroppedItem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.cboDroppedItem.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboDroppedItem.FormattingEnabled = true;
-            this.cboDroppedItem.Location = new System.Drawing.Point(480, 15);
+            this.cboDroppedItem.Location = new System.Drawing.Point(414, 15);
             this.cboDroppedItem.Name = "cboDroppedItem";
             this.cboDroppedItem.Size = new System.Drawing.Size(304, 21);
             this.cboDroppedItem.TabIndex = 48;
@@ -2438,7 +1947,7 @@
             this.lblCopyCommandDropped.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblCopyCommandDropped.AutoSize = true;
             this.lblCopyCommandDropped.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCopyCommandDropped.Location = new System.Drawing.Point(14, 204);
+            this.lblCopyCommandDropped.Location = new System.Drawing.Point(14, 435);
             this.lblCopyCommandDropped.Name = "lblCopyCommandDropped";
             this.lblCopyCommandDropped.Size = new System.Drawing.Size(65, 13);
             this.lblCopyCommandDropped.TabIndex = 42;
@@ -2451,7 +1960,7 @@
             this.cboCopyCommandDropped.FormattingEnabled = true;
             this.cboCopyCommandDropped.Items.AddRange(new object[] {
             "SetPlayerPos  <x> <y> <z>"});
-            this.cboCopyCommandDropped.Location = new System.Drawing.Point(82, 201);
+            this.cboCopyCommandDropped.Location = new System.Drawing.Point(82, 432);
             this.cboCopyCommandDropped.Name = "cboCopyCommandDropped";
             this.cboCopyCommandDropped.Size = new System.Drawing.Size(262, 21);
             this.cboCopyCommandDropped.TabIndex = 41;
@@ -2461,7 +1970,7 @@
             this.lblCountDropped.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblCountDropped.BackColor = System.Drawing.Color.PowderBlue;
             this.lblCountDropped.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCountDropped.Location = new System.Drawing.Point(661, 197);
+            this.lblCountDropped.Location = new System.Drawing.Point(864, 426);
             this.lblCountDropped.Name = "lblCountDropped";
             this.lblCountDropped.Size = new System.Drawing.Size(123, 30);
             this.lblCountDropped.TabIndex = 40;
@@ -2472,7 +1981,7 @@
             // 
             this.lblDroppedItem.AutoSize = true;
             this.lblDroppedItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDroppedItem.Location = new System.Drawing.Point(439, 19);
+            this.lblDroppedItem.Location = new System.Drawing.Point(373, 19);
             this.lblDroppedItem.Name = "lblDroppedItem";
             this.lblDroppedItem.Size = new System.Drawing.Size(35, 13);
             this.lblDroppedItem.TabIndex = 39;
@@ -2495,7 +2004,7 @@
             this.lvwDroppedItems.Location = new System.Drawing.Point(12, 52);
             this.lvwDroppedItems.MultiSelect = false;
             this.lvwDroppedItems.Name = "lvwDroppedItems";
-            this.lvwDroppedItems.Size = new System.Drawing.Size(773, 140);
+            this.lvwDroppedItems.Size = new System.Drawing.Size(975, 365);
             this.lvwDroppedItems.TabIndex = 38;
             this.lvwDroppedItems.UseCompatibleStateImageBehavior = false;
             this.lvwDroppedItems.View = System.Windows.Forms.View.Details;
@@ -2530,189 +2039,70 @@
             this.lvwDroppedItems_Player.Text = "Player";
             this.lvwDroppedItems_Player.Width = 109;
             // 
-            // pnlStructures
-            // 
-            this.pnlStructures.BackColor = System.Drawing.Color.CadetBlue;
-            this.pnlStructures.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlStructures.Controls.Add(this.picGlitches);
-            this.pnlStructures.Controls.Add(this.chkGlitches);
-            this.pnlStructures.Controls.Add(this.chkMagmasaurNests);
-            this.pnlStructures.Controls.Add(this.picMagmasaurNests);
-            this.pnlStructures.Controls.Add(this.chkDrakeNests);
-            this.pnlStructures.Controls.Add(this.picDrakeNests);
-            this.pnlStructures.Controls.Add(this.picChargeNodes);
-            this.pnlStructures.Controls.Add(this.chkChargeNodes);
-            this.pnlStructures.Controls.Add(this.picArtifacts);
-            this.pnlStructures.Controls.Add(this.picBeaverDams);
-            this.pnlStructures.Controls.Add(this.chkArtifacts);
-            this.pnlStructures.Controls.Add(this.chkBeaverDams);
-            this.pnlStructures.Controls.Add(this.picWyvernNests);
-            this.pnlStructures.Controls.Add(this.chkDeinoNests);
-            this.pnlStructures.Controls.Add(this.chkWyvernNests);
-            this.pnlStructures.Controls.Add(this.picDeinoNests);
-            this.pnlStructures.Controls.Add(this.picObelisks);
-            this.pnlStructures.Controls.Add(this.chkGasVeins);
-            this.pnlStructures.Controls.Add(this.chkObelisks);
-            this.pnlStructures.Controls.Add(this.picGasVeins);
-            this.pnlStructures.Controls.Add(this.picWaterVeins);
-            this.pnlStructures.Controls.Add(this.chkOilVeins);
-            this.pnlStructures.Controls.Add(this.chkWaterVeins);
-            this.pnlStructures.Controls.Add(this.picOilVeins);
-            this.pnlStructures.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.pnlStructures.Location = new System.Drawing.Point(12, 34);
-            this.pnlStructures.Name = "pnlStructures";
-            this.pnlStructures.Size = new System.Drawing.Size(437, 251);
-            this.pnlStructures.TabIndex = 17;
-            // 
-            // chkGlitches
-            // 
-            this.chkGlitches.AutoSize = true;
-            this.chkGlitches.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.chkGlitches.Location = new System.Drawing.Point(283, 217);
-            this.chkGlitches.Name = "chkGlitches";
-            this.chkGlitches.Size = new System.Drawing.Size(64, 17);
-            this.chkGlitches.TabIndex = 26;
-            this.chkGlitches.Text = "Glitches";
-            this.chkGlitches.UseVisualStyleBackColor = true;
-            this.chkGlitches.CheckedChanged += new System.EventHandler(this.Structure_CheckedChanged);
-            // 
-            // chkMagmasaurNests
-            // 
-            this.chkMagmasaurNests.AutoSize = true;
-            this.chkMagmasaurNests.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.chkMagmasaurNests.Location = new System.Drawing.Point(236, 139);
-            this.chkMagmasaurNests.Name = "chkMagmasaurNests";
-            this.chkMagmasaurNests.Size = new System.Drawing.Size(111, 17);
-            this.chkMagmasaurNests.TabIndex = 24;
-            this.chkMagmasaurNests.Text = "Magmasaur Nests";
-            this.chkMagmasaurNests.UseVisualStyleBackColor = true;
-            this.chkMagmasaurNests.CheckedChanged += new System.EventHandler(this.Structure_CheckedChanged);
-            // 
-            // chkDrakeNests
-            // 
-            this.chkDrakeNests.AutoSize = true;
-            this.chkDrakeNests.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.chkDrakeNests.Location = new System.Drawing.Point(233, 99);
-            this.chkDrakeNests.Name = "chkDrakeNests";
-            this.chkDrakeNests.Size = new System.Drawing.Size(114, 17);
-            this.chkDrakeNests.TabIndex = 22;
-            this.chkDrakeNests.Text = "Rock Drake Nests";
-            this.chkDrakeNests.UseVisualStyleBackColor = true;
-            this.chkDrakeNests.CheckedChanged += new System.EventHandler(this.Structure_CheckedChanged);
-            // 
-            // chkChargeNodes
-            // 
-            this.chkChargeNodes.AutoSize = true;
-            this.chkChargeNodes.Location = new System.Drawing.Point(85, 178);
-            this.chkChargeNodes.Name = "chkChargeNodes";
-            this.chkChargeNodes.Size = new System.Drawing.Size(94, 17);
-            this.chkChargeNodes.TabIndex = 16;
-            this.chkChargeNodes.Text = "Charge Nodes";
-            this.chkChargeNodes.UseVisualStyleBackColor = true;
-            this.chkChargeNodes.CheckedChanged += new System.EventHandler(this.Structure_CheckedChanged);
-            // 
-            // lblStructureMarkers
-            // 
-            this.lblStructureMarkers.AutoSize = true;
-            this.lblStructureMarkers.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblStructureMarkers.Location = new System.Drawing.Point(9, 16);
-            this.lblStructureMarkers.Name = "lblStructureMarkers";
-            this.lblStructureMarkers.Size = new System.Drawing.Size(93, 13);
-            this.lblStructureMarkers.TabIndex = 18;
-            this.lblStructureMarkers.Text = "Map Structures";
-            // 
-            // chkApplyFilterMarkers
-            // 
-            this.chkApplyFilterMarkers.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.chkApplyFilterMarkers.Appearance = System.Windows.Forms.Appearance.Button;
-            this.chkApplyFilterMarkers.Image = global::ARKViewer.Properties.Resources.button_filter;
-            this.chkApplyFilterMarkers.Location = new System.Drawing.Point(748, 258);
-            this.chkApplyFilterMarkers.Name = "chkApplyFilterMarkers";
-            this.chkApplyFilterMarkers.Size = new System.Drawing.Size(30, 30);
-            this.chkApplyFilterMarkers.TabIndex = 21;
-            this.chkApplyFilterMarkers.UseVisualStyleBackColor = true;
-            this.chkApplyFilterMarkers.CheckedChanged += new System.EventHandler(this.chkApplyFilterMarkers_CheckedChanged);
-            // 
             // lblStatus
             // 
             this.lblStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblStatus.BackColor = System.Drawing.Color.PowderBlue;
             this.lblStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblStatus.ForeColor = System.Drawing.Color.CadetBlue;
-            this.lblStatus.Location = new System.Drawing.Point(15, 561);
+            this.lblStatus.Location = new System.Drawing.Point(12, 577);
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(571, 22);
+            this.lblStatus.Size = new System.Drawing.Size(570, 22);
             this.lblStatus.TabIndex = 22;
             this.lblStatus.Text = "Loading...";
             // 
-            // splitContainer1
+            // picIcon
             // 
-            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.splitContainer1.BackColor = System.Drawing.Color.CadetBlue;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer1.Name = "splitContainer1";
+            this.picIcon.Image = ((System.Drawing.Image)(resources.GetObject("picIcon.Image")));
+            this.picIcon.Location = new System.Drawing.Point(15, 8);
+            this.picIcon.Name = "picIcon";
+            this.picIcon.Size = new System.Drawing.Size(71, 55);
+            this.picIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIcon.TabIndex = 24;
+            this.picIcon.TabStop = false;
             // 
-            // splitContainer1.Panel1
+            // lblTitle
             // 
-            this.splitContainer1.Panel1.BackColor = System.Drawing.Color.PowderBlue;
-            this.splitContainer1.Panel1.Controls.Add(this.lblMapDate);
-            this.splitContainer1.Panel1.Controls.Add(this.pnlStructures);
-            this.splitContainer1.Panel1.Controls.Add(this.lvwMapMarkers);
-            this.splitContainer1.Panel1.Controls.Add(this.lblStatus);
-            this.splitContainer1.Panel1.Controls.Add(this.lblMapMarkerHeader);
-            this.splitContainer1.Panel1.Controls.Add(this.btnRemoveMarker);
-            this.splitContainer1.Panel1.Controls.Add(this.chkApplyFilterMarkers);
-            this.splitContainer1.Panel1.Controls.Add(this.btnAddMarker);
-            this.splitContainer1.Panel1.Controls.Add(this.btnEditMarker);
-            this.splitContainer1.Panel1.Controls.Add(this.lblStructureMarkers);
-            this.splitContainer1.Panel1.Controls.Add(this.txtMarkerFilter);
-            this.splitContainer1.Panel1.Controls.Add(this.tabFeatures);
-            this.splitContainer1.Panel1MinSize = 830;
+            this.lblTitle.AutoSize = true;
+            this.lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTitle.Location = new System.Drawing.Point(89, 9);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new System.Drawing.Size(71, 31);
+            this.lblTitle.TabIndex = 40;
+            this.lblTitle.Text = "ASV";
             // 
-            // splitContainer1.Panel2
+            // lblSubTitle
             // 
-            this.splitContainer1.Panel2.BackColor = System.Drawing.Color.PowderBlue;
-            this.splitContainer1.Panel2.Controls.Add(this.pnlMap);
-            this.splitContainer1.Panel2.Controls.Add(this.panel2);
-            this.splitContainer1.Panel2MinSize = 0;
-            this.splitContainer1.Size = new System.Drawing.Size(1387, 587);
-            this.splitContainer1.SplitterDistance = 830;
-            this.splitContainer1.TabIndex = 23;
-            this.splitContainer1.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitContainer1_SplitterMoved);
+            this.lblSubTitle.AutoSize = true;
+            this.lblSubTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSubTitle.Location = new System.Drawing.Point(92, 45);
+            this.lblSubTitle.Name = "lblSubTitle";
+            this.lblSubTitle.Size = new System.Drawing.Size(250, 16);
+            this.lblSubTitle.TabIndex = 41;
+            this.lblSubTitle.Text = "ARK Survival Savegame Visualiser";
             // 
             // frmViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.PowderBlue;
-            this.ClientSize = new System.Drawing.Size(1391, 587);
+            this.ClientSize = new System.Drawing.Size(1027, 617);
+            this.Controls.Add(this.btnViewMap);
+            this.Controls.Add(this.lblSubTitle);
+            this.Controls.Add(this.lblTitle);
+            this.Controls.Add(this.picIcon);
+            this.Controls.Add(this.lblMapDate);
             this.Controls.Add(this.btnRefresh);
             this.Controls.Add(this.btnSettings);
-            this.Controls.Add(this.splitContainer1);
+            this.Controls.Add(this.lblStatus);
+            this.Controls.Add(this.tabFeatures);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmViewer";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ARK Save Viewer";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmViewer_FormClosed);
+            this.Enter += new System.EventHandler(this.frmViewer_Enter);
             this.mnuContext.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.picMap)).EndInit();
-            this.pnlMap.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.trackZoom)).EndInit();
-            this.panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.picArtifacts)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picWyvernNests)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picObelisks)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picWaterVeins)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picOilVeins)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picGasVeins)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picDeinoNests)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picBeaverDams)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picChargeNodes)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picDrakeNests)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picMagmasaurNests)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picGlitches)).EndInit();
             this.tabFeatures.ResumeLayout(false);
             this.tpgWild.ResumeLayout(false);
             this.tpgWild.PerformLayout();
@@ -2733,14 +2123,9 @@
             this.tpgPlayers.PerformLayout();
             this.tpgDroppedItems.ResumeLayout(false);
             this.tpgDroppedItems.PerformLayout();
-            this.pnlStructures.ResumeLayout(false);
-            this.pnlStructures.PerformLayout();
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel1.PerformLayout();
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picIcon)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -2763,43 +2148,11 @@
         private System.Windows.Forms.Label lblMapDate;
         private System.Windows.Forms.ColumnHeader lvwWildDetail_Level;
         private System.Windows.Forms.ComboBox cboWildClass;
-        private System.Windows.Forms.PictureBox picMap;
-        private System.Windows.Forms.Panel pnlMap;
-        private System.Windows.Forms.TrackBar trackZoom;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.ListView lvwMapMarkers;
-        private System.Windows.Forms.Label lblMapMarkerHeader;
-        private System.Windows.Forms.Button btnRemoveMarker;
-        private System.Windows.Forms.Button btnAddMarker;
-        private System.Windows.Forms.Button btnEditMarker;
-        private System.Windows.Forms.PictureBox picWyvernNests;
-        private System.Windows.Forms.CheckBox chkWyvernNests;
-        private System.Windows.Forms.PictureBox picObelisks;
-        private System.Windows.Forms.CheckBox chkObelisks;
-        private System.Windows.Forms.PictureBox picWaterVeins;
-        private System.Windows.Forms.CheckBox chkWaterVeins;
-        private System.Windows.Forms.PictureBox picOilVeins;
-        private System.Windows.Forms.CheckBox chkOilVeins;
-        private System.Windows.Forms.PictureBox picGasVeins;
-        private System.Windows.Forms.CheckBox chkGasVeins;
-        private System.Windows.Forms.PictureBox picDeinoNests;
-        private System.Windows.Forms.CheckBox chkDeinoNests;
-        private System.Windows.Forms.PictureBox picBeaverDams;
-        private System.Windows.Forms.CheckBox chkBeaverDams;
-        private System.Windows.Forms.ColumnHeader lvwMapMarkers_Name;
-        private System.Windows.Forms.ColumnHeader lvwMapMarkers_Lat;
-        private System.Windows.Forms.ColumnHeader lvwMapMarkers_Lon;
-        private System.Windows.Forms.PictureBox picArtifacts;
-        private System.Windows.Forms.CheckBox chkArtifacts;
         private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.TextBox txtMarkerFilter;
         private System.Windows.Forms.Button btnRefresh;
-        private System.Windows.Forms.Button btnZoomMinus;
         private System.Windows.Forms.TabControl tabFeatures;
         private System.Windows.Forms.TabPage tpgWild;
         private System.Windows.Forms.TabPage tpgPlayers;
-        private System.Windows.Forms.Panel pnlStructures;
-        private System.Windows.Forms.Label lblStructureMarkers;
         private System.Windows.Forms.Label lblPlayersPlayer;
         private System.Windows.Forms.Label lblPlayersTribe;
         private System.Windows.Forms.ComboBox cboTribes;
@@ -2822,11 +2175,6 @@
         private System.Windows.Forms.ColumnHeader lvwPlayers_Water;
         private System.Windows.Forms.ColumnHeader lvwPlayers_Tribe;
         private System.Windows.Forms.Button btnPlayerInventory;
-        private System.Windows.Forms.PictureBox picChargeNodes;
-        private System.Windows.Forms.CheckBox chkChargeNodes;
-        private System.Windows.Forms.CheckBox chkApplyFilterMarkers;
-        private System.Windows.Forms.CheckBox chkDrakeNests;
-        private System.Windows.Forms.PictureBox picDrakeNests;
         private System.Windows.Forms.ColumnHeader lvwPlayers_Crafting;
         private System.Windows.Forms.ColumnHeader lvwPlayers_Fortitude;
         private System.Windows.Forms.Button btnPlayerTribeLog;
@@ -2837,14 +2185,12 @@
         private System.Windows.Forms.ComboBox cboStructureTribe;
         private System.Windows.Forms.ComboBox cboStructurePlayer;
         private System.Windows.Forms.ListView lvwStructureLocations;
-        private System.Windows.Forms.ColumnHeader lvwStructureLocations_Player;
         private System.Windows.Forms.ColumnHeader lvwStructureLocations_Tribe;
         private System.Windows.Forms.ColumnHeader lvwStructureLocations_Structure;
         private System.Windows.Forms.ColumnHeader lvwStructureLocations_Lat;
         private System.Windows.Forms.ColumnHeader lvwStructureLocations_Lon;
         private System.Windows.Forms.Label lblStructureStructure;
         private System.Windows.Forms.ComboBox cboStructureStructure;
-        private System.Windows.Forms.Button btnZoomPlus;
         private System.Windows.Forms.Button btnStructureExclusionFilter;
         private System.Windows.Forms.Label lblCommandPlayer;
         private System.Windows.Forms.ComboBox cboConsoleCommandsPlayerTribe;
@@ -2913,7 +2259,6 @@
         private System.Windows.Forms.ColumnHeader lvwTameDetail_Colour4;
         private System.Windows.Forms.ColumnHeader lvwTameDetail_Colour5;
         private System.Windows.Forms.ColumnHeader lvwTameDetail_Colour6;
-        private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.TabPage tpgDroppedItems;
         private System.Windows.Forms.Button btnCopyCommandDropped;
         private System.Windows.Forms.Label lblCopyCommandDropped;
@@ -2949,16 +2294,12 @@
         private System.Windows.Forms.CheckBox chkTribeStructures;
         private System.Windows.Forms.CheckBox chkTribeTames;
         private System.Windows.Forms.CheckBox chkTribePlayers;
-        private System.Windows.Forms.CheckBox chkMagmasaurNests;
-        private System.Windows.Forms.PictureBox picMagmasaurNests;
         private System.Windows.Forms.Label lblWildRadius;
         private System.Windows.Forms.NumericUpDown udWildRadius;
         private System.Windows.Forms.Label lblWildLon;
         private System.Windows.Forms.NumericUpDown udWildLon;
         private System.Windows.Forms.Label lblWildLat;
         private System.Windows.Forms.NumericUpDown udWildLat;
-        private System.Windows.Forms.PictureBox picGlitches;
-        private System.Windows.Forms.CheckBox chkGlitches;
         private System.Windows.Forms.Button btnStructureInventory;
         private System.Windows.Forms.Button btnDeletePlayer;
         private System.Windows.Forms.ToolStripMenuItem mnuContext_Export;
@@ -2970,6 +2311,11 @@
         private System.Windows.Forms.ColumnHeader lvwTameDetail_Id;
         private System.Windows.Forms.ColumnHeader lvwPlayers_SteamId;
         private System.Windows.Forms.Button btnDropInventory;
+        private System.Windows.Forms.PictureBox picIcon;
+        private System.Windows.Forms.Label lblTitle;
+        private System.Windows.Forms.Label lblSubTitle;
+        private System.Windows.Forms.Button btnViewMap;
+        private System.Windows.Forms.Label label1;
     }
 }
 

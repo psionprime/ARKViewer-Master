@@ -25,64 +25,65 @@ namespace ARKViewer
 
 
         Timer saveCheckTimer = new Timer();
-        frmStructureLocations structureLocations = null;
+        frmMapView MapViewer = null;
 
         private bool isLoading = false;
-        private decimal lastSelectedX = 0.0m;
-        private decimal lastSelectedY = 0.0m;
-        private string imageFolder = "";
 
         private ColumnHeader SortingColumn_DetailTame = null;
         private ColumnHeader SortingColumn_DetailWild = null;
-
-        private ColumnHeader SortingColumn_Markers = null;
         private ColumnHeader SortingColumn_Players = null;
         private ColumnHeader SortingColumn_Structures = null;
         private ColumnHeader SortingColumn_Tribes = null;
         private ColumnHeader SortingColumn_Drops = null;
 
         private string savePath = Path.GetDirectoryName(Application.ExecutablePath);
-        private string saveFilename = "TheIsland.ark";
-
-        private int mapMouseDownX = 0;
-        private int mapMouseDownY = 0;
-        private int mapMouseDownZoom = 0;
 
         //wrapper for the information we need from ARK save data
         ContentManager cm = null;
+
+        private void LoadWindowSettings()
+        {
+            var savedWindow = ARKViewer.Program.ProgramConfig.Windows.FirstOrDefault(w => w.Name == this.Name);
+
+
+            if (savedWindow != null)
+            {
+                this.StartPosition = FormStartPosition.Manual;
+                this.Left = savedWindow.Left;
+                this.Top = savedWindow.Top;
+                this.Width = savedWindow.Width;
+                this.Height = savedWindow.Height;
+            }
+        }
+
+        private void UpdateWindowSettings()
+        {
+            //only save location if normal window, do not save location/size if minimized/maximized
+            if (this.WindowState == FormWindowState.Normal)
+            {
+                var savedWindow = ARKViewer.Program.ProgramConfig.Windows.FirstOrDefault(w => w.Name == this.Name);
+                if (savedWindow == null)
+                {
+                    savedWindow = new ViewerWindow();
+                    savedWindow.Name = this.Name;
+                    ARKViewer.Program.ProgramConfig.Windows.Add(savedWindow);
+                }
+
+                if (savedWindow != null)
+                {
+                    savedWindow.Left = this.Left;
+                    savedWindow.Top = this.Top;
+                    savedWindow.Width = this.Width;
+                    savedWindow.Height = this.Height;
+                }
+            }
+        }
 
         private void InitializeDefaults()
         {
             isLoading = true;
 
-            lvwMapMarkers.SmallImageList = Program.MarkerImageList;
-            lvwMapMarkers.LargeImageList = Program.MarkerImageList;
-
-            if (ARKViewer.Program.ProgramConfig.WindowHeight != 0)
-            {
-                this.Left = ARKViewer.Program.ProgramConfig.WindowLeft;
-                this.Top = ARKViewer.Program.ProgramConfig.WindowTop;
-                this.Width = ARKViewer.Program.ProgramConfig.WindowWidth;
-                this.Height = ARKViewer.Program.ProgramConfig.WindowHeight;
-            }
-            else
-            {
-                this.StartPosition = FormStartPosition.CenterScreen;
-            }
-
-            if (ARKViewer.Program.ProgramConfig.SplitterDistance > 0)
-            {
-                splitContainer1.SplitterDistance = ARKViewer.Program.ProgramConfig.SplitterDistance;
-            }
-
-
-
-            if (ARKViewer.Program.ProgramConfig.Zoom > 0)
-            {
-                trackZoom.Value = ARKViewer.Program.ProgramConfig.Zoom;
-            }
-
-            UpdateZoomLevel(this, new EventArgs());
+            LoadWindowSettings();
 
             Application.DoEvents();
 
@@ -99,6 +100,9 @@ namespace ARKViewer
         public void LoadContent(ContentManager manager)
         {
             cm = manager;
+            MapViewer = frmMapView.GetForm(cm);
+            MapViewer.Owner = this;
+
             this.Cursor = Cursors.WaitCursor;
             UpdateProgress("Loading content.");
             lblMapDate.Text = manager.ContentDate.Equals(new DateTime())?"n/a": manager.ContentDate.ToString("dd MMM yyyy - HH:mm");
@@ -117,59 +121,15 @@ namespace ARKViewer
             RefreshTamedSummary();
             RefreshTribeSummary();
 
-
-
-            chkArtifacts.CheckedChanged -= Structure_CheckedChanged;
-            chkBeaverDams.CheckedChanged -= Structure_CheckedChanged;
-            chkDeinoNests.CheckedChanged -= Structure_CheckedChanged;
-            chkGasVeins.CheckedChanged -= Structure_CheckedChanged;
-            chkObelisks.CheckedChanged -= Structure_CheckedChanged;
-            chkOilVeins.CheckedChanged -= Structure_CheckedChanged;
-            chkWaterVeins.CheckedChanged -= Structure_CheckedChanged;
-            chkWyvernNests.CheckedChanged -= Structure_CheckedChanged;
-            chkChargeNodes.CheckedChanged -= Structure_CheckedChanged;
-            chkGlitches.CheckedChanged -= Structure_CheckedChanged;
-            chkMagmasaurNests.CheckedChanged -= Structure_CheckedChanged;
-
-
-            chkArtifacts.Checked = ARKViewer.Program.ProgramConfig.Artifacts;
-            chkBeaverDams.Checked = ARKViewer.Program.ProgramConfig.BeaverDams;
-            chkDeinoNests.Checked = ARKViewer.Program.ProgramConfig.DeinoNests;
-            chkDrakeNests.Checked = ARKViewer.Program.ProgramConfig.DrakeNests;
-            chkGasVeins.Checked = ARKViewer.Program.ProgramConfig.GasVeins;
-            chkObelisks.Checked = ARKViewer.Program.ProgramConfig.Obelisks;
-            chkOilVeins.Checked = ARKViewer.Program.ProgramConfig.OilVeins;
-            chkWaterVeins.Checked = ARKViewer.Program.ProgramConfig.WaterVeins;
-            chkWyvernNests.Checked = ARKViewer.Program.ProgramConfig.WyvernNests;
-            chkChargeNodes.Checked = ARKViewer.Program.ProgramConfig.ChargeNodes;
-            chkGlitches.Checked = ARKViewer.Program.ProgramConfig.Glitches;
-            chkMagmasaurNests.Checked = ARKViewer.Program.ProgramConfig.MagmaNests;
-
-            chkArtifacts.CheckedChanged += Structure_CheckedChanged;
-            chkBeaverDams.CheckedChanged += Structure_CheckedChanged;
-            chkDeinoNests.CheckedChanged += Structure_CheckedChanged;
-            chkGasVeins.CheckedChanged += Structure_CheckedChanged;
-            chkObelisks.CheckedChanged += Structure_CheckedChanged;
-            chkOilVeins.CheckedChanged += Structure_CheckedChanged;
-            chkWaterVeins.CheckedChanged += Structure_CheckedChanged;
-            chkWyvernNests.CheckedChanged += Structure_CheckedChanged;
-            chkChargeNodes.CheckedChanged += Structure_CheckedChanged;
-            chkGlitches.CheckedChanged += Structure_CheckedChanged;
-            chkMagmasaurNests.CheckedChanged += Structure_CheckedChanged;
-
-
-            txtMarkerFilter.Text = "";
-
-
-            RefreshMapMarkers();
+            
             RefreshPlayerTribes();
             RefreshTamedTribes();
             RefreshCryoTribes();
             RefreshStructureTribes();
             RefreshStructureSummary();
             RefreshDroppedPlayers();
-            picMap.Image = DrawMap(0, 0);
 
+            DrawMap(0,0);
 
             UpdateProgress("Content loaded.");
             if (manager.ContentDate.Equals(new DateTime()))
@@ -626,8 +586,6 @@ namespace ARKViewer
             if (cboTribes.SelectedItem == null) return;
             if (cboPlayers.SelectedItem == null) return;
 
-            lastSelectedX = 0.0m;
-            lastSelectedY = 0.0m;
 
             btnPlayerInventory.Enabled = false;
 
@@ -730,37 +688,13 @@ namespace ARKViewer
 
             lvwPlayers.EndUpdate();
             lblPlayerTotal.Text = $"Count: {lvwPlayers.Items.Count}";
-            if(tabFeatures.SelectedTab.Name == "tpgPlayers")
-            {
-                picMap.Image = DrawMap(lastSelectedX, lastSelectedY);
-            }
+            DrawMap(0, 0);
+
         }
 
 
 
-        private void RefreshMapMarkers()
-        {
-            lvwMapMarkers.Items.Clear();
-            lvwMapMarkers.Refresh();
-            lvwMapMarkers.BeginUpdate();
-            if (ARKViewer.Program.ProgramConfig.MapMarkerList.Count(m => m.Map.ToLower() == Path.GetFileName(ARKViewer.Program.ProgramConfig.SelectedFile).ToLower()) > 0)
-            {
-                foreach (var marker in ARKViewer.Program.ProgramConfig.MapMarkerList.Where(m => m.Map.ToLower() == Path.GetFileName(ARKViewer.Program.ProgramConfig.SelectedFile).ToLower()))
-                {
-                    if (marker.Name.ToLower().Contains(txtMarkerFilter.Text.ToLower()))
-                    {
-                        ListViewItem newItem = lvwMapMarkers.Items.Add(marker.Name);
-                        newItem.ImageIndex = Program.GetMarkerImageIndex(marker.Image) -  1;
-                        newItem.SubItems.Add(marker.Lat.ToString("0.00"));
-                        newItem.SubItems.Add(marker.Lon.ToString("0.00"));
-                        newItem.Tag = marker;
-                    }
-                }
-            }
-
-            lvwMapMarkers.EndUpdate();
-        }
-
+        
         private void BtnDownload_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
@@ -919,38 +853,18 @@ namespace ARKViewer
             return fileList;
         }
 
-        private Bitmap DrawMap(decimal selectedX, decimal selectedY) {
+        private void DrawMap(decimal selectedX, decimal selectedY) {
             if (cm == null)
             {
-                return new Bitmap(1024, 1024);
+                return;
             }
 
             lblStatus.Text = "Updating map display.";
             lblStatus.Refresh();
 
-            lastSelectedX = selectedX;
-            lastSelectedY = selectedY;
-
             Bitmap bitmap = new Bitmap(1024, 1024);
             Graphics graphics = Graphics.FromImage(bitmap);
-            decimal markerX = 0;
-            decimal markerY = 0;
 
-            List<ContentMarker> customMarkers = new List<ContentMarker>();
-            foreach(ListViewItem item in lvwMapMarkers.CheckedItems)
-            {
-                MapMarker marker = (MapMarker)item.Tag;
-                customMarkers.Add(new ContentMarker()
-                {
-                    BorderColour = marker.BorderColour,
-                    BorderWidth = marker.BorderWidth,
-                    Colour = marker.Colour,
-                    Image = marker.Image,
-                    Lat = marker.Lat,
-                    Lon = marker.Lon,
-                    Name = marker.Name
-                });
-            }
 
             switch (tabFeatures.SelectedTab.Name)
             {
@@ -962,7 +876,7 @@ namespace ARKViewer
                         wildClass = selectedValue.ClassName;
                     }
 
-                    bitmap = cm.GetMapImageWild(wildClass, (int)udWildMin.Value, (int)udWildMax.Value, (float)udWildLat.Value,(float)udWildLon.Value,(float)udWildRadius.Value,selectedY,selectedX,chkObelisks.Checked,chkGlitches.Checked,chkChargeNodes.Checked,chkBeaverDams.Checked,chkDeinoNests.Checked,chkWyvernNests.Checked,chkDrakeNests.Checked,chkMagmasaurNests.Checked,chkOilVeins.Checked,chkWaterVeins.Checked,chkGasVeins.Checked,chkArtifacts.Checked, customMarkers);
+                    MapViewer.DrawMapImageWild(wildClass, (int)udWildMin.Value, (int)udWildMax.Value, (float)udWildLat.Value, (float)udWildLon.Value, (float)udWildRadius.Value, selectedY, selectedX);
 
                     break;
                 case "tpgTamed":
@@ -988,8 +902,7 @@ namespace ARKViewer
                         long.TryParse(selectedPlayer.Key, out playerId);
                     }
 
-                    bitmap = cm.GetMapImageTamed(tameClass,chkCryo.Checked, tribeId,playerId,selectedY, selectedX, chkObelisks.Checked, chkGlitches.Checked, chkChargeNodes.Checked, chkBeaverDams.Checked, chkDeinoNests.Checked, chkWyvernNests.Checked, chkDrakeNests.Checked, chkMagmasaurNests.Checked, chkOilVeins.Checked, chkWaterVeins.Checked, chkGasVeins.Checked, chkArtifacts.Checked, customMarkers);
-
+                    MapViewer.DrawMapImageTamed(tameClass, chkCryo.Checked, tribeId, playerId, selectedY, selectedX);
 
 
                     break;
@@ -1015,7 +928,7 @@ namespace ARKViewer
                         long.TryParse(selectedPlayer.Key, out tribeId);
                     }
 
-                    bitmap = cm.GetMapImagePlayerStructures(structureClass, structureTribe, structurePlayer, selectedY, selectedX, chkObelisks.Checked, chkGlitches.Checked, chkChargeNodes.Checked, chkBeaverDams.Checked, chkDeinoNests.Checked, chkWyvernNests.Checked, chkDrakeNests.Checked, chkMagmasaurNests.Checked, chkOilVeins.Checked, chkWaterVeins.Checked, chkGasVeins.Checked, chkArtifacts.Checked, customMarkers);
+                    MapViewer.DrawMapImagePlayerStructures(structureClass, structureTribe, structurePlayer, selectedY, selectedX);
 
                     break;
                 case "tpgPlayers":
@@ -1034,8 +947,7 @@ namespace ARKViewer
                         long.TryParse(selectedPlayer.Key, out currentId);
                     }
 
-                    bitmap = cm.GetMapImagePlayers(playerTribe, currentId, selectedY, selectedX, chkObelisks.Checked, chkGlitches.Checked, chkChargeNodes.Checked, chkBeaverDams.Checked, chkDeinoNests.Checked, chkWyvernNests.Checked, chkDrakeNests.Checked, chkMagmasaurNests.Checked, chkOilVeins.Checked, chkWaterVeins.Checked, chkGasVeins.Checked, chkArtifacts.Checked, customMarkers);
-
+                    MapViewer.DrawMapImagePlayers(playerTribe, currentId, selectedY, selectedX);
 
                     break;
                 case "tpgDroppedItems":
@@ -1055,12 +967,14 @@ namespace ARKViewer
 
                     if (droppedClass == "-1")
                     {
-                        bitmap = cm.GetMapImageDropBags(droppedPlayerId, selectedY, selectedX, chkObelisks.Checked, chkGlitches.Checked, chkChargeNodes.Checked, chkBeaverDams.Checked, chkDeinoNests.Checked, chkWyvernNests.Checked, chkDrakeNests.Checked, chkMagmasaurNests.Checked, chkOilVeins.Checked, chkWaterVeins.Checked, chkGasVeins.Checked, chkArtifacts.Checked, customMarkers);
+                        
+                        MapViewer.DrawMapImageDropBags(droppedPlayerId, selectedY, selectedX);
                     }
                     else
                     {
                         if (droppedClass == "0") droppedClass = "";
-                        bitmap = cm.GetMapImageDroppedItems(droppedPlayerId, droppedClass, selectedY, selectedX, chkObelisks.Checked, chkGlitches.Checked, chkChargeNodes.Checked, chkBeaverDams.Checked, chkDeinoNests.Checked, chkWyvernNests.Checked, chkDrakeNests.Checked, chkMagmasaurNests.Checked, chkOilVeins.Checked, chkWaterVeins.Checked, chkGasVeins.Checked, chkArtifacts.Checked, customMarkers);
+                        
+                        MapViewer.DrawMapImageDroppedItems(droppedPlayerId, droppedClass, selectedY, selectedX);
                     }
                     
 
@@ -1074,7 +988,7 @@ namespace ARKViewer
                         ContentTribe selectedTribe = (ContentTribe)selectedItem.Tag;
                         summaryTribeId = selectedTribe.TribeId;
                     }
-                    bitmap = cm.GetMapImageTribes(summaryTribeId, chkTribeStructures.Checked,chkTribePlayers.Checked,chkTribeTames.Checked, selectedY, selectedX, chkObelisks.Checked, chkGlitches.Checked, chkChargeNodes.Checked, chkBeaverDams.Checked, chkDeinoNests.Checked, chkWyvernNests.Checked, chkDrakeNests.Checked, chkMagmasaurNests.Checked, chkOilVeins.Checked, chkWaterVeins.Checked, chkGasVeins.Checked, chkArtifacts.Checked, customMarkers);
+                    MapViewer.DrawMapImageTribes(summaryTribeId, chkTribeStructures.Checked, chkTribePlayers.Checked, chkTribeTames.Checked, selectedY, selectedX);
 
                     break;
                 default:
@@ -1085,8 +999,6 @@ namespace ARKViewer
             lblStatus.Text = "Map display updated.";
             lblStatus.Refresh();
 
-
-            return bitmap;
         }
 
         private void LvwSummary_SelectedIndexChanged(object sender, EventArgs e)
@@ -1105,9 +1017,6 @@ namespace ARKViewer
             this.Cursor = Cursors.WaitCursor;
             lblStatus.Text = "Populating dropped item data.";
             lblStatus.Refresh();
-
-            lastSelectedX = 0.0m;
-            lastSelectedY = 0.0m;
 
             lvwDroppedItems.BeginUpdate();
             lvwDroppedItems.Items.Clear();
@@ -1214,8 +1123,7 @@ namespace ARKViewer
 
             if (tabFeatures.SelectedTab.Name == "tpgDroppedItems")
             {
-                picMap.Image = DrawMap(lastSelectedX, lastSelectedY);
-                picMap.Refresh();
+                DrawMap(0, 0);
             }
 
 
@@ -1233,9 +1141,6 @@ namespace ARKViewer
             this.Cursor = Cursors.WaitCursor;
             lblStatus.Text = "Populating tame data.";
             lblStatus.Refresh();
-
-            lastSelectedX = 0.0m;
-            lastSelectedY = 0.0m;
 
             decimal selectedX = 0.0m;
             decimal selectedY = 0.0m;
@@ -1520,8 +1425,7 @@ namespace ARKViewer
 
                 if(tabFeatures.SelectedTab.Name == "tpgTamed")
                 {
-                    picMap.Image = DrawMap(lastSelectedX, lastSelectedY);
-                    picMap.Refresh();
+                    DrawMap(selectedX, selectedY);
                 }
 
 
@@ -1543,9 +1447,6 @@ namespace ARKViewer
             this.Cursor = Cursors.WaitCursor;
             lblStatus.Text = "Populating creature data.";
             lblStatus.Refresh();
-
-            lastSelectedX = 0.0m;
-            lastSelectedY = 0.0m;
 
             decimal selectedX = 0.0m;
             decimal selectedY = 0.0m;
@@ -1718,8 +1619,7 @@ namespace ARKViewer
 
                 if(tabFeatures.SelectedTab.Name == "tpgWild")
                 {
-                    picMap.Image = DrawMap(lastSelectedX, lastSelectedY);
-                    picMap.Refresh();
+                    DrawMap(selectedX, selectedY);
 
                 }
 
@@ -1744,10 +1644,8 @@ namespace ARKViewer
                 decimal.TryParse(selectedItem.SubItems[4].Text, out decimal selectedY);
 
 
-                Bitmap bitmap = DrawMap(selectedX, selectedY);
+                DrawMap(selectedX, selectedY);
 
-                picMap.Image = bitmap;
-                picMap.Refresh();
 
 
             }
@@ -1764,8 +1662,6 @@ namespace ARKViewer
                 return;
             }
 
-            lastSelectedX = 0.0m;
-            lastSelectedY = 0.0m;
 
             lblStatus.Text = "Populating tamed creature summary...";
             lblStatus.Refresh();
@@ -1854,9 +1750,6 @@ namespace ARKViewer
             {
                 return;
             }
-
-            lastSelectedX = 0.0m;
-            lastSelectedY = 0.0m;
 
             lblStatus.Text = "Populating wild creature summary...";
             lblStatus.Refresh();
@@ -2020,9 +1913,9 @@ namespace ARKViewer
 
         private void btnSettings_Click(object sender, EventArgs e)
         {
-            this.Cursor = Cursors.WaitCursor;
 
             frmSettings settings = new frmSettings(cm);
+            settings.Owner = this;
             while(settings.ShowDialog() == DialogResult.OK)
             {
                 ARKViewer.Program.ProgramConfig = settings.SavedConfig;
@@ -2030,33 +1923,32 @@ namespace ARKViewer
                 {
                     if(settings.SavedConfig.Mode == ViewerModes.Mode_Ftp)
                     {
+                        this.Cursor = Cursors.WaitCursor;
+
                         settings.SavedConfig.SelectedFile = cm.Download();
+
+                        this.Cursor = Cursors.Default;
+
                     }
                 }
 
                 if (File.Exists(settings.SavedConfig.SelectedFile))
                 {
+                    this.Cursor = Cursors.WaitCursor;
+
                     UpdateProgress("Loading content pack..");
                     ContentPack loadedPack = Program.LoadContentPack(settings.SavedConfig.SelectedFile);
                     cm = new ContentManager(loadedPack);
                     LoadContent(cm);
 
+                    this.Cursor = Cursors.Default;
+
                     break;
                 }
             }
 
-            this.Cursor = Cursors.Default;
         }
         
-
-
-        private void UpdateZoomLevel(object sender, EventArgs e)
-        {
-            var newSize = 1024 * ((double)trackZoom.Value / 100.0);
-            picMap.Width = (int)newSize;
-            picMap.Height = (int)newSize;
-
-        }
 
         private void cboSelected_DrawItem(object sender, DrawItemEventArgs e)
         {
@@ -2139,345 +2031,11 @@ namespace ARKViewer
 
         }
 
-        private void ZoomIn()
-        {
-            if (trackZoom.Value + trackZoom.LargeChange < trackZoom.Maximum)
-            {
-                trackZoom.Value += trackZoom.LargeChange;
-            }
-            else
-            {
-                trackZoom.Value = trackZoom.Maximum;
-            }
-        }
-
-        private void ZoomOut()
-        {
-            if (trackZoom.Value - trackZoom.LargeChange >= 0)
-            {
-                trackZoom.Value -= trackZoom.LargeChange;
-            }
-            else
-            {
-                trackZoom.Value = 0;
-            }
-        }
-
-        private void btnAddMarker_Click(object sender, EventArgs e)
-        {
-            frmMarkerEditor markerEditor = new frmMarkerEditor(Path.GetFileName(ARKViewer.Program.ProgramConfig.SelectedFile), ARKViewer.Program.ProgramConfig.MapMarkerList, "");
-            if (markerEditor.ShowDialog() == DialogResult.OK)
-            {
-                ListViewItem newItem = lvwMapMarkers.Items.Add(markerEditor.EditingMarker.Name);
-                newItem.ImageIndex = Program.GetMarkerImageIndex(markerEditor.EditingMarker.Image) -1;
-                newItem.SubItems.Add(markerEditor.EditingMarker.Lat.ToString("0.00"));
-                newItem.SubItems.Add(markerEditor.EditingMarker.Lon.ToString("0.00"));
-                newItem.Tag = markerEditor.EditingMarker;
-
-                ARKViewer.Program.ProgramConfig.MapMarkerList.Add(markerEditor.EditingMarker);
-            }
-        }
-
-
-        private void Structure_CheckedChanged(object sender, EventArgs e)
-        {
-
-
-            ARKViewer.Program.ProgramConfig.WaterVeins = chkWaterVeins.Checked;
-            ARKViewer.Program.ProgramConfig.WyvernNests = chkWyvernNests.Checked;
-            ARKViewer.Program.ProgramConfig.BeaverDams = chkBeaverDams.Checked;
-            ARKViewer.Program.ProgramConfig.DeinoNests = chkDeinoNests.Checked;
-            ARKViewer.Program.ProgramConfig.DrakeNests = chkDrakeNests.Checked;
-            ARKViewer.Program.ProgramConfig.Obelisks = chkObelisks.Checked;
-            ARKViewer.Program.ProgramConfig.GasVeins = chkGasVeins.Checked;
-            ARKViewer.Program.ProgramConfig.OilVeins = chkOilVeins.Checked;
-            ARKViewer.Program.ProgramConfig.Artifacts = chkArtifacts.Checked;
-            ARKViewer.Program.ProgramConfig.ChargeNodes = chkChargeNodes.Checked;
-            ARKViewer.Program.ProgramConfig.PlantZ = false;
-            ARKViewer.Program.ProgramConfig.PlantX = false;
-            ARKViewer.Program.ProgramConfig.MagmaNests = chkMagmasaurNests.Checked;
-            ARKViewer.Program.ProgramConfig.Glitches = chkGlitches.Checked;
-
-            picMap.Image = DrawMap(lastSelectedX, lastSelectedY);
-        }
-
-
-        private void ShowStructureLocations(string className, List<ContentStructure> structureList)
-        {
-            Image structureIcon = new Bitmap(32, 32);
-            string structureName = "None";
-
-            switch (className)
-            {
-                case "ASV_Terminal":
-                    structureName = "Obelisks / Terminals";
-                    structureIcon = ARKViewer.Properties.Resources.structure_marker_obelisk;
-                    break;
-                case "ASV_ChargeNode":
-                    structureName = "Charge Nodes";
-                    structureIcon = ARKViewer.Properties.Resources.structure_marker_battery;
-
-                    break;
-                case "ASV_Glitch":
-                    structureName = "Glitches";
-                    structureIcon = ARKViewer.Properties.Resources.structure_marker_glitch;
-
-                    break;
-                case "ASV_BeaverDam":
-                    structureName = "Beaver Dams";
-                    structureIcon = ARKViewer.Properties.Resources.structure_marker_beaver;
-                    break;
-                case "ASV_WyvernNest":
-                    structureName = "Wyvern Nests";
-                    structureIcon = ARKViewer.Properties.Resources.structure_marker_wyvern;
-
-                    break;
-                case "ASV_DrakeNest":
-                    structureName = "Rock Drake Nests";
-                    structureIcon = ARKViewer.Properties.Resources.structure_marker_rockdrake;
-                    break;
-                case "ASV_DeinoNest":
-                    structureName = "Deinonychus Nests";
-                    structureIcon = ARKViewer.Properties.Resources.structure_marker_deino;
-                    break;
-                case "ASV_MagmaNest":
-                    structureName = "Magmasaur Nests";
-                    structureIcon = ARKViewer.Properties.Resources.structure_marker_magmasaur;
-                    break;
-                case "ASV_OilVein":
-                    structureName = "Oil Veins";
-                    structureIcon = ARKViewer.Properties.Resources.structure_marker_magmasaur;
-                    break;
-                case "ASV_WaterVein":
-                    structureName = "Water Veins";
-                    structureIcon = ARKViewer.Properties.Resources.structure_marker_water;
-                    break;
-                case "ASV_GasVein":
-                    structureName = "Gas Veins";
-                    structureIcon = ARKViewer.Properties.Resources.structure_marker_gas;
-                    break;
-                case "ASV_Artifact":
-                    structureName = "Artifacts";
-                    structureIcon = ARKViewer.Properties.Resources.structure_marker_trophy;
-                    break;
-                default:
-
-                    break;
-            }
-
-            if (structureLocations != null)
-            {
-                structureLocations.Close();
-                structureLocations.Dispose();
-            }
-
-            structureLocations = new frmStructureLocations(cm, structureList, structureName, structureIcon);
-            structureLocations.Top = this.Top;
-            structureLocations.Left = this.Left;
-            structureLocations.Height = this.Height;
-
-
-            structureLocations.HighlightStructure += (s, structure) =>
-            {
-                Bitmap originalImage = DrawMap(lastSelectedX, lastSelectedY);
-                Bitmap bitmap = new Bitmap(originalImage.Width, originalImage.Height);
-                Graphics graphics = Graphics.FromImage(bitmap);
-                graphics.DrawImage(originalImage, new Rectangle(0, 0, originalImage.Width, originalImage.Height));
-
-                decimal markerX = 0m;
-                decimal markerY = 0m;
-
-                Tuple<int, int, decimal, decimal, decimal, decimal> mapvals = Tuple.Create(1024, 1024, 0.0m, 0.0m, 100.0m, 100.0m);
-                
-                if (structure != null)
-                {
-                    markerX = ((decimal)Math.Round(structure.Lon, 2) - mapvals.Item4) * mapvals.Item1 / (mapvals.Item5 - mapvals.Item4);
-                    markerY = ((decimal)Math.Round(structure.Lat, 2) - mapvals.Item3) * mapvals.Item2 / (mapvals.Item6 - mapvals.Item3);
-
-                    graphics.FillEllipse(new SolidBrush(Color.Red), (float)markerX - 15f, (float)markerY - 15f, 30, 30);
-                    graphics.DrawEllipse(new Pen(Color.Green, 2), (float)markerX - 15f, (float)markerY - 15f, 30, 30);
-
-                }
-
-                picMap.Image = bitmap;
-
-            };
-
-
-            structureLocations.Show();
-        }
-
-        private void picBeaverDams_Click(object sender, EventArgs e)
-        {
-            ShowStructureLocations("ASV_BeaverDam", cm.GetBeaverDams());
-        }
-
-        private void picWyvernNests_Click(object sender, EventArgs e)
-        {
-            ShowStructureLocations("ASV_WyvernNest", cm.GetWyvernNests());
-        }
-
-        private void picWaterVeins_Click(object sender, EventArgs e)
-        {
-            ShowStructureLocations("ASV_WaterVein", cm.GetWaterVeins());
-
-        }
-
-        private void picObelisks_Click(object sender, EventArgs e)
-        {
-            ShowStructureLocations("ASV_Terminal", cm.GetTerminals());
-        }
-
-        private void picDeinoNests_Click(object sender, EventArgs e)
-        {
-            ShowStructureLocations("ASV_DeinoNest", cm.GetDeinoNests());
-        }
-
-        private void picGasVeins_Click(object sender, EventArgs e)
-        {
-            ShowStructureLocations("ASV_GasVein", cm.GetGasVeins());
-        }
-
-        private void picOilVeins_Click(object sender, EventArgs e)
-        {
-            ShowStructureLocations("ASV_OilVein", cm.GetOilVeins());
-        }
-
-        private void picArtifacts_Click(object sender, EventArgs e)
-        {
-            ShowStructureLocations("ASV_Artifact", cm.GetArtifacts());
-        }
 
         private void frmViewer_FormClosed(object sender, FormClosedEventArgs e)
         {
-            //only save location if normal window, do not save location/size if minimized/maximized
-            if(this.WindowState == FormWindowState.Normal)
-            {
-                ARKViewer.Program.ProgramConfig.WindowTop = this.Top;
-                ARKViewer.Program.ProgramConfig.WindowLeft = this.Left;
-                ARKViewer.Program.ProgramConfig.WindowHeight = this.Height;
-                ARKViewer.Program.ProgramConfig.WindowWidth = this.Width;
-            }
-
-            ARKViewer.Program.ProgramConfig.Zoom = trackZoom.Value;
-            ARKViewer.Program.ProgramConfig.SplitterDistance = splitContainer1.SplitterDistance;
+            UpdateWindowSettings();
             ARKViewer.Program.ProgramConfig.Save();
-        }
-
-        private void btnEditMarker_Click(object sender, EventArgs e)
-        {
-            if (lvwMapMarkers.SelectedItems.Count == 0) return;
-
-            ListViewItem selectedItem = lvwMapMarkers.SelectedItems[0];
-            MapMarker selectedMarker = (MapMarker)selectedItem.Tag;
-            
-            frmMarkerEditor markerEditor = new frmMarkerEditor(Path.GetFileName(ARKViewer.Program.ProgramConfig.SelectedFile), ARKViewer.Program.ProgramConfig.MapMarkerList, selectedMarker.Name);
-            if (markerEditor.ShowDialog() == DialogResult.OK)
-            {
-                selectedItem.Text = markerEditor.EditingMarker.Name;
-                selectedItem.ImageKey = $"marker_{markerEditor.EditingMarker.Image}";
-                selectedItem.SubItems[1].Text = markerEditor.EditingMarker.Lat.ToString("0.00");
-                selectedItem.SubItems[2].Text = markerEditor.EditingMarker.Lon.ToString("0.00");
-                selectedItem.Tag = markerEditor.EditingMarker;
-
-                if (ARKViewer.Program.ProgramConfig.MapMarkerList.Contains(selectedMarker))
-                {
-                    ARKViewer.Program.ProgramConfig.MapMarkerList.Remove(selectedMarker);
-                    ARKViewer.Program.ProgramConfig.MapMarkerList.Add(markerEditor.EditingMarker);
-                }
-                
-            }
-        }
-
-        private void lvwMapMarkers_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void lvwMapMarkers_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-
-            btnEditMarker.Enabled = lvwMapMarkers.SelectedItems.Count == 1;
-            btnRemoveMarker.Enabled = lvwMapMarkers.SelectedItems.Count == 1;
-        }
-
-        private void btnRemoveMarker_Click(object sender, EventArgs e)
-        {
-            if (lvwMapMarkers.SelectedItems.Count == 0) return;
-
-            ListViewItem selectedItem = lvwMapMarkers.SelectedItems[0];
-            MapMarker selectedMarker = (MapMarker)selectedItem.Tag;
-            if(MessageBox.Show($"Are you sure you want to remove your marker for '{selectedMarker.Name}'?", "Remove Marker?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            {
-                lvwMapMarkers.Items.Remove(selectedItem);
-                if (ARKViewer.Program.ProgramConfig.MapMarkerList.Contains(selectedMarker))
-                {
-                    ARKViewer.Program.ProgramConfig.MapMarkerList.Remove(selectedMarker);
-                }
-            }
-
-        }
-
-        private void txtMarkerFilter_TextChanged(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void lvwMapMarkers_ColumnClick(object sender, ColumnClickEventArgs e)
-        {
-            // Get the new sorting column.
-            ColumnHeader new_sorting_column = lvwMapMarkers.Columns[e.Column];
-
-            // Figure out the new sorting order.
-            System.Windows.Forms.SortOrder sort_order;
-            if (SortingColumn_Markers == null)
-            {
-                // New column. Sort ascending.
-                sort_order = SortOrder.Ascending;
-            }
-            else
-            {
-                // See if this is the same column.
-                if (new_sorting_column == SortingColumn_Markers)
-                {
-                    // Same column. Switch the sort order.
-                    if (SortingColumn_Markers.Text.StartsWith("> "))
-                    {
-                        sort_order = SortOrder.Descending;
-                    }
-                    else
-                    {
-                        sort_order = SortOrder.Ascending;
-                    }
-                }
-                else
-                {
-                    // New column. Sort ascending.
-                    sort_order = SortOrder.Ascending;
-                }
-
-                // Remove the old sort indicator.
-                SortingColumn_Markers.Text = SortingColumn_Markers.Text.Substring(2);
-            }
-
-            // Display the new sort order.
-            SortingColumn_Markers = new_sorting_column;
-            if (sort_order == SortOrder.Ascending)
-            {
-                SortingColumn_Markers.Text = "> " + SortingColumn_Markers.Text;
-            }
-            else
-            {
-                SortingColumn_Markers.Text = "< " + SortingColumn_Markers.Text;
-            }
-
-            // Create a comparer.
-            lvwMapMarkers.ListViewItemSorter =
-                new ListViewComparer(e.Column, sort_order);
-
-            // Sort.
-            lvwMapMarkers.Sort();
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
@@ -2485,13 +2043,6 @@ namespace ARKViewer
             btnRefresh.Enabled = false;
             RefreshMap();
             btnRefresh.Enabled = true;
-        }
-
-        private void btnZoomMinus_Click(object sender, EventArgs e)
-        {
-            btnZoomMinus.Enabled = false;
-            ZoomOut();
-            btnZoomMinus.Enabled = true;
         }
 
         private void cboTribes_SelectedIndexChanged(object sender, EventArgs e)
@@ -2592,6 +2143,7 @@ namespace ARKViewer
             ContentPlayer selectedPlayer = (ContentPlayer)lvwPlayers.SelectedItems[0].Tag;
 
             frmPlayerInventoryViewer playerViewer = new frmPlayerInventoryViewer(cm,selectedPlayer);
+            playerViewer.Owner = this;
             playerViewer.ShowDialog();
 
         }
@@ -2609,37 +2161,9 @@ namespace ARKViewer
             var tribe = cm.GetTribes(selectedCreature.TargetingTeam).First();
             var inventory = cm.GetInventory(selectedCreature.InventoryId.GetValueOrDefault(0));
             frmDinoInventoryViewer inventoryViewer = new frmDinoInventoryViewer(selectedCreature, inventory.Items);
+            inventoryViewer.Owner = this;
             inventoryViewer.ShowDialog();
         }
-
-        private void picChargeNodes_Click(object sender, EventArgs e)
-        {
-            ShowStructureLocations("ASV_ChargeNode", cm.GetChargeNodes());
-
-        }
-
-        private void picPlantZ_Click(object sender, EventArgs e)
-        {
-            ShowStructureLocations("ASV_PlantZ", cm.GetPlantZ());
-        }
-
-        private void chkApplyFilterMarkers_CheckedChanged(object sender, EventArgs e)
-        {
-            txtMarkerFilter.Enabled = !chkApplyFilterMarkers.Checked;
-            if (!chkApplyFilterMarkers.Checked)
-            {
-                txtMarkerFilter.Text = string.Empty;
-                txtMarkerFilter.Focus();
-            }
-
-            RefreshMapMarkers();
-        }
-
-        private void picDrakeNests_Click(object sender, EventArgs e)
-        {
-            ShowStructureLocations("ASV_DrakeNest", cm.GetDrakeNests());
-        }
-
 
         private void btnPlayerTribeLog_Click(object sender, EventArgs e)
         {
@@ -2649,6 +2173,7 @@ namespace ARKViewer
             ContentPlayer selectedPlayer = (ContentPlayer)lvwPlayers.SelectedItems[0].Tag;
             var tribe = cm.GetPlayerTribe(selectedPlayer.Id);
             frmTribeLog logViewer = new frmTribeLog(tribe);
+            logViewer.Owner = this;
             logViewer.ShowDialog();
         }
 
@@ -2666,9 +2191,6 @@ namespace ARKViewer
         {
             if (cm == null) return;
             if (cboStructureTribe.SelectedItem == null) return;
-
-            lastSelectedX = 0.0m;
-            lastSelectedY = 0.0m;
 
 
             string selectedClass = "NONE";
@@ -2844,7 +2366,6 @@ namespace ARKViewer
                         }
 
                         ListViewItem newItem = new ListViewItem(tribeName);
-                        newItem.SubItems.Add(tribeName);
                         newItem.SubItems.Add(itemName);
 
 
@@ -2876,7 +2397,7 @@ namespace ARKViewer
             lblStatus.Text = "Player structure selection updated.";
             lblStatus.Refresh();
 
-            picMap.Image = DrawMap(lastSelectedX, lastSelectedY);
+            DrawMap(0, 0);
 
             this.Cursor = Cursors.Default;
         }
@@ -2942,7 +2463,7 @@ namespace ARKViewer
             if (isLoading) return;
             tabFeatures.Refresh();
             this.Cursor = Cursors.WaitCursor;
-            picMap.Image = DrawMap(0, 0);
+            DrawMap(0, 0);
             this.Cursor = Cursors.Default;
         }
 
@@ -2957,7 +2478,7 @@ namespace ARKViewer
                 ListViewItem selectedItem = lvwStructureLocations.SelectedItems[0];
                 ContentStructure selectedStructure = (ContentStructure)selectedItem.Tag;
                 
-                picMap.Image = DrawMap((decimal)selectedStructure.Longitude.GetValueOrDefault(0), (decimal)selectedStructure.Latitude.GetValueOrDefault(0));
+                DrawMap((decimal)selectedStructure.Longitude.GetValueOrDefault(0), (decimal)selectedStructure.Latitude.GetValueOrDefault(0));
 
                 var inventory = cm.GetInventory(selectedStructure.InventoryId.GetValueOrDefault(0));
                 btnStructureInventory.Enabled = inventory != null && inventory.Items.Count > 0;
@@ -2973,13 +2494,6 @@ namespace ARKViewer
             LoadPlayerStructureDetail();
         }
 
-        private void btnZoomPlus_Click(object sender, EventArgs e)
-        {
-            btnZoomPlus.Enabled = false;
-            ZoomIn();
-            btnZoomPlus.Enabled = true;
-        }
-
         private void btnStructureExclusionFilter_Click(object sender, EventArgs e)
         {
             if (cm == null) return;
@@ -2988,6 +2502,7 @@ namespace ARKViewer
             if (structureList != null && structureList.Count > 0)
             {
                 frmStructureExclusionFilter exclusionEditor = new frmStructureExclusionFilter(structureList);
+                exclusionEditor.Owner = this;
                 if (exclusionEditor.ShowDialog() == DialogResult.OK)
                 {
                     RefreshStructureSummary();
@@ -3228,12 +2743,7 @@ namespace ARKViewer
                 decimal.TryParse(selectedItem.SubItems[6].Text, out decimal selectedX);
                 decimal.TryParse(selectedItem.SubItems[5].Text, out decimal selectedY);
 
-
-                Bitmap bitmap = DrawMap(selectedX, selectedY);
-
-                picMap.Image = bitmap;
-                picMap.Refresh();
-
+                DrawMap(selectedX, selectedY);
 
             }
             this.Cursor = Cursors.Default;
@@ -3652,7 +3162,7 @@ namespace ARKViewer
 
                 btnDropInventory.Enabled = false;
 
-                picMap.Image = DrawMap(selectedX, selectedY);
+                DrawMap(selectedX, selectedY);
             }
             
 
@@ -3722,6 +3232,7 @@ namespace ARKViewer
             if (tribe != null)
             {
                 frmTribeLog logViewer = new frmTribeLog(tribe);
+                logViewer.Owner = this;
                 logViewer.ShowDialog();
 
             }
@@ -3790,7 +3301,7 @@ namespace ARKViewer
             if (tabFeatures.SelectedTab.Name == "tpgTribes")
             {
 
-                picMap.Image = DrawMap(0, 0);
+                DrawMap(0, 0);
             }
         }
 
@@ -3801,7 +3312,7 @@ namespace ARKViewer
             if (tabFeatures.SelectedTab.Name == "tpgTribes")
             {
 
-                picMap.Image = DrawMap(0, 0);
+                DrawMap(0, 0);
             }
         }
 
@@ -3812,7 +3323,7 @@ namespace ARKViewer
             if (tabFeatures.SelectedTab.Name == "tpgTribes")
             {
 
-                picMap.Image = DrawMap(0, 0);
+                DrawMap(0, 0);
             }
         }
 
@@ -3912,11 +3423,6 @@ namespace ARKViewer
             }
         }
 
-        private void picMagmasaurNests_Click(object sender, EventArgs e)
-        {
-            ShowStructureLocations("ASV_MagmaNest", cm.GetMagmaNests());
-        }
-
         private void udWildLat_ValueChanged(object sender, EventArgs e)
         {
             RefreshWildSummary();
@@ -3937,49 +3443,6 @@ namespace ARKViewer
 
         }
 
-        private void picMap_MouseMove(object sender, MouseEventArgs e)
-        {
-            int movementY = e.Y - mapMouseDownY;
-            int movementX = e.X - mapMouseDownX;
-
-
-            if (e.Button == MouseButtons.Left)
-            {
-                picMap.Left = picMap.Left + movementX;
-                picMap.Top = picMap.Top + movementY;
-            }
-            else if(e.Button == MouseButtons.Right)
-            {
-                if(movementY > 0 )
-                {
-                    if ((mapMouseDownZoom + movementY) <= trackZoom.Maximum)
-                    {
-                        trackZoom.Value = mapMouseDownZoom + movementY;
-                    }
-                }
-                else if(movementY < 0 )
-                {
-                    if ((mapMouseDownZoom + movementY) >= trackZoom.Minimum)
-                    {
-                        trackZoom.Value = mapMouseDownZoom + movementY;
-                    }
-                }
-            }
-        }
-
-        private void picMap_MouseDown(object sender, MouseEventArgs e)
-        {
-            mapMouseDownX = e.X;
-            mapMouseDownY = e.Y;
-            mapMouseDownZoom = trackZoom.Value;
-        }
-
-        private void picGlitches_Click(object sender, EventArgs e)
-        {
-
-            ShowStructureLocations("ASV_Glitch", cm.GetGlitchMarkers());
-        }
-
         private void btnStructureInventory_Click(object sender, EventArgs e)
         {
             if (lvwStructureLocations.SelectedItems.Count == 0) return;
@@ -3989,6 +3452,7 @@ namespace ARKViewer
             var inventory = cm.GetInventory(selectedStructure.InventoryId.GetValueOrDefault(0));
 
             frmStructureInventoryViewer inventoryViewer = new frmStructureInventoryViewer(selectedStructure, inventory.Items);
+            inventoryViewer.Owner = this;
             inventoryViewer.ShowDialog();
         }
 
@@ -4810,6 +4274,7 @@ namespace ARKViewer
                     {
                         var inventory = cm.GetInventory(droppedItem.InventoryId.GetValueOrDefault(0));
                         frmDeathCacheViewer inventoryView = new frmDeathCacheViewer(droppedItem,inventory.Items);
+                        inventoryView.Owner = this;
                         inventoryView.ShowDialog();
                     }
 
@@ -4820,10 +4285,6 @@ namespace ARKViewer
             }
         }
 
-        private void lvwMapMarkers_ItemChecked(object sender, ItemCheckedEventArgs e)
-        {
-            picMap.Image = DrawMap(lastSelectedX, lastSelectedY);
-        }
 
         private void lvwDroppedItems_ColumnClick(object sender, ColumnClickEventArgs e)
         {
@@ -4879,6 +4340,37 @@ namespace ARKViewer
 
             // Sort.
             lvwDroppedItems.Sort();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tpgWild_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnViewMap_Click(object sender, EventArgs e)
+        {
+            ShowMapViewer();
+        }
+
+        private void ShowMapViewer()
+        {
+            if (MapViewer == null || MapViewer.IsDisposed)
+            {
+                MapViewer = frmMapView.GetForm(cm);
+                DrawMap(0,0);
+            }
+            MapViewer.Show();
+            MapViewer.BringToFront();
+        }
+
+        private void frmViewer_Enter(object sender, EventArgs e)
+        {
+            this.BringToFront();
         }
     }
 }

@@ -1251,19 +1251,20 @@ namespace ARKViewer
             return bitmap;
         }
 
-        public Bitmap GetMapDroppedItems(long playerId, decimal? selectedLat, decimal? selectedLon, bool includeTerminals, bool includeGlitches, bool includeChargeNodes, bool includeBeaverDams, bool includeDeinoNests, bool includeWyvernNests, bool includeDrakeNests, bool includeMagmaNests, bool includeOilVeins, bool includeWaterVeins,bool includeGasVeins,bool includeArtifacts,List<ContentMarker> customMarkers)
+        public Bitmap GetMapImageMapStructures(List<ContentMarker> customMarkers, decimal? selectedLat, decimal? selectedLon)
         {
             Bitmap bitmap = new Bitmap(1024, 1024);
             Graphics graphics = Graphics.FromImage(bitmap);
             graphics.DrawImage(MapImage, new Rectangle(0, 0, 1024, 1024));
 
 
-            graphics = AddMapStructures(graphics, includeTerminals, includeGlitches, includeChargeNodes, includeBeaverDams, includeDeinoNests, includeWyvernNests, includeDrakeNests, includeMagmaNests, includeOilVeins, includeWaterVeins, includeGasVeins, includeArtifacts);
+            var config = Program.ProgramConfig;
+            graphics = AddMapStructures(graphics, config.Obelisks, config.Glitches, config.ChargeNodes, config.BeaverDams, config.DeinoNests, config.WyvernNests, config.DrakeNests, config.MagmaNests, config.OilVeins, config.WaterVeins, config.GasVeins, config.Artifacts);
             if (customMarkers != null && customMarkers.Count > 0)
             {
                 graphics = AddCustomMarkers(graphics, customMarkers);
             }
-            graphics = AddCurrentMarker(graphics, selectedLat, selectedLon);
+            graphics = AddCurrentMarker(graphics,selectedLat,selectedLon);
 
             return bitmap;
         }
@@ -1604,8 +1605,9 @@ namespace ARKViewer
                 var markerX = (decimal)(lon) * 1024 / 100;
                 var markerY = (decimal)(lat) * 1024 / 100;
                 Color markerColor = Color.Red;
+                float markerSize = 20;
 
-                g.FillEllipse(new SolidBrush(markerColor), (float)markerX - 5.0f, (float)markerY - 5.0f, 10, 10);
+                g.FillEllipse(new SolidBrush(markerColor), (float)markerX - (markerSize/2), (float)markerY - (markerSize/2), markerSize, markerSize);
 
             }
             return g;

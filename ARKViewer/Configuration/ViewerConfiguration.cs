@@ -110,14 +110,9 @@ namespace ARKViewer.Configuration
 
         [DataMember]
         public List<ServerConfiguration> ServerList { get; set; } = new List<ServerConfiguration>();
-        [DataMember]
-        public int WindowTop { get; set; } = 0;
-        [DataMember]
-        public int WindowLeft { get; set; } = 0;
-        [DataMember]
-        public int WindowHeight { get; set; } = 0;
-        [DataMember]
-        public int WindowWidth { get; set; } = 0;
+
+        [DataMember] public List<ViewerWindow> Windows { get; set; } = new List<ViewerWindow>();
+
         [DataMember]
         public int Zoom { get; set; } = 50;
         
@@ -549,12 +544,7 @@ namespace ARKViewer.Configuration
                 this.HideNoTames = savedState.HideNoTames;
                 this.CommandPrefix = savedState.CommandPrefix;
                 this.FtpDownloadMode = savedState.FtpDownloadMode;
-                
-
-                this.WindowHeight = savedState.WindowHeight;
-                this.WindowWidth = savedState.WindowWidth;
-                this.WindowLeft = savedState.WindowLeft;
-                this.WindowTop = savedState.WindowTop;
+                if(savedState.Windows!=null) this.Windows = savedState.Windows;
                 this.Zoom = savedState.Zoom;
                 this.SplitterDistance = savedState.SplitterDistance;
                 this.ServerList = savedState.ServerList;

@@ -17,5 +17,6 @@ namespace ARKViewer.Models
         public int BorderWidth { get; set; } = 0;
         public double Lat { get; set; } = 0;
         public double Lon { get; set; } = 0;
+        public bool Displayed { get; set; } = false;
     }
 }

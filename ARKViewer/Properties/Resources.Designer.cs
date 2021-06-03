@@ -473,6 +473,16 @@ namespace ARKViewer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ModernXP_73_Globe_icon {
+            get {
+                object obj = ResourceManager.GetObject("ModernXP-73-Globe-icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap structure_marker_battery {
             get {
                 object obj = ResourceManager.GetObject("structure_marker_battery", resourceCulture);
