@@ -639,7 +639,7 @@ namespace ARKViewer
         private List<ContentAncestor> GetAncestors(long gen, ContentTamedCreature tame)
         {
             List<ContentAncestor> currentAncestors = new List<ContentAncestor>();
-if (tame.FatherId.GetValueOrDefault(0) != 0)
+            if (tame.FatherId.GetValueOrDefault(0) != 0)
             {
 
                 ContentTamedCreature father = cm.GetTamedCreature(tame.FatherId.Value);
@@ -656,6 +656,7 @@ if (tame.FatherId.GetValueOrDefault(0) != 0)
                     if (fatherName.Contains("- Lvl"))
                     {
                         int.TryParse(fatherName.Substring(fatherName.LastIndexOf("l") + 1), out fatherLevel);
+                        fatherName = fatherName.Substring(0, fatherName.LastIndexOf("-") - 1).Trim();
                     }
                 }
                 currentAncestors.Add(new ContentAncestor(gen, (long)tame.FatherId.GetValueOrDefault(0), fatherName, "Male", fatherLevel));
@@ -677,6 +678,7 @@ if (tame.FatherId.GetValueOrDefault(0) != 0)
                     if(motherName.Contains("- Lvl"))
                     {
                         int.TryParse(motherName.Substring(motherName.LastIndexOf("l") + 1), out motherLevel);
+                        motherName = motherName.Substring(0, motherName.LastIndexOf("-") - 1).Trim();
                     }
                 }
                 currentAncestors.Add(new ContentAncestor(gen, (long)tame.MotherId.GetValueOrDefault(0), motherName, "Female", motherLevel));

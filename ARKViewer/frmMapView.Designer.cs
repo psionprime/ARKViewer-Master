@@ -102,6 +102,7 @@ namespace ARKViewer
             // btnMapMarkers
             // 
             this.btnMapMarkers.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnMapMarkers.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnMapMarkers.Image = ((System.Drawing.Image)(resources.GetObject("btnMapMarkers.Image")));
             this.btnMapMarkers.Location = new System.Drawing.Point(578, 8);
             this.btnMapMarkers.Name = "btnMapMarkers";
@@ -113,6 +114,7 @@ namespace ARKViewer
             // btnMapStructures
             // 
             this.btnMapStructures.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnMapStructures.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnMapStructures.Image = ((System.Drawing.Image)(resources.GetObject("btnMapStructures.Image")));
             this.btnMapStructures.Location = new System.Drawing.Point(522, 8);
             this.btnMapStructures.Name = "btnMapStructures";

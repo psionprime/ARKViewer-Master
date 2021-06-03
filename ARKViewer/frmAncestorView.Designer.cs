@@ -204,11 +204,12 @@ namespace ARKViewer
             // btnCopyCommandTamed
             // 
             this.btnCopyCommandTamed.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCopyCommandTamed.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCopyCommandTamed.Enabled = false;
             this.btnCopyCommandTamed.Image = global::ARKViewer.Properties.Resources.button_document;
-            this.btnCopyCommandTamed.Location = new System.Drawing.Point(1060, 399);
+            this.btnCopyCommandTamed.Location = new System.Drawing.Point(1055, 397);
             this.btnCopyCommandTamed.Name = "btnCopyCommandTamed";
-            this.btnCopyCommandTamed.Size = new System.Drawing.Size(30, 30);
+            this.btnCopyCommandTamed.Size = new System.Drawing.Size(35, 35);
             this.btnCopyCommandTamed.TabIndex = 40;
             this.btnCopyCommandTamed.UseVisualStyleBackColor = true;
             this.btnCopyCommandTamed.Click += new System.EventHandler(this.btnCopyCommandTamed_Click);
@@ -216,9 +217,8 @@ namespace ARKViewer
             // lblTamedCommand
             // 
             this.lblTamedCommand.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblTamedCommand.AutoSize = true;
             this.lblTamedCommand.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTamedCommand.Location = new System.Drawing.Point(734, 406);
+            this.lblTamedCommand.Location = new System.Drawing.Point(722, 407);
             this.lblTamedCommand.Name = "lblTamedCommand";
             this.lblTamedCommand.Size = new System.Drawing.Size(65, 13);
             this.lblTamedCommand.TabIndex = 39;
@@ -235,7 +235,7 @@ namespace ARKViewer
             "GMSummon \"<ClassName>\"  <Level>",
             "TakeTribe <TribeID>",
             "SetPlayerPos  <x> <y> <z>"});
-            this.cboConsoleCommandsTamed.Location = new System.Drawing.Point(802, 403);
+            this.cboConsoleCommandsTamed.Location = new System.Drawing.Point(792, 404);
             this.cboConsoleCommandsTamed.Name = "cboConsoleCommandsTamed";
             this.cboConsoleCommandsTamed.Size = new System.Drawing.Size(248, 21);
             this.cboConsoleCommandsTamed.TabIndex = 38;
@@ -476,12 +476,13 @@ namespace ARKViewer
             // 
             this.lblStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblStatus.AutoSize = true;
             this.lblStatus.BackColor = System.Drawing.SystemColors.Control;
             this.lblStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblStatus.ForeColor = System.Drawing.Color.DimGray;
             this.lblStatus.Location = new System.Drawing.Point(195, 406);
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(533, 17);
+            this.lblStatus.Size = new System.Drawing.Size(64, 13);
             this.lblStatus.TabIndex = 41;
             this.lblStatus.Text = "Loading...";
             // 
