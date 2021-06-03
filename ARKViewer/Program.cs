@@ -4,6 +4,7 @@ using ARKViewer.Configuration;
 using ARKViewer.CustomNameMaps;
 using ARKViewer.Models;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -63,6 +64,26 @@ namespace ARKViewer
             commandArguments = commandArguments.Where(a => string.IsNullOrEmpty(a) == false).ToArray();
             if (commandArguments != null && commandArguments.Length > 1)
             {
+
+                //used when exporting ASV pack data
+                long tribeId = 0;
+                long playerId = 0;
+                decimal filterLat = 50;
+                decimal filterLon = 50;
+                decimal filterRad = 250;
+                bool packStructureLocations = true;
+                bool packStructureContent = true;
+                bool packDroppedItems = true;
+                bool packTribesPlayers = true;
+                bool packTamed = true;
+                bool packWild = true;
+                bool packPlayerStructures = true;
+
+
+                string commandOptionCheck = commandArguments[1].ToString().Trim().ToLower();
+                string exportFilePath = AppContext.BaseDirectory;
+                string exportFilename = Path.Combine(exportFilePath, "");
+
                 //arguments provided, export and exit
                 using (TextWriter logWriter = new StreamWriter(logFilename))
                 {
@@ -81,7 +102,64 @@ namespace ARKViewer
                     if (commandArguments.Length > 3)
                     {
                         //ark save game specified
-                        saveFullFilename = commandArguments[3].ToString().Trim().Replace("\"", "");
+                        var packIniFilename = commandArguments[3].ToString().Trim().Replace("\"", "");
+                        if (File.Exists(packIniFilename))
+                        {
+                            string packConfigText = File.ReadAllText(packIniFilename);
+                            try
+                            {
+                                JObject packConfig = JObject.Parse(packConfigText);
+
+                                saveFullFilename = packConfig.Property("mapFilename").Value.ToString();
+                                tribeId = (long)packConfig.Property("tribeId").Value;
+                                playerId = (long)packConfig.Property("tribeId").Value;
+                                filterLat = (decimal)packConfig.Property("filterLat").Value;
+                                filterLon = (decimal)packConfig.Property("filterLon").Value;
+                                filterRad = (decimal)packConfig.Property("filterRad").Value;
+                                packStructureLocations = (bool)packConfig.Property("filterLat").Value;
+                                packStructureContent = (bool)packConfig.Property("filterLat").Value;
+                                packDroppedItems = (bool)packConfig.Property("filterLat").Value;
+                                packTribesPlayers = (bool)packConfig.Property("filterLat").Value; 
+                                packTamed = (bool)packConfig.Property("filterLat").Value; 
+                                packWild = (bool)packConfig.Property("filterLat").Value;
+                                packPlayerStructures = (bool)packConfig.Property("filterLat").Value;
+
+
+                                /*
+                                {
+                                    "tribeId": 0,
+                                    "playerId": 0, 
+                                    "filterLat": 50.0, 
+                                    "filterLon": 50.0, 
+                                    "filterRad": 250.0,
+                                    "packStructureLocations": true,
+                                    "packStructureContent": true,
+                                    "packDroppedItems": true,
+                                    "packTribesPlayers": true, 
+                                    "packTamed": true, 
+                                    "packWild": true, 
+                                    "packPlayerStructures": true
+                                }
+                                */
+                            }
+                            catch
+                            {
+                                //bad file data, ignore
+                            }
+
+
+                        }
+
+
+
+
+
+
+
+
+
+
+                        saveFullFilename = "";                    
                     }
                     else
                     {
@@ -105,7 +183,7 @@ namespace ARKViewer
                                 if (gd.Update(CancellationToken.None, null, true)?.Success == true)
                                 {
                                     gd.ApplyPreviousUpdate();
-                                    loadedPack = new ContentPack(gd, 0, 0, 50, 100, 100);
+                                    loadedPack = new ContentPack(gd,tribeId,playerId,filterLat,filterLon,filterRad,packStructureLocations, packStructureContent,packTribesPlayers, packTamed, packWild, packPlayerStructures);
                                     loadedPack.ContentDate = File.GetLastWriteTimeUtc(saveFullFilename);
                                 }
 
@@ -114,10 +192,6 @@ namespace ARKViewer
                         }
 
                         ContentManager contentManager = new ContentManager(loadedPack);
-
-                        string commandOptionCheck = commandArguments[1].ToString().Trim().ToLower();
-                        string exportFilePath = AppContext.BaseDirectory;
-                        string exportFilename = Path.Combine(exportFilePath,"");
 
                         if (commandArguments.Length > 2)
                         {
@@ -129,6 +203,9 @@ namespace ARKViewer
 
                         switch (commandOptionCheck)
                         {
+                            case "pack":
+                                contentManager.ExportContentPack(exportFilename);
+                                break;
                             case "all":
                                 contentManager.ExportAll(exportFilePath);
                                 break;

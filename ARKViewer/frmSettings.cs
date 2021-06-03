@@ -34,6 +34,7 @@ namespace ARKViewer
                 { "valguero_p.ark", "Valguero" },
                 { "crystalisles.ark", "Crystal Isles" },
                 { "genesis.ark", "Genesis" },
+                { "gen2.ark", "Genesis 2" },
                 { "astralark.ark", "AstralARK" },
                 { "hope.ark", "Hope"},
                 { "tunguska_p.ark", "Tunguska"},
