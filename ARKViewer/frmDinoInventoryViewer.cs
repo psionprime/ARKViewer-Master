@@ -68,9 +68,15 @@ namespace ARKViewer
 
             loadedItems = items;
 
-            string dinoName = tame.Name;
+            var dinoMap = Program.ProgramConfig.DinoMap.FirstOrDefault(m => m.ClassName == tame.ClassName);
+            string dinoName = dinoMap == null ? tame.ClassName : dinoMap.FriendlyName;
 
-            if(dinoName.Length == 0)
+            if (tame.Name != null)
+            {
+                dinoName = tame.Name;
+            }
+
+            if (dinoName.Length == 0)
             {
                 dinoName = tame.ClassName;
                 DinoClassMap classMap = Program.ProgramConfig.DinoMap.Where(d => d.ClassName == tame.ClassName).FirstOrDefault();

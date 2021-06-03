@@ -13,10 +13,11 @@ namespace ARKViewer.Models
         [DataMember] public long TribeId { get; set; }
         [DataMember] public string TribeName { get; set; }
         [DataMember] public DateTime? LastActive { get; set; }
-        [DataMember] public List<ContentPlayer> Players { get; set; }
-        [DataMember] public List<ContentStructure> Structures { get; set; }
-        [DataMember] public List<ContentTamedCreature> Tames {get;set;}
+        [DataMember] public List<ContentPlayer> Players { get; set; } = new List<ContentPlayer>();
+        [DataMember] public List<ContentStructure> Structures { get; set; } = new List<ContentStructure>();
+        [DataMember] public List<ContentTamedCreature> Tames { get; set; } = new List<ContentTamedCreature>();
         [DataMember] public string[] Logs { get; set; }
+
 
 
     }

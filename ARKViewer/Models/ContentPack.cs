@@ -22,24 +22,24 @@ namespace ARKViewer.Models
         [DataMember] public long ExportedForTribe { get; set; } = 0;
         [DataMember] public long ExportedForPlayer { get; set; } = 0;
         [DataMember] public DateTime ExportedTimestamp { get; set; } = DateTime.Now;
-        [DataMember] public List<ContentStructure> TerminalMarkers { get; set; }
-        [DataMember] public List<ContentStructure> GlitchMarkers { get; set; }
-        [DataMember] public List<ContentStructure> ChargeNodes { get; set; }
-        [DataMember] public List<ContentStructure> BeaverDams { get; set; }
-        [DataMember] public List<ContentStructure> WyvernNests { get; set; }
-        [DataMember] public List<ContentStructure> DrakeNests { get; set; }
-        [DataMember] public List<ContentStructure> MagmaNests { get; set; }
-        [DataMember] public List<ContentStructure> DeinoNests { get; set; }
-        [DataMember] public List<ContentStructure> OilVeins { get; set; }
-        [DataMember] public List<ContentStructure> WaterVeins { get; set; }
-        [DataMember] public List<ContentStructure> GasVeins { get; set; }
-        [DataMember] public List<ContentStructure> Artifacts { get; set; }
-        [DataMember] public List<ContentStructure> PlantZ { get; set; }
-        [DataMember] public List<ContentInventory> Inventories { get; set; }
-        [DataMember] public List<ContentDroppedItem> DroppedItems { get; set; }
-        [DataMember] public List<ContentWildCreature> WildCreatures { get; set; }
+        [DataMember] public List<ContentStructure> TerminalMarkers { get; set; } = new List<ContentStructure>();
+        [DataMember] public List<ContentStructure> GlitchMarkers { get; set; } = new List<ContentStructure>();
+        [DataMember] public List<ContentStructure> ChargeNodes { get; set; } = new List<ContentStructure>();
+        [DataMember] public List<ContentStructure> BeaverDams { get; set; } = new List<ContentStructure>();
+        [DataMember] public List<ContentStructure> WyvernNests { get; set; } = new List<ContentStructure>();
+        [DataMember] public List<ContentStructure> DrakeNests { get; set; } = new List<ContentStructure>();
+        [DataMember] public List<ContentStructure> MagmaNests { get; set; } = new List<ContentStructure>();
+        [DataMember] public List<ContentStructure> DeinoNests { get; set; } = new List<ContentStructure>();
+        [DataMember] public List<ContentStructure> OilVeins { get; set; } = new List<ContentStructure>();
+        [DataMember] public List<ContentStructure> WaterVeins { get; set; } = new List<ContentStructure>();
+        [DataMember] public List<ContentStructure> GasVeins { get; set; } = new List<ContentStructure>();
+        [DataMember] public List<ContentStructure> Artifacts { get; set; } = new List<ContentStructure>();
+        [DataMember] public List<ContentStructure> PlantZ { get; set; } = new List<ContentStructure>();
+        [DataMember] public List<ContentInventory> Inventories { get; set; } = new List<ContentInventory>();
+        [DataMember] public List<ContentDroppedItem> DroppedItems { get; set; } = new List<ContentDroppedItem>();
+        [DataMember] public List<ContentWildCreature> WildCreatures { get; set; } = new List<ContentWildCreature>();
 
-        [DataMember] public List<ContentTribe> Tribes { get; set; }
+        [DataMember] public List<ContentTribe> Tribes { get; set; } = new List<ContentTribe>();
 
         bool IncludeGameStructures { get; set; } = true;
         bool IncludeGameStructureContent { get; set; } = true;

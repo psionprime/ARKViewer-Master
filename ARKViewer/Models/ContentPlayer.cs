@@ -20,7 +20,7 @@ namespace ARKViewer.Models
         [DataMember] public float? X { get; set; }
         [DataMember] public float? Y { get; set; }
         [DataMember] public float? Z { get; set; }
-        [DataMember] public int? InventoryId { get; set; }
+        [DataMember] public long? InventoryId { get; set; }
         [DataMember] public int Level { get; set; }
         [DataMember] public byte[] Stats { get; set; }
         [DataMember] public DateTime? LastActive { get; set; }

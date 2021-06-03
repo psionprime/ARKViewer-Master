@@ -72,6 +72,7 @@ namespace ARKViewer
         {
             //populate personal inventory list
             lvwPlayerInventory.Items.Clear();
+
             if (playerInventory != null)
             {
                 //var playerItems = selectedPlayer.Creatures;
@@ -310,6 +311,8 @@ namespace ARKViewer
 
             cm = manager;
             currentPlayer = selectedPlayer;
+            playerTribe = cm.GetPlayerTribe(currentPlayer.Id);
+            playerInventory = cm.GetInventory(currentPlayer.InventoryId.GetValueOrDefault(0)).Items;
 
             var inventory = cm.GetInventory(currentPlayer.Id);
             if (inventory != null)
