@@ -35,7 +35,11 @@ namespace ARKViewer.Models
         [DataMember] public int RandomMutationsFemale { get; set; }
         [DataMember] public int RandomMutationsMale { get; set; }
         [DataMember] public int? InventoryId { get; set; } = null;
-        public int ImprintedPlayerId { get; internal set; }
+        [DataMember] public int ImprintedPlayerId { get; set; }
+        [DataMember] public long? MotherId { get; set; }
+        [DataMember] public string MotherName { get; set; }
+        [DataMember] public long? FatherId { get; internal set; }
+        [DataMember] public string FatherName { get; internal set; }
 
         public bool IsSpawned()
         {

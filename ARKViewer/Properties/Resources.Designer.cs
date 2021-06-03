@@ -293,6 +293,16 @@ namespace ARKViewer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Logs {
+            get {
+                object obj = ResourceManager.GetObject("Logs", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap map_aberration {
             get {
                 object obj = ResourceManager.GetObject("map_aberration", resourceCulture);
@@ -626,6 +636,16 @@ namespace ARKViewer.Properties {
         internal static System.Drawing.Bitmap structure_marker_wyvern {
             get {
                 object obj = ResourceManager.GetObject("structure_marker_wyvern", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TribeLogs {
+            get {
+                object obj = ResourceManager.GetObject("TribeLogs", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

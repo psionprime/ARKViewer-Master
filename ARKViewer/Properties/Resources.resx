@@ -133,11 +133,11 @@
   <data name="map_astralark" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\map_astralark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="button_cryoon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\button_cryoon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="button_stroller" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\button_stroller.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ModernXP-73-Globe-icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ModernXP-73-Globe-icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="button_refresh" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\button_refresh.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -157,20 +157,23 @@
   <data name="map_fjordur" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\map_fjordur.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="structure_marker_gas" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\oil-and-gas-icon-12215.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="map_ragnarok" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\map_ragnarok.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="map_valguero" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\map_valguero.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="button_add" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\003-add-file.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Logs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Logs.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="map_tunguska" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\map_tunguska.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="structure_marker_deino" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\48px-Deinonychus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="button_import" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\import.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="structure_marker_lizard" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\structure_marker_lizard.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -211,8 +214,8 @@
   <data name="button_save" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\002-save.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="button_import" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\import.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="map_thecenter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\map_thecenter.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="map_extinction" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\map_extinction.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -220,8 +223,11 @@
   <data name="button_blocks" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\button_blocks.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="map_thecenter" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\map_thecenter.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="structure_marker_trophy" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Trophy.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="structure_marker_gas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\oil-and-gas-icon-12215.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="dino_green_icon_dvr_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\dino_green_icon_dvr_icon.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -241,8 +247,8 @@
   <data name="map_hope" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\map_hope.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="structure_marker_trophy" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Trophy.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="button_cryoon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\button_cryoon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="structure_marker_beaver" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\48px-Giant_Beaver.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -256,8 +262,8 @@
   <data name="structure_marker_magmasaur" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\marker_magmasaur.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="structure_marker_deino" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\48px-Deinonychus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="button_add" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\003-add-file.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="button_edit" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\button_edit.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -286,7 +292,7 @@
   <data name="structure_marker_obelisk" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tower-icon-25704.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ModernXP-73-Globe-icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ModernXP-73-Globe-icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="TribeLogs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TribeLogs.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

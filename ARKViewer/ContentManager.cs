@@ -44,6 +44,9 @@ namespace ARKViewer
         public bool MapChargeNodes { get; set; } = true;
         public bool MapArtifacts { get; set; } = true;
         public bool MapWyvernNests { get; set; } = true;
+
+        
+
         public bool MapDeinoNests { get; set; } = true;
         public bool MapDrakeNests { get; set; } = true;
         public bool MapMagmaNests { get; set; } = true;
@@ -154,6 +157,14 @@ namespace ARKViewer
                                 )
                             ).ToList();
 
+        }
+
+        public ContentTamedCreature GetTamedCreature(long tameId)
+        {
+            return pack.Tribes
+                .SelectMany(c =>
+                                c.Tames.Where(w => (long)w.Id == tameId)
+                            ).ToList().FirstOrDefault();
         }
 
         public List<ContentStructure> GetTerminals() 

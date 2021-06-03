@@ -874,6 +874,16 @@ namespace ARKViewer.Models
                             InventoryId = addInventory(tame.Inventory)
                         };
 
+                        if((tame.DinoAncestors!=null && tame.DinoAncestors.Length > 0))
+                        {
+                            var parents = tame.DinoAncestors.First();
+                            loadedTame.MotherId = (long)parents.FemaleId;
+                            loadedTame.MotherName = parents.FemaleName;
+                            loadedTame.FatherId = (long)parents.MaleId;
+                            loadedTame.FatherName = parents.MaleName;
+                        }
+
+
                         loadedTames.Add(loadedTame);
 
                     });

@@ -131,7 +131,7 @@ namespace ARKViewer
 
             DrawMap(0,0);
 
-            UpdateProgress("Content loaded.");
+            UpdateProgress($"Content loaded: {cm.MapName}");
             if (manager.ContentDate.Equals(new DateTime()))
             {
                 //no map loaded
@@ -2150,7 +2150,14 @@ namespace ARKViewer
 
         private void btnDinoAncestors_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Dino ancestor explorer coming soon.", "Coming Soon!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //MessageBox.Show("Dino ancestor explorer coming soon.", "Coming Soon!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            ListViewItem selectedItem = lvwTameDetail.SelectedItems[0];
+            ContentTamedCreature selectedTame = (ContentTamedCreature)selectedItem.Tag;
+            using (frmAncestorView ancestors = new frmAncestorView(selectedTame, cm))
+            {
+                ancestors.ShowDialog();
+            }
+
         }
 
         private void btnDinoInventory_Click(object sender, EventArgs e)
@@ -2740,10 +2747,10 @@ namespace ARKViewer
             {
 
                 var selectedItem = lvwTameDetail.SelectedItems[0];
-                decimal.TryParse(selectedItem.SubItems[6].Text, out decimal selectedX);
-                decimal.TryParse(selectedItem.SubItems[5].Text, out decimal selectedY);
-
-                DrawMap(selectedX, selectedY);
+                ContentTamedCreature selectedTame = (ContentTamedCreature)selectedItem.Tag;
+                btnDinoAncestors.Enabled = !(selectedTame.FatherId.GetValueOrDefault(0) == 0 && selectedTame.MotherId.GetValueOrDefault(0) == 0);
+                
+                DrawMap((decimal)selectedTame.Longitude.GetValueOrDefault(0),(decimal)selectedTame.Longitude.GetValueOrDefault(0));
 
             }
             this.Cursor = Cursors.Default;

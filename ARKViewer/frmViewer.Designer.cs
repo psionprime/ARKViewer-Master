@@ -61,7 +61,6 @@
             this.lblMapDate = new System.Windows.Forms.Label();
             this.cboWildClass = new System.Windows.Forms.ComboBox();
             this.btnRefresh = new System.Windows.Forms.Button();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.btnSettings = new System.Windows.Forms.Button();
             this.btnPlayerInventory = new System.Windows.Forms.Button();
             this.btnPlayerTribeLog = new System.Windows.Forms.Button();
@@ -97,7 +96,6 @@
             this.lblSelectedWildTotal = new System.Windows.Forms.Label();
             this.lblWildClass = new System.Windows.Forms.Label();
             this.tpgTamed = new System.Windows.Forms.TabPage();
-            this.label1 = new System.Windows.Forms.Label();
             this.lblTamedCommand = new System.Windows.Forms.Label();
             this.cboConsoleCommandsTamed = new System.Windows.Forms.ComboBox();
             this.cboTameTribes = new System.Windows.Forms.ComboBox();
@@ -432,10 +430,11 @@
             // lblMapDate
             // 
             this.lblMapDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblMapDate.AutoSize = true;
             this.lblMapDate.ForeColor = System.Drawing.Color.CadetBlue;
-            this.lblMapDate.Location = new System.Drawing.Point(769, 577);
+            this.lblMapDate.Location = new System.Drawing.Point(991, 577);
             this.lblMapDate.Name = "lblMapDate";
-            this.lblMapDate.Size = new System.Drawing.Size(205, 21);
+            this.lblMapDate.Size = new System.Drawing.Size(24, 13);
             this.lblMapDate.TabIndex = 1;
             this.lblMapDate.Text = "n/a";
             this.lblMapDate.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -457,251 +456,242 @@
             // btnRefresh
             // 
             this.btnRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRefresh.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnRefresh.Image = ((System.Drawing.Image)(resources.GetObject("btnRefresh.Image")));
             this.btnRefresh.Location = new System.Drawing.Point(858, 8);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(50, 50);
             this.btnRefresh.TabIndex = 18;
-            this.toolTip1.SetToolTip(this.btnRefresh, "Load latest save");
             this.btnRefresh.UseVisualStyleBackColor = true;
             this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
-            // 
-            // toolTip1
-            // 
-            this.toolTip1.AutomaticDelay = 10;
-            this.toolTip1.AutoPopDelay = 2000;
-            this.toolTip1.InitialDelay = 10;
-            this.toolTip1.IsBalloon = true;
-            this.toolTip1.ReshowDelay = 2000;
-            this.toolTip1.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
-            this.toolTip1.ToolTipTitle = "Information";
             // 
             // btnSettings
             // 
             this.btnSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSettings.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnSettings.Image = global::ARKViewer.Properties.Resources.button_settings;
             this.btnSettings.Location = new System.Drawing.Point(970, 8);
             this.btnSettings.Name = "btnSettings";
             this.btnSettings.Size = new System.Drawing.Size(50, 50);
             this.btnSettings.TabIndex = 19;
-            this.toolTip1.SetToolTip(this.btnSettings, "View and edit settings");
             this.btnSettings.UseVisualStyleBackColor = true;
             this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
             // 
             // btnPlayerInventory
             // 
             this.btnPlayerInventory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnPlayerInventory.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnPlayerInventory.Enabled = false;
             this.btnPlayerInventory.Image = global::ARKViewer.Properties.Resources.button_family;
-            this.btnPlayerInventory.Location = new System.Drawing.Point(426, 426);
+            this.btnPlayerInventory.Location = new System.Drawing.Point(432, 426);
             this.btnPlayerInventory.Name = "btnPlayerInventory";
-            this.btnPlayerInventory.Size = new System.Drawing.Size(30, 30);
+            this.btnPlayerInventory.Size = new System.Drawing.Size(35, 35);
             this.btnPlayerInventory.TabIndex = 21;
-            this.toolTip1.SetToolTip(this.btnPlayerInventory, "Player View");
             this.btnPlayerInventory.UseVisualStyleBackColor = true;
             this.btnPlayerInventory.Click += new System.EventHandler(this.btnPlayerInventory_Click);
             // 
             // btnPlayerTribeLog
             // 
             this.btnPlayerTribeLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnPlayerTribeLog.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnPlayerTribeLog.Enabled = false;
-            this.btnPlayerTribeLog.Image = global::ARKViewer.Properties.Resources.button_notepad;
-            this.btnPlayerTribeLog.Location = new System.Drawing.Point(388, 426);
+            this.btnPlayerTribeLog.Image = global::ARKViewer.Properties.Resources.TribeLogs;
+            this.btnPlayerTribeLog.Location = new System.Drawing.Point(391, 426);
             this.btnPlayerTribeLog.Name = "btnPlayerTribeLog";
-            this.btnPlayerTribeLog.Size = new System.Drawing.Size(30, 30);
+            this.btnPlayerTribeLog.Size = new System.Drawing.Size(35, 35);
             this.btnPlayerTribeLog.TabIndex = 24;
-            this.toolTip1.SetToolTip(this.btnPlayerTribeLog, "Tribe Log");
             this.btnPlayerTribeLog.UseVisualStyleBackColor = true;
             this.btnPlayerTribeLog.Click += new System.EventHandler(this.btnPlayerTribeLog_Click);
             // 
             // btnStructureExclusionFilter
             // 
             this.btnStructureExclusionFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnStructureExclusionFilter.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnStructureExclusionFilter.Image = ((System.Drawing.Image)(resources.GetObject("btnStructureExclusionFilter.Image")));
-            this.btnStructureExclusionFilter.Location = new System.Drawing.Point(956, 15);
+            this.btnStructureExclusionFilter.Location = new System.Drawing.Point(952, 10);
             this.btnStructureExclusionFilter.Name = "btnStructureExclusionFilter";
-            this.btnStructureExclusionFilter.Size = new System.Drawing.Size(31, 25);
+            this.btnStructureExclusionFilter.Size = new System.Drawing.Size(35, 35);
             this.btnStructureExclusionFilter.TabIndex = 29;
-            this.toolTip1.SetToolTip(this.btnStructureExclusionFilter, "Edit Structure Exclusion List");
             this.btnStructureExclusionFilter.UseVisualStyleBackColor = true;
             this.btnStructureExclusionFilter.Click += new System.EventHandler(this.btnStructureExclusionFilter_Click);
             // 
             // btnCopyCommandPlayer
             // 
             this.btnCopyCommandPlayer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnCopyCommandPlayer.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCopyCommandPlayer.Enabled = false;
             this.btnCopyCommandPlayer.Image = global::ARKViewer.Properties.Resources.button_document;
             this.btnCopyCommandPlayer.Location = new System.Drawing.Point(350, 426);
             this.btnCopyCommandPlayer.Name = "btnCopyCommandPlayer";
-            this.btnCopyCommandPlayer.Size = new System.Drawing.Size(30, 30);
+            this.btnCopyCommandPlayer.Size = new System.Drawing.Size(35, 35);
             this.btnCopyCommandPlayer.TabIndex = 27;
-            this.toolTip1.SetToolTip(this.btnCopyCommandPlayer, "Copy to clipboard");
             this.btnCopyCommandPlayer.UseVisualStyleBackColor = true;
             this.btnCopyCommandPlayer.Click += new System.EventHandler(this.btnCopyCommandPlayer_Click);
             // 
             // btnCopyCommandStructure
             // 
             this.btnCopyCommandStructure.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnCopyCommandStructure.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCopyCommandStructure.Enabled = false;
             this.btnCopyCommandStructure.Image = global::ARKViewer.Properties.Resources.button_document;
-            this.btnCopyCommandStructure.Location = new System.Drawing.Point(345, 428);
+            this.btnCopyCommandStructure.Location = new System.Drawing.Point(345, 426);
             this.btnCopyCommandStructure.Name = "btnCopyCommandStructure";
-            this.btnCopyCommandStructure.Size = new System.Drawing.Size(30, 30);
+            this.btnCopyCommandStructure.Size = new System.Drawing.Size(35, 35);
             this.btnCopyCommandStructure.TabIndex = 32;
-            this.toolTip1.SetToolTip(this.btnCopyCommandStructure, "Copy to clipboard");
             this.btnCopyCommandStructure.UseVisualStyleBackColor = true;
             this.btnCopyCommandStructure.Click += new System.EventHandler(this.btnCopyCommandStructure_Click);
             // 
             // btnDinoAncestors
             // 
             this.btnDinoAncestors.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnDinoAncestors.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnDinoAncestors.Image = global::ARKViewer.Properties.Resources.button_family;
-            this.btnDinoAncestors.Location = new System.Drawing.Point(553, 427);
+            this.btnDinoAncestors.Location = new System.Drawing.Point(559, 426);
             this.btnDinoAncestors.Name = "btnDinoAncestors";
-            this.btnDinoAncestors.Size = new System.Drawing.Size(30, 30);
+            this.btnDinoAncestors.Size = new System.Drawing.Size(35, 35);
             this.btnDinoAncestors.TabIndex = 26;
-            this.toolTip1.SetToolTip(this.btnDinoAncestors, "Ancester Line");
             this.btnDinoAncestors.UseVisualStyleBackColor = true;
             this.btnDinoAncestors.Click += new System.EventHandler(this.btnDinoAncestors_Click);
             // 
             // btnDinoInventory
             // 
             this.btnDinoInventory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnDinoInventory.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnDinoInventory.Image = ((System.Drawing.Image)(resources.GetObject("btnDinoInventory.Image")));
-            this.btnDinoInventory.Location = new System.Drawing.Point(587, 427);
+            this.btnDinoInventory.Location = new System.Drawing.Point(600, 426);
             this.btnDinoInventory.Name = "btnDinoInventory";
-            this.btnDinoInventory.Size = new System.Drawing.Size(30, 30);
+            this.btnDinoInventory.Size = new System.Drawing.Size(35, 35);
             this.btnDinoInventory.TabIndex = 25;
-            this.toolTip1.SetToolTip(this.btnDinoInventory, "Inventory Data");
             this.btnDinoInventory.UseVisualStyleBackColor = true;
             this.btnDinoInventory.Click += new System.EventHandler(this.btnDinoInventory_Click);
             // 
             // btnCopyCommandWild
             // 
             this.btnCopyCommandWild.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnCopyCommandWild.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCopyCommandWild.Enabled = false;
             this.btnCopyCommandWild.Image = global::ARKViewer.Properties.Resources.button_document;
-            this.btnCopyCommandWild.Location = new System.Drawing.Point(350, 429);
+            this.btnCopyCommandWild.Location = new System.Drawing.Point(350, 426);
             this.btnCopyCommandWild.Name = "btnCopyCommandWild";
-            this.btnCopyCommandWild.Size = new System.Drawing.Size(30, 30);
+            this.btnCopyCommandWild.Size = new System.Drawing.Size(35, 35);
             this.btnCopyCommandWild.TabIndex = 35;
-            this.toolTip1.SetToolTip(this.btnCopyCommandWild, "Copy to clipboard");
             this.btnCopyCommandWild.UseVisualStyleBackColor = true;
             this.btnCopyCommandWild.Click += new System.EventHandler(this.btnCopyCommandWild_Click);
             // 
             // btnCopyCommandTamed
             // 
             this.btnCopyCommandTamed.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnCopyCommandTamed.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCopyCommandTamed.Enabled = false;
             this.btnCopyCommandTamed.Image = global::ARKViewer.Properties.Resources.button_document;
-            this.btnCopyCommandTamed.Location = new System.Drawing.Point(518, 428);
+            this.btnCopyCommandTamed.Location = new System.Drawing.Point(518, 426);
             this.btnCopyCommandTamed.Name = "btnCopyCommandTamed";
-            this.btnCopyCommandTamed.Size = new System.Drawing.Size(30, 30);
+            this.btnCopyCommandTamed.Size = new System.Drawing.Size(35, 35);
             this.btnCopyCommandTamed.TabIndex = 35;
-            this.toolTip1.SetToolTip(this.btnCopyCommandTamed, "Copy to clipboard");
             this.btnCopyCommandTamed.UseVisualStyleBackColor = true;
             this.btnCopyCommandTamed.Click += new System.EventHandler(this.btnCopyCommandTamed_Click);
             // 
             // chkCryo
             // 
+            this.chkCryo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chkCryo.Appearance = System.Windows.Forms.Appearance.Button;
             this.chkCryo.BackgroundImage = global::ARKViewer.Properties.Resources.button_cryooff;
             this.chkCryo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.chkCryo.Location = new System.Drawing.Point(816, 16);
+            this.chkCryo.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.chkCryo.Location = new System.Drawing.Point(951, 8);
             this.chkCryo.Name = "chkCryo";
-            this.chkCryo.Size = new System.Drawing.Size(23, 22);
+            this.chkCryo.Size = new System.Drawing.Size(36, 35);
             this.chkCryo.TabIndex = 36;
-            this.toolTip1.SetToolTip(this.chkCryo, "Show/Hide Stored Creatures");
             this.chkCryo.UseVisualStyleBackColor = true;
             this.chkCryo.CheckedChanged += new System.EventHandler(this.chkCryo_CheckedChanged);
             // 
             // btnCopyCommandDropped
             // 
             this.btnCopyCommandDropped.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnCopyCommandDropped.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCopyCommandDropped.Enabled = false;
             this.btnCopyCommandDropped.Image = global::ARKViewer.Properties.Resources.button_document;
-            this.btnCopyCommandDropped.Location = new System.Drawing.Point(350, 428);
+            this.btnCopyCommandDropped.Location = new System.Drawing.Point(350, 426);
             this.btnCopyCommandDropped.Name = "btnCopyCommandDropped";
-            this.btnCopyCommandDropped.Size = new System.Drawing.Size(30, 30);
+            this.btnCopyCommandDropped.Size = new System.Drawing.Size(35, 35);
             this.btnCopyCommandDropped.TabIndex = 43;
-            this.toolTip1.SetToolTip(this.btnCopyCommandDropped, "Copy to clipboard");
             this.btnCopyCommandDropped.UseVisualStyleBackColor = true;
             this.btnCopyCommandDropped.Click += new System.EventHandler(this.btnCopyCommandDropped_Click);
             // 
             // btnTribeCopyCommand
             // 
             this.btnTribeCopyCommand.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnTribeCopyCommand.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnTribeCopyCommand.Enabled = false;
             this.btnTribeCopyCommand.Image = global::ARKViewer.Properties.Resources.button_document;
             this.btnTribeCopyCommand.Location = new System.Drawing.Point(350, 426);
             this.btnTribeCopyCommand.Name = "btnTribeCopyCommand";
-            this.btnTribeCopyCommand.Size = new System.Drawing.Size(30, 30);
+            this.btnTribeCopyCommand.Size = new System.Drawing.Size(35, 35);
             this.btnTribeCopyCommand.TabIndex = 32;
-            this.toolTip1.SetToolTip(this.btnTribeCopyCommand, "Copy to clipboard");
             this.btnTribeCopyCommand.UseVisualStyleBackColor = true;
             this.btnTribeCopyCommand.Click += new System.EventHandler(this.btnTribeCopyCommand_Click);
             // 
             // btnTribeLog
             // 
             this.btnTribeLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnTribeLog.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnTribeLog.Enabled = false;
-            this.btnTribeLog.Image = global::ARKViewer.Properties.Resources.button_notepad;
-            this.btnTribeLog.Location = new System.Drawing.Point(388, 426);
+            this.btnTribeLog.Image = global::ARKViewer.Properties.Resources.TribeLogs;
+            this.btnTribeLog.Location = new System.Drawing.Point(391, 426);
             this.btnTribeLog.Name = "btnTribeLog";
-            this.btnTribeLog.Size = new System.Drawing.Size(30, 30);
+            this.btnTribeLog.Size = new System.Drawing.Size(35, 35);
             this.btnTribeLog.TabIndex = 29;
-            this.toolTip1.SetToolTip(this.btnTribeLog, "Tribe Log");
             this.btnTribeLog.UseVisualStyleBackColor = true;
             this.btnTribeLog.Click += new System.EventHandler(this.btnTribeLog_Click);
             // 
             // btnStructureInventory
             // 
             this.btnStructureInventory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnStructureInventory.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnStructureInventory.Enabled = false;
             this.btnStructureInventory.Image = ((System.Drawing.Image)(resources.GetObject("btnStructureInventory.Image")));
-            this.btnStructureInventory.Location = new System.Drawing.Point(381, 428);
+            this.btnStructureInventory.Location = new System.Drawing.Point(386, 426);
             this.btnStructureInventory.Name = "btnStructureInventory";
-            this.btnStructureInventory.Size = new System.Drawing.Size(30, 30);
+            this.btnStructureInventory.Size = new System.Drawing.Size(35, 35);
             this.btnStructureInventory.TabIndex = 34;
-            this.toolTip1.SetToolTip(this.btnStructureInventory, "Inventory Data");
             this.btnStructureInventory.UseVisualStyleBackColor = true;
             this.btnStructureInventory.Click += new System.EventHandler(this.btnStructureInventory_Click);
             // 
             // btnDeletePlayer
             // 
             this.btnDeletePlayer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnDeletePlayer.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnDeletePlayer.Enabled = false;
             this.btnDeletePlayer.Image = global::ARKViewer.Properties.Resources.button_remove;
-            this.btnDeletePlayer.Location = new System.Drawing.Point(464, 426);
+            this.btnDeletePlayer.Location = new System.Drawing.Point(473, 426);
             this.btnDeletePlayer.Name = "btnDeletePlayer";
-            this.btnDeletePlayer.Size = new System.Drawing.Size(30, 30);
+            this.btnDeletePlayer.Size = new System.Drawing.Size(35, 35);
             this.btnDeletePlayer.TabIndex = 29;
-            this.toolTip1.SetToolTip(this.btnDeletePlayer, "Remove Player");
             this.btnDeletePlayer.UseVisualStyleBackColor = true;
             this.btnDeletePlayer.Click += new System.EventHandler(this.btnDeletePlayer_Click);
             // 
             // btnDropInventory
             // 
             this.btnDropInventory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnDropInventory.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnDropInventory.Enabled = false;
             this.btnDropInventory.Image = ((System.Drawing.Image)(resources.GetObject("btnDropInventory.Image")));
-            this.btnDropInventory.Location = new System.Drawing.Point(386, 428);
+            this.btnDropInventory.Location = new System.Drawing.Point(391, 426);
             this.btnDropInventory.Name = "btnDropInventory";
-            this.btnDropInventory.Size = new System.Drawing.Size(30, 30);
+            this.btnDropInventory.Size = new System.Drawing.Size(35, 35);
             this.btnDropInventory.TabIndex = 49;
-            this.toolTip1.SetToolTip(this.btnDropInventory, "Inventory Data");
             this.btnDropInventory.UseVisualStyleBackColor = true;
             this.btnDropInventory.Click += new System.EventHandler(this.btnDropInventory_Click);
             // 
             // btnViewMap
             // 
             this.btnViewMap.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnViewMap.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnViewMap.Image = global::ARKViewer.Properties.Resources.ModernXP_73_Globe_icon;
             this.btnViewMap.Location = new System.Drawing.Point(914, 8);
             this.btnViewMap.Name = "btnViewMap";
             this.btnViewMap.Size = new System.Drawing.Size(50, 50);
             this.btnViewMap.TabIndex = 42;
-            this.toolTip1.SetToolTip(this.btnViewMap, "View and edit settings");
             this.btnViewMap.UseVisualStyleBackColor = true;
             this.btnViewMap.Click += new System.EventHandler(this.btnViewMap_Click);
             // 
@@ -946,7 +936,6 @@
             // 
             // tpgTamed
             // 
-            this.tpgTamed.Controls.Add(this.label1);
             this.tpgTamed.Controls.Add(this.chkCryo);
             this.tpgTamed.Controls.Add(this.btnCopyCommandTamed);
             this.tpgTamed.Controls.Add(this.lblTamedCommand);
@@ -968,16 +957,6 @@
             this.tpgTamed.TabIndex = 3;
             this.tpgTamed.Text = "Tamed Creatures";
             this.tpgTamed.UseVisualStyleBackColor = true;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(762, 21);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(48, 13);
-            this.label1.TabIndex = 37;
-            this.label1.Text = "Stored:";
             // 
             // lblTamedCommand
             // 
@@ -1392,7 +1371,7 @@
             this.cboStructureStructure.FormattingEnabled = true;
             this.cboStructureStructure.Location = new System.Drawing.Point(553, 16);
             this.cboStructureStructure.Name = "cboStructureStructure";
-            this.cboStructureStructure.Size = new System.Drawing.Size(397, 21);
+            this.cboStructureStructure.Size = new System.Drawing.Size(386, 21);
             this.cboStructureStructure.TabIndex = 26;
             this.cboStructureStructure.SelectedIndexChanged += new System.EventHandler(this.cboStructureStructure_SelectedIndexChanged);
             // 
@@ -1502,11 +1481,12 @@
             this.chkTribeStructures.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.chkTribeStructures.BackColor = System.Drawing.Color.PaleGreen;
             this.chkTribeStructures.CheckAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.chkTribeStructures.Cursor = System.Windows.Forms.Cursors.Hand;
             this.chkTribeStructures.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.chkTribeStructures.ForeColor = System.Drawing.Color.ForestGreen;
-            this.chkTribeStructures.Location = new System.Drawing.Point(664, 427);
+            this.chkTribeStructures.Location = new System.Drawing.Point(691, 426);
             this.chkTribeStructures.Name = "chkTribeStructures";
-            this.chkTribeStructures.Size = new System.Drawing.Size(121, 29);
+            this.chkTribeStructures.Size = new System.Drawing.Size(121, 35);
             this.chkTribeStructures.TabIndex = 35;
             this.chkTribeStructures.Text = "Structure Markers";
             this.chkTribeStructures.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1518,11 +1498,12 @@
             this.chkTribeTames.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.chkTribeTames.BackColor = System.Drawing.Color.Gold;
             this.chkTribeTames.CheckAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.chkTribeTames.Cursor = System.Windows.Forms.Cursors.Hand;
             this.chkTribeTames.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.chkTribeTames.ForeColor = System.Drawing.Color.Chocolate;
-            this.chkTribeTames.Location = new System.Drawing.Point(553, 428);
+            this.chkTribeTames.Location = new System.Drawing.Point(580, 426);
             this.chkTribeTames.Name = "chkTribeTames";
-            this.chkTribeTames.Size = new System.Drawing.Size(105, 29);
+            this.chkTribeTames.Size = new System.Drawing.Size(105, 35);
             this.chkTribeTames.TabIndex = 34;
             this.chkTribeTames.Text = "Tame Markers";
             this.chkTribeTames.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1536,11 +1517,12 @@
             this.chkTribePlayers.CheckAlign = System.Drawing.ContentAlignment.TopCenter;
             this.chkTribePlayers.Checked = true;
             this.chkTribePlayers.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkTribePlayers.Cursor = System.Windows.Forms.Cursors.Hand;
             this.chkTribePlayers.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.chkTribePlayers.ForeColor = System.Drawing.Color.LightCyan;
-            this.chkTribePlayers.Location = new System.Drawing.Point(433, 427);
+            this.chkTribePlayers.Location = new System.Drawing.Point(460, 426);
             this.chkTribePlayers.Name = "chkTribePlayers";
-            this.chkTribePlayers.Size = new System.Drawing.Size(114, 31);
+            this.chkTribePlayers.Size = new System.Drawing.Size(114, 35);
             this.chkTribePlayers.TabIndex = 33;
             this.chkTribePlayers.Text = "Player Markers";
             this.chkTribePlayers.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1552,7 +1534,7 @@
             this.lblTribeCopyCommand.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblTribeCopyCommand.AutoSize = true;
             this.lblTribeCopyCommand.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTribeCopyCommand.Location = new System.Drawing.Point(14, 433);
+            this.lblTribeCopyCommand.Location = new System.Drawing.Point(14, 435);
             this.lblTribeCopyCommand.Name = "lblTribeCopyCommand";
             this.lblTribeCopyCommand.Size = new System.Drawing.Size(65, 13);
             this.lblTribeCopyCommand.TabIndex = 31;
@@ -1574,7 +1556,7 @@
             "TribeDinoAudit  <TribeID>",
             "RM <FileCsvList>",
             "DEL <FileCsvList>"});
-            this.cboTribeCopyCommand.Location = new System.Drawing.Point(82, 430);
+            this.cboTribeCopyCommand.Location = new System.Drawing.Point(82, 432);
             this.cboTribeCopyCommand.Name = "cboTribeCopyCommand";
             this.cboTribeCopyCommand.Size = new System.Drawing.Size(262, 21);
             this.cboTribeCopyCommand.TabIndex = 30;
@@ -1673,7 +1655,7 @@
             this.lblCommandPlayer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblCommandPlayer.AutoSize = true;
             this.lblCommandPlayer.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCommandPlayer.Location = new System.Drawing.Point(14, 433);
+            this.lblCommandPlayer.Location = new System.Drawing.Point(14, 434);
             this.lblCommandPlayer.Name = "lblCommandPlayer";
             this.lblCommandPlayer.Size = new System.Drawing.Size(65, 13);
             this.lblCommandPlayer.TabIndex = 26;
@@ -1716,7 +1698,7 @@
             "UnbanPlayer <SteamID>",
             "RM <FileCsvList>",
             "DEL <FileCsvList>"});
-            this.cboConsoleCommandsPlayerTribe.Location = new System.Drawing.Point(82, 430);
+            this.cboConsoleCommandsPlayerTribe.Location = new System.Drawing.Point(82, 431);
             this.cboConsoleCommandsPlayerTribe.Name = "cboConsoleCommandsPlayerTribe";
             this.cboConsoleCommandsPlayerTribe.Size = new System.Drawing.Size(262, 21);
             this.cboConsoleCommandsPlayerTribe.TabIndex = 25;
@@ -2042,12 +2024,13 @@
             // lblStatus
             // 
             this.lblStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblStatus.AutoSize = true;
             this.lblStatus.BackColor = System.Drawing.Color.PowderBlue;
             this.lblStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblStatus.ForeColor = System.Drawing.Color.CadetBlue;
             this.lblStatus.Location = new System.Drawing.Point(12, 577);
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(570, 22);
+            this.lblStatus.Size = new System.Drawing.Size(64, 13);
             this.lblStatus.TabIndex = 22;
             this.lblStatus.Text = "Loading...";
             // 
@@ -2148,7 +2131,6 @@
         private System.Windows.Forms.Label lblMapDate;
         private System.Windows.Forms.ColumnHeader lvwWildDetail_Level;
         private System.Windows.Forms.ComboBox cboWildClass;
-        private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.TabControl tabFeatures;
         private System.Windows.Forms.TabPage tpgWild;
@@ -2315,7 +2297,6 @@
         private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.Label lblSubTitle;
         private System.Windows.Forms.Button btnViewMap;
-        private System.Windows.Forms.Label label1;
     }
 }
 

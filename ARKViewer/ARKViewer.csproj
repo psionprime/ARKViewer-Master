@@ -63,6 +63,12 @@
     <Compile Include="Configuration\ViewerWindow.cs" />
     <Compile Include="CustomNameMaps\ColourMap.cs" />
     <Compile Include="ContentManager.cs" />
+    <Compile Include="frmAncestorView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAncestorView.Designer.cs">
+      <DependentUpon>frmAncestorView.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmColourEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -174,6 +180,7 @@
     <Compile Include="CustomNameMaps\LogColourMap.cs" />
     <Compile Include="CustomNameMaps\LogTextColourMap.cs" />
     <Compile Include="MapMarker.cs" />
+    <Compile Include="Models\ContentAncestor.cs" />
     <Compile Include="Models\ContentDroppedItem.cs" />
     <Compile Include="Models\ContentInventory.cs" />
     <Compile Include="Models\ContentItem.cs" />
@@ -197,6 +204,9 @@
     <Compile Include="StructureMarker.cs" />
     <Compile Include="CustomNameMaps\TribeMap.cs" />
     <Compile Include="Configuration\ViewerConfiguration.cs" />
+    <EmbeddedResource Include="frmAncestorView.resx">
+      <DependentUpon>frmAncestorView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmColourEditor.resx">
       <DependentUpon>frmColourEditor.cs</DependentUpon>
     </EmbeddedResource>
@@ -558,6 +568,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ModernXP-73-Globe-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Logs.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TribeLogs.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
