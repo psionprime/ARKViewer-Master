@@ -211,10 +211,12 @@ namespace ARKViewer
             double clickY = e.Location.Y / (zoomLevel);
             double clickX = e.Location.X / (zoomLevel);
 
-            double latitude = clickY / (1024 / zoomLevel);
-            double longtitude = clickX / (10 / zoomLevel);
-            
-            OnMapClicked?.Invoke((decimal)longtitude, (decimal)latitude);
+            double latitude = clickY / 10.25;
+            double longitude = clickX / 10.25;
+
+            var t = Screen.PrimaryScreen.BitsPerPixel;
+
+            OnMapClicked?.Invoke((decimal)latitude, (decimal)longitude);
         }
 
         private void trackZoom_ValueChanged(object sender, EventArgs e)
@@ -258,5 +260,9 @@ namespace ARKViewer
             }
         }
 
+        private void picMap_Click(object sender, EventArgs e)
+        {
+            
+        }
     }
 }

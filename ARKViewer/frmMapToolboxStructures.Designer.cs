@@ -76,6 +76,7 @@ namespace ARKViewer
             this.lblInventory = new System.Windows.Forms.Label();
             this.btnCopyCommand = new System.Windows.Forms.Button();
             this.cboConsoleCommands = new System.Windows.Forms.ComboBox();
+            this.lblStatus = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel13.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).BeginInit();
@@ -596,7 +597,7 @@ namespace ARKViewer
             this.chkGroup.AutoSize = true;
             this.chkGroup.Checked = true;
             this.chkGroup.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkGroup.Location = new System.Drawing.Point(282, 502);
+            this.chkGroup.Location = new System.Drawing.Point(282, 486);
             this.chkGroup.Name = "chkGroup";
             this.chkGroup.Size = new System.Drawing.Size(91, 17);
             this.chkGroup.TabIndex = 47;
@@ -607,12 +608,12 @@ namespace ARKViewer
             // 
             this.txtContents.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtContents.Location = new System.Drawing.Point(16, 522);
+            this.txtContents.Location = new System.Drawing.Point(16, 509);
             this.txtContents.Multiline = true;
             this.txtContents.Name = "txtContents";
             this.txtContents.ReadOnly = true;
             this.txtContents.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtContents.Size = new System.Drawing.Size(357, 159);
+            this.txtContents.Size = new System.Drawing.Size(357, 154);
             this.txtContents.TabIndex = 46;
             // 
             // lblInventory
@@ -620,7 +621,7 @@ namespace ARKViewer
             this.lblInventory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblInventory.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblInventory.ForeColor = System.Drawing.Color.Black;
-            this.lblInventory.Location = new System.Drawing.Point(13, 494);
+            this.lblInventory.Location = new System.Drawing.Point(13, 481);
             this.lblInventory.Name = "lblInventory";
             this.lblInventory.Size = new System.Drawing.Size(125, 25);
             this.lblInventory.TabIndex = 45;
@@ -651,12 +652,25 @@ namespace ARKViewer
             this.cboConsoleCommands.Size = new System.Drawing.Size(322, 21);
             this.cboConsoleCommands.TabIndex = 43;
             // 
+            // lblStatus
+            // 
+            this.lblStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblStatus.ForeColor = System.Drawing.Color.DimGray;
+            this.lblStatus.Location = new System.Drawing.Point(13, 672);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(362, 13);
+            this.lblStatus.TabIndex = 48;
+            this.lblStatus.Text = "Loading...";
+            // 
             // frmMapToolboxStructures
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightBlue;
             this.ClientSize = new System.Drawing.Size(387, 690);
+            this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.chkGroup);
             this.Controls.Add(this.txtContents);
             this.Controls.Add(this.lblInventory);
@@ -759,5 +773,6 @@ namespace ARKViewer
         private System.Windows.Forms.Label lblInventory;
         private System.Windows.Forms.Button btnCopyCommand;
         private System.Windows.Forms.ComboBox cboConsoleCommands;
+        private System.Windows.Forms.Label lblStatus;
     }
 }

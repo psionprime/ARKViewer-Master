@@ -96,6 +96,7 @@ namespace ARKViewer
             this.picMap.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picMap.TabIndex = 1;
             this.picMap.TabStop = false;
+            this.picMap.Click += new System.EventHandler(this.picMap_Click);
             this.picMap.MouseClick += new System.Windows.Forms.MouseEventHandler(this.picMap_MouseClick);
             this.picMap.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picMap_MouseDown);
             this.picMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.picMap_MouseMove);

@@ -186,14 +186,9 @@ namespace ARKViewer
                                 break;
                             default:
                                 //non asv pack, load from toolkit
-                                ArkGameData gd = new ArkGameData(saveFullFilename, loadOnlyPropertiesInDomain: false);
-
-                                if (gd.Update(CancellationToken.None, null, true)?.Success == true)
-                                {
-                                    gd.ApplyPreviousUpdate();
-                                    loadedPack = new ContentPack(gd,tribeId,playerId,filterLat,filterLon,filterRad,packStructureLocations, packStructureContent,packTribesPlayers, packTamed, packWild, packPlayerStructures);
-                                    loadedPack.ContentDate = File.GetLastWriteTimeUtc(saveFullFilename);
-                                }
+                                ArkGameData gd = LoadArkData(saveFullFilename);//new ArkGameData(saveFullFilename, loadOnlyPropertiesInDomain: false);
+                                loadedPack = new ContentPack(gd,tribeId,playerId,filterLat,filterLon,filterRad,packStructureLocations, packStructureContent,packTribesPlayers, packTamed, packWild, packPlayerStructures);
+                                loadedPack.ContentDate = File.GetLastWriteTimeUtc(saveFullFilename);
 
                                 gd = null;
                                 break;

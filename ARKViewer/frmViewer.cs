@@ -100,8 +100,6 @@ namespace ARKViewer
         public void LoadContent(ContentManager manager)
         {
             cm = manager;
-            MapViewer = frmMapView.GetForm(cm);
-            MapViewer.Owner = this;
 
             this.Cursor = Cursors.WaitCursor;
             UpdateProgress("Loading content.");
@@ -135,7 +133,7 @@ namespace ARKViewer
             if (manager.ContentDate.Equals(new DateTime()))
             {
                 //no map loaded
-                UpdateProgress("!! NO MAP FOUND !! - Please Refresh.");
+                UpdateProgress("Content failed to load.  Please check settings or refresh download to try again.");
             }
             this.Cursor = Cursors.Default;
         }
@@ -854,12 +852,12 @@ namespace ARKViewer
         }
 
         private void DrawMap(decimal selectedX, decimal selectedY) {
-            if (cm == null)
+            if (cm == null || MapViewer==null || MapViewer.IsDisposed)
             {
                 return;
             }
 
-            lblStatus.Text = "Updating map display.";
+            lblStatus.Text = "Updating selections...";
             lblStatus.Refresh();
 
             Bitmap bitmap = new Bitmap(1024, 1024);
@@ -2024,8 +2022,18 @@ namespace ARKViewer
             }
             UpdateProgress("Loading content pack...");
             cm = new ContentManager(Program.LoadContentPack(Program.ProgramConfig.SelectedFile));
-            LoadContent(cm);
-            UpdateProgress("Content loaded.");
+            
+            if(cm.ContentDate.Equals(new DateTime()))
+            {
+                //unable to load pack
+                UpdateProgress("Content failed to load.  Please check settings or refresh download to try again.");
+            }
+            else
+            {
+                LoadContent(cm);
+                UpdateProgress("Content loaded.");
+
+            }
 
             this.Cursor = Cursors.Default;
 
@@ -2613,7 +2621,7 @@ namespace ARKViewer
 
             Clipboard.SetText(commandList);
 
-            lblStatus.Text = $"Command copied to the clipboard: {commandList}";
+            lblStatus.Text = $"Command copied:  {commandList}";
             lblStatus.Refresh();
         }
 
@@ -2650,7 +2658,7 @@ namespace ARKViewer
                 }
 
                 Clipboard.SetText(commandText);
-                lblStatus.Text = $"Command copied to the clipboard: {commandText}";
+                lblStatus.Text = $"Command copied:  {commandText}";
                 lblStatus.Refresh();
 
             }
@@ -2772,7 +2780,7 @@ namespace ARKViewer
             double clickX = e.Location.X / (zoomLevel);
             
             double latitude = clickY / 10.25;
-            double longtitude = clickX / 10.25;
+            double longitude = clickX / 10.25;
 
             switch (tabFeatures.SelectedTab.Name)
             {
@@ -2789,7 +2797,7 @@ namespace ARKViewer
                                 double itemLon = Convert.ToDouble(item.SubItems[5].Text);
 
                                 double latDistance = Math.Abs(itemLat - latitude);
-                                double lonDistance = Math.Abs(itemLon- longtitude);
+                                double lonDistance = Math.Abs(itemLon- longitude);
 
                                 
                                 if(latDistance <= 0.5 && lonDistance <= 0.5){
@@ -2822,7 +2830,7 @@ namespace ARKViewer
                                 double itemLon = Convert.ToDouble(item.SubItems[6].Text);
 
                                 double latDistance = itemLat - latitude;
-                                double lonDistance = itemLon - longtitude;
+                                double lonDistance = itemLon - longitude;
 
 
                                 if ((latDistance >=0 && latDistance <= 0.5) && (lonDistance >=0 && lonDistance <= 0.5))
@@ -2854,7 +2862,7 @@ namespace ARKViewer
                                 double itemLon = Convert.ToDouble(item.SubItems[4].Text);
 
                                 double latDistance = itemLat - latitude;
-                                double lonDistance = itemLon - longtitude;
+                                double lonDistance = itemLon - longitude;
 
 
                                 if ((latDistance >= 0 && latDistance <= 0.5) && (lonDistance >= 0 && lonDistance <= 0.5))
@@ -2888,7 +2896,7 @@ namespace ARKViewer
                                 double itemLon = Convert.ToDouble(item.SubItems[5].Text);
 
                                 double latDistance = Math.Abs(itemLat - latitude);
-                                double lonDistance = Math.Abs(itemLon - longtitude);
+                                double lonDistance = Math.Abs(itemLon - longitude);
 
                                 if (latDistance <= 0.75 && lonDistance <= 0.75)
                                 {
@@ -2953,7 +2961,7 @@ namespace ARKViewer
 
                 Clipboard.SetText(commandText);
 
-                lblStatus.Text = $"Command copied to the clipboard: {commandText}";
+                lblStatus.Text = $"Command copied:  {commandText}";
                 lblStatus.Refresh();
 
             }
@@ -2994,7 +3002,7 @@ namespace ARKViewer
 
                 Clipboard.SetText(commandText);
 
-                lblStatus.Text = $"Command copied to the clipboard: {commandText}";
+                lblStatus.Text = $"Command copied:  {commandText}";
                 lblStatus.Refresh();
 
             }
@@ -3205,7 +3213,7 @@ namespace ARKViewer
 
                 Clipboard.SetText(commandText);
 
-                lblStatus.Text = $"Command copied to the clipboard: {commandText}";
+                lblStatus.Text = $"Command copied:  {commandText}";
                 lblStatus.Refresh();
 
             }
@@ -3404,7 +3412,7 @@ namespace ARKViewer
 
                 Clipboard.SetText(commandList);
                 
-                lblStatus.Text = $"Command copied to the clipboard: {commandList}";
+                lblStatus.Text = $"Command copied:  {commandList}";
                 lblStatus.Refresh();
             }
         }
@@ -4372,10 +4380,131 @@ namespace ARKViewer
             if (MapViewer == null || MapViewer.IsDisposed)
             {
                 MapViewer = frmMapView.GetForm(cm);
+                MapViewer.Owner = this;
+
+                MapViewer.OnMapClicked += MapViewer_OnMapClicked;
+
                 DrawMap(0,0);
             }
             MapViewer.Show();
             MapViewer.BringToFront();
+        }
+
+        private void MapViewer_OnMapClicked(decimal latitutde, decimal longitude)
+        {
+            AttemptReverseMapSelection(latitutde, longitude);
+        }
+
+        private void AttemptReverseMapSelection(decimal latitude, decimal longitude)
+        {
+
+            switch (tabFeatures.SelectedTab.Name)
+            {
+                case "tpgWild":
+
+                    if (lvwWildDetail.Items.Count > 0)
+                    {
+                        //get nearest 
+                        foreach (ListViewItem item in lvwWildDetail.Items)
+                        {
+                            ContentWildCreature wild = (ContentWildCreature)item.Tag;
+
+                            decimal latDistance = Math.Abs((decimal)wild.Latitude.GetValueOrDefault(0) - latitude);
+                            decimal lonDistance = Math.Abs((decimal)wild.Longitude.GetValueOrDefault(0) - longitude);
+
+                            if (latDistance <= (decimal)0.5 && lonDistance <= (decimal)0.5)
+                            {
+                                lvwWildDetail.SelectedItems.Clear();
+                                item.Selected = true;
+                                item.EnsureVisible();
+                                break;
+                            }
+
+                        }
+
+                    }
+
+
+                    break;
+                case "tpgTamed":
+
+                    if (lvwTameDetail.Items.Count > 0)
+                    {
+                        //get nearest 
+                        foreach (ListViewItem item in lvwTameDetail.Items)
+                        {
+                            ContentTamedCreature tame = (ContentTamedCreature)item.Tag;
+
+                            decimal latDistance = Math.Abs((decimal)tame.Latitude.GetValueOrDefault(0) - latitude);
+                            decimal lonDistance = Math.Abs((decimal)tame.Longitude.GetValueOrDefault(0) - longitude);
+
+                            if (latDistance <= (decimal)0.5 && lonDistance <= (decimal)0.5)
+                            {
+                                lvwTameDetail.SelectedItems.Clear();
+                                item.Selected = true;
+                                item.EnsureVisible();
+                                break;
+                            }
+                        }
+                    }
+
+                    break;
+                case "tpgStructures":
+                    if (lvwStructureLocations.Items.Count > 0)
+                    {
+                        //get nearest 
+                        foreach (ListViewItem item in lvwStructureLocations.Items)
+                        {
+                            ContentStructure structure = (ContentStructure)item.Tag;
+
+                            decimal latDistance = Math.Abs((decimal)structure.Latitude.GetValueOrDefault(0) - latitude);
+                            decimal lonDistance = Math.Abs((decimal)structure.Longitude.GetValueOrDefault(0) - longitude);
+
+                            if (latDistance <= (decimal)0.5 && lonDistance <= (decimal)0.5)
+                            {
+                                lvwStructureLocations.SelectedItems.Clear();
+                                item.Selected = true;
+                                item.EnsureVisible();
+                                break;
+                            }
+
+                        }
+
+
+                    }
+
+
+                    break;
+                case "tpgPlayers":
+                    if (lvwPlayers.Items.Count > 0)
+                    {
+
+                        //get nearest 
+                        foreach (ListViewItem item in lvwPlayers.Items)
+                        {
+                            ContentPlayer player = (ContentPlayer)item.Tag;
+
+                            decimal latDistance = Math.Abs((decimal)player.Latitude.GetValueOrDefault(0) - latitude);
+                            decimal lonDistance = Math.Abs((decimal)player.Longitude.GetValueOrDefault(0) - longitude);
+
+                            if (latDistance <= (decimal)0.5 && lonDistance <= (decimal)0.5)
+                            {
+                                lvwStructureLocations.SelectedItems.Clear();
+                                item.Selected = true;
+                                item.EnsureVisible();
+                                break;
+                            }
+
+                        }
+                    }
+
+                    break;
+
+                default:
+                    break;
+            }
+
+
         }
 
         private void frmViewer_Enter(object sender, EventArgs e)

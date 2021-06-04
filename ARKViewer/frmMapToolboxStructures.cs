@@ -144,7 +144,8 @@ namespace ARKViewer
                 }
 
                 Clipboard.SetText(commandText);
-                MessageBox.Show($"Command copied to the clipboard:\n\n{commandText}", "Command Copied", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                lblStatus.Text = $"Command copied: {commandText}";
+                lblStatus.Refresh();
 
             }
 
@@ -152,7 +153,9 @@ namespace ARKViewer
 
         private void PopulateMapStructures()
         {
-            
+            lblStatus.Text = "Populating selected map structures...";
+            lblStatus.Refresh();
+
             //update program config
             var c = Program.ProgramConfig;
 
@@ -417,8 +420,10 @@ namespace ARKViewer
 
             if (!structureBag.IsEmpty) lvwStructureLocations.Items.AddRange(structureBag.ToArray());
 
-
             MapViewer.DrawTestMap(0,0);
+
+            lblStatus.Text = "";
+            lblStatus.Refresh();
         }
 
         private void UpdateSelection()

@@ -98,7 +98,9 @@ namespace ARKViewer.Models
             IncludeWild = includeWild;
             IncludePlayerStructures = includePlayerStructures;
 
+            
             LoadGameData(gd);
+
         }
 
         public ContentPack(ArkGameData gd, int selectedTribeId, int selectedPlayerId, decimal lat, decimal lon, decimal rad): this(gd, selectedTribeId, selectedPlayerId, lat, lon, rad,true,true,true,true,true,true)

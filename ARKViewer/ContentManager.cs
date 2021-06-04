@@ -1007,9 +1007,9 @@ namespace ARKViewer
             {
 
                 float latitude = item.Latitude.GetValueOrDefault(0);
-                float longtitude = item.Longitude.GetValueOrDefault(0);
+                float longitude = item.Longitude.GetValueOrDefault(0);
 
-                var markerX = (decimal)(longtitude) * 1024 / 100;
+                var markerX = (decimal)(longitude) * 1024 / 100;
                 var markerY = (decimal)(latitude) * 1024 / 100;
 
                 Color markerColor = Color.Blue;
@@ -1047,9 +1047,9 @@ namespace ARKViewer
             {
 
                 float latitude = item.Latitude.GetValueOrDefault(0);
-                float longtitude = item.Longitude.GetValueOrDefault(0);
+                float longitude = item.Longitude.GetValueOrDefault(0);
 
-                var markerX = (decimal)(longtitude) * 1024 / 100;
+                var markerX = (decimal)(longitude) * 1024 / 100;
                 var markerY = (decimal)(latitude) * 1024 / 100;
 
                 Color markerColor = Color.Blue;
