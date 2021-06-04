@@ -130,9 +130,6 @@
   <data name="map_caballus" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\map_caballus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="map_astralark" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\map_astralark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="button_stroller" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\button_stroller.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -294,5 +291,11 @@
   </data>
   <data name="TribeLogs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\TribeLogs.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="map_gen2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\map_gen2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="map_astralark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\map_astralark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

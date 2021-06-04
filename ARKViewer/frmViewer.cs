@@ -1287,25 +1287,25 @@ namespace ARKViewer
                     }
                     else if (detail.IsVivarium)
                     {
-                        item.BackColor = Color.LightPink;
-                        item.SubItems[1].BackColor = Color.LightPink;
-                        item.SubItems[2].BackColor = Color.LightPink;
-                        item.SubItems[3].BackColor = Color.LightPink;
-                        item.SubItems[4].BackColor = Color.LightPink;
-                        item.SubItems[5].BackColor = Color.LightPink;
-                        item.SubItems[6].BackColor = Color.LightPink;
-                        item.SubItems[7].BackColor = Color.LightPink;
-                        item.SubItems[8].BackColor = Color.LightPink;
-                        item.SubItems[9].BackColor = Color.LightPink;
-                        item.SubItems[10].BackColor = Color.LightPink;
-                        item.SubItems[11].BackColor = Color.LightPink;
-                        item.SubItems[12].BackColor = Color.LightPink;
-                        item.SubItems[13].BackColor = Color.LightPink;
-                        item.SubItems[14].BackColor = Color.LightPink;
-                        item.SubItems[15].BackColor = Color.LightPink;
-                        item.SubItems[16].BackColor = Color.LightPink;
-                        item.SubItems[17].BackColor = Color.LightPink;
-                        item.SubItems[18].BackColor = Color.LightPink;
+                        item.BackColor = Color.LightGreen;
+                        item.SubItems[1].BackColor = Color.LightGreen;
+                        item.SubItems[2].BackColor = Color.LightGreen;
+                        item.SubItems[3].BackColor = Color.LightGreen;
+                        item.SubItems[4].BackColor = Color.LightGreen;
+                        item.SubItems[5].BackColor = Color.LightGreen;
+                        item.SubItems[6].BackColor = Color.LightGreen;
+                        item.SubItems[7].BackColor = Color.LightGreen;
+                        item.SubItems[8].BackColor = Color.LightGreen;
+                        item.SubItems[9].BackColor = Color.LightGreen;
+                        item.SubItems[10].BackColor = Color.LightGreen;
+                        item.SubItems[11].BackColor = Color.LightGreen;
+                        item.SubItems[12].BackColor = Color.LightGreen;
+                        item.SubItems[13].BackColor = Color.LightGreen;
+                        item.SubItems[14].BackColor = Color.LightGreen;
+                        item.SubItems[15].BackColor = Color.LightGreen;
+                        item.SubItems[16].BackColor = Color.LightGreen;
+                        item.SubItems[17].BackColor = Color.LightGreen;
+                        item.SubItems[18].BackColor = Color.LightGreen;
                     }
 
 
@@ -2742,6 +2742,8 @@ namespace ARKViewer
             this.Cursor = Cursors.WaitCursor;
 
             btnCopyCommandTamed.Enabled = lvwTameDetail.SelectedItems.Count > 0;
+            btnDinoInventory.Enabled = false;
+            btnDinoAncestors.Enabled = false;
 
             if (lvwTameDetail.SelectedItems.Count > 0)
             {
@@ -2749,8 +2751,9 @@ namespace ARKViewer
                 var selectedItem = lvwTameDetail.SelectedItems[0];
                 ContentTamedCreature selectedTame = (ContentTamedCreature)selectedItem.Tag;
                 btnDinoAncestors.Enabled = !(selectedTame.FatherId.GetValueOrDefault(0) == 0 && selectedTame.MotherId.GetValueOrDefault(0) == 0);
+                btnDinoInventory.Enabled = selectedTame.InventoryId.GetValueOrDefault(0) != 0;
                 
-                DrawMap((decimal)selectedTame.Longitude.GetValueOrDefault(0),(decimal)selectedTame.Longitude.GetValueOrDefault(0));
+                DrawMap((decimal)selectedTame.Longitude.GetValueOrDefault(0),(decimal)selectedTame.Latitude.GetValueOrDefault(0));
 
             }
             this.Cursor = Cursors.Default;

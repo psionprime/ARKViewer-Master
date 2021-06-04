@@ -102,7 +102,18 @@ namespace ARKViewer
                     if (commandArguments.Length > 3)
                     {
                         //ark save game specified
-                        var packIniFilename = commandArguments[3].ToString().Trim().Replace("\"", "");
+                        saveFullFilename = commandArguments[3].ToString().Trim().Replace("\"", "");
+
+                    }
+                    else
+                    {
+                        //use configured
+                        saveFullFilename = ARKViewer.Program.ProgramConfig.SelectedFile;
+                    }
+
+                    if(commandOptionCheck == "pack")
+                    {
+                        var packIniFilename = commandArguments[2].ToString().Replace("\"" ,"");
                         if (File.Exists(packIniFilename))
                         {
                             string packConfigText = File.ReadAllText(packIniFilename);
@@ -111,6 +122,7 @@ namespace ARKViewer
                                 JObject packConfig = JObject.Parse(packConfigText);
 
                                 saveFullFilename = packConfig.Property("mapFilename").Value.ToString();
+                                exportFilename = packConfig.Property("exportFilename").Value.ToString();
                                 tribeId = (long)packConfig.Property("tribeId").Value;
                                 playerId = (long)packConfig.Property("tribeId").Value;
                                 filterLat = (decimal)packConfig.Property("filterLat").Value;
@@ -119,14 +131,16 @@ namespace ARKViewer
                                 packStructureLocations = (bool)packConfig.Property("filterLat").Value;
                                 packStructureContent = (bool)packConfig.Property("filterLat").Value;
                                 packDroppedItems = (bool)packConfig.Property("filterLat").Value;
-                                packTribesPlayers = (bool)packConfig.Property("filterLat").Value; 
-                                packTamed = (bool)packConfig.Property("filterLat").Value; 
+                                packTribesPlayers = (bool)packConfig.Property("filterLat").Value;
+                                packTamed = (bool)packConfig.Property("filterLat").Value;
                                 packWild = (bool)packConfig.Property("filterLat").Value;
                                 packPlayerStructures = (bool)packConfig.Property("filterLat").Value;
 
 
                                 /*
                                 {
+                                    "mapFilename": "C:\\Temp\\TestMap.ark",
+                                    "exportFilename": "C:\\Temp\\TestPack.asv",
                                     "tribeId": 0,
                                     "playerId": 0, 
                                     "filterLat": 50.0, 
@@ -149,22 +163,16 @@ namespace ARKViewer
 
 
                         }
-
-
-
-
-
-
-
-
-
-
-                        saveFullFilename = "";                    
                     }
                     else
                     {
-                        //use configured
-                        saveFullFilename = ARKViewer.Program.ProgramConfig.SelectedFile;
+
+                        if (commandArguments.Length > 2)
+                        {
+                            //export filename
+                            exportFilename = commandArguments[2].ToString().Trim().Replace("\"", "");
+                            exportFilePath = Path.GetDirectoryName(exportFilename);
+                        }
                     }
 
                     if (File.Exists(saveFullFilename))
@@ -193,12 +201,6 @@ namespace ARKViewer
 
                         ContentManager contentManager = new ContentManager(loadedPack);
 
-                        if (commandArguments.Length > 2)
-                        {
-                            //export filename
-                            exportFilename = commandArguments[2].ToString().Trim().Replace("\"", "");
-                            exportFilePath = Path.GetDirectoryName(exportFilename);
-                        }
                         if (!Directory.Exists(exportFilePath)) Directory.CreateDirectory(exportFilePath);
 
                         switch (commandOptionCheck)
@@ -289,14 +291,25 @@ namespace ARKViewer
         {
             if (File.Exists(contentFilename))
             {
-                ArkGameData gd = new ArkGameData(contentFilename, loadOnlyPropertiesInDomain: false);
-
-                if (gd.Update(CancellationToken.None, null, true)?.Success == true)
+                try
                 {
-                    gd.ApplyPreviousUpdate();
+                    ArkGameData gd = new ArkGameData(contentFilename, loadOnlyPropertiesInDomain: false);
+
+                    if (gd.Update(CancellationToken.None, null, true)?.Success == true)
+                    {
+                        gd.ApplyPreviousUpdate();
+                    }
+
+                    return gd;
+
+                }catch(Exception ex)
+                {
+                    //toolkit failed to parse/load .ark file.. maybe corrupt?
+
+
+
                 }
 
-                return gd;
             }
 
             return null;
@@ -318,13 +331,10 @@ namespace ARKViewer
                     ArkGameData gd = LoadArkData(contentFilename);
                     if (gd!=null)
                     {
-                        if (gd.Update(CancellationToken.None, null, true)?.Success == true)
-                        {
-                            Application.DoEvents();
-                            gd.ApplyPreviousUpdate();
-                            loadedPack = new ContentPack(gd, 0, 0, 50, 50, 250);
-                            loadedPack.ContentDate = File.GetLastWriteTimeUtc(contentFilename);
-                        }
+                        Application.DoEvents();
+                        loadedPack = new ContentPack(gd, 0, 0, 50, 50, 250);
+                        loadedPack.ContentDate = File.GetLastWriteTimeUtc(contentFilename);
+
                         gd = null;
                     }
                     else

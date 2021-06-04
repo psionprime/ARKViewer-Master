@@ -102,6 +102,9 @@ namespace ARKViewer
                 case "tiamatprime":
                     MapImage = new Bitmap(ARKViewer.Properties.Resources.map_tiamat, new Size(1024, 1024));
                     break;
+                case "gen2":
+                    MapImage = new Bitmap(ARKViewer.Properties.Resources.map_gen2, new Size(1024, 1024));
+                    break;
                 default:
                     MapImage = new Bitmap(1024, 1024);
                     break;

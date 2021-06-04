@@ -69,6 +69,7 @@ namespace ARKViewer
             this.trackZoom.TabIndex = 3;
             this.trackZoom.TickStyle = System.Windows.Forms.TickStyle.None;
             this.trackZoom.Value = 5;
+            this.trackZoom.Scroll += new System.EventHandler(this.trackZoom_Scroll);
             this.trackZoom.ValueChanged += new System.EventHandler(this.trackZoom_ValueChanged);
             // 
             // pnlMap

@@ -546,9 +546,6 @@
     <None Include="Resources\map_crystalisles.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\map_astralark.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\map_hope.png" />
   </ItemGroup>
   <ItemGroup>
@@ -574,6 +571,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\TribeLogs.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\map_gen2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\map_astralark.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

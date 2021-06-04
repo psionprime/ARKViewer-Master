@@ -192,8 +192,6 @@ namespace ARKViewer
                 item.SubItems[14].BackColor = Color.LightSkyBlue;
                 item.SubItems[15].BackColor = Color.LightSkyBlue;
                 item.SubItems[16].BackColor = Color.LightSkyBlue;
-                item.SubItems[17].BackColor = Color.LightSkyBlue;
-                item.SubItems[18].BackColor = Color.LightSkyBlue;
             }
             if (tameDetail.IsVivarium)
             {
@@ -214,8 +212,6 @@ namespace ARKViewer
                 item.SubItems[14].BackColor = Color.LightGreen;
                 item.SubItems[15].BackColor = Color.LightGreen;
                 item.SubItems[16].BackColor = Color.LightGreen;
-                item.SubItems[17].BackColor = Color.LightGreen;
-                item.SubItems[18].BackColor = Color.LightGreen;
             }
             if (tameDetail.BaseStats == null) //fake tame, used for ancestry only as unable to identify living parent
             {

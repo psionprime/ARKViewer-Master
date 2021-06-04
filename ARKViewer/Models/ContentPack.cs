@@ -181,9 +181,6 @@ namespace ARKViewer.Models
             //load content pack from Ark savegame 
             MapFilename = gd.SaveState.MapName;
 
-            
-
-
             if (IncludeGameStructures)
             {
 

@@ -363,6 +363,16 @@ namespace ARKViewer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap map_gen2 {
+            get {
+                object obj = ResourceManager.GetObject("map_gen2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap map_genesis {
             get {
                 object obj = ResourceManager.GetObject("map_genesis", resourceCulture);

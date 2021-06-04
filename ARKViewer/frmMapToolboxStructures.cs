@@ -20,6 +20,7 @@ namespace ARKViewer
 
         frmMapView MapViewer = null;
         bool isLoading = false;
+        bool isUpdating = false;
         ContentManager cm = null;
 
 
@@ -151,21 +152,11 @@ namespace ARKViewer
 
         private void PopulateMapStructures()
         {
+            
             //update program config
             var c = Program.ProgramConfig;
 
-            c.Obelisks = chkMapTerminals.Checked;
-            c.OilVeins = chkMapOilVeins.Checked;
-            c.GasVeins = chkMapGasVeins.Checked;
-            c.WaterVeins = chkMapWaterVeins.Checked;
-            c.ChargeNodes = chkMapChargeNodes.Checked;
-            c.Artifacts = chkMapArtifacts.Checked;
-            c.WyvernNests = chkMapWyvernNests.Checked;
-            c.DeinoNests = chkMapDeinoNests.Checked;
-            c.DrakeNests = chkMapDrakeNests.Checked;
-            c.MagmaNests = chkMapMagmaNests.Checked;
-            c.BeaverDams = chkMapBeaverDams.Checked;
-            c.Glitches = chkMapGlitches.Checked;
+
             lvwStructureLocations.Items.Clear();
 
             ConcurrentBag<ListViewItem> structureBag = new ConcurrentBag<ListViewItem>();
@@ -504,64 +495,88 @@ namespace ARKViewer
             txtContents.Text = inventString.ToString();
         }
 
+        private void UpdateConfig()
+        {
+            if (isLoading) return;
+
+            //update program config
+            var c = Program.ProgramConfig;
+
+            c.Obelisks = chkMapTerminals.Checked;
+            c.OilVeins = chkMapOilVeins.Checked;
+            c.GasVeins = chkMapGasVeins.Checked;
+            c.WaterVeins = chkMapWaterVeins.Checked;
+            c.ChargeNodes = chkMapChargeNodes.Checked;
+            c.Artifacts = chkMapArtifacts.Checked;
+            c.WyvernNests = chkMapWyvernNests.Checked;
+            c.DeinoNests = chkMapDeinoNests.Checked;
+            c.DrakeNests = chkMapDrakeNests.Checked;
+            c.MagmaNests = chkMapMagmaNests.Checked;
+            c.BeaverDams = chkMapBeaverDams.Checked;
+            c.Glitches = chkMapGlitches.Checked;
+
+            PopulateMapStructures();
+
+        }
+
         private void chkMapTerminals_CheckedChanged(object sender, EventArgs e)
         {
-            PopulateMapStructures();
+            UpdateConfig();
         }
 
         private void chkMapOilVeins_CheckedChanged(object sender, EventArgs e)
         {
-            PopulateMapStructures();
+            UpdateConfig();
         }
 
         private void chkMapGasVeins_CheckedChanged(object sender, EventArgs e)
         {
-            PopulateMapStructures();
+            UpdateConfig();
         }
 
         private void chkMapWaterVeins_CheckedChanged(object sender, EventArgs e)
         {
-            PopulateMapStructures();
+            UpdateConfig();
         }
 
         private void chkMapChargeNodes_CheckedChanged(object sender, EventArgs e)
         {
-            PopulateMapStructures();
+            UpdateConfig();
         }
 
         private void chkMapArtifacts_CheckedChanged(object sender, EventArgs e)
         {
-            PopulateMapStructures();
+            UpdateConfig();
         }
 
         private void chkMapWyvernNests_CheckedChanged(object sender, EventArgs e)
         {
-            PopulateMapStructures();
+            UpdateConfig();
         }
 
         private void chkMapDeinoNests_CheckedChanged(object sender, EventArgs e)
         {
-            PopulateMapStructures();
+            UpdateConfig();
         }
 
         private void chkMapDrakeNests_CheckedChanged(object sender, EventArgs e)
         {
-            PopulateMapStructures();
+            UpdateConfig();
         }
 
         private void chkMapMagmaNests_CheckedChanged(object sender, EventArgs e)
         {
-            PopulateMapStructures();
+            UpdateConfig();
         }
 
         private void chkMapBeaverDams_CheckedChanged(object sender, EventArgs e)
         {
-            PopulateMapStructures();
+            UpdateConfig();
         }
 
         private void chkMapGlitches_CheckedChanged(object sender, EventArgs e)
         {
-            PopulateMapStructures();
+            UpdateConfig();
         }
 
         private void lvwStructureLocations_SelectedIndexChanged(object sender, EventArgs e)

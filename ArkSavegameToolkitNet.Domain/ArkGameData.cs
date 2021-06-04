@@ -73,6 +73,8 @@ namespace ArkSavegameToolkitNet.Domain
                 save = new ArkSavegame(_saveFilePath, null, _savegameMaxDegreeOfParallelism, exclusivePropertyNameTree);
                 save.LoadEverything();
 
+                //var test = save.Objects.GroupBy(x => x.ClassName).Select(s => new { ClassName= s.Key, Items = s.ToList()});
+
                 ct.ThrowIfCancellationRequested();
 
                 var arktribes = Directory.GetFiles(directoryPath, "*.arktribe", SearchOption.TopDirectoryOnly).Select(x =>

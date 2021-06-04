@@ -430,14 +430,13 @@
             // lblMapDate
             // 
             this.lblMapDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblMapDate.AutoSize = true;
             this.lblMapDate.ForeColor = System.Drawing.Color.CadetBlue;
-            this.lblMapDate.Location = new System.Drawing.Point(991, 577);
+            this.lblMapDate.Location = new System.Drawing.Point(838, 577);
             this.lblMapDate.Name = "lblMapDate";
-            this.lblMapDate.Size = new System.Drawing.Size(24, 13);
+            this.lblMapDate.Size = new System.Drawing.Size(177, 19);
             this.lblMapDate.TabIndex = 1;
             this.lblMapDate.Text = "n/a";
-            this.lblMapDate.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lblMapDate.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // cboWildClass
             // 

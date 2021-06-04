@@ -153,6 +153,7 @@ namespace ARKViewer
             picMap.Width = (int)newSize;
             picMap.Height = (int)newSize;
 
+            Program.ProgramConfig.Zoom = trackZoom.Value;
         }
 
         public void DrawTestMap(decimal selectedX, decimal selectedY)
@@ -256,5 +257,6 @@ namespace ARKViewer
                 DrawTestMap(0, 0);
             }
         }
+
     }
 }
