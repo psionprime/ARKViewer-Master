@@ -75,6 +75,12 @@
     <Compile Include="frmColourEditor.Designer.cs">
       <DependentUpon>frmColourEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmFtpFileBrowser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmFtpFileBrowser.Designer.cs">
+      <DependentUpon>frmFtpFileBrowser.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmGenericClassMap.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -192,6 +198,7 @@
     <Compile Include="Models\ContentTribe.cs" />
     <Compile Include="Models\ContentWildCreature.cs" />
     <Compile Include="CustomNameMaps\PlayerMap.cs" />
+    <Compile Include="Models\FtpBrowseItem.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -209,6 +216,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmColourEditor.resx">
       <DependentUpon>frmColourEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmFtpFileBrowser.resx">
+      <DependentUpon>frmFtpFileBrowser.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmGenericClassMap.resx">
       <DependentUpon>frmGenericClassMap.cs</DependentUpon>

@@ -84,6 +84,7 @@ namespace ARKViewer
             isLoading = true;
 
             LoadWindowSettings();
+            chkCryo.Checked = Program.ProgramConfig.StoredTames;
 
             Application.DoEvents();
 
@@ -3139,6 +3140,8 @@ namespace ARKViewer
         private void chkCryo_CheckedChanged(object sender, EventArgs e)
         {
             chkCryo.BackgroundImage = chkCryo.Checked ? ARKViewer.Properties.Resources.button_cryoon : ARKViewer.Properties.Resources.button_cryooff;
+            Program.ProgramConfig.StoredTames = chkCryo.Checked;
+
             LoadTameDetail();
         }
 
@@ -3244,7 +3247,7 @@ namespace ARKViewer
         {
             if (cm == null) return;
             if (lvwTribes.SelectedItems.Count == 0) return;
-            TribeMap selectedTribe = (TribeMap)lvwTribes.SelectedItems[0].Tag;
+            ContentTribe selectedTribe = (ContentTribe)lvwTribes.SelectedItems[0].Tag;
             
             var tribe = cm.GetTribes(selectedTribe.TribeId).FirstOrDefault<ContentTribe>();
             if (tribe != null)
@@ -4510,6 +4513,11 @@ namespace ARKViewer
         private void frmViewer_Enter(object sender, EventArgs e)
         {
             this.BringToFront();
+        }
+
+        private void frmViewer_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

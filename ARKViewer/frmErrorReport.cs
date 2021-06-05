@@ -16,6 +16,8 @@ namespace ARKViewer
         {
             InitializeComponent();
 
+            string saveFile = Program.LastLoadedSaveFilename;
+
             rtbError.SelectionFont = new Font(new FontFamily("Calibri"), 10, FontStyle.Bold);
             rtbError.SelectedText = "Mode: ";
             rtbError.SelectionStart = rtbError.TextLength;
@@ -27,7 +29,7 @@ namespace ARKViewer
             rtbError.SelectedText = "Save:\n";
             rtbError.SelectionStart = rtbError.TextLength;
             rtbError.SelectionFont = new Font(new FontFamily("Calibri"), 10, FontStyle.Regular);
-            rtbError.SelectedText = Program.ProgramConfig.SelectedFile + "\n\n";
+            rtbError.SelectedText = saveFile + "\n\n";
             rtbError.SelectionStart = rtbError.TextLength;
 
 

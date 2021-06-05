@@ -38,6 +38,7 @@ namespace ARKViewer
             this.btnMapStructures = new System.Windows.Forms.Button();
             this.lblTitle = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.btnSave = new System.Windows.Forms.Button();
             this.pnlZoom.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackZoom)).BeginInit();
             this.pnlMap.SuspendLayout();
@@ -106,7 +107,7 @@ namespace ARKViewer
             this.btnMapMarkers.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnMapMarkers.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnMapMarkers.Image = ((System.Drawing.Image)(resources.GetObject("btnMapMarkers.Image")));
-            this.btnMapMarkers.Location = new System.Drawing.Point(578, 8);
+            this.btnMapMarkers.Location = new System.Drawing.Point(526, 8);
             this.btnMapMarkers.Name = "btnMapMarkers";
             this.btnMapMarkers.Size = new System.Drawing.Size(50, 50);
             this.btnMapMarkers.TabIndex = 48;
@@ -118,7 +119,7 @@ namespace ARKViewer
             this.btnMapStructures.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnMapStructures.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnMapStructures.Image = ((System.Drawing.Image)(resources.GetObject("btnMapStructures.Image")));
-            this.btnMapStructures.Location = new System.Drawing.Point(522, 8);
+            this.btnMapStructures.Location = new System.Drawing.Point(470, 8);
             this.btnMapStructures.Name = "btnMapStructures";
             this.btnMapStructures.Size = new System.Drawing.Size(50, 50);
             this.btnMapStructures.TabIndex = 47;
@@ -145,12 +146,26 @@ namespace ARKViewer
             this.pictureBox1.TabIndex = 50;
             this.pictureBox1.TabStop = false;
             // 
+            // btnSave
+            // 
+            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSave.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSave.Enabled = false;
+            this.btnSave.Image = global::ARKViewer.Properties.Resources.button_save;
+            this.btnSave.Location = new System.Drawing.Point(582, 8);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(50, 50);
+            this.btnSave.TabIndex = 51;
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
             // frmMapView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightBlue;
             this.ClientSize = new System.Drawing.Size(637, 680);
+            this.Controls.Add(this.btnSave);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.lblTitle);
             this.Controls.Add(this.btnMapMarkers);
@@ -181,5 +196,6 @@ namespace ARKViewer
         private System.Windows.Forms.Button btnMapStructures;
         private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Button btnSave;
     }
 }

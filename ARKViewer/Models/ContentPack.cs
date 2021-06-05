@@ -47,6 +47,7 @@ namespace ARKViewer.Models
         bool IncludeTamed { get; set; } = true;
         bool IncludeWild { get; set; } = true;
         bool IncludePlayerStructures { get; set; } = true;
+        bool IncludeDroppedItems { get; set; } = true;
         decimal FilterLatitude { get; set; } = 50;
         decimal FilterLongitude { get; set; } = 50;
         decimal FilterRadius { get; set; } = 100;
@@ -82,7 +83,7 @@ namespace ARKViewer.Models
             DroppedItems = new List<ContentDroppedItem>();
         }
 
-        public ContentPack(ArkGameData gd, long selectedTribeId, long selectedPlayerId, decimal lat, decimal lon, decimal rad, bool includeGameStructures, bool includeGameStructureContent, bool includeTribesPlayers, bool includeTamed, bool includeWild, bool includePlayerStructures): this()
+        public ContentPack(ArkGameData gd, long selectedTribeId, long selectedPlayerId, decimal lat, decimal lon, decimal rad, bool includeGameStructures, bool includeGameStructureContent, bool includeTribesPlayers, bool includeTamed, bool includeWild, bool includePlayerStructures, bool includeDropped): this()
         {
             ExportedForTribe = selectedTribeId;
             ExportedForPlayer = selectedPlayerId;
@@ -103,7 +104,7 @@ namespace ARKViewer.Models
 
         }
 
-        public ContentPack(ArkGameData gd, int selectedTribeId, int selectedPlayerId, decimal lat, decimal lon, decimal rad): this(gd, selectedTribeId, selectedPlayerId, lat, lon, rad,true,true,true,true,true,true)
+        public ContentPack(ArkGameData gd, int selectedTribeId, int selectedPlayerId, decimal lat, decimal lon, decimal rad): this(gd, selectedTribeId, selectedPlayerId, lat, lon, rad,true,true,true,true,true,true,true)
         {
 
         }
@@ -190,54 +191,67 @@ namespace ARKViewer.Models
                 //TerminalMarkers
                 ConcurrentBag<ContentStructure> loadedStructures = new ConcurrentBag<ContentStructure>();
 
-                var mapDetectedTerminals = gd.Structures.Where(s => s.ClassName.ToLower().Contains("terminal"));
-                Parallel.ForEach(mapDetectedTerminals, terminal =>
+                var mapDetectedTerminals = gd.Structures.Where(s => s.ClassName.ToLower().Contains("terminal") && s.Location!=null);
+                if (mapDetectedTerminals != null)
                 {
-                    loadedStructures.Add(new ContentStructure()
+                    Parallel.ForEach(mapDetectedTerminals, terminal =>
                     {
-                        ClassName = "ASV_Terminal",
-                        Latitude = (float)terminal.Location.Latitude.GetValueOrDefault(0),
-                        Longitude = (float)terminal.Location.Longitude.GetValueOrDefault(0),
-                        X = terminal.Location.X,
-                        Y = terminal.Location.Y,
-                        Z = terminal.Location.Z,
-                        InventoryId = IncludeGameStructureContent?addInventory(terminal.Inventory):0
-                    });
+                        loadedStructures.Add(new ContentStructure()
+                        {
+                            ClassName = "ASV_Terminal",
+                            Latitude = terminal.Location!= null ? (float)terminal.Location.Latitude.GetValueOrDefault(0): 0,
+                            Longitude = terminal.Location != null ? (float)terminal.Location.Longitude.GetValueOrDefault(0) : 0,
+                            X = terminal.Location.X,
+                            Y = terminal.Location.Y,
+                            Z = terminal.Location.Z,
+                            InventoryId = IncludeGameStructureContent ? addInventory(terminal.Inventory) : 0
+                        });
 
-                });
+                    });
+                }               
 
 
                 //user defined terminals
-                var mapTerminals = loadedStructures.ToList();                
-                var terminals = Program.ProgramConfig.TerminalMarkers
-                    .Where(m =>
-                        m.Map.ToLower().StartsWith(MapFilename.ToLower())
-                        //exclude any that match map detected terminal location
-                        &! mapTerminals.Any(t=>t.Latitude.ToString().StartsWith(m.Lat.ToString()) && t.Longitude.ToString().StartsWith(m.Lon.ToString()))
-                    ).ToList();
-
-
-                Parallel.ForEach(terminals, terminal =>
+                if (Program.ProgramConfig.TerminalMarkers != null)
                 {
-                    loadedStructures.Add(new ContentStructure()
+                    var mapTerminals = loadedStructures.ToList();
+                    var terminals = Program.ProgramConfig.TerminalMarkers
+                        .Where(m =>
+                            m.Map.ToLower().StartsWith(MapFilename.ToLower())
+                            //exclude any that match map detected terminal location
+                            & !mapTerminals.Any(t => t.Latitude.ToString().StartsWith(m.Lat.ToString()) && t.Longitude.ToString().StartsWith(m.Lon.ToString()))
+                        ).ToList();
+
+                    if (terminals != null)
                     {
-                        ClassName = "ASV_Terminal",
-                        Latitude = (float)terminal.Lat,
-                        Longitude = (float)terminal.Lon,
-                        X = terminal.X,
-                        Y = terminal.Y,
-                        Z = terminal.Z,
-                        InventoryId = 0
-                    });
+                        Parallel.ForEach(terminals, terminal =>
+                        {
+                            loadedStructures.Add(new ContentStructure()
+                            {
+                                ClassName = "ASV_Terminal",
+                                Latitude = (float)terminal.Lat,
+                                Longitude = (float)terminal.Lon,
+                                X = terminal.X,
+                                Y = terminal.Y,
+                                Z = terminal.Z,
+                                InventoryId = 0
+                            });
+
+                        });
+                    }
                     
-                });
+                }
+                
+                
                 if (!loadedStructures.IsEmpty) TerminalMarkers.AddRange(loadedStructures.ToList());
+
 
                 //Charge nodes
                 loadedStructures = new ConcurrentBag<ContentStructure>();
                 var chargeNodes = gd.Structures
                     .Where(s =>
                         s.ClassName.StartsWith("PrimalItem_PowerNodeCharge")
+                        && s.Location!=null
                         && (Math.Abs((decimal)s.Location.Latitude - FilterLatitude) <= FilterRadius)
                         && (Math.Abs((decimal)s.Location.Longitude - FilterLongitude) <= FilterRadius)
                     ).ToList();
@@ -771,186 +785,194 @@ namespace ARKViewer.Models
             }
 
             
-            //player structures            
-            Parallel.ForEach(Tribes, tribe =>
+            //player structures
+            if(Tribes!=null && Tribes.Count > 0)
             {
-
-                if (IncludePlayerStructures)
+                Parallel.ForEach(Tribes, tribe =>
                 {
 
-                    ConcurrentBag<ContentStructure> loadedStructures = new ConcurrentBag<ContentStructure>();
-
-                    var tribeStructures = gd.Structures
-                    .Where(s =>
-                            s.TargetingTeam.HasValue && (s.TargetingTeam == tribe.TribeId)
-                            && (Math.Abs((decimal)s.Location.Latitude - FilterLatitude) <= FilterRadius)
-                            && (Math.Abs((decimal)s.Location.Longitude - FilterLongitude) <= FilterRadius)
-                        ).ToList();
-
-                    //Tribe Structures
-                    Parallel.ForEach(tribeStructures, structure =>
+                    if (IncludePlayerStructures)
                     {
-                        loadedStructures.Add(new ContentStructure()
-                        {
-                            ClassName = structure.ClassName,
-                            Latitude = structure.Location.Latitude,
-                            Longitude = structure.Location.Longitude,
-                            X = structure.Location.X,
-                            Y = structure.Location.Y,
-                            Z = structure.Location.Z,
-                            TargetingTeam = tribe.TribeId,
-                            InventoryId = addInventory(structure.Inventory)
-                        });
-                    });
 
-                    //add rafts which for some reason are under "Tamed" in the toolkit.
-                    var rafts = gd.Rafts
-                        .Where(t =>
-                            (t.TargetingTeam == tribe.TribeId || tribe.Players.Any(p => p.Id == t.OwningPlayerId || p.Id == t.ImprinterPlayerDataId))
-                            && (Math.Abs((decimal)t.Location.Latitude - FilterLatitude) <= FilterRadius)
-                            && (Math.Abs((decimal)t.Location.Longitude - FilterLongitude) <= FilterRadius)
-                            
-                        ).ToList();
-                    Parallel.ForEach(rafts, structure =>
+                        ConcurrentBag<ContentStructure> loadedStructures = new ConcurrentBag<ContentStructure>();
+
+                        var tribeStructures = gd.Structures
+                        .Where(s =>
+                                s.TargetingTeam.HasValue && (s.TargetingTeam == tribe.TribeId)
+                                && (Math.Abs((decimal)s.Location.Latitude - FilterLatitude) <= FilterRadius)
+                                && (Math.Abs((decimal)s.Location.Longitude - FilterLongitude) <= FilterRadius)
+                            ).ToList();
+
+                        //Tribe Structures
+                        Parallel.ForEach(tribeStructures, structure =>
+                        {
+                            loadedStructures.Add(new ContentStructure()
+                            {
+                                ClassName = structure.ClassName,
+                                Latitude = structure.Location.Latitude,
+                                Longitude = structure.Location.Longitude,
+                                X = structure.Location.X,
+                                Y = structure.Location.Y,
+                                Z = structure.Location.Z,
+                                TargetingTeam = tribe.TribeId,
+                                InventoryId = addInventory(structure.Inventory)
+                            });
+                        });
+
+                        //add rafts which for some reason are under "Tamed" in the toolkit.
+                        var rafts = gd.Rafts
+                            .Where(t =>
+                                (t.TargetingTeam == tribe.TribeId || tribe.Players.Any(p => p.Id == t.OwningPlayerId || p.Id == t.ImprinterPlayerDataId))
+                                && (Math.Abs((decimal)t.Location.Latitude - FilterLatitude) <= FilterRadius)
+                                && (Math.Abs((decimal)t.Location.Longitude - FilterLongitude) <= FilterRadius)
+
+                            ).ToList();
+                        Parallel.ForEach(rafts, structure =>
+                        {
+                            loadedStructures.Add(new ContentStructure()
+                            {
+                                ClassName = structure.ClassName,
+                                Latitude = structure.Location.Latitude,
+                                Longitude = structure.Location.Longitude,
+                                X = structure.Location.X,
+                                Y = structure.Location.Y,
+                                Z = structure.Location.Z,
+                                InventoryId = addInventory(structure.Inventory)
+                            });
+                        });
+
+
+                        if (!loadedStructures.IsEmpty) tribe.Structures.AddRange(loadedStructures.ToList());
+                    }
+
+                    if (IncludeTamed)
                     {
-                        loadedStructures.Add(new ContentStructure()
+                        //tamed
+                        ConcurrentBag<ContentTamedCreature> loadedTames = new ConcurrentBag<ContentTamedCreature>();
+                        var tamed = gd.NoRafts
+                            .Where(t =>
+                                (t.TargetingTeam == tribe.TribeId || tribe.Players.Any(p => p.Id == t.OwningPlayerId || p.Id == t.ImprinterPlayerDataId))
+                                && (Math.Abs((decimal)t.Location.Latitude - FilterLatitude) <= FilterRadius)
+                                && (Math.Abs((decimal)t.Location.Longitude - FilterLongitude) <= FilterRadius)
+                            ).ToList();
+
+                        //Tamed
+                        Parallel.ForEach(tamed, tame =>
                         {
-                            ClassName = structure.ClassName,
-                            Latitude = structure.Location.Latitude,
-                            Longitude = structure.Location.Longitude,
-                            X = structure.Location.X,
-                            Y = structure.Location.Y,
-                            Z = structure.Location.Z,
-                            InventoryId = addInventory(structure.Inventory)
+                            var loadedTame = new ContentTamedCreature()
+                            {
+                                Id = (long)tame.Id,
+                                ClassName = tame.ClassName,
+                                BaseLevel = tame.BaseLevel,
+                                Gender = tame.Gender.ToString(),
+                                ImprintedPlayerId = (int)tame.ImprinterPlayerDataId.GetValueOrDefault(0),
+                                ImprinterName = tame.ImprinterName,
+                                ImprintQuality = (decimal)tame.DinoImprintingQuality.GetValueOrDefault(0),
+                                Level = tame.Level,
+                                Name = tame.Name,
+                                TamedOnServerName = tame.TamedOnServerName,
+                                TribeName = tame.TribeName,
+                                TamerName = tame.TamerName,
+                                TargetingTeam = tame.TargetingTeam,
+                                IsCryo = tame.IsCryo,
+                                IsVivarium = tame.IsVivarium,
+                                Latitude = tame.Location.Latitude.GetValueOrDefault(0),
+                                Longitude = tame.Location.Longitude.GetValueOrDefault(0),
+                                X = tame.Location.X,
+                                Y = tame.Location.Y,
+                                Z = tame.Location.Z,
+                                Colors = tame.Colors,
+                                BaseStats = tame.BaseStats,
+                                TamedStats = tame.TamedStats,
+                                RandomMutationsFemale = tame.RandomMutationsFemale,
+                                RandomMutationsMale = tame.RandomMutationsMale,
+                                InventoryId = addInventory(tame.Inventory)
+                            };
+
+                            if ((tame.DinoAncestors != null && tame.DinoAncestors.Length > 0))
+                            {
+                                var parents = tame.DinoAncestors.First();
+                                loadedTame.MotherId = (long)parents.FemaleId;
+                                loadedTame.MotherName = parents.FemaleName;
+                                loadedTame.FatherId = (long)parents.MaleId;
+                                loadedTame.FatherName = parents.MaleName;
+                            }
+
+
+                            loadedTames.Add(loadedTame);
+
                         });
-                    });
+
+                        if (!loadedTames.IsEmpty) tribe.Tames.AddRange(loadedTames.ToList());
+                    }
+
+                });
+            }
 
 
-                    if (!loadedStructures.IsEmpty) tribe.Structures.AddRange(loadedStructures.ToList());
-                }
-
-                if (IncludeTamed)
-                {
-                    //tamed
-                    ConcurrentBag<ContentTamedCreature> loadedTames = new ConcurrentBag<ContentTamedCreature>();
-                    var tamed = gd.NoRafts
-                        .Where(t =>
-                            (t.TargetingTeam == tribe.TribeId || tribe.Players.Any(p=>p.Id == t.OwningPlayerId || p.Id == t.ImprinterPlayerDataId))
-                            && (Math.Abs((decimal)t.Location.Latitude - FilterLatitude) <= FilterRadius)
-                            && (Math.Abs((decimal)t.Location.Longitude - FilterLongitude) <= FilterRadius)
-                        ).ToList();
-
-                    //Tamed
-                    Parallel.ForEach(tamed, tame => 
-                    { 
-                        var loadedTame = new ContentTamedCreature()
-                        {
-                            Id = (long)tame.Id,
-                            ClassName = tame.ClassName,
-                            BaseLevel = tame.BaseLevel,
-                            Gender = tame.Gender.ToString(),
-                            ImprintedPlayerId = (int)tame.ImprinterPlayerDataId.GetValueOrDefault(0),
-                            ImprinterName = tame.ImprinterName,
-                            ImprintQuality = (decimal)tame.DinoImprintingQuality.GetValueOrDefault(0),
-                            Level = tame.Level,
-                            Name = tame.Name,
-                            TamedOnServerName = tame.TamedOnServerName,
-                            TribeName = tame.TribeName,
-                            TamerName = tame.TamerName,
-                            TargetingTeam = tame.TargetingTeam,
-                            IsCryo = tame.IsCryo,
-                            IsVivarium = tame.IsVivarium,
-                            Latitude = tame.Location.Latitude.GetValueOrDefault(0),
-                            Longitude = tame.Location.Longitude.GetValueOrDefault(0),
-                            X = tame.Location.X,
-                            Y = tame.Location.Y,
-                            Z = tame.Location.Z,
-                            Colors = tame.Colors,
-                            BaseStats = tame.BaseStats,
-                            TamedStats = tame.TamedStats,
-                            RandomMutationsFemale = tame.RandomMutationsFemale,
-                            RandomMutationsMale = tame.RandomMutationsMale,
-                            InventoryId = addInventory(tame.Inventory)
-                        };
-
-                        if((tame.DinoAncestors!=null && tame.DinoAncestors.Length > 0))
-                        {
-                            var parents = tame.DinoAncestors.First();
-                            loadedTame.MotherId = (long)parents.FemaleId;
-                            loadedTame.MotherName = parents.FemaleName;
-                            loadedTame.FatherId = (long)parents.MaleId;
-                            loadedTame.FatherName = parents.MaleName;
-                        }
-
-
-                        loadedTames.Add(loadedTame);
-
-                    });
-
-                    if (!loadedTames.IsEmpty) tribe.Tames.AddRange(loadedTames.ToList());
-                }
-
-            });
-
-            //Dropped items
-            ConcurrentBag<ContentDroppedItem> loadedDroppedItems = new ConcurrentBag<ContentDroppedItem>();
-            var droppedItems = gd.DroppedItems
-                .Where(i =>
-                    (i.DroppedByPlayerId.GetValueOrDefault(0) == 0 || i.DroppedByPlayerId.GetValueOrDefault(0) == ExportedForPlayer || ExportedForPlayer == 0)
-                    && (Math.Abs((decimal)i.Location.Latitude - FilterLatitude) <= FilterRadius)
-                    && (Math.Abs((decimal)i.Location.Longitude - FilterLongitude) <= FilterRadius)
-                ).ToList();
-
-            Parallel.ForEach(droppedItems, droppedItem =>
+            if (IncludeDroppedItems)
             {
-                loadedDroppedItems.Add(new ContentDroppedItem()
+                //Dropped items
+                ConcurrentBag<ContentDroppedItem> loadedDroppedItems = new ConcurrentBag<ContentDroppedItem>();
+                var droppedItems = gd.DroppedItems
+                    .Where(i =>
+                        (i.DroppedByPlayerId.GetValueOrDefault(0) == 0 || i.DroppedByPlayerId.GetValueOrDefault(0) == ExportedForPlayer || ExportedForPlayer == 0)
+                        && (Math.Abs((decimal)i.Location.Latitude - FilterLatitude) <= FilterRadius)
+                        && (Math.Abs((decimal)i.Location.Longitude - FilterLongitude) <= FilterRadius)
+                    ).ToList();
+
+                Parallel.ForEach(droppedItems, droppedItem =>
                 {
-                    ClassName = droppedItem.ClassName,
-                    DroppedByName = droppedItem.DroppedByName,
-                    DroppedByPlayerId = droppedItem.DroppedByPlayerId.GetValueOrDefault(0),
-                    IsBlueprint = droppedItem.IsBlueprint,
-                    IsEngram = droppedItem.IsEngram,
-                    IsDeathCache=false,
-                    Latitude = droppedItem.Location.Latitude.GetValueOrDefault(0),
-                    Longitude = droppedItem.Location.Longitude.GetValueOrDefault(0),
-                    X = droppedItem.Location.X,
-                    Y = droppedItem.Location.Y,
-                    Z = droppedItem.Location.Z,
-                    InventoryId = null
+                    loadedDroppedItems.Add(new ContentDroppedItem()
+                    {
+                        ClassName = droppedItem.ClassName,
+                        DroppedByName = droppedItem.DroppedByName,
+                        DroppedByPlayerId = droppedItem.DroppedByPlayerId.GetValueOrDefault(0),
+                        IsBlueprint = droppedItem.IsBlueprint,
+                        IsEngram = droppedItem.IsEngram,
+                        IsDeathCache = false,
+                        Latitude = droppedItem.Location.Latitude.GetValueOrDefault(0),
+                        Longitude = droppedItem.Location.Longitude.GetValueOrDefault(0),
+                        X = droppedItem.Location.X,
+                        Y = droppedItem.Location.Y,
+                        Z = droppedItem.Location.Z,
+                        InventoryId = null
+                    });
+
                 });
 
-            });
+                //Death cache bags
+                var dropBags = gd.PlayerDeathCache
+                    .Where(i =>
+                        (i.TargetingTeam == 0 || (i.TargetingTeam == ExportedForTribe || ExportedForTribe == 0))
+                        && (Math.Abs((decimal)i.Location.Latitude - FilterLatitude) <= FilterRadius)
+                        && (Math.Abs((decimal)i.Location.Longitude - FilterLongitude) <= FilterRadius)
+                    ).ToList();
 
-            //Death cache bags
-            var dropBags = gd.PlayerDeathCache
-                .Where(i =>
-                    (i.TargetingTeam == 0 || (i.TargetingTeam == ExportedForTribe || ExportedForTribe==0))
-                    && (Math.Abs((decimal)i.Location.Latitude - FilterLatitude) <= FilterRadius)
-                    && (Math.Abs((decimal)i.Location.Longitude - FilterLongitude) <= FilterRadius)
-                ).ToList();
-
-            Parallel.ForEach(dropBags, droppedItem =>
-            {
-                loadedDroppedItems.Add(new ContentDroppedItem()
+                Parallel.ForEach(dropBags, droppedItem =>
                 {
-                    ClassName = droppedItem.ClassName,
-                    DroppedByName = droppedItem.OwnerName,
-                    DroppedByPlayerId = droppedItem.OwningPlayerId.GetValueOrDefault(0),
-                    IsBlueprint = false,
-                    IsEngram = false,
-                    IsDeathCache = true,
-                    Latitude = droppedItem.Location.Latitude.GetValueOrDefault(0),
-                    Longitude = droppedItem.Location.Longitude.GetValueOrDefault(0),
-                    X = droppedItem.Location.X,
-                    Y = droppedItem.Location.Y,
-                    Z = droppedItem.Location.Z,
-                    InventoryId = addInventory(droppedItem.Inventory)
+                    loadedDroppedItems.Add(new ContentDroppedItem()
+                    {
+                        ClassName = droppedItem.ClassName,
+                        DroppedByName = droppedItem.OwnerName,
+                        DroppedByPlayerId = droppedItem.OwningPlayerId.GetValueOrDefault(0),
+                        IsBlueprint = false,
+                        IsEngram = false,
+                        IsDeathCache = true,
+                        Latitude = droppedItem.Location.Latitude.GetValueOrDefault(0),
+                        Longitude = droppedItem.Location.Longitude.GetValueOrDefault(0),
+                        X = droppedItem.Location.X,
+                        Y = droppedItem.Location.Y,
+                        Z = droppedItem.Location.Z,
+                        InventoryId = addInventory(droppedItem.Inventory)
+                    });
+
                 });
 
-            });
 
-
-            if (!loadedDroppedItems.IsEmpty) DroppedItems.AddRange(loadedDroppedItems.ToList());
+                if (!loadedDroppedItems.IsEmpty) DroppedItems.AddRange(loadedDroppedItems.ToList());
+            }
+            
 
             //Inventories - should have been populated by the previous steps through structure/tribe/player/tame/dropped items loading
 

@@ -2059,9 +2059,9 @@
             this.lblSubTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSubTitle.Location = new System.Drawing.Point(92, 45);
             this.lblSubTitle.Name = "lblSubTitle";
-            this.lblSubTitle.Size = new System.Drawing.Size(250, 16);
+            this.lblSubTitle.Size = new System.Drawing.Size(190, 16);
             this.lblSubTitle.TabIndex = 41;
-            this.lblSubTitle.Text = "ARK Survival Savegame Visualiser";
+            this.lblSubTitle.Text = "ARK Savegame Visualiser";
             // 
             // frmViewer
             // 
@@ -2083,6 +2083,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ARK Save Viewer";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmViewer_FormClosed);
+            this.Load += new System.EventHandler(this.frmViewer_Load);
             this.Enter += new System.EventHandler(this.frmViewer_Enter);
             this.mnuContext.ResumeLayout(false);
             this.tabFeatures.ResumeLayout(false);

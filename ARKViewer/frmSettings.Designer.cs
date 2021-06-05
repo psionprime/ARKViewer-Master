@@ -44,27 +44,11 @@
             this.optServer = new System.Windows.Forms.RadioButton();
             this.optSinglePlayer = new System.Windows.Forms.RadioButton();
             this.grpServer = new System.Windows.Forms.GroupBox();
-            this.optFtpModeSftp = new System.Windows.Forms.RadioButton();
-            this.optFtpModeFtp = new System.Windows.Forms.RadioButton();
-            this.label1 = new System.Windows.Forms.Label();
-            this.lblFtpMap = new System.Windows.Forms.Label();
             this.cboFtpMap = new System.Windows.Forms.ComboBox();
-            this.chkPasswordVisibility = new System.Windows.Forms.CheckBox();
-            this.udFTPPort = new System.Windows.Forms.NumericUpDown();
             this.pnlServerDetails = new System.Windows.Forms.Panel();
-            this.txtFTPFilePath = new System.Windows.Forms.TextBox();
-            this.lblFtpFilePath = new System.Windows.Forms.Label();
             this.btnRemoveServer = new System.Windows.Forms.Button();
             this.btnAddServer = new System.Windows.Forms.Button();
             this.lblFTPServer = new System.Windows.Forms.Label();
-            this.txtFTPPassword = new System.Windows.Forms.TextBox();
-            this.txtFTPUsername = new System.Windows.Forms.TextBox();
-            this.lblFTPPassword = new System.Windows.Forms.Label();
-            this.lblFTPUsername = new System.Windows.Forms.Label();
-            this.txtFTPAddress = new System.Windows.Forms.TextBox();
-            this.lblFTPPort = new System.Windows.Forms.Label();
-            this.lblFTPHost = new System.Windows.Forms.Label();
-            this.txtServerName = new System.Windows.Forms.TextBox();
             this.cboFTPServer = new System.Windows.Forms.ComboBox();
             this.grpOffline = new System.Windows.Forms.GroupBox();
             this.chkUpdateNotificationFile = new System.Windows.Forms.CheckBox();
@@ -192,11 +176,12 @@
             this.lblOptionHeaderStructures = new System.Windows.Forms.Label();
             this.lblOptionTextStructures = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.lblFtpMap = new System.Windows.Forms.Label();
+            this.btnEditServer = new System.Windows.Forms.Button();
             this.tabSettings.SuspendLayout();
             this.tpgMap.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.grpServer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.udFTPPort)).BeginInit();
             this.grpOffline.SuspendLayout();
             this.grpSinglePlayer.SuspendLayout();
             this.tpgColours.SuspendLayout();
@@ -293,7 +278,7 @@
             // 
             this.optContentPack.AutoSize = true;
             this.optContentPack.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.optContentPack.Location = new System.Drawing.Point(55, 210);
+            this.optContentPack.Location = new System.Drawing.Point(40, 264);
             this.optContentPack.Name = "optContentPack";
             this.optContentPack.Size = new System.Drawing.Size(138, 17);
             this.optContentPack.TabIndex = 15;
@@ -306,7 +291,7 @@
             this.groupBox2.Controls.Add(this.btnLoadContentPack);
             this.groupBox2.Controls.Add(this.txtContentPackFilename);
             this.groupBox2.Controls.Add(this.lblSelectedMapContentPack);
-            this.groupBox2.Location = new System.Drawing.Point(37, 193);
+            this.groupBox2.Location = new System.Drawing.Point(37, 286);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(471, 78);
             this.groupBox2.TabIndex = 13;
@@ -316,9 +301,9 @@
             // 
             this.btnLoadContentPack.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnLoadContentPack.Image = global::ARKViewer.Properties.Resources.button_folder;
-            this.btnLoadContentPack.Location = new System.Drawing.Point(415, 41);
+            this.btnLoadContentPack.Location = new System.Drawing.Point(415, 26);
             this.btnLoadContentPack.Name = "btnLoadContentPack";
-            this.btnLoadContentPack.Size = new System.Drawing.Size(33, 27);
+            this.btnLoadContentPack.Size = new System.Drawing.Size(35, 35);
             this.btnLoadContentPack.TabIndex = 2;
             this.toolTip1.SetToolTip(this.btnLoadContentPack, "Open ARK save file");
             this.btnLoadContentPack.UseVisualStyleBackColor = true;
@@ -329,7 +314,7 @@
             this.txtContentPackFilename.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtContentPackFilename.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtContentPackFilename.Location = new System.Drawing.Point(18, 43);
+            this.txtContentPackFilename.Location = new System.Drawing.Point(18, 32);
             this.txtContentPackFilename.Name = "txtContentPackFilename";
             this.txtContentPackFilename.ReadOnly = true;
             this.txtContentPackFilename.Size = new System.Drawing.Size(391, 22);
@@ -352,7 +337,7 @@
             // 
             this.optOffline.AutoSize = true;
             this.optOffline.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.optOffline.Location = new System.Drawing.Point(55, 116);
+            this.optOffline.Location = new System.Drawing.Point(40, 154);
             this.optOffline.Name = "optOffline";
             this.optOffline.Size = new System.Drawing.Size(142, 17);
             this.optOffline.TabIndex = 8;
@@ -364,7 +349,7 @@
             // 
             this.optServer.AutoSize = true;
             this.optServer.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.optServer.Location = new System.Drawing.Point(55, 293);
+            this.optServer.Location = new System.Drawing.Point(40, 373);
             this.optServer.Name = "optServer";
             this.optServer.Size = new System.Drawing.Size(89, 17);
             this.optServer.TabIndex = 10;
@@ -376,179 +361,61 @@
             // 
             this.optSinglePlayer.AutoSize = true;
             this.optSinglePlayer.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.optSinglePlayer.Location = new System.Drawing.Point(55, 30);
+            this.optSinglePlayer.Location = new System.Drawing.Point(40, 38);
             this.optSinglePlayer.Name = "optSinglePlayer";
-            this.optSinglePlayer.Size = new System.Drawing.Size(99, 17);
+            this.optSinglePlayer.Size = new System.Drawing.Size(146, 17);
             this.optSinglePlayer.TabIndex = 12;
-            this.optSinglePlayer.Text = "Single Player";
+            this.optSinglePlayer.Text = "Single Player (Steam)";
             this.optSinglePlayer.UseVisualStyleBackColor = true;
             this.optSinglePlayer.CheckedChanged += new System.EventHandler(this.optSinglePlayer_CheckedChanged);
             // 
             // grpServer
             // 
-            this.grpServer.Controls.Add(this.optFtpModeSftp);
-            this.grpServer.Controls.Add(this.optFtpModeFtp);
-            this.grpServer.Controls.Add(this.label1);
+            this.grpServer.Controls.Add(this.btnEditServer);
             this.grpServer.Controls.Add(this.lblFtpMap);
             this.grpServer.Controls.Add(this.cboFtpMap);
-            this.grpServer.Controls.Add(this.chkPasswordVisibility);
-            this.grpServer.Controls.Add(this.udFTPPort);
             this.grpServer.Controls.Add(this.pnlServerDetails);
-            this.grpServer.Controls.Add(this.txtFTPFilePath);
-            this.grpServer.Controls.Add(this.lblFtpFilePath);
             this.grpServer.Controls.Add(this.btnRemoveServer);
             this.grpServer.Controls.Add(this.btnAddServer);
             this.grpServer.Controls.Add(this.lblFTPServer);
-            this.grpServer.Controls.Add(this.txtFTPPassword);
-            this.grpServer.Controls.Add(this.txtFTPUsername);
-            this.grpServer.Controls.Add(this.lblFTPPassword);
-            this.grpServer.Controls.Add(this.lblFTPUsername);
-            this.grpServer.Controls.Add(this.txtFTPAddress);
-            this.grpServer.Controls.Add(this.lblFTPPort);
-            this.grpServer.Controls.Add(this.lblFTPHost);
-            this.grpServer.Controls.Add(this.txtServerName);
             this.grpServer.Controls.Add(this.cboFTPServer);
-            this.grpServer.Location = new System.Drawing.Point(38, 279);
+            this.grpServer.Location = new System.Drawing.Point(38, 401);
             this.grpServer.Name = "grpServer";
-            this.grpServer.Size = new System.Drawing.Size(471, 333);
+            this.grpServer.Size = new System.Drawing.Size(471, 160);
             this.grpServer.TabIndex = 11;
             this.grpServer.TabStop = false;
-            // 
-            // optFtpModeSftp
-            // 
-            this.optFtpModeSftp.AutoSize = true;
-            this.optFtpModeSftp.Enabled = false;
-            this.optFtpModeSftp.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.optFtpModeSftp.Location = new System.Drawing.Point(158, 83);
-            this.optFtpModeSftp.Name = "optFtpModeSftp";
-            this.optFtpModeSftp.Size = new System.Drawing.Size(52, 17);
-            this.optFtpModeSftp.TabIndex = 23;
-            this.optFtpModeSftp.Text = "SFTP";
-            this.optFtpModeSftp.UseVisualStyleBackColor = true;
-            // 
-            // optFtpModeFtp
-            // 
-            this.optFtpModeFtp.AutoSize = true;
-            this.optFtpModeFtp.Checked = true;
-            this.optFtpModeFtp.Enabled = false;
-            this.optFtpModeFtp.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.optFtpModeFtp.Location = new System.Drawing.Point(94, 83);
-            this.optFtpModeFtp.Name = "optFtpModeFtp";
-            this.optFtpModeFtp.Size = new System.Drawing.Size(45, 17);
-            this.optFtpModeFtp.TabIndex = 22;
-            this.optFtpModeFtp.TabStop = true;
-            this.optFtpModeFtp.Text = "FTP";
-            this.optFtpModeFtp.UseVisualStyleBackColor = true;
-            // 
-            // label1
-            // 
-            this.label1.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.label1.BackColor = System.Drawing.SystemColors.Control;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(22, 78);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(66, 22);
-            this.label1.TabIndex = 21;
-            this.label1.Text = "Mode";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblFtpMap
-            // 
-            this.lblFtpMap.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.lblFtpMap.BackColor = System.Drawing.SystemColors.Control;
-            this.lblFtpMap.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFtpMap.Location = new System.Drawing.Point(22, 264);
-            this.lblFtpMap.Name = "lblFtpMap";
-            this.lblFtpMap.Size = new System.Drawing.Size(115, 22);
-            this.lblFtpMap.TabIndex = 20;
-            this.lblFtpMap.Text = "Map";
-            this.lblFtpMap.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // cboFtpMap
             // 
             this.cboFtpMap.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.cboFtpMap.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboFtpMap.DropDownStyle = System.Windows.Forms.ComboBoxStyle.Simple;
             this.cboFtpMap.Enabled = false;
             this.cboFtpMap.FormattingEnabled = true;
-            this.cboFtpMap.Location = new System.Drawing.Point(25, 295);
+            this.cboFtpMap.Location = new System.Drawing.Point(25, 123);
             this.cboFtpMap.Name = "cboFtpMap";
             this.cboFtpMap.Size = new System.Drawing.Size(422, 21);
             this.cboFtpMap.TabIndex = 19;
             this.cboFtpMap.SelectedIndexChanged += new System.EventHandler(this.cboFtpMap_SelectedIndexChanged);
-            // 
-            // chkPasswordVisibility
-            // 
-            this.chkPasswordVisibility.Appearance = System.Windows.Forms.Appearance.Button;
-            this.chkPasswordVisibility.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.chkPasswordVisibility.Image = ((System.Drawing.Image)(resources.GetObject("chkPasswordVisibility.Image")));
-            this.chkPasswordVisibility.Location = new System.Drawing.Point(427, 180);
-            this.chkPasswordVisibility.Name = "chkPasswordVisibility";
-            this.chkPasswordVisibility.Size = new System.Drawing.Size(20, 20);
-            this.chkPasswordVisibility.TabIndex = 15;
-            this.chkPasswordVisibility.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.toolTip1.SetToolTip(this.chkPasswordVisibility, "Reveal Password");
-            this.chkPasswordVisibility.UseVisualStyleBackColor = false;
-            this.chkPasswordVisibility.CheckedChanged += new System.EventHandler(this.chkPasswordVisibility_CheckedChanged);
-            // 
-            // udFTPPort
-            // 
-            this.udFTPPort.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.udFTPPort.Enabled = false;
-            this.udFTPPort.Location = new System.Drawing.Point(372, 129);
-            this.udFTPPort.Maximum = new decimal(new int[] {
-            9999999,
-            0,
-            0,
-            0});
-            this.udFTPPort.Name = "udFTPPort";
-            this.udFTPPort.Size = new System.Drawing.Size(75, 20);
-            this.udFTPPort.TabIndex = 10;
-            this.udFTPPort.Value = new decimal(new int[] {
-            8821,
-            0,
-            0,
-            0});
             // 
             // pnlServerDetails
             // 
             this.pnlServerDetails.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlServerDetails.BackColor = System.Drawing.Color.Silver;
-            this.pnlServerDetails.Location = new System.Drawing.Point(17, 70);
+            this.pnlServerDetails.Location = new System.Drawing.Point(17, 82);
             this.pnlServerDetails.Name = "pnlServerDetails";
             this.pnlServerDetails.Size = new System.Drawing.Size(433, 3);
             this.pnlServerDetails.TabIndex = 6;
-            // 
-            // txtFTPFilePath
-            // 
-            this.txtFTPFilePath.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.txtFTPFilePath.Enabled = false;
-            this.txtFTPFilePath.Location = new System.Drawing.Point(25, 236);
-            this.txtFTPFilePath.Name = "txtFTPFilePath";
-            this.txtFTPFilePath.Size = new System.Drawing.Size(422, 20);
-            this.txtFTPFilePath.TabIndex = 17;
-            // 
-            // lblFtpFilePath
-            // 
-            this.lblFtpFilePath.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.lblFtpFilePath.BackColor = System.Drawing.SystemColors.Control;
-            this.lblFtpFilePath.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFtpFilePath.Location = new System.Drawing.Point(22, 208);
-            this.lblFtpFilePath.Name = "lblFtpFilePath";
-            this.lblFtpFilePath.Size = new System.Drawing.Size(115, 22);
-            this.lblFtpFilePath.TabIndex = 16;
-            this.lblFtpFilePath.Text = "Save path";
-            this.lblFtpFilePath.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // btnRemoveServer
             // 
             this.btnRemoveServer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRemoveServer.Enabled = false;
             this.btnRemoveServer.Image = global::ARKViewer.Properties.Resources.button_remove;
-            this.btnRemoveServer.Location = new System.Drawing.Point(413, 38);
+            this.btnRemoveServer.Location = new System.Drawing.Point(414, 24);
             this.btnRemoveServer.Name = "btnRemoveServer";
-            this.btnRemoveServer.Size = new System.Drawing.Size(34, 27);
+            this.btnRemoveServer.Size = new System.Drawing.Size(35, 35);
             this.btnRemoveServer.TabIndex = 4;
             this.toolTip1.SetToolTip(this.btnRemoveServer, "Remove selected server");
             this.btnRemoveServer.UseVisualStyleBackColor = true;
@@ -558,9 +425,9 @@
             // 
             this.btnAddServer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAddServer.Image = global::ARKViewer.Properties.Resources.button_add;
-            this.btnAddServer.Location = new System.Drawing.Point(376, 38);
+            this.btnAddServer.Location = new System.Drawing.Point(374, 24);
             this.btnAddServer.Name = "btnAddServer";
-            this.btnAddServer.Size = new System.Drawing.Size(34, 27);
+            this.btnAddServer.Size = new System.Drawing.Size(35, 35);
             this.btnAddServer.TabIndex = 3;
             this.toolTip1.SetToolTip(this.btnAddServer, "Add new server");
             this.btnAddServer.UseVisualStyleBackColor = true;
@@ -578,94 +445,6 @@
             this.lblFTPServer.TabIndex = 0;
             this.lblFTPServer.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // txtFTPPassword
-            // 
-            this.txtFTPPassword.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.txtFTPPassword.Enabled = false;
-            this.txtFTPPassword.Location = new System.Drawing.Point(233, 180);
-            this.txtFTPPassword.Name = "txtFTPPassword";
-            this.txtFTPPassword.PasswordChar = '●';
-            this.txtFTPPassword.Size = new System.Drawing.Size(214, 20);
-            this.txtFTPPassword.TabIndex = 14;
-            // 
-            // txtFTPUsername
-            // 
-            this.txtFTPUsername.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.txtFTPUsername.Enabled = false;
-            this.txtFTPUsername.Location = new System.Drawing.Point(25, 180);
-            this.txtFTPUsername.Name = "txtFTPUsername";
-            this.txtFTPUsername.Size = new System.Drawing.Size(197, 20);
-            this.txtFTPUsername.TabIndex = 12;
-            // 
-            // lblFTPPassword
-            // 
-            this.lblFTPPassword.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.lblFTPPassword.AutoSize = true;
-            this.lblFTPPassword.BackColor = System.Drawing.SystemColors.Control;
-            this.lblFTPPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFTPPassword.Location = new System.Drawing.Point(230, 159);
-            this.lblFTPPassword.Name = "lblFTPPassword";
-            this.lblFTPPassword.Size = new System.Drawing.Size(61, 15);
-            this.lblFTPPassword.TabIndex = 13;
-            this.lblFTPPassword.Text = "Password";
-            // 
-            // lblFTPUsername
-            // 
-            this.lblFTPUsername.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.lblFTPUsername.BackColor = System.Drawing.SystemColors.Control;
-            this.lblFTPUsername.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFTPUsername.Location = new System.Drawing.Point(22, 155);
-            this.lblFTPUsername.Name = "lblFTPUsername";
-            this.lblFTPUsername.Size = new System.Drawing.Size(74, 22);
-            this.lblFTPUsername.TabIndex = 11;
-            this.lblFTPUsername.Text = "Username";
-            this.lblFTPUsername.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // txtFTPAddress
-            // 
-            this.txtFTPAddress.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.txtFTPAddress.Enabled = false;
-            this.txtFTPAddress.Location = new System.Drawing.Point(25, 128);
-            this.txtFTPAddress.Name = "txtFTPAddress";
-            this.txtFTPAddress.Size = new System.Drawing.Size(333, 20);
-            this.txtFTPAddress.TabIndex = 8;
-            // 
-            // lblFTPPort
-            // 
-            this.lblFTPPort.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.lblFTPPort.AutoSize = true;
-            this.lblFTPPort.BackColor = System.Drawing.SystemColors.Control;
-            this.lblFTPPort.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFTPPort.Location = new System.Drawing.Point(369, 108);
-            this.lblFTPPort.Name = "lblFTPPort";
-            this.lblFTPPort.Size = new System.Drawing.Size(29, 15);
-            this.lblFTPPort.TabIndex = 9;
-            this.lblFTPPort.Text = "Port";
-            // 
-            // lblFTPHost
-            // 
-            this.lblFTPHost.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.lblFTPHost.BackColor = System.Drawing.SystemColors.Control;
-            this.lblFTPHost.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFTPHost.Location = new System.Drawing.Point(22, 106);
-            this.lblFTPHost.Name = "lblFTPHost";
-            this.lblFTPHost.Size = new System.Drawing.Size(329, 19);
-            this.lblFTPHost.TabIndex = 7;
-            this.lblFTPHost.Text = "Server Address                        ";
-            this.lblFTPHost.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // txtServerName
-            // 
-            this.txtServerName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtServerName.Location = new System.Drawing.Point(25, 42);
-            this.txtServerName.Name = "txtServerName";
-            this.txtServerName.Size = new System.Drawing.Size(345, 20);
-            this.txtServerName.TabIndex = 2;
-            this.txtServerName.Visible = false;
-            this.txtServerName.TextChanged += new System.EventHandler(this.txtServerName_TextChanged);
-            this.txtServerName.Validating += new System.ComponentModel.CancelEventHandler(this.txtServerName_Validating);
-            // 
             // cboFTPServer
             // 
             this.cboFTPServer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -673,9 +452,9 @@
             this.cboFTPServer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboFTPServer.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cboFTPServer.FormattingEnabled = true;
-            this.cboFTPServer.Location = new System.Drawing.Point(25, 40);
+            this.cboFTPServer.Location = new System.Drawing.Point(25, 30);
             this.cboFTPServer.Name = "cboFTPServer";
-            this.cboFTPServer.Size = new System.Drawing.Size(345, 24);
+            this.cboFTPServer.Size = new System.Drawing.Size(298, 24);
             this.cboFTPServer.TabIndex = 1;
             this.cboFTPServer.SelectedIndexChanged += new System.EventHandler(this.cboFTPServer_SelectedIndexChanged);
             // 
@@ -685,7 +464,7 @@
             this.grpOffline.Controls.Add(this.btnSelectSaveGame);
             this.grpOffline.Controls.Add(this.txtFilename);
             this.grpOffline.Controls.Add(this.lblOfflineSave);
-            this.grpOffline.Location = new System.Drawing.Point(37, 101);
+            this.grpOffline.Location = new System.Drawing.Point(37, 173);
             this.grpOffline.Name = "grpOffline";
             this.grpOffline.Size = new System.Drawing.Size(471, 83);
             this.grpOffline.TabIndex = 9;
@@ -707,9 +486,9 @@
             // 
             this.btnSelectSaveGame.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSelectSaveGame.Image = global::ARKViewer.Properties.Resources.button_folder;
-            this.btnSelectSaveGame.Location = new System.Drawing.Point(415, 34);
+            this.btnSelectSaveGame.Location = new System.Drawing.Point(415, 30);
             this.btnSelectSaveGame.Name = "btnSelectSaveGame";
-            this.btnSelectSaveGame.Size = new System.Drawing.Size(33, 27);
+            this.btnSelectSaveGame.Size = new System.Drawing.Size(35, 35);
             this.btnSelectSaveGame.TabIndex = 2;
             this.toolTip1.SetToolTip(this.btnSelectSaveGame, "Open ARK save file");
             this.btnSelectSaveGame.UseVisualStyleBackColor = true;
@@ -744,7 +523,7 @@
             this.grpSinglePlayer.Controls.Add(this.chkUpdateNotificationSingle);
             this.grpSinglePlayer.Controls.Add(this.lblSelectedMapSP);
             this.grpSinglePlayer.Controls.Add(this.cboMapSinglePlayer);
-            this.grpSinglePlayer.Location = new System.Drawing.Point(36, 12);
+            this.grpSinglePlayer.Location = new System.Drawing.Point(36, 61);
             this.grpSinglePlayer.Name = "grpSinglePlayer";
             this.grpSinglePlayer.Size = new System.Drawing.Size(472, 85);
             this.grpSinglePlayer.TabIndex = 7;
@@ -780,7 +559,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cboMapSinglePlayer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboMapSinglePlayer.FormattingEnabled = true;
-            this.cboMapSinglePlayer.Location = new System.Drawing.Point(19, 40);
+            this.cboMapSinglePlayer.Location = new System.Drawing.Point(19, 34);
             this.cboMapSinglePlayer.Name = "cboMapSinglePlayer";
             this.cboMapSinglePlayer.Size = new System.Drawing.Size(430, 21);
             this.cboMapSinglePlayer.TabIndex = 1;
@@ -2107,6 +1886,30 @@
             this.toolTip1.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.toolTip1.ToolTipTitle = "Information";
             // 
+            // lblFtpMap
+            // 
+            this.lblFtpMap.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblFtpMap.BackColor = System.Drawing.SystemColors.Control;
+            this.lblFtpMap.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFtpMap.Location = new System.Drawing.Point(22, 92);
+            this.lblFtpMap.Name = "lblFtpMap";
+            this.lblFtpMap.Size = new System.Drawing.Size(115, 22);
+            this.lblFtpMap.TabIndex = 20;
+            this.lblFtpMap.Text = "Map";
+            this.lblFtpMap.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // btnEditServer
+            // 
+            this.btnEditServer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnEditServer.Image = global::ARKViewer.Properties.Resources.button_edit;
+            this.btnEditServer.Location = new System.Drawing.Point(334, 24);
+            this.btnEditServer.Name = "btnEditServer";
+            this.btnEditServer.Size = new System.Drawing.Size(35, 35);
+            this.btnEditServer.TabIndex = 21;
+            this.toolTip1.SetToolTip(this.btnEditServer, "Add new server");
+            this.btnEditServer.UseVisualStyleBackColor = true;
+            this.btnEditServer.Click += new System.EventHandler(this.btnEditServer_Click);
+            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2129,8 +1932,6 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.grpServer.ResumeLayout(false);
-            this.grpServer.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.udFTPPort)).EndInit();
             this.grpOffline.ResumeLayout(false);
             this.grpOffline.PerformLayout();
             this.grpSinglePlayer.ResumeLayout(false);
@@ -2179,23 +1980,11 @@
         private System.Windows.Forms.TabControl tabSettings;
         private System.Windows.Forms.TabPage tpgMap;
         private System.Windows.Forms.GroupBox grpServer;
-        private System.Windows.Forms.CheckBox chkPasswordVisibility;
-        private System.Windows.Forms.NumericUpDown udFTPPort;
         private System.Windows.Forms.Panel pnlServerDetails;
-        private System.Windows.Forms.TextBox txtFTPFilePath;
-        private System.Windows.Forms.Label lblFtpFilePath;
         private System.Windows.Forms.Button btnRemoveServer;
         private System.Windows.Forms.Button btnAddServer;
         private System.Windows.Forms.Label lblFTPServer;
-        private System.Windows.Forms.TextBox txtFTPPassword;
-        private System.Windows.Forms.TextBox txtFTPUsername;
-        private System.Windows.Forms.Label lblFTPPassword;
-        private System.Windows.Forms.Label lblFTPUsername;
-        private System.Windows.Forms.TextBox txtFTPAddress;
-        private System.Windows.Forms.Label lblFTPPort;
-        private System.Windows.Forms.Label lblFTPHost;
         private System.Windows.Forms.ComboBox cboFTPServer;
-        private System.Windows.Forms.TextBox txtServerName;
         private System.Windows.Forms.GroupBox grpOffline;
         private System.Windows.Forms.Button btnSelectSaveGame;
         private System.Windows.Forms.TextBox txtFilename;
@@ -2266,11 +2055,7 @@
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.ColumnHeader columnHeader7;
         private System.Windows.Forms.ColumnHeader columnHeader8;
-        private System.Windows.Forms.Label lblFtpMap;
         private System.Windows.Forms.ComboBox cboFtpMap;
-        private System.Windows.Forms.RadioButton optFtpModeSftp;
-        private System.Windows.Forms.RadioButton optFtpModeFtp;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox chkUpdateNotificationFile;
         private System.Windows.Forms.CheckBox chkUpdateNotificationSingle;
         private System.Windows.Forms.Panel pnlFtpSettingsCommands;
@@ -2335,5 +2120,7 @@
         private System.Windows.Forms.CheckBox chkStructureLocations;
         private System.Windows.Forms.CheckBox chkStructureContents;
         private System.Windows.Forms.CheckBox chkDroppedItems;
+        private System.Windows.Forms.Button btnEditServer;
+        private System.Windows.Forms.Label lblFtpMap;
     }
 }

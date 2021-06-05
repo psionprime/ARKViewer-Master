@@ -939,6 +939,9 @@ namespace ARKViewer
         {
             Bitmap bitmap = new Bitmap(1024, 1024);
             Graphics graphics = Graphics.FromImage(bitmap);
+            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+
             graphics.DrawImage(MapImage, new Rectangle(0, 0, 1024, 1024));
 
             var filteredWilds = GetWildCreatures(minLevel, maxLevel, filterLat, filterLon, filterRadius, className);
@@ -968,6 +971,9 @@ namespace ARKViewer
         {
             Bitmap bitmap = new Bitmap(1024, 1024);
             Graphics graphics = Graphics.FromImage(bitmap);
+            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+
             graphics.DrawImage(MapImage, new Rectangle(0, 0, 1024, 1024));
 
 
@@ -998,6 +1004,9 @@ namespace ARKViewer
 
             Bitmap bitmap = new Bitmap(1024, 1024);
             Graphics graphics = Graphics.FromImage(bitmap);
+            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+
             graphics.DrawImage(MapImage, new Rectangle(0, 0, 1024, 1024));
 
 
@@ -1038,6 +1047,9 @@ namespace ARKViewer
 
             Bitmap bitmap = new Bitmap(1024, 1024);
             Graphics graphics = Graphics.FromImage(bitmap);
+            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+
             graphics.DrawImage(MapImage, new Rectangle(0, 0, 1024, 1024));
 
 
@@ -1077,6 +1089,9 @@ namespace ARKViewer
         {
             Bitmap bitmap = new Bitmap(1024, 1024);
             Graphics graphics = Graphics.FromImage(bitmap);
+            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+
             graphics.DrawImage(MapImage, new Rectangle(0, 0, 1024, 1024));
 
             var filteredStructures = GetPlayerStructures(tribeId, playerId, className,false);
@@ -1110,6 +1125,9 @@ namespace ARKViewer
         {
             Bitmap bitmap = new Bitmap(1024, 1024);
             Graphics graphics = Graphics.FromImage(bitmap);
+            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+
             graphics.DrawImage(MapImage, new Rectangle(0, 0, 1024, 1024));
 
             var tribe = GetTribes(tribeId).FirstOrDefault<ContentTribe>();
@@ -1226,6 +1244,9 @@ namespace ARKViewer
         {
             Bitmap bitmap = new Bitmap(1024, 1024);
             Graphics graphics = Graphics.FromImage(bitmap);
+            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+
             graphics.DrawImage(MapImage, new Rectangle(0, 0, 1024, 1024));
 
             var filteredPlayers = GetPlayers(tribeId, playerId);
@@ -1269,6 +1290,9 @@ namespace ARKViewer
         {
             Bitmap bitmap = new Bitmap(1024, 1024);
             Graphics graphics = Graphics.FromImage(bitmap);
+            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+
             graphics.DrawImage(MapImage, new Rectangle(0, 0, 1024, 1024));
 
 

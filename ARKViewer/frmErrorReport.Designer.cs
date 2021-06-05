@@ -70,15 +70,18 @@
             this.pnlPlayerInventory.Controls.Add(this.rtbError);
             this.pnlPlayerInventory.Location = new System.Drawing.Point(9, 103);
             this.pnlPlayerInventory.Name = "pnlPlayerInventory";
-            this.pnlPlayerInventory.Size = new System.Drawing.Size(635, 217);
+            this.pnlPlayerInventory.Size = new System.Drawing.Size(635, 271);
             this.pnlPlayerInventory.TabIndex = 15;
             // 
             // rtbError
             // 
+            this.rtbError.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.rtbError.Location = new System.Drawing.Point(9, 9);
             this.rtbError.Name = "rtbError";
             this.rtbError.ReadOnly = true;
-            this.rtbError.Size = new System.Drawing.Size(615, 196);
+            this.rtbError.Size = new System.Drawing.Size(615, 248);
             this.rtbError.TabIndex = 0;
             this.rtbError.Text = "";
             // 
@@ -87,7 +90,7 @@
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClose.Location = new System.Drawing.Point(569, 332);
+            this.btnClose.Location = new System.Drawing.Point(569, 386);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 16;
@@ -112,7 +115,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(656, 367);
+            this.ClientSize = new System.Drawing.Size(656, 421);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.pnlPlayerInventory);

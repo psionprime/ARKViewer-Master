@@ -30,6 +30,8 @@ namespace ARKViewer
         public static string ItemImageFolder { get; set; } = "";
         public static string MarkerImageFolder { get; set; } = "";
 
+        public static string LastLoadedSaveFilename { get; set; }  = "";
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -41,6 +43,9 @@ namespace ARKViewer
 
             Application.ThreadException += Application_ThreadException;
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+
+    
+
 
             //param setup
             string appFolder = AppContext.BaseDirectory;
@@ -55,7 +60,6 @@ namespace ARKViewer
 
             //load config
             ProgramConfig = new ViewerConfiguration();
-
 
             //support quoted command line arguments which doesn't seem to be supported with Environment.GetCommandLineArgs() 
             string[] commandArguments = Regex.Split(Environment.CommandLine.Trim(), " (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
@@ -97,147 +101,25 @@ namespace ARKViewer
                     }
 
                     //command line, load save game data for export
-                    string saveFullFilename = "";
-
-                    if (commandArguments.Length > 3)
+                    string jsonConfigFilename = "";
+                    if (commandArguments.Length > 2)
                     {
-                        //ark save game specified
-                        saveFullFilename = commandArguments[3].ToString().Trim().Replace("\"", "");
-
-                    }
-                    else
-                    {
-                        //use configured
-                        saveFullFilename = ARKViewer.Program.ProgramConfig.SelectedFile;
+                        //config specified
+                        jsonConfigFilename = commandArguments[3].ToString().Trim().Replace("\"", "");
                     }
 
-                    if(commandOptionCheck == "pack")
+                    switch (commandOptionCheck)
                     {
-                        var packIniFilename = commandArguments[2].ToString().Replace("\"" ,"");
-                        if (File.Exists(packIniFilename))
-                        {
-                            string packConfigText = File.ReadAllText(packIniFilename);
-                            try
-                            {
-                                JObject packConfig = JObject.Parse(packConfigText);
+                        case "pack":
+                            ExportCommandLinePack(jsonConfigFilename);
 
-                                saveFullFilename = packConfig.Property("mapFilename").Value.ToString();
-                                exportFilename = packConfig.Property("exportFilename").Value.ToString();
-                                tribeId = (long)packConfig.Property("tribeId").Value;
-                                playerId = (long)packConfig.Property("tribeId").Value;
-                                filterLat = (decimal)packConfig.Property("filterLat").Value;
-                                filterLon = (decimal)packConfig.Property("filterLon").Value;
-                                filterRad = (decimal)packConfig.Property("filterRad").Value;
-                                packStructureLocations = (bool)packConfig.Property("filterLat").Value;
-                                packStructureContent = (bool)packConfig.Property("filterLat").Value;
-                                packDroppedItems = (bool)packConfig.Property("filterLat").Value;
-                                packTribesPlayers = (bool)packConfig.Property("filterLat").Value;
-                                packTamed = (bool)packConfig.Property("filterLat").Value;
-                                packWild = (bool)packConfig.Property("filterLat").Value;
-                                packPlayerStructures = (bool)packConfig.Property("filterLat").Value;
+                            break;
 
+                        case "json":
+                            ExportCommandLine(jsonConfigFilename);
 
-                                /*
-                                {
-                                    "mapFilename": "C:\\Temp\\TestMap.ark",
-                                    "exportFilename": "C:\\Temp\\TestPack.asv",
-                                    "tribeId": 0,
-                                    "playerId": 0, 
-                                    "filterLat": 50.0, 
-                                    "filterLon": 50.0, 
-                                    "filterRad": 250.0,
-                                    "packStructureLocations": true,
-                                    "packStructureContent": true,
-                                    "packDroppedItems": true,
-                                    "packTribesPlayers": true, 
-                                    "packTamed": true, 
-                                    "packWild": true, 
-                                    "packPlayerStructures": true
-                                }
-                                */
-                            }
-                            catch
-                            {
-                                //bad file data, ignore
-                            }
-
-
-                        }
+                            break;
                     }
-                    else
-                    {
-
-                        if (commandArguments.Length > 2)
-                        {
-                            //export filename
-                            exportFilename = commandArguments[2].ToString().Trim().Replace("\"", "");
-                            exportFilePath = Path.GetDirectoryName(exportFilename);
-                        }
-                    }
-
-                    if (File.Exists(saveFullFilename))
-                    {
-                        ContentPack loadedPack = null;
-                        switch (Path.GetExtension(saveFullFilename).ToLower())
-                        {
-                            case "asvpack":
-                                loadedPack = new ContentPack(File.ReadAllBytes(saveFullFilename));
-                                loadedPack.ContentDate = File.GetLastWriteTimeUtc(saveFullFilename);
-                                break;
-                            default:
-                                //non asv pack, load from toolkit
-                                ArkGameData gd = LoadArkData(saveFullFilename);//new ArkGameData(saveFullFilename, loadOnlyPropertiesInDomain: false);
-                                loadedPack = new ContentPack(gd,tribeId,playerId,filterLat,filterLon,filterRad,packStructureLocations, packStructureContent,packTribesPlayers, packTamed, packWild, packPlayerStructures);
-                                loadedPack.ContentDate = File.GetLastWriteTimeUtc(saveFullFilename);
-
-                                gd = null;
-                                break;
-                        }
-
-                        ContentManager contentManager = new ContentManager(loadedPack);
-
-                        if (!Directory.Exists(exportFilePath)) Directory.CreateDirectory(exportFilePath);
-
-                        switch (commandOptionCheck)
-                        {
-                            case "pack":
-                                contentManager.ExportContentPack(exportFilename);
-                                break;
-                            case "all":
-                                contentManager.ExportAll(exportFilePath);
-                                break;
-                            case "wild":
-                                exportFilename = exportFilename.Length > 0 ? exportFilename : Path.Combine(exportFilePath, "ARKViewer_Export_Wild.json");
-                                contentManager.ExportWild(exportFilename);
-                                break;
-                            case "tamed":
-                                exportFilename = exportFilename.Length > 0 ? exportFilename : Path.Combine(exportFilePath, "ARKViewer_Export_Tamed.json");
-                                contentManager.ExportTamed(exportFilename);
-                                break;
-                            case "structures":
-                                exportFilename = exportFilename.Length > 0 ? exportFilename : Path.Combine(exportFilePath, "ARKViewer_Export_Structures.json");
-                                contentManager.ExportPlayerStructures(exportFilename);
-                                break;
-                            case "tribes":
-                                exportFilename = exportFilename.Length > 0 ? exportFilename : Path.Combine(exportFilePath, "ARKViewer_Export_Tribes.json");
-                                contentManager.ExportPlayerTribes(exportFilename);
-                                break;
-                            case "players":
-                                exportFilename = exportFilename.Length > 0 ? exportFilename : Path.Combine(exportFilePath, "ARKViewer_Export_Players.json");
-                                contentManager.ExportPlayers(exportFilename);
-                                break;
-                        }
-
-                        //success
-                        Environment.ExitCode = 0;
-                        return;
-                    }
-                    else
-                    {
-                        //input file not found
-                        Environment.ExitCode = -1;
-                    }
-
 
                     logWriter.Flush();
 
@@ -282,6 +164,324 @@ namespace ARKViewer
         }
 
 
+        private static void ExportCommandLinePack(string configFilename)
+        {
+
+            //defaults
+            string mapFilename = "";
+            string exportFilename = Path.Combine(AppContext.BaseDirectory, "ASV_ContentPack.asv");
+            long tribeId = 0;
+            long playerId = 0;
+            decimal filterLat = 50;
+            decimal filterLon = 50;
+            decimal filterRad = 250;
+            bool packStructureLocations = true;
+            bool packStructureContent = true;
+            bool packDroppedItems = true;
+            bool packTribesPlayers = true;
+            bool packTamed = true;
+            bool packWild = true;
+            bool packPlayerStructures = true;
+
+
+            if (File.Exists(configFilename))
+            {
+                //config found, load settings from file.
+                string packConfigText = File.ReadAllText(configFilename);
+                try
+                {
+                    JObject packConfig = JObject.Parse(packConfigText);
+
+                    mapFilename = packConfig.Property("mapFilename") == null ? "" : packConfig.Property("mapFilename").Value.ToString();
+                    exportFilename = packConfig.Property("tribeId") == null ? "" : packConfig.Property("exportFilename").Value.ToString();
+                    tribeId = packConfig.Property("exportFilename") == null ? 0 : (long)packConfig.Property("tribeId").Value;
+                    playerId = packConfig.Property("playerId") == null ? 0 : (long)packConfig.Property("playerId").Value;
+                    filterLat = packConfig.Property("filterLat") == null ? 50 : (decimal)packConfig.Property("filterLat").Value;
+                    filterLon = packConfig.Property("filterLon") == null ? 50 : (decimal)packConfig.Property("filterLon").Value;
+                    filterRad = packConfig.Property("filterRad") == null ? 250 : (decimal)packConfig.Property("filterRad").Value;
+                    packStructureLocations = packConfig.Property("packStructureLocations") == null ? true : (bool)packConfig.Property("packStructureLocations").Value;
+                    packStructureContent = packConfig.Property("packStructureContent") == null ? true : (bool)packConfig.Property("packStructureContent").Value;
+                    packDroppedItems = packConfig.Property("packDroppedItems") == null ? true : (bool)packConfig.Property("packDroppedItems").Value;
+                    packTribesPlayers = packConfig.Property("packTribesPlayers") == null ? true : (bool)packConfig.Property("packTribesPlayers").Value;
+                    packTamed = packConfig.Property("packTamed") == null ? true : (bool)packConfig.Property("packTamed").Value;
+                    packWild = packConfig.Property("packWild") == null ? true : (bool)packConfig.Property("packWild").Value;
+                    packPlayerStructures = packConfig.Property("packPlayerStructures") == null ? true : (bool)packConfig.Property("packPlayerStructures").Value;
+
+
+                }
+                catch
+                {
+                    //bad file data, ignore
+                }
+            }            
+
+
+            //so far so good, try load the ARK save file if it's available
+            ArkGameData gd = LoadArkData(mapFilename);
+            if (gd == null)
+            {
+                //unable to load game data
+                return;
+            }
+
+            //ensure folder exists
+            string exportFolder = Path.GetDirectoryName(exportFilename);
+            if (exportFolder.Length == 0) exportFolder = AppContext.BaseDirectory;
+            if (!Directory.Exists(exportFolder)) Directory.CreateDirectory(exportFolder);
+
+            //ensure filename set, and ends with .asv
+            if (exportFilename.Length == 0) exportFilename = Path.Combine(exportFolder, "ASV_ContentPack.asv");
+            if (!exportFilename.ToLower().EndsWith("asv")) exportFilename += ".asv";
+
+            //create pack and export
+            ContentPack exportPack = new ContentPack(gd, tribeId, playerId, filterLat, filterLon, filterRad, packStructureLocations, packStructureContent, packTribesPlayers, packTamed, packWild, packPlayerStructures, packDroppedItems);
+            ContentManager exportManger = new ContentManager(exportPack);
+            exportManger.ExportContentPack(exportFilename);
+        }
+
+        private static void ExportCommandLine(string configFilename)
+        {
+
+
+            long tribeId = 0;
+            long playerId = 0;
+            decimal filterLat = 50;
+            decimal filterLon = 50;
+            decimal filterRad = 250;
+
+            string tribeExportFilename = Path.Combine(AppContext.BaseDirectory, "ASV_Export_Tribes.json");
+            string tribeImageFilename = Path.Combine(AppContext.BaseDirectory, "ASV_Export_Tribes.png");
+            bool tribeStructures = true;
+            bool tribeStructureContent = true;
+            bool tribePlayers = true;
+            bool tribeTames = true;
+
+            string structureExportFilename = Path.Combine(AppContext.BaseDirectory, "ASV_Export_Structures.json");
+            string structureImageFilename = Path.Combine(AppContext.BaseDirectory, "ASV_Export_Structures.png");
+            string structureClassName = "";
+
+            string playerExportFilename = Path.Combine(AppContext.BaseDirectory, "ASV_Export_Players.json");
+            string playerImageFilename = Path.Combine(AppContext.BaseDirectory, "ASV_Export_Players.png");
+
+            string wildExportFilename = Path.Combine(AppContext.BaseDirectory, "ASV_Export_Wild.json");
+            string wildImageFilename = Path.Combine(AppContext.BaseDirectory, "ASV_Export_Wild.png");
+            string wildClassName = "";
+            int wildMinLevel = 0;
+            int wildMaxLevel = 999;
+
+
+            string tamedExportFilename = Path.Combine(AppContext.BaseDirectory, "ASV_Export_Tamed.json");
+            string tamedImageFilename = Path.Combine(AppContext.BaseDirectory, "ASV_Export_Tamed.png");
+            string tamedClassName = "";
+            bool tamedStored = true;
+
+            string mapFilename = Program.ProgramConfig.SelectedFile;
+
+            if (File.Exists(configFilename))
+            {
+                string configText = File.ReadAllText(configFilename);
+                try
+                {
+                    JObject packConfig = JObject.Parse(configText);
+
+                    mapFilename = packConfig.Property("mapFilename") == null ? "" : packConfig.Property("mapFilename").Value.ToString();
+
+                    //if no save file provided, use ProgramConfig
+                    if (mapFilename.Length == 0) mapFilename = Program.ProgramConfig.SelectedFile;
+
+
+                    // parse filters for export options
+                    tribeId = packConfig.Property("tribeId") == null ? 0 : (long)packConfig.Property("tribeId").Value;
+                    playerId = packConfig.Property("playerId") == null ? 0 : (long)packConfig.Property("playerId").Value;
+                    filterLat = packConfig.Property("filterLat") == null ? 50 : (decimal)packConfig.Property("filterLat").Value;
+                    filterLon = packConfig.Property("filterLon") == null ? 50 : (decimal)packConfig.Property("filterLon").Value;
+                    filterRad = packConfig.Property("filterRad") == null ? 250 : (decimal)packConfig.Property("filterRad").Value;
+
+                    //Tribes
+                    JObject exportTribes = (JObject)packConfig["exportTribes"];
+                    if (exportTribes != null)
+                    {
+                        tribeExportFilename = exportTribes.Property("jsonFilename") == null ? "" : (string)exportTribes.Property("jsonFilename").Value;
+                        tribeImageFilename = exportTribes.Property("imageFilename") == null ? "" : (string)exportTribes.Property("imageFilename").Value;
+                        tribeStructures = exportTribes.Property("addStructures") == null ? true : (bool)exportTribes.Property("addStructures").Value;
+                        tribeStructureContent = exportTribes.Property("addStructureContent") == null ? true : (bool)exportTribes.Property("addStructureContent").Value;
+                        tribePlayers = exportTribes.Property("addPlayers") == null ? true : (bool)exportTribes.Property("addPlayers").Value;
+                        tribeTames = exportTribes.Property("addTames") == null ? true : (bool)exportTribes.Property("addTames").Value;
+                    }
+
+                    //Structures
+                    JObject exportStructures = (JObject)packConfig["exportStructures"];
+                    if (exportStructures != null)
+                    {
+                        structureExportFilename = exportStructures.Property("jsonFilename") == null ? "" : exportStructures.Property("jsonFilename").Value.ToString();
+                        structureImageFilename = exportStructures.Property("imageFilename") == null ? "" : exportStructures.Property("imageFilename").Value.ToString();
+                        structureClassName = exportStructures.Property("className") == null ? "" : exportStructures.Property("className").Value.ToString();
+                    }
+
+                    //Players
+                    JObject exportPlayers = (JObject)packConfig["exportPlayers"];
+                    if (exportPlayers != null)
+                    {
+                        playerExportFilename = exportPlayers.Property("jsonFilename") == null ? "" : exportPlayers.Property("jsonFilename").Value.ToString();
+                        playerImageFilename = exportPlayers.Property("imageFilename") == null ? "" : exportPlayers.Property("imageFilename").Value.ToString();
+
+                    }
+
+                    //Wilds
+                    JObject exportWild = (JObject)packConfig["exportWild"];
+                    if (exportWild != null)
+                    {
+                        wildExportFilename = exportWild.Property("jsonFilename") == null ? "" : exportWild.Property("jsonFilename").Value.ToString();
+                        wildImageFilename = exportWild.Property("imageFilename") == null ? "" : exportWild.Property("imageFilename").Value.ToString();
+                        wildClassName = exportWild.Property("className") == null ? "" : exportWild.Property("className").Value.ToString();
+                        wildMinLevel = exportWild.Property("minLevel") == null ? 0 : (int)exportWild.Property("minLevel").Value;
+                        wildMaxLevel = exportWild.Property("maxLevel") == null ? 0 : (int)exportWild.Property("maxLevel").Value;
+
+                    }
+
+                    //Tamed
+                    JObject exportTamed = (JObject)packConfig["exportTamed"];
+                    if (exportTamed != null)
+                    {
+                        tamedExportFilename = exportTamed.Property("jsonFilename") == null ? "" : exportTamed.Property("jsonFilename").Value.ToString();
+                        tamedImageFilename = exportTamed.Property("imageFilename") == null ? "" : exportTamed.Property("imageFilename").Value.ToString();
+                        tamedClassName = exportTamed.Property("className") == null ? "" : exportTamed.Property("className").Value.ToString();
+                        tamedStored = exportTamed.Property("includeStored") == null ? true : (bool)exportTamed.Property("includeStored").Value;
+
+                    }
+
+                }
+                catch
+                {
+                    //bad file data, ignore
+                }
+            }
+
+            //load game data
+            if (!File.Exists(mapFilename))
+            {
+                return;
+            }
+
+            ArkGameData gd = LoadArkData(mapFilename);
+            if (gd == null)
+            {
+                //unable to load game data
+                return;
+            }
+
+            ContentPack exportPack = new ContentPack(gd, tribeId, playerId, filterLat, filterLon, filterRad, true, true, true, true, true, true,true);
+            ContentManager exportManger = new ContentManager(exportPack);
+
+            //Export tribes
+            if (tribeExportFilename.Length > 0)
+            {
+                string exportFolder = Path.GetDirectoryName(tribeExportFilename);
+                if (!Directory.Exists(exportFolder)) Directory.CreateDirectory(exportFolder);
+
+                exportManger.ExportPlayerTribes(tribeExportFilename);
+            }
+            if (tribeImageFilename.Length > 0)
+            {
+                string exportFolder = Path.GetDirectoryName(tribeImageFilename);
+                if (!Directory.Exists(exportFolder)) Directory.CreateDirectory(exportFolder);
+
+                var image = exportManger.GetMapImageTribes(tribeId, tribeStructures, tribePlayers, tribeTames, 0, 0, false, false, false, false, false, false, false, false, false, false, false, false, new List<ContentMarker>());
+                if (image != null)
+                {
+                    image.Save(tribeImageFilename);
+                }
+            }
+
+
+
+
+            //Structures
+            if (structureExportFilename.Length > 0)
+            {
+                string exportFolder = Path.GetDirectoryName(structureExportFilename);
+                if (!Directory.Exists(exportFolder)) Directory.CreateDirectory(exportFolder);
+
+                exportManger.ExportPlayerStructures(structureExportFilename);
+            }
+
+            if (structureImageFilename.Length > 0)
+            {
+                string exportFolder = Path.GetDirectoryName(structureImageFilename);
+                if (!Directory.Exists(exportFolder)) Directory.CreateDirectory(exportFolder);
+
+                var image = exportManger.GetMapImagePlayerStructures(structureImageFilename, tribeId,playerId,0,0,false, false, false, false, false, false, false, false, false, false,false,false, new List<ContentMarker>());
+                if (image != null)
+                {
+                    image.Save(structureImageFilename);
+                }
+            }
+
+
+
+            //Export Players
+            if (playerExportFilename.Length > 0)
+            {
+                string exportFolder = Path.GetDirectoryName(playerExportFilename);
+                if (!Directory.Exists(exportFolder)) Directory.CreateDirectory(exportFolder);
+
+                exportManger.ExportPlayers(playerExportFilename);
+            }
+
+            if (playerImageFilename.Length > 0)
+            {
+                string exportFolder = Path.GetDirectoryName(playerImageFilename);
+                if (!Directory.Exists(exportFolder)) Directory.CreateDirectory(exportFolder);
+
+                var image = exportManger.GetMapImagePlayers(tribeId, playerId, 0, 0, false, false, false, false, false, false, false, false, false, false, false, false, new List<ContentMarker>());
+                if (image != null)
+                {
+                    image.Save(playerImageFilename);
+                }
+            }
+
+            //Export Wild
+            if (wildExportFilename.Length > 0)
+            {
+                string exportFolder = Path.GetDirectoryName(wildExportFilename);
+                if (!Directory.Exists(exportFolder)) Directory.CreateDirectory(exportFolder);
+
+                exportManger.ExportWild(wildExportFilename);
+            }
+            if (wildImageFilename.Length > 0)
+            {
+                string exportFolder = Path.GetDirectoryName(wildImageFilename);
+                if (!Directory.Exists(exportFolder)) Directory.CreateDirectory(exportFolder);
+
+                var image = exportManger.GetMapImageWild(wildClassName, wildMinLevel, wildMaxLevel ,(float)filterLat,(float)filterLon,(float)filterRad,0, 0, false, false, false, false, false, false, false, false, false, false, false, false, new List<ContentMarker>());
+                if (image != null)
+                {
+                    image.Save(tamedImageFilename);
+                }
+            }
+
+            //Export tamed
+            if (tamedExportFilename.Length > 0)
+            {
+                string exportFolder = Path.GetDirectoryName(tamedExportFilename);
+                if (!Directory.Exists(exportFolder)) Directory.CreateDirectory(exportFolder);
+
+                exportManger.ExportTamed(tamedExportFilename);
+            }
+            if (tamedImageFilename.Length > 0)
+            {
+                string exportFolder = Path.GetDirectoryName(tamedImageFilename);
+                if (!Directory.Exists(exportFolder)) Directory.CreateDirectory(exportFolder);
+
+                var image = exportManger.GetMapImageTamed(tamedClassName, tamedStored, tribeId, playerId, 0, 0, false, false, false, false, false, false, false, false, false, false, false, false, new List<ContentMarker>());
+                if (image != null)
+                {
+                    image.Save(tamedImageFilename);
+                }
+            }
+
+        }
+
         public static ArkGameData LoadArkData(string contentFilename)
         {
             if (File.Exists(contentFilename))
@@ -310,8 +510,11 @@ namespace ARKViewer
             return null;
         }
 
+
         public static ContentPack LoadContentPack(string contentFilename)
         {
+            LastLoadedSaveFilename = contentFilename;
+
             ContentPack loadedPack = null;
             switch (Path.GetExtension(contentFilename).ToLower())
             {

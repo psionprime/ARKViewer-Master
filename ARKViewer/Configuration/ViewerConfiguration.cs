@@ -27,13 +27,9 @@ namespace ARKViewer.Configuration
     [DataContract]
     public class ViewerConfiguration
     {
-
-        [DataMember]
-        public string IV { get; set; }
-
         private int BlockSize = 128;
 
-        Dictionary<string,string> mapFilenameMap = new Dictionary<string, string>
+        Dictionary<string, string> mapFilenameMap = new Dictionary<string, string>
         {
             { "theisland.ark", "The Island" },
             { "scorchedearth_p.ark","Scorched Earth"},
@@ -47,101 +43,52 @@ namespace ARKViewer.Configuration
             { "tiamatprime.ark", "Tiamat Prime"}
         };
 
-        [DataMember]
-        public string EncryptionPassword { get; set; } = "";
-        [DataMember]
-        public bool Artifacts { get; set; } = false;
-        [DataMember]
-        public bool BeaverDams { get; set; } = false;
-        [DataMember]
-        public bool WyvernNests { get; set; } = false;
-        [DataMember(EmitDefaultValue = false, IsRequired = false)]
-        public bool MagmaNests { get; set; } = false;
-        [DataMember]
-        public bool DeinoNests { get; set; } = false;
-        [DataMember]
-        public bool DrakeNests { get; set; } = false;
+        [DataMember] public string IV { get; set; }
+        [DataMember] public string EncryptionPassword { get; set; } = "";
+        [DataMember] public bool Artifacts { get; set; } = false;
+        [DataMember] public bool BeaverDams { get; set; } = false;
+        [DataMember] public bool WyvernNests { get; set; } = false;
+        [DataMember(EmitDefaultValue = false, IsRequired = false)] public bool MagmaNests { get; set; } = false;
+        [DataMember] public bool DeinoNests { get; set; } = false;
+        [DataMember] public bool DrakeNests { get; set; } = false;
+        [DataMember] public bool OilVeins { get; set; } = false;
+        [DataMember] public bool WaterVeins { get; set; } = false;
+        [DataMember] public bool GasVeins { get; set; } = false;
+        [DataMember] public bool Obelisks { get; set; } = true;
+        [DataMember(EmitDefaultValue = false, IsRequired = false)] public bool Glitches { get; set; } = true;
+        [DataMember] public bool ChargeNodes { get; set; } = false;
+        [DataMember] public bool PlantX { get; set; } = false;
+        [DataMember] public bool PlantZ { get; set; } = false;
+        [DataMember] public ViewerModes Mode { get; set; } = ViewerModes.Mode_SinglePlayer;
+        [DataMember(IsRequired = false, EmitDefaultValue = false)] public bool UpdateNotificationSingle { get; set; } = true;
+        [DataMember(IsRequired = false, EmitDefaultValue = false)] public bool UpdateNotificationFile { get; set; } = true;
+        [DataMember] public string SelectedFile { get; set; }
+        [DataMember] public string SelectedServer { get; set; } = "";
+        [DataMember] public List<string> StructureExclusions { get; set; } = new List<string>();
+        [DataMember] public List<ServerConfiguration> ServerList { get; set; } = new List<ServerConfiguration>();
+        [DataMember] public List<ViewerWindow> Windows { get; set; } = new List<ViewerWindow>();
+        [DataMember] public int Zoom { get; set; } = 50;
+        [DataMember(IsRequired = false)] public int SplitterDistance { get; set; } = 840;
+        [DataMember(IsRequired = false)] public bool HideNoStructures { get; set; } = true;
+        [DataMember(IsRequired = false)] public bool HideNoTames { get; set; } = true;
+        [DataMember(IsRequired = false)] public bool HideNoBody { get; set; } = true;
+        [DataMember(IsRequired = false)] public int CommandPrefix { get; set; } = 0;
+        [DataMember(IsRequired = false, EmitDefaultValue = false)] public int FtpDownloadMode { get; set; } = 0;
+        [DataMember(IsRequired = false, EmitDefaultValue = false)] public bool SortCommandLineExport { get; set; } = false;
+        [DataMember(IsRequired = false, EmitDefaultValue = false)] public bool ExportInventories { get; set; } = false;
+        [DataMember(IsRequired = false, EmitDefaultValue = true)] public LogColourMap TribeLogColours { get; set; } = new LogColourMap();
+        [DataMember(IsRequired = false)] public bool StoredTames { get; set; } = false;
 
-        [DataMember]
-        public bool OilVeins { get; set; } = false;
-        [DataMember]
-        public bool WaterVeins { get; set; } = false;
-        [DataMember]
-        public bool GasVeins { get; set; } = false;
-        [DataMember]
-        public bool Obelisks { get; set; } = true;
-        [DataMember(EmitDefaultValue = false, IsRequired = false)]
-        public bool Glitches { get; set; } = true;
-        [DataMember]
-        public bool ChargeNodes { get; set; } = false;
-        [DataMember]
-        public bool PlantX { get; set; } = false;
-
-        [DataMember]
-        public bool PlantZ { get; set; } = false;
-        [DataMember]
-        public ViewerModes Mode { get; set; } = ViewerModes.Mode_SinglePlayer;
-        [DataMember(IsRequired = false, EmitDefaultValue = false)]
-        public bool UpdateNotificationSingle { get; set; } = true;
-
-        [DataMember(IsRequired = false, EmitDefaultValue = false)]
-        public bool UpdateNotificationFile { get; set; } = true;
-
-
-        [DataMember]
-        public string SelectedFile { get; set; }
-        [DataMember]
-        public string SelectedServer { get; set; } = "";
-
-        [DataMember]
-        public List<string> StructureExclusions { get; set; } = new List<string>();
 
         public List<DinoClassMap> DinoMap = new List<DinoClassMap>();
         public List<MapMarker> MapMarkerList { get; set; } = new List<MapMarker>();
-
         public List<ItemClassMap> ItemMap { get; set; } = new List<ItemClassMap>();
         public List<StructureClassMap> StructureMap { get; set; } = new List<StructureClassMap>();
-
         public List<ColourMap> ColourMap { get; set; } = new List<ColourMap>();
-
         public List<StructureMarker> TerminalMarkers { get; set; } = new List<StructureMarker>();
-
         public List<StructureMarker> GlitchMarkers { get; set; } = new List<StructureMarker>();
 
-        [DataMember]
-        public List<ServerConfiguration> ServerList { get; set; } = new List<ServerConfiguration>();
-
-        [DataMember] public List<ViewerWindow> Windows { get; set; } = new List<ViewerWindow>();
-
-        [DataMember]
-        public int Zoom { get; set; } = 50;
         
-        [DataMember(IsRequired = false)]
-        public int SplitterDistance { get; set; } = 840;
-
-        [DataMember(IsRequired = false)]
-        public bool HideNoStructures { get; set; } = true;
-        
-        [DataMember(IsRequired = false)] 
-        public bool HideNoTames { get; set; } = true;
-        
-        [DataMember(IsRequired = false)] 
-        public bool HideNoBody{ get; set; } = true;
-
-        [DataMember(IsRequired = false)] 
-        public int CommandPrefix { get; set; } = 0;
-
-        [DataMember(IsRequired = false, EmitDefaultValue = false)]
-        
-        public int FtpDownloadMode { get; set; } = 0;
-        [DataMember(IsRequired = false, EmitDefaultValue = false)]
-        public bool SortCommandLineExport { get; set; } = false;
-
-        [DataMember(IsRequired = false, EmitDefaultValue = false)]
-        public bool ExportInventories { get; set; } = false;
-
-        [DataMember(IsRequired = false, EmitDefaultValue = true)]
-        public LogColourMap TribeLogColours { get; set; } = new LogColourMap();
 
         public ViewerConfiguration()
         {
@@ -545,6 +492,7 @@ namespace ARKViewer.Configuration
                 this.CommandPrefix = savedState.CommandPrefix;
                 this.FtpDownloadMode = savedState.FtpDownloadMode;
                 if(savedState.Windows!=null) this.Windows = savedState.Windows;
+                this.StoredTames = savedState.StoredTames;
                 this.Zoom = savedState.Zoom;
                 this.SplitterDistance = savedState.SplitterDistance;
                 this.ServerList = savedState.ServerList;

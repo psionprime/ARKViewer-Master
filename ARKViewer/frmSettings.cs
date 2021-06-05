@@ -519,11 +519,6 @@ namespace ARKViewer
 
 
             cboFTPServer.Enabled = optServer.Checked;
-            txtFTPAddress.Enabled = optServer.Checked && cboFTPServer.Visible == false;
-            txtFTPFilePath.Enabled = optServer.Checked && cboFTPServer.Visible == false;
-            txtFTPPassword.Enabled = optServer.Checked && cboFTPServer.Visible == false;
-            udFTPPort.Enabled = optServer.Checked && cboFTPServer.Visible == false;
-            txtFTPUsername.Enabled = optServer.Checked && cboFTPServer.Visible == false;
             btnAddServer.Enabled = optServer.Checked;
             btnRemoveServer.Enabled = optServer.Checked;
 
@@ -560,22 +555,6 @@ namespace ARKViewer
 
         private void DisplayServerSettings()
         {
-            txtFTPAddress.Text = "";
-            txtFTPAddress.Enabled = false;
-            udFTPPort.Value = 8821;
-            udFTPPort.Enabled = false;
-            txtFTPFilePath.Text = "";
-            txtFTPFilePath.Enabled = false;
-            txtFTPUsername.Text = "";
-            txtFTPUsername.Enabled = false;
-            txtFTPPassword.Text = "";
-            txtFTPPassword.Enabled = false;
-            cboFtpMap.Enabled = false;
-            optFtpModeFtp.Enabled = false;
-            optFtpModeSftp.Enabled = false;
-
-            chkPasswordVisibility.Visible = txtServerName.Visible;
-            chkPasswordVisibility.Checked = false;
 
             if(cboFTPServer.SelectedItem==null || cboFTPServer.Visible == false)
             {
@@ -584,46 +563,12 @@ namespace ARKViewer
             
 
             ServerConfiguration selectedServer = (ServerConfiguration)cboFTPServer.SelectedItem;
-            txtServerName.Text = selectedServer.Name;
-
-            txtFTPAddress.Text = selectedServer.Address;
-            txtFTPAddress.Enabled = cboFTPServer.Visible == false;
-            udFTPPort.Value = selectedServer.Port;
-            udFTPPort.Enabled = cboFTPServer.Visible == false;
-            txtFTPFilePath.Text = selectedServer.SaveGamePath;
-            txtFTPFilePath.Enabled = cboFTPServer.Visible == false;
-            txtFTPUsername.Text = selectedServer.Username;
-            txtFTPUsername.Enabled = cboFTPServer.Visible == false;
-            txtFTPPassword.Text = selectedServer.Password;
-            txtFTPPassword.Enabled = cboFTPServer.Visible == false;
-            optFtpModeFtp.Enabled = cboFTPServer.Visible == false;
-            optFtpModeSftp.Enabled = cboFTPServer.Visible == false;
-
-            if(selectedServer.Mode == 0)
-            {
-                optFtpModeFtp.Checked = true;
-            }
-            else
-            {
-                optFtpModeSftp.Checked = true;
-            }
-
             ComboValuePair selectedMapItem = cboFtpMap.Items.Cast<ComboValuePair>().FirstOrDefault(i => i.Key.ToLower() == selectedServer.Map.ToLower());
             if (selectedMapItem != null)
             {
                 cboFtpMap.SelectedItem = selectedMapItem;
             }
             cboFtpMap.Enabled = cboFTPServer.Visible == false;
-            txtFTPUsername.PasswordChar = cboFTPServer.Visible? '●':'\0';
-
-            if (cboFTPServer.Visible)
-            {
-                btnAddServer.Image = ARKViewer.Properties.Resources.button_add;
-                btnSave.Enabled = true;
-            }
-
-            chkPasswordVisibility.Visible = false;
-            chkPasswordVisibility.Checked = false;
             
         }
         private void btnSave_Click(object sender, EventArgs e)
@@ -703,34 +648,6 @@ namespace ARKViewer
                     string localFilename = Path.Combine(AppContext.BaseDirectory, $@"{selectedConfig.Name}\{selectedConfig.Map}");
                     SavedConfig.SelectedFile = localFilename;
 
-                    if (txtServerName.Visible)
-                    {
-                        selectedConfig.Name = txtServerName.Text;
-                    }
-
-                    if (txtFTPAddress.Text.Contains(@"\"))
-                    {
-                        txtFTPAddress.Text = txtFTPAddress.Text.Replace(@"\", @"/");
-                    }
-                    if (txtFTPAddress.Text.EndsWith(@"/"))
-                    {
-                        txtFTPAddress.Text = txtFTPAddress.Text.Substring(0, txtFTPAddress.TextLength - 1);
-                    }
-                    if (txtFTPFilePath.Text.Contains(@"\"))
-                    {
-                        txtFTPFilePath.Text = txtFTPFilePath.Text.Replace(@"\", @"/");
-                    }
-                    if (!txtFTPFilePath.Text.StartsWith(@"/"))
-                    {
-                        txtFTPFilePath.Text = "/" + txtFTPFilePath.Text;
-                    }
-
-                    selectedConfig.Address = txtFTPAddress.Text;
-                    selectedConfig.SaveGamePath = txtFTPFilePath.Text;
-                    selectedConfig.Port = (int)udFTPPort.Value;
-                    selectedConfig.Username = txtFTPUsername.Text;
-                    selectedConfig.Password = txtFTPPassword.Text;
-
                     cboFTPServer.Items[cboFTPServer.SelectedIndex] = selectedConfig;
 
                 }
@@ -756,7 +673,7 @@ namespace ARKViewer
         private void btnRemoveServer_Click(object sender, EventArgs e)
         {
 
-            if (cboFTPServer.Visible && cboFTPServer.SelectedItem != null)
+            if (cboFTPServer.SelectedItem != null)
             {
                 var selectedItem = cboFTPServer.SelectedItem;
                 if(MessageBox.Show("Are you sure you want to remove this server?", "Remove Server?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
@@ -768,16 +685,6 @@ namespace ARKViewer
                     }
                 }
             }
-            else
-            {
-                txtServerName.Visible = false;
-                cboFTPServer.Visible = true;
-
-                if (cboFTPServer.Items.Count > 0)
-                {
-                    cboFTPServer.SelectedIndex = 0;
-                }
-            }
 
             DisplayServerSettings();
 
@@ -785,111 +692,22 @@ namespace ARKViewer
 
         private void btnAddServer_Click(object sender, EventArgs e)
         {
-            if (cboFTPServer.Visible)
+
+            using (frmFtpFileBrowser serverSetup = new frmFtpFileBrowser())
             {
-                btnSave.Enabled = false;
-                btnAddServer.Image = ARKViewer.Properties.Resources.button_save;
-
-                //add new
-                cboFTPServer.Visible = false;
-                txtServerName.Visible = true;
-                
-                txtServerName.Text = "";
-                
-                txtFTPAddress.Text = "";
-                txtFTPAddress.Enabled = true;
-                txtFTPFilePath.Text = "";
-                txtFTPFilePath.Enabled = true;
-                txtFTPUsername.Text = "";
-                txtFTPUsername.PasswordChar = '\0';
-                txtFTPUsername.Enabled = true;
-                txtFTPPassword.Text = "";
-                txtFTPPassword.Enabled = true;
-                udFTPPort.Value = 8821;
-                udFTPPort.Enabled = true;
-                cboFtpMap.Enabled = true;
-                optFtpModeFtp.Enabled = true;
-                optFtpModeSftp.Enabled = true;
-
-
-                txtServerName.Focus();
-                chkPasswordVisibility.Visible = true;
-
-
-            }
-            else
-            {
-                UpdateFtpServer();
-
-
+                if (serverSetup.ShowDialog() == DialogResult.OK)
+                {
+                    //commit changes to combo tag
+                    int newIndex = cboFTPServer.Items.Add(serverSetup.SelectedServer);
+                    Program.ProgramConfig.SelectedServer = serverSetup.Name;
+                    cboFTPServer.SelectedIndex = newIndex;
+                }
             }
 
         }
         private void UpdateFtpServer()
         {
-            if (txtServerName.Text.Trim().Length == 0)
-            {
-                MessageBox.Show("Please enter a unique name for this server.", "Missing Value", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                txtServerName.Focus();
-                return;
-            }
-
-            if(txtFTPAddress.TextLength == 0)
-            {
-                MessageBox.Show("Please enter the FTP server address.", "Missing Value", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                txtFTPAddress.Focus();
-                return;
-            }
-
-            if(!(cboFtpMap.SelectedIndex >= 0))
-            {
-                MessageBox.Show("Please select a server map.", "Missing Value", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                cboFtpMap.Focus();
-                return;
-            }
-
-            txtServerName.Visible = false;
-            txtFTPAddress.Text = txtFTPAddress.Text.Replace("ftp://", "");
-            txtFTPAddress.Text = txtFTPAddress.Text.Replace("sftp://", "");
-            cboFTPServer.Visible = true;
-
-            //add it, revert to combo selection, select new server
-            ServerConfiguration newConfig = new ServerConfiguration()
-            {
-                Name = txtServerName.Text,
-                Address = txtFTPAddress.Text,
-                SaveGamePath = txtFTPFilePath.Text,
-                Username = txtFTPUsername.Text,
-                Password = txtFTPPassword.Text,
-                Port = (int)udFTPPort.Value,
-                Map = ((ComboValuePair)cboFtpMap.SelectedItem).Key.ToLower(),
-                Mode = optFtpModeFtp.Checked ? 0 : 1
-            };
-
-            int newIndex = cboFTPServer.Items.Add(newConfig);
-            cboFTPServer.SelectedIndex = newIndex;
-            DisplayServerSettings();
-            btnSave.Enabled = true;
-        }
-
-        private void txtServerName_Validating(object sender, CancelEventArgs e)
-        {
-            if (txtServerName.TextLength == 0) return;
-
-            if(cboFTPServer.Items.Count > 0)
-            {
-                var serverExists = cboFTPServer.Items.Cast<ServerConfiguration>().Where(s=>s.Name.ToLower() == txtServerName.Text.ToLower()).Count() > 0;
-                if (serverExists)
-                {
-                    MessageBox.Show("Server name already exists, please choose a different name.", "Server Name.", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                e.Cancel = serverExists;
-            }
-        }
-
-        private void chkPasswordVisibility_CheckedChanged(object sender, EventArgs e)
-        {            
-            txtFTPPassword.PasswordChar = chkPasswordVisibility.Checked? '\0' : '●';
+            
         }
 
         private void btnImport_Click(object sender, EventArgs e)
@@ -1685,7 +1503,7 @@ namespace ARKViewer
                         bool includeWild = chkWildCreatures.Checked;
                         bool includePlayerStructures = chkPlayerStructures.Checked;
 
-                        ContentPack contentPack = new ContentPack(gd, tribeId, playerId, udExportLat.Value, udExportLon.Value, udExportRadius.Value, includeGameStructures, includeGameStructureContent, includeTribesPlayers, includeTamed, includeWild, includePlayerStructures);
+                        ContentPack contentPack = new ContentPack(gd, tribeId, playerId, udExportLat.Value, udExportLon.Value, udExportRadius.Value, includeGameStructures, includeGameStructureContent, includeTribesPlayers, includeTamed, includeWild, includePlayerStructures,includeGameStructureContent);
                         ContentManager exportManager = new ContentManager(contentPack);
                         try
                         {
@@ -1848,6 +1666,22 @@ namespace ARKViewer
         private void optContentPack_CheckedChanged(object sender, EventArgs e)
         {
             UpdateDisplay();
+        }
+
+        private void btnEditServer_Click(object sender, EventArgs e)
+        {
+            if (cboFTPServer.SelectedItem == null) return;
+            ServerConfiguration selectedServer = (ServerConfiguration)cboFTPServer.SelectedItem;
+            using (frmFtpFileBrowser serverSetup = new frmFtpFileBrowser(selectedServer))
+            {
+                if(serverSetup.ShowDialog() == DialogResult.OK)
+                {
+                    //commit changes to combo tag
+                    cboFTPServer.Items[cboFTPServer.SelectedIndex] = serverSetup.SelectedServer;
+                    DisplayServerSettings();
+                }
+
+            }
         }
     }
 }
