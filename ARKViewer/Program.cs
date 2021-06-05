@@ -70,20 +70,6 @@ namespace ARKViewer
             {
 
                 //used when exporting ASV pack data
-                long tribeId = 0;
-                long playerId = 0;
-                decimal filterLat = 50;
-                decimal filterLon = 50;
-                decimal filterRad = 250;
-                bool packStructureLocations = true;
-                bool packStructureContent = true;
-                bool packDroppedItems = true;
-                bool packTribesPlayers = true;
-                bool packTamed = true;
-                bool packWild = true;
-                bool packPlayerStructures = true;
-
-
                 string commandOptionCheck = commandArguments[1].ToString().Trim().ToLower();
                 string exportFilePath = AppContext.BaseDirectory;
                 string exportFilename = Path.Combine(exportFilePath, "");

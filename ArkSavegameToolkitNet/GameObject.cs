@@ -299,7 +299,10 @@ namespace ArkSavegameToolkitNet
 
                     if (Properties.ContainsKey(_tamedOnServer) || Properties.ContainsKey(_imprinterName) || tamingTeamID >= 50000)
                     {
-                        _isFlags |= GameObjectIs.IsTamedCreature;
+                        if(targetingTeamId >= 50000) {
+                            _isFlags |= GameObjectIs.IsTamedCreature;
+                        }
+                        
                     }
                 }
 

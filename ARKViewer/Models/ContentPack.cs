@@ -720,8 +720,7 @@ namespace ARKViewer.Models
 
                 var soloPlayers = gd.Players
                     .Where(p =>
-                        p.TribeId.HasValue
-                        && (p.TribeId == 0 || p.TribeId == p.Id)
+                        (p.TribeId == null || (p.TribeId.HasValue && (p.TribeId == 0 || p.TribeId == p.Id)))
                         && (ExportedForPlayer == 0 || p.Id == ExportedForPlayer)
                         && (Math.Abs((decimal)p.Location.Latitude - FilterLatitude) <= FilterRadius)
                         && (Math.Abs((decimal)p.Location.Longitude - FilterLongitude) <= FilterRadius)
