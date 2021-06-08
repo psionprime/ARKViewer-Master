@@ -53,9 +53,9 @@ namespace ARKViewer
             this.pnlZoom.BackColor = System.Drawing.Color.MintCream;
             this.pnlZoom.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlZoom.Controls.Add(this.trackZoom);
-            this.pnlZoom.Location = new System.Drawing.Point(4, 648);
+            this.pnlZoom.Location = new System.Drawing.Point(4, 562);
             this.pnlZoom.Name = "pnlZoom";
-            this.pnlZoom.Size = new System.Drawing.Size(628, 26);
+            this.pnlZoom.Size = new System.Drawing.Size(551, 26);
             this.pnlZoom.TabIndex = 46;
             // 
             // trackZoom
@@ -84,7 +84,7 @@ namespace ARKViewer
             this.pnlMap.Controls.Add(this.picMap);
             this.pnlMap.Location = new System.Drawing.Point(4, 64);
             this.pnlMap.Name = "pnlMap";
-            this.pnlMap.Size = new System.Drawing.Size(628, 581);
+            this.pnlMap.Size = new System.Drawing.Size(551, 495);
             this.pnlMap.TabIndex = 42;
             // 
             // picMap
@@ -107,7 +107,7 @@ namespace ARKViewer
             this.btnMapMarkers.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnMapMarkers.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnMapMarkers.Image = ((System.Drawing.Image)(resources.GetObject("btnMapMarkers.Image")));
-            this.btnMapMarkers.Location = new System.Drawing.Point(526, 8);
+            this.btnMapMarkers.Location = new System.Drawing.Point(449, 8);
             this.btnMapMarkers.Name = "btnMapMarkers";
             this.btnMapMarkers.Size = new System.Drawing.Size(50, 50);
             this.btnMapMarkers.TabIndex = 48;
@@ -119,7 +119,7 @@ namespace ARKViewer
             this.btnMapStructures.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnMapStructures.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnMapStructures.Image = ((System.Drawing.Image)(resources.GetObject("btnMapStructures.Image")));
-            this.btnMapStructures.Location = new System.Drawing.Point(470, 8);
+            this.btnMapStructures.Location = new System.Drawing.Point(393, 8);
             this.btnMapStructures.Name = "btnMapStructures";
             this.btnMapStructures.Size = new System.Drawing.Size(50, 50);
             this.btnMapStructures.TabIndex = 47;
@@ -152,7 +152,7 @@ namespace ARKViewer
             this.btnSave.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnSave.Enabled = false;
             this.btnSave.Image = global::ARKViewer.Properties.Resources.button_save;
-            this.btnSave.Location = new System.Drawing.Point(582, 8);
+            this.btnSave.Location = new System.Drawing.Point(505, 8);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(50, 50);
             this.btnSave.TabIndex = 51;
@@ -164,7 +164,7 @@ namespace ARKViewer
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightBlue;
-            this.ClientSize = new System.Drawing.Size(637, 680);
+            this.ClientSize = new System.Drawing.Size(560, 594);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.lblTitle);
@@ -173,6 +173,7 @@ namespace ARKViewer
             this.Controls.Add(this.pnlMap);
             this.Controls.Add(this.pnlZoom);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.MinimumSize = new System.Drawing.Size(400, 400);
             this.Name = "frmMapView";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Map View";

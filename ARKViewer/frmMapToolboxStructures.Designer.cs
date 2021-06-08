@@ -133,7 +133,7 @@ namespace ARKViewer
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(364, 280);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(361, 280);
             this.tableLayoutPanel1.TabIndex = 41;
             // 
             // panel13
@@ -144,7 +144,7 @@ namespace ARKViewer
             this.panel13.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel13.Location = new System.Drawing.Point(3, 233);
             this.panel13.Name = "panel13";
-            this.panel13.Size = new System.Drawing.Size(176, 44);
+            this.panel13.Size = new System.Drawing.Size(174, 44);
             this.panel13.TabIndex = 50;
             // 
             // pictureBox11
@@ -177,9 +177,9 @@ namespace ARKViewer
             this.panel12.Controls.Add(this.pictureBox12);
             this.panel12.Controls.Add(this.chkMapGlitches);
             this.panel12.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel12.Location = new System.Drawing.Point(185, 233);
+            this.panel12.Location = new System.Drawing.Point(183, 233);
             this.panel12.Name = "panel12";
-            this.panel12.Size = new System.Drawing.Size(176, 44);
+            this.panel12.Size = new System.Drawing.Size(175, 44);
             this.panel12.TabIndex = 49;
             // 
             // pictureBox12
@@ -214,7 +214,7 @@ namespace ARKViewer
             this.panel11.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel11.Location = new System.Drawing.Point(3, 187);
             this.panel11.Name = "panel11";
-            this.panel11.Size = new System.Drawing.Size(176, 40);
+            this.panel11.Size = new System.Drawing.Size(174, 40);
             this.panel11.TabIndex = 48;
             // 
             // pictureBox9
@@ -247,9 +247,9 @@ namespace ARKViewer
             this.panel10.Controls.Add(this.pictureBox10);
             this.panel10.Controls.Add(this.chkMapBeaverDams);
             this.panel10.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel10.Location = new System.Drawing.Point(185, 187);
+            this.panel10.Location = new System.Drawing.Point(183, 187);
             this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(176, 40);
+            this.panel10.Size = new System.Drawing.Size(175, 40);
             this.panel10.TabIndex = 47;
             // 
             // pictureBox10
@@ -284,7 +284,7 @@ namespace ARKViewer
             this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel9.Location = new System.Drawing.Point(3, 141);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(176, 40);
+            this.panel9.Size = new System.Drawing.Size(174, 40);
             this.panel9.TabIndex = 46;
             // 
             // pictureBox7
@@ -317,9 +317,9 @@ namespace ARKViewer
             this.panel8.Controls.Add(this.chkMapMagmaNests);
             this.panel8.Controls.Add(this.pictureBox8);
             this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel8.Location = new System.Drawing.Point(185, 141);
+            this.panel8.Location = new System.Drawing.Point(183, 141);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(176, 40);
+            this.panel8.Size = new System.Drawing.Size(175, 40);
             this.panel8.TabIndex = 45;
             // 
             // chkMapMagmaNests
@@ -354,7 +354,7 @@ namespace ARKViewer
             this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel7.Location = new System.Drawing.Point(3, 95);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(176, 40);
+            this.panel7.Size = new System.Drawing.Size(174, 40);
             this.panel7.TabIndex = 44;
             // 
             // chkMapGasVeins
@@ -387,9 +387,9 @@ namespace ARKViewer
             this.panel6.Controls.Add(this.chkMapDrakeNests);
             this.panel6.Controls.Add(this.pictureBox6);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel6.Location = new System.Drawing.Point(185, 95);
+            this.panel6.Location = new System.Drawing.Point(183, 95);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(176, 40);
+            this.panel6.Size = new System.Drawing.Size(175, 40);
             this.panel6.TabIndex = 43;
             // 
             // chkMapDrakeNests
@@ -424,7 +424,7 @@ namespace ARKViewer
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(3, 49);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(176, 40);
+            this.panel4.Size = new System.Drawing.Size(174, 40);
             this.panel4.TabIndex = 42;
             // 
             // chkMapOilVeins
@@ -457,9 +457,9 @@ namespace ARKViewer
             this.panel3.Controls.Add(this.chkMapDeinoNests);
             this.panel3.Controls.Add(this.pictureBox3);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(185, 49);
+            this.panel3.Location = new System.Drawing.Point(183, 49);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(176, 40);
+            this.panel3.Size = new System.Drawing.Size(175, 40);
             this.panel3.TabIndex = 41;
             // 
             // chkMapDeinoNests
@@ -494,7 +494,7 @@ namespace ARKViewer
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(3, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(176, 40);
+            this.panel2.Size = new System.Drawing.Size(174, 40);
             this.panel2.TabIndex = 40;
             // 
             // pictureBox2
@@ -527,9 +527,9 @@ namespace ARKViewer
             this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Controls.Add(this.chkMapWyvernNests);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(185, 3);
+            this.panel1.Location = new System.Drawing.Point(183, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(176, 40);
+            this.panel1.Size = new System.Drawing.Size(175, 40);
             this.panel1.TabIndex = 39;
             // 
             // pictureBox1
@@ -570,7 +570,7 @@ namespace ARKViewer
             this.lvwStructureLocations.Location = new System.Drawing.Point(12, 303);
             this.lvwStructureLocations.MultiSelect = false;
             this.lvwStructureLocations.Name = "lvwStructureLocations";
-            this.lvwStructureLocations.Size = new System.Drawing.Size(361, 141);
+            this.lvwStructureLocations.Size = new System.Drawing.Size(358, 62);
             this.lvwStructureLocations.TabIndex = 42;
             this.lvwStructureLocations.UseCompatibleStateImageBehavior = false;
             this.lvwStructureLocations.View = System.Windows.Forms.View.Details;
@@ -597,7 +597,7 @@ namespace ARKViewer
             this.chkGroup.AutoSize = true;
             this.chkGroup.Checked = true;
             this.chkGroup.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkGroup.Location = new System.Drawing.Point(282, 486);
+            this.chkGroup.Location = new System.Drawing.Point(279, 407);
             this.chkGroup.Name = "chkGroup";
             this.chkGroup.Size = new System.Drawing.Size(91, 17);
             this.chkGroup.TabIndex = 47;
@@ -608,12 +608,12 @@ namespace ARKViewer
             // 
             this.txtContents.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtContents.Location = new System.Drawing.Point(16, 509);
+            this.txtContents.Location = new System.Drawing.Point(16, 430);
             this.txtContents.Multiline = true;
             this.txtContents.Name = "txtContents";
             this.txtContents.ReadOnly = true;
             this.txtContents.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtContents.Size = new System.Drawing.Size(357, 154);
+            this.txtContents.Size = new System.Drawing.Size(354, 154);
             this.txtContents.TabIndex = 46;
             // 
             // lblInventory
@@ -621,7 +621,7 @@ namespace ARKViewer
             this.lblInventory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblInventory.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblInventory.ForeColor = System.Drawing.Color.Black;
-            this.lblInventory.Location = new System.Drawing.Point(13, 481);
+            this.lblInventory.Location = new System.Drawing.Point(13, 402);
             this.lblInventory.Name = "lblInventory";
             this.lblInventory.Size = new System.Drawing.Size(125, 25);
             this.lblInventory.TabIndex = 45;
@@ -632,7 +632,7 @@ namespace ARKViewer
             // 
             this.btnCopyCommand.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCopyCommand.Image = global::ARKViewer.Properties.Resources.button_document;
-            this.btnCopyCommand.Location = new System.Drawing.Point(343, 446);
+            this.btnCopyCommand.Location = new System.Drawing.Point(340, 367);
             this.btnCopyCommand.Name = "btnCopyCommand";
             this.btnCopyCommand.Size = new System.Drawing.Size(30, 30);
             this.btnCopyCommand.TabIndex = 44;
@@ -647,9 +647,9 @@ namespace ARKViewer
             this.cboConsoleCommands.FormattingEnabled = true;
             this.cboConsoleCommands.Items.AddRange(new object[] {
             "SetPlayerPos  <x> <y> <z>"});
-            this.cboConsoleCommands.Location = new System.Drawing.Point(15, 450);
+            this.cboConsoleCommands.Location = new System.Drawing.Point(15, 371);
             this.cboConsoleCommands.Name = "cboConsoleCommands";
-            this.cboConsoleCommands.Size = new System.Drawing.Size(322, 21);
+            this.cboConsoleCommands.Size = new System.Drawing.Size(319, 21);
             this.cboConsoleCommands.TabIndex = 43;
             // 
             // lblStatus
@@ -658,9 +658,9 @@ namespace ARKViewer
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblStatus.ForeColor = System.Drawing.Color.DimGray;
-            this.lblStatus.Location = new System.Drawing.Point(13, 672);
+            this.lblStatus.Location = new System.Drawing.Point(13, 593);
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(362, 13);
+            this.lblStatus.Size = new System.Drawing.Size(359, 13);
             this.lblStatus.TabIndex = 48;
             this.lblStatus.Text = "Loading...";
             // 
@@ -669,7 +669,7 @@ namespace ARKViewer
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightBlue;
-            this.ClientSize = new System.Drawing.Size(387, 690);
+            this.ClientSize = new System.Drawing.Size(384, 611);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.chkGroup);
             this.Controls.Add(this.txtContents);
@@ -679,6 +679,7 @@ namespace ARKViewer
             this.Controls.Add(this.lvwStructureLocations);
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.MinimumSize = new System.Drawing.Size(400, 650);
             this.Name = "frmMapToolboxStructures";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Map Structures";

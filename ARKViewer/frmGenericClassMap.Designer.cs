@@ -123,7 +123,7 @@
             this.Controls.Add(this.lblClassName);
             this.Controls.Add(this.btnCcancel);
             this.Controls.Add(this.btnSave);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmGenericClassMap";

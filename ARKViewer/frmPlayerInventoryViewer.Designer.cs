@@ -117,7 +117,7 @@
             this.pnlPlayerInventory.Controls.Add(this.lvwPlayerInventory);
             this.pnlPlayerInventory.Location = new System.Drawing.Point(18, 83);
             this.pnlPlayerInventory.Name = "pnlPlayerInventory";
-            this.pnlPlayerInventory.Size = new System.Drawing.Size(673, 348);
+            this.pnlPlayerInventory.Size = new System.Drawing.Size(689, 364);
             this.pnlPlayerInventory.TabIndex = 4;
             // 
             // chkApplyFilterPlayer
@@ -125,7 +125,7 @@
             this.chkApplyFilterPlayer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.chkApplyFilterPlayer.Appearance = System.Windows.Forms.Appearance.Button;
             this.chkApplyFilterPlayer.Image = global::ARKViewer.Properties.Resources.button_filter;
-            this.chkApplyFilterPlayer.Location = new System.Drawing.Point(615, 312);
+            this.chkApplyFilterPlayer.Location = new System.Drawing.Point(631, 328);
             this.chkApplyFilterPlayer.Name = "chkApplyFilterPlayer";
             this.chkApplyFilterPlayer.Size = new System.Drawing.Size(30, 30);
             this.chkApplyFilterPlayer.TabIndex = 22;
@@ -136,7 +136,7 @@
             // 
             this.lblPlayerFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblPlayerFilter.AutoSize = true;
-            this.lblPlayerFilter.Location = new System.Drawing.Point(26, 319);
+            this.lblPlayerFilter.Location = new System.Drawing.Point(26, 335);
             this.lblPlayerFilter.Name = "lblPlayerFilter";
             this.lblPlayerFilter.Size = new System.Drawing.Size(29, 13);
             this.lblPlayerFilter.TabIndex = 1;
@@ -146,9 +146,9 @@
             // 
             this.txtPlayerFilter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtPlayerFilter.Location = new System.Drawing.Point(72, 316);
+            this.txtPlayerFilter.Location = new System.Drawing.Point(72, 332);
             this.txtPlayerFilter.Name = "txtPlayerFilter";
-            this.txtPlayerFilter.Size = new System.Drawing.Size(537, 20);
+            this.txtPlayerFilter.Size = new System.Drawing.Size(553, 20);
             this.txtPlayerFilter.TabIndex = 2;
             this.txtPlayerFilter.TextChanged += new System.EventHandler(this.txtPlayerFilter_TextChanged);
             // 
@@ -167,7 +167,7 @@
             this.lvwPlayerInventory.HideSelection = false;
             this.lvwPlayerInventory.Location = new System.Drawing.Point(24, 19);
             this.lvwPlayerInventory.Name = "lvwPlayerInventory";
-            this.lvwPlayerInventory.Size = new System.Drawing.Size(621, 290);
+            this.lvwPlayerInventory.Size = new System.Drawing.Size(637, 306);
             this.lvwPlayerInventory.TabIndex = 0;
             this.lvwPlayerInventory.UseCompatibleStateImageBehavior = false;
             this.lvwPlayerInventory.View = System.Windows.Forms.View.Details;
@@ -211,7 +211,7 @@
             this.tabInventory.Location = new System.Drawing.Point(12, 24);
             this.tabInventory.Name = "tabInventory";
             this.tabInventory.SelectedIndex = 0;
-            this.tabInventory.Size = new System.Drawing.Size(716, 493);
+            this.tabInventory.Size = new System.Drawing.Size(732, 509);
             this.tabInventory.TabIndex = 1;
             // 
             // tpgPlayerInventory
@@ -225,7 +225,7 @@
             this.tpgPlayerInventory.Location = new System.Drawing.Point(4, 22);
             this.tpgPlayerInventory.Name = "tpgPlayerInventory";
             this.tpgPlayerInventory.Padding = new System.Windows.Forms.Padding(3);
-            this.tpgPlayerInventory.Size = new System.Drawing.Size(708, 467);
+            this.tpgPlayerInventory.Size = new System.Drawing.Size(724, 483);
             this.tpgPlayerInventory.TabIndex = 0;
             this.tpgPlayerInventory.Text = "Player Inventory";
             this.tpgPlayerInventory.UseVisualStyleBackColor = true;
@@ -235,7 +235,7 @@
             this.lblPlayerLevelLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblPlayerLevelLabel.AutoSize = true;
             this.lblPlayerLevelLabel.ForeColor = System.Drawing.Color.DarkGray;
-            this.lblPlayerLevelLabel.Location = new System.Drawing.Point(600, 24);
+            this.lblPlayerLevelLabel.Location = new System.Drawing.Point(616, 24);
             this.lblPlayerLevelLabel.Name = "lblPlayerLevelLabel";
             this.lblPlayerLevelLabel.Size = new System.Drawing.Size(65, 13);
             this.lblPlayerLevelLabel.TabIndex = 2;
@@ -246,7 +246,7 @@
             this.lblPlayerLevel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblPlayerLevel.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPlayerLevel.ForeColor = System.Drawing.Color.Black;
-            this.lblPlayerLevel.Location = new System.Drawing.Point(601, 37);
+            this.lblPlayerLevel.Location = new System.Drawing.Point(617, 37);
             this.lblPlayerLevel.Name = "lblPlayerLevel";
             this.lblPlayerLevel.Size = new System.Drawing.Size(62, 31);
             this.lblPlayerLevel.TabIndex = 3;
@@ -261,7 +261,7 @@
             this.lblTribeName.ForeColor = System.Drawing.Color.DimGray;
             this.lblTribeName.Location = new System.Drawing.Point(97, 51);
             this.lblTribeName.Name = "lblTribeName";
-            this.lblTribeName.Size = new System.Drawing.Size(589, 17);
+            this.lblTribeName.Size = new System.Drawing.Size(605, 17);
             this.lblTribeName.TabIndex = 1;
             this.lblTribeName.Text = "Tribe Name";
             this.lblTribeName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -274,7 +274,7 @@
             this.lblPlayerName.ForeColor = System.Drawing.Color.Black;
             this.lblPlayerName.Location = new System.Drawing.Point(95, 18);
             this.lblPlayerName.Name = "lblPlayerName";
-            this.lblPlayerName.Size = new System.Drawing.Size(450, 31);
+            this.lblPlayerName.Size = new System.Drawing.Size(466, 31);
             this.lblPlayerName.TabIndex = 0;
             this.lblPlayerName.Text = "Player Name";
             this.lblPlayerName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -657,7 +657,7 @@
             // picWindowIcon
             // 
             this.picWindowIcon.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.picWindowIcon.Location = new System.Drawing.Point(691, 7);
+            this.picWindowIcon.Location = new System.Drawing.Point(707, 7);
             this.picWindowIcon.Name = "picWindowIcon";
             this.picWindowIcon.Size = new System.Drawing.Size(30, 30);
             this.picWindowIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -669,7 +669,7 @@
             this.lblWindowTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblWindowTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblWindowTitle.ForeColor = System.Drawing.Color.Black;
-            this.lblWindowTitle.Location = new System.Drawing.Point(384, 6);
+            this.lblWindowTitle.Location = new System.Drawing.Point(400, 6);
             this.lblWindowTitle.Name = "lblWindowTitle";
             this.lblWindowTitle.Size = new System.Drawing.Size(301, 31);
             this.lblWindowTitle.TabIndex = 0;
@@ -681,7 +681,7 @@
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClose.Location = new System.Drawing.Point(649, 525);
+            this.btnClose.Location = new System.Drawing.Point(665, 541);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 2;
@@ -692,7 +692,7 @@
             // 
             this.lblPlayerId.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblPlayerId.AutoSize = true;
-            this.lblPlayerId.Location = new System.Drawing.Point(13, 530);
+            this.lblPlayerId.Location = new System.Drawing.Point(13, 546);
             this.lblPlayerId.Name = "lblPlayerId";
             this.lblPlayerId.Size = new System.Drawing.Size(51, 13);
             this.lblPlayerId.TabIndex = 8;
@@ -702,15 +702,16 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(744, 561);
+            this.ClientSize = new System.Drawing.Size(760, 577);
             this.Controls.Add(this.lblPlayerId);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.lblWindowTitle);
             this.Controls.Add(this.picWindowIcon);
             this.Controls.Add(this.tabInventory);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(760, 600);
+            this.MinimumSize = new System.Drawing.Size(750, 400);
             this.Name = "frmPlayerInventoryViewer";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Player Explorer";

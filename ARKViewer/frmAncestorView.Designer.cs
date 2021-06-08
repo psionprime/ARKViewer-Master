@@ -104,15 +104,82 @@ namespace ARKViewer
             this.columnHeader27 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader28 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader29 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.button2 = new System.Windows.Forms.Button();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.chkAllTribes = new System.Windows.Forms.CheckBox();
+            this.lvwTameLovers = new System.Windows.Forms.ListView();
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader31 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader32 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader33 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader34 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader35 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader36 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader37 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader38 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader39 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader40 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader41 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader42 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader43 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader44 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader45 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader46 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader47 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader48 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader49 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader50 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader51 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader52 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader53 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader54 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader55 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader56 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.button3 = new System.Windows.Forms.Button();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.btnWildFilter = new System.Windows.Forms.Button();
+            this.lvwWildLovers = new System.Windows.Forms.ListView();
+            this.lvwWildDetail_Base = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lvwWildDetail_Level = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lvwWildDetail_Lat = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lvwWildDetail_Lon = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lvwWildDetail_HP = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lvwWildDetail_Stam = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lvwWildDetail_Melee = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lvwWildDetail_Weight = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lvwWildDetail_Speed = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lvwWildDetail_Food = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lvwWildDetail_Oxygen = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lvwWildDetail_Craft = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lvwWildDetail_Colour1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lvwWildDetail_Colour2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lvwWildDetail_Colour3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lvwWildDetail_Colour4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lvwWildDetail_Colour5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lvwWildDetail_Colour6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lvwWildDetail_Id = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader30 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.picWindowIcon)).BeginInit();
             this.panel3.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
             // cboGeneration
             // 
             this.cboGeneration.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboGeneration.FormattingEnabled = true;
-            this.cboGeneration.Location = new System.Drawing.Point(103, 155);
+            this.cboGeneration.Location = new System.Drawing.Point(112, 21);
             this.cboGeneration.Name = "cboGeneration";
             this.cboGeneration.Size = new System.Drawing.Size(165, 21);
             this.cboGeneration.TabIndex = 15;
@@ -122,7 +189,7 @@ namespace ARKViewer
             // 
             this.lblGeneration.AutoSize = true;
             this.lblGeneration.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblGeneration.Location = new System.Drawing.Point(16, 157);
+            this.lblGeneration.Location = new System.Drawing.Point(25, 23);
             this.lblGeneration.Name = "lblGeneration";
             this.lblGeneration.Size = new System.Drawing.Size(73, 13);
             this.lblGeneration.TabIndex = 16;
@@ -183,18 +250,18 @@ namespace ARKViewer
             this.lblWindowTitle.AutoSize = true;
             this.lblWindowTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblWindowTitle.ForeColor = System.Drawing.Color.Black;
-            this.lblWindowTitle.Location = new System.Drawing.Point(885, 11);
+            this.lblWindowTitle.Location = new System.Drawing.Point(602, 9);
             this.lblWindowTitle.Name = "lblWindowTitle";
-            this.lblWindowTitle.Size = new System.Drawing.Size(162, 25);
+            this.lblWindowTitle.Size = new System.Drawing.Size(170, 25);
             this.lblWindowTitle.TabIndex = 17;
-            this.lblWindowTitle.Text = "Ancestor View";
+            this.lblWindowTitle.Text = "Breeding Lines";
             this.lblWindowTitle.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // picWindowIcon
             // 
             this.picWindowIcon.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.picWindowIcon.Image = ((System.Drawing.Image)(resources.GetObject("picWindowIcon.Image")));
-            this.picWindowIcon.Location = new System.Drawing.Point(1054, 8);
+            this.picWindowIcon.Location = new System.Drawing.Point(778, 8);
             this.picWindowIcon.Name = "picWindowIcon";
             this.picWindowIcon.Size = new System.Drawing.Size(35, 40);
             this.picWindowIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -207,7 +274,7 @@ namespace ARKViewer
             this.btnCopyCommandTamed.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCopyCommandTamed.Enabled = false;
             this.btnCopyCommandTamed.Image = global::ARKViewer.Properties.Resources.button_document;
-            this.btnCopyCommandTamed.Location = new System.Drawing.Point(1055, 397);
+            this.btnCopyCommandTamed.Location = new System.Drawing.Point(740, 257);
             this.btnCopyCommandTamed.Name = "btnCopyCommandTamed";
             this.btnCopyCommandTamed.Size = new System.Drawing.Size(35, 35);
             this.btnCopyCommandTamed.TabIndex = 40;
@@ -218,7 +285,7 @@ namespace ARKViewer
             // 
             this.lblTamedCommand.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTamedCommand.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTamedCommand.Location = new System.Drawing.Point(722, 407);
+            this.lblTamedCommand.Location = new System.Drawing.Point(414, 267);
             this.lblTamedCommand.Name = "lblTamedCommand";
             this.lblTamedCommand.Size = new System.Drawing.Size(65, 13);
             this.lblTamedCommand.TabIndex = 39;
@@ -235,7 +302,7 @@ namespace ARKViewer
             "GMSummon \"<ClassName>\"  <Level>",
             "TakeTribe <TribeID>",
             "SetPlayerPos  <x> <y> <z>"});
-            this.cboConsoleCommandsTamed.Location = new System.Drawing.Point(792, 404);
+            this.cboConsoleCommandsTamed.Location = new System.Drawing.Point(486, 264);
             this.cboConsoleCommandsTamed.Name = "cboConsoleCommandsTamed";
             this.cboConsoleCommandsTamed.Size = new System.Drawing.Size(248, 21);
             this.cboConsoleCommandsTamed.TabIndex = 38;
@@ -277,10 +344,10 @@ namespace ARKViewer
             this.lvwTameDetail_Id});
             this.lvwTameDetail.FullRowSelect = true;
             this.lvwTameDetail.HideSelection = false;
-            this.lvwTameDetail.Location = new System.Drawing.Point(14, 182);
+            this.lvwTameDetail.Location = new System.Drawing.Point(20, 48);
             this.lvwTameDetail.MultiSelect = false;
             this.lvwTameDetail.Name = "lvwTameDetail";
-            this.lvwTameDetail.Size = new System.Drawing.Size(1076, 205);
+            this.lvwTameDetail.Size = new System.Drawing.Size(755, 205);
             this.lvwTameDetail.TabIndex = 36;
             this.lvwTameDetail.UseCompatibleStateImageBehavior = false;
             this.lvwTameDetail.View = System.Windows.Forms.View.Details;
@@ -434,7 +501,7 @@ namespace ARKViewer
             this.panel3.Controls.Add(this.lblStats);
             this.panel3.Controls.Add(this.optStatsTamed);
             this.panel3.Controls.Add(this.optStatsBase);
-            this.panel3.Location = new System.Drawing.Point(14, 397);
+            this.panel3.Location = new System.Drawing.Point(15, 482);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(175, 34);
             this.panel3.TabIndex = 37;
@@ -474,13 +541,12 @@ namespace ARKViewer
             // 
             // lblStatus
             // 
-            this.lblStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblStatus.AutoSize = true;
             this.lblStatus.BackColor = System.Drawing.SystemColors.Control;
             this.lblStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblStatus.ForeColor = System.Drawing.Color.DimGray;
-            this.lblStatus.Location = new System.Drawing.Point(195, 406);
+            this.lblStatus.Location = new System.Drawing.Point(204, 493);
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(64, 13);
             this.lblStatus.TabIndex = 41;
@@ -523,7 +589,7 @@ namespace ARKViewer
             this.lvwTame.Location = new System.Drawing.Point(14, 62);
             this.lvwTame.MultiSelect = false;
             this.lvwTame.Name = "lvwTame";
-            this.lvwTame.Size = new System.Drawing.Size(1076, 85);
+            this.lvwTame.Size = new System.Drawing.Size(800, 85);
             this.lvwTame.TabIndex = 42;
             this.lvwTame.UseCompatibleStateImageBehavior = false;
             this.lvwTame.View = System.Windows.Forms.View.Details;
@@ -658,17 +724,497 @@ namespace ARKViewer
             this.columnHeader29.Text = "Id";
             this.columnHeader29.Width = 0;
             // 
+            // tabControl1
+            // 
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Location = new System.Drawing.Point(14, 153);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(802, 324);
+            this.tabControl1.TabIndex = 43;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.lvwTameDetail);
+            this.tabPage1.Controls.Add(this.cboGeneration);
+            this.tabPage1.Controls.Add(this.lblGeneration);
+            this.tabPage1.Controls.Add(this.btnCopyCommandTamed);
+            this.tabPage1.Controls.Add(this.cboConsoleCommandsTamed);
+            this.tabPage1.Controls.Add(this.lblTamedCommand);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(794, 298);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Ancestors";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.button2);
+            this.tabPage2.Controls.Add(this.comboBox1);
+            this.tabPage2.Controls.Add(this.label1);
+            this.tabPage2.Controls.Add(this.button1);
+            this.tabPage2.Controls.Add(this.chkAllTribes);
+            this.tabPage2.Controls.Add(this.lvwTameLovers);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(794, 298);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Tamed Lovers";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button2.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button2.Enabled = false;
+            this.button2.Image = global::ARKViewer.Properties.Resources.button_document;
+            this.button2.Location = new System.Drawing.Point(740, 257);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(35, 35);
+            this.button2.TabIndex = 43;
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "DestroyTribeIdDinos <TribeID>",
+            "GMSummon \"<ClassName>\"  <Level> | <DoTame>",
+            "GMSummon \"<ClassName>\"  <Level>",
+            "TakeTribe <TribeID>",
+            "SetPlayerPos  <x> <y> <z>"});
+            this.comboBox1.Location = new System.Drawing.Point(486, 264);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(248, 21);
+            this.comboBox1.TabIndex = 41;
+            // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(414, 267);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(65, 13);
+            this.label1.TabIndex = 42;
+            this.label1.Text = "Command:";
+            // 
+            // button1
+            // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button1.Image = global::ARKViewer.Properties.Resources.button_settings;
+            this.button1.Location = new System.Drawing.Point(20, 259);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(36, 33);
+            this.button1.TabIndex = 21;
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // chkAllTribes
+            // 
+            this.chkAllTribes.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.chkAllTribes.AutoSize = true;
+            this.chkAllTribes.Location = new System.Drawing.Point(62, 268);
+            this.chkAllTribes.Name = "chkAllTribes";
+            this.chkAllTribes.Size = new System.Drawing.Size(69, 17);
+            this.chkAllTribes.TabIndex = 17;
+            this.chkAllTribes.Text = "All Tribes";
+            this.chkAllTribes.UseVisualStyleBackColor = true;
+            // 
+            // lvwTameLovers
+            // 
+            this.lvwTameLovers.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lvwTameLovers.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2,
+            this.columnHeader31,
+            this.columnHeader32,
+            this.columnHeader33,
+            this.columnHeader34,
+            this.columnHeader35,
+            this.columnHeader36,
+            this.columnHeader37,
+            this.columnHeader38,
+            this.columnHeader39,
+            this.columnHeader40,
+            this.columnHeader41,
+            this.columnHeader42,
+            this.columnHeader43,
+            this.columnHeader44,
+            this.columnHeader45,
+            this.columnHeader46,
+            this.columnHeader47,
+            this.columnHeader48,
+            this.columnHeader49,
+            this.columnHeader50,
+            this.columnHeader51,
+            this.columnHeader52,
+            this.columnHeader53,
+            this.columnHeader54,
+            this.columnHeader55,
+            this.columnHeader56});
+            this.lvwTameLovers.FullRowSelect = true;
+            this.lvwTameLovers.HideSelection = false;
+            this.lvwTameLovers.Location = new System.Drawing.Point(20, 18);
+            this.lvwTameLovers.MultiSelect = false;
+            this.lvwTameLovers.Name = "lvwTameLovers";
+            this.lvwTameLovers.Size = new System.Drawing.Size(755, 235);
+            this.lvwTameLovers.TabIndex = 16;
+            this.lvwTameLovers.UseCompatibleStateImageBehavior = false;
+            this.lvwTameLovers.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Name";
+            this.columnHeader2.Width = 150;
+            // 
+            // columnHeader31
+            // 
+            this.columnHeader31.Text = "Base";
+            this.columnHeader31.Width = 50;
+            // 
+            // columnHeader32
+            // 
+            this.columnHeader32.Text = "Lvl";
+            this.columnHeader32.Width = 41;
+            // 
+            // columnHeader33
+            // 
+            this.columnHeader33.Text = "Lat";
+            this.columnHeader33.Width = 58;
+            // 
+            // columnHeader34
+            // 
+            this.columnHeader34.Text = "Lon";
+            this.columnHeader34.Width = 57;
+            // 
+            // columnHeader35
+            // 
+            this.columnHeader35.Text = "HP";
+            this.columnHeader35.Width = 45;
+            // 
+            // columnHeader36
+            // 
+            this.columnHeader36.Text = "Stam";
+            this.columnHeader36.Width = 45;
+            // 
+            // columnHeader37
+            // 
+            this.columnHeader37.Text = "Melee";
+            this.columnHeader37.Width = 48;
+            // 
+            // columnHeader38
+            // 
+            this.columnHeader38.Text = "Weight";
+            this.columnHeader38.Width = 55;
+            // 
+            // columnHeader39
+            // 
+            this.columnHeader39.Text = "Speed";
+            this.columnHeader39.Width = 50;
+            // 
+            // columnHeader40
+            // 
+            this.columnHeader40.Text = "Food";
+            this.columnHeader40.Width = 47;
+            // 
+            // columnHeader41
+            // 
+            this.columnHeader41.Text = "Oxygen";
+            this.columnHeader41.Width = 53;
+            // 
+            // columnHeader42
+            // 
+            this.columnHeader42.Text = "Craft";
+            this.columnHeader42.Width = 50;
+            // 
+            // columnHeader43
+            // 
+            this.columnHeader43.Text = "Server";
+            this.columnHeader43.Width = 150;
+            // 
+            // columnHeader44
+            // 
+            this.columnHeader44.Text = "Tamer";
+            this.columnHeader44.Width = 105;
+            // 
+            // columnHeader45
+            // 
+            this.columnHeader45.Text = "Imprinter";
+            this.columnHeader45.Width = 105;
+            // 
+            // columnHeader46
+            // 
+            this.columnHeader46.Text = "Imprint";
+            // 
+            // columnHeader47
+            // 
+            this.columnHeader47.Text = "Stored";
+            // 
+            // columnHeader48
+            // 
+            this.columnHeader48.Text = "C0";
+            this.columnHeader48.Width = 35;
+            // 
+            // columnHeader49
+            // 
+            this.columnHeader49.Text = "C1";
+            this.columnHeader49.Width = 35;
+            // 
+            // columnHeader50
+            // 
+            this.columnHeader50.Text = "C2";
+            this.columnHeader50.Width = 35;
+            // 
+            // columnHeader51
+            // 
+            this.columnHeader51.Text = "C3";
+            this.columnHeader51.Width = 35;
+            // 
+            // columnHeader52
+            // 
+            this.columnHeader52.Text = "C4";
+            this.columnHeader52.Width = 35;
+            // 
+            // columnHeader53
+            // 
+            this.columnHeader53.Text = "C5";
+            this.columnHeader53.Width = 35;
+            // 
+            // columnHeader54
+            // 
+            this.columnHeader54.Text = "Mut (F)";
+            // 
+            // columnHeader55
+            // 
+            this.columnHeader55.Text = "Mut (M)";
+            // 
+            // columnHeader56
+            // 
+            this.columnHeader56.Text = "Id";
+            this.columnHeader56.Width = 0;
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.button3);
+            this.tabPage3.Controls.Add(this.comboBox2);
+            this.tabPage3.Controls.Add(this.label2);
+            this.tabPage3.Controls.Add(this.btnWildFilter);
+            this.tabPage3.Controls.Add(this.lvwWildLovers);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(794, 298);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Wild Lovers";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // button3
+            // 
+            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button3.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button3.Enabled = false;
+            this.button3.Image = global::ARKViewer.Properties.Resources.button_document;
+            this.button3.Location = new System.Drawing.Point(740, 257);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(35, 35);
+            this.button3.TabIndex = 43;
+            this.button3.UseVisualStyleBackColor = true;
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Items.AddRange(new object[] {
+            "DestroyTribeIdDinos <TribeID>",
+            "GMSummon \"<ClassName>\"  <Level> | <DoTame>",
+            "GMSummon \"<ClassName>\"  <Level>",
+            "TakeTribe <TribeID>",
+            "SetPlayerPos  <x> <y> <z>"});
+            this.comboBox2.Location = new System.Drawing.Point(486, 264);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(248, 21);
+            this.comboBox2.TabIndex = 41;
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(414, 267);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(65, 13);
+            this.label2.TabIndex = 42;
+            this.label2.Text = "Command:";
+            // 
+            // btnWildFilter
+            // 
+            this.btnWildFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnWildFilter.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnWildFilter.Image = global::ARKViewer.Properties.Resources.button_settings;
+            this.btnWildFilter.Location = new System.Drawing.Point(20, 259);
+            this.btnWildFilter.Name = "btnWildFilter";
+            this.btnWildFilter.Size = new System.Drawing.Size(36, 33);
+            this.btnWildFilter.TabIndex = 20;
+            this.btnWildFilter.UseVisualStyleBackColor = true;
+            // 
+            // lvwWildLovers
+            // 
+            this.lvwWildLovers.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lvwWildLovers.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader30,
+            this.lvwWildDetail_Base,
+            this.lvwWildDetail_Level,
+            this.lvwWildDetail_Lat,
+            this.lvwWildDetail_Lon,
+            this.lvwWildDetail_HP,
+            this.lvwWildDetail_Stam,
+            this.lvwWildDetail_Melee,
+            this.lvwWildDetail_Weight,
+            this.lvwWildDetail_Speed,
+            this.lvwWildDetail_Food,
+            this.lvwWildDetail_Oxygen,
+            this.lvwWildDetail_Craft,
+            this.lvwWildDetail_Colour1,
+            this.lvwWildDetail_Colour2,
+            this.lvwWildDetail_Colour3,
+            this.lvwWildDetail_Colour4,
+            this.lvwWildDetail_Colour5,
+            this.lvwWildDetail_Colour6,
+            this.lvwWildDetail_Id});
+            this.lvwWildLovers.FullRowSelect = true;
+            this.lvwWildLovers.HideSelection = false;
+            this.lvwWildLovers.Location = new System.Drawing.Point(20, 18);
+            this.lvwWildLovers.MultiSelect = false;
+            this.lvwWildLovers.Name = "lvwWildLovers";
+            this.lvwWildLovers.Size = new System.Drawing.Size(755, 235);
+            this.lvwWildLovers.TabIndex = 12;
+            this.lvwWildLovers.UseCompatibleStateImageBehavior = false;
+            this.lvwWildLovers.View = System.Windows.Forms.View.Details;
+            // 
+            // lvwWildDetail_Base
+            // 
+            this.lvwWildDetail_Base.Text = "Base";
+            this.lvwWildDetail_Base.Width = 0;
+            // 
+            // lvwWildDetail_Level
+            // 
+            this.lvwWildDetail_Level.Text = "Lvl";
+            this.lvwWildDetail_Level.Width = 40;
+            // 
+            // lvwWildDetail_Lat
+            // 
+            this.lvwWildDetail_Lat.Text = "Lat";
+            this.lvwWildDetail_Lat.Width = 51;
+            // 
+            // lvwWildDetail_Lon
+            // 
+            this.lvwWildDetail_Lon.Text = "Lon";
+            this.lvwWildDetail_Lon.Width = 40;
+            // 
+            // lvwWildDetail_HP
+            // 
+            this.lvwWildDetail_HP.Text = "HP";
+            this.lvwWildDetail_HP.Width = 45;
+            // 
+            // lvwWildDetail_Stam
+            // 
+            this.lvwWildDetail_Stam.Text = "Stam";
+            this.lvwWildDetail_Stam.Width = 45;
+            // 
+            // lvwWildDetail_Melee
+            // 
+            this.lvwWildDetail_Melee.Text = "Melee";
+            this.lvwWildDetail_Melee.Width = 48;
+            // 
+            // lvwWildDetail_Weight
+            // 
+            this.lvwWildDetail_Weight.Text = "Weight";
+            this.lvwWildDetail_Weight.Width = 55;
+            // 
+            // lvwWildDetail_Speed
+            // 
+            this.lvwWildDetail_Speed.Text = "Speed";
+            this.lvwWildDetail_Speed.Width = 50;
+            // 
+            // lvwWildDetail_Food
+            // 
+            this.lvwWildDetail_Food.Text = "Food";
+            this.lvwWildDetail_Food.Width = 47;
+            // 
+            // lvwWildDetail_Oxygen
+            // 
+            this.lvwWildDetail_Oxygen.Text = "Oxygen";
+            this.lvwWildDetail_Oxygen.Width = 53;
+            // 
+            // lvwWildDetail_Craft
+            // 
+            this.lvwWildDetail_Craft.Text = "Craft";
+            this.lvwWildDetail_Craft.Width = 50;
+            // 
+            // lvwWildDetail_Colour1
+            // 
+            this.lvwWildDetail_Colour1.Text = "C0";
+            this.lvwWildDetail_Colour1.Width = 35;
+            // 
+            // lvwWildDetail_Colour2
+            // 
+            this.lvwWildDetail_Colour2.Text = "C1";
+            this.lvwWildDetail_Colour2.Width = 35;
+            // 
+            // lvwWildDetail_Colour3
+            // 
+            this.lvwWildDetail_Colour3.Text = "C2";
+            this.lvwWildDetail_Colour3.Width = 35;
+            // 
+            // lvwWildDetail_Colour4
+            // 
+            this.lvwWildDetail_Colour4.Text = "C3";
+            this.lvwWildDetail_Colour4.Width = 35;
+            // 
+            // lvwWildDetail_Colour5
+            // 
+            this.lvwWildDetail_Colour5.Text = "C4";
+            this.lvwWildDetail_Colour5.Width = 35;
+            // 
+            // lvwWildDetail_Colour6
+            // 
+            this.lvwWildDetail_Colour6.Text = "C5";
+            this.lvwWildDetail_Colour6.Width = 35;
+            // 
+            // lvwWildDetail_Id
+            // 
+            this.lvwWildDetail_Id.Text = "Id";
+            this.lvwWildDetail_Id.Width = 0;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Rank";
+            // 
+            // columnHeader30
+            // 
+            this.columnHeader30.Text = "Rank";
+            // 
             // frmAncestorView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1104, 450);
+            this.ClientSize = new System.Drawing.Size(828, 528);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.lvwTame);
             this.Controls.Add(this.lblStatus);
-            this.Controls.Add(this.btnCopyCommandTamed);
-            this.Controls.Add(this.lblTamedCommand);
-            this.Controls.Add(this.cboConsoleCommandsTamed);
-            this.Controls.Add(this.lvwTameDetail);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.lblPlayerLevelLabel);
             this.Controls.Add(this.lblPlayerLevel);
@@ -676,10 +1222,10 @@ namespace ARKViewer
             this.Controls.Add(this.lblPlayerName);
             this.Controls.Add(this.lblWindowTitle);
             this.Controls.Add(this.picWindowIcon);
-            this.Controls.Add(this.lblGeneration);
-            this.Controls.Add(this.cboGeneration);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(750, 350);
             this.Name = "frmAncestorView";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Ancestor View";
@@ -687,6 +1233,12 @@ namespace ARKViewer
             ((System.ComponentModel.ISupportInitialize)(this.picWindowIcon)).EndInit();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
+            this.tabPage3.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -767,5 +1319,68 @@ namespace ARKViewer
         private System.Windows.Forms.ColumnHeader columnHeader27;
         private System.Windows.Forms.ColumnHeader columnHeader28;
         private System.Windows.Forms.ColumnHeader columnHeader29;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.CheckBox chkAllTribes;
+        private System.Windows.Forms.ListView lvwTameLovers;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.ColumnHeader columnHeader31;
+        private System.Windows.Forms.ColumnHeader columnHeader32;
+        private System.Windows.Forms.ColumnHeader columnHeader33;
+        private System.Windows.Forms.ColumnHeader columnHeader34;
+        private System.Windows.Forms.ColumnHeader columnHeader35;
+        private System.Windows.Forms.ColumnHeader columnHeader36;
+        private System.Windows.Forms.ColumnHeader columnHeader37;
+        private System.Windows.Forms.ColumnHeader columnHeader38;
+        private System.Windows.Forms.ColumnHeader columnHeader39;
+        private System.Windows.Forms.ColumnHeader columnHeader40;
+        private System.Windows.Forms.ColumnHeader columnHeader41;
+        private System.Windows.Forms.ColumnHeader columnHeader42;
+        private System.Windows.Forms.ColumnHeader columnHeader43;
+        private System.Windows.Forms.ColumnHeader columnHeader44;
+        private System.Windows.Forms.ColumnHeader columnHeader45;
+        private System.Windows.Forms.ColumnHeader columnHeader46;
+        private System.Windows.Forms.ColumnHeader columnHeader47;
+        private System.Windows.Forms.ColumnHeader columnHeader48;
+        private System.Windows.Forms.ColumnHeader columnHeader49;
+        private System.Windows.Forms.ColumnHeader columnHeader50;
+        private System.Windows.Forms.ColumnHeader columnHeader51;
+        private System.Windows.Forms.ColumnHeader columnHeader52;
+        private System.Windows.Forms.ColumnHeader columnHeader53;
+        private System.Windows.Forms.ColumnHeader columnHeader54;
+        private System.Windows.Forms.ColumnHeader columnHeader55;
+        private System.Windows.Forms.ColumnHeader columnHeader56;
+        private System.Windows.Forms.ListView lvwWildLovers;
+        private System.Windows.Forms.ColumnHeader lvwWildDetail_Base;
+        private System.Windows.Forms.ColumnHeader lvwWildDetail_Level;
+        private System.Windows.Forms.ColumnHeader lvwWildDetail_Lat;
+        private System.Windows.Forms.ColumnHeader lvwWildDetail_Lon;
+        private System.Windows.Forms.ColumnHeader lvwWildDetail_HP;
+        private System.Windows.Forms.ColumnHeader lvwWildDetail_Stam;
+        private System.Windows.Forms.ColumnHeader lvwWildDetail_Melee;
+        private System.Windows.Forms.ColumnHeader lvwWildDetail_Weight;
+        private System.Windows.Forms.ColumnHeader lvwWildDetail_Speed;
+        private System.Windows.Forms.ColumnHeader lvwWildDetail_Food;
+        private System.Windows.Forms.ColumnHeader lvwWildDetail_Oxygen;
+        private System.Windows.Forms.ColumnHeader lvwWildDetail_Craft;
+        private System.Windows.Forms.ColumnHeader lvwWildDetail_Colour1;
+        private System.Windows.Forms.ColumnHeader lvwWildDetail_Colour2;
+        private System.Windows.Forms.ColumnHeader lvwWildDetail_Colour3;
+        private System.Windows.Forms.ColumnHeader lvwWildDetail_Colour4;
+        private System.Windows.Forms.ColumnHeader lvwWildDetail_Colour5;
+        private System.Windows.Forms.ColumnHeader lvwWildDetail_Colour6;
+        private System.Windows.Forms.ColumnHeader lvwWildDetail_Id;
+        private System.Windows.Forms.Button btnWildFilter;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader columnHeader30;
     }
 }

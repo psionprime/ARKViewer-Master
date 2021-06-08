@@ -19,13 +19,10 @@ namespace ARKViewer
         private static frmMapView inst;
         public static frmMapView GetForm(ContentManager manager)
         {
+            cm = manager;
             if (inst == null || inst.IsDisposed)
             {
                 inst  = new frmMapView(manager);
-            }
-            else
-            {
-                cm = manager;
             }
                     
             return inst;
@@ -78,6 +75,7 @@ namespace ARKViewer
                 }
             }
         }
+
 
 
 
@@ -222,8 +220,6 @@ namespace ARKViewer
             double latitude = clickY / 10.25;
             double longitude = clickX / 10.25;
 
-            var t = Screen.PrimaryScreen.BitsPerPixel;
-
             OnMapClicked?.Invoke((decimal)latitude, (decimal)longitude);
         }
 
@@ -254,7 +250,7 @@ namespace ARKViewer
             frmMapToolboxStructures mapSettings = frmMapToolboxStructures.GetForm(this, cm);
             {
                 mapSettings.Show();
-                mapSettings.BringToFront();
+                //mapSettings.BringToFront();
                 DrawTestMap(0, 0);
             }
         }
@@ -263,7 +259,7 @@ namespace ARKViewer
             frmMapToolboxMarkers mapSettings = frmMapToolboxMarkers.GetForm(this);
             {
                 mapSettings.Show();
-                mapSettings.BringToFront();
+                //mapSettings.BringToFront();
                 DrawTestMap(0, 0);
             }
         }

@@ -100,12 +100,23 @@ namespace ARKViewer
 
         public void LoadContent(ContentManager manager)
         {
+            if(cm!=null && (cm.MapFilename != manager.MapFilename))
+            {
+                if(MapViewer == null || MapViewer.IsDisposed)
+                {
+                    MapViewer = frmMapView.GetForm(cm);
+                    MapViewer.OnMapClicked += MapViewer_OnMapClicked;
+                }
+            }
+
             cm = manager;
 
             this.Cursor = Cursors.WaitCursor;
             UpdateProgress("Loading content.");
-            lblMapDate.Text = manager.ContentDate.Equals(new DateTime())?"n/a": manager.ContentDate.ToString("dd MMM yyyy - HH:mm");
-            
+
+
+            string mapFileDateString = (manager.ContentDate.Equals(new DateTime()) ? "n/a" : manager.ContentDate.ToString("dd MMM yyyy - HH:mm"));
+            lblMapDate.Text = $"({manager.MapName}) - {mapFileDateString}";
 
             var allWilds = manager.GetWildCreatures(0, int.MaxValue, 50, 50, float.MaxValue, "");
             if (allWilds.Count > 0)
@@ -130,7 +141,7 @@ namespace ARKViewer
 
             DrawMap(0,0);
 
-            UpdateProgress($"Content loaded: {cm.MapName}");
+            UpdateProgress($"Content loaded.");
             if (manager.ContentDate.Equals(new DateTime()))
             {
                 //no map loaded
@@ -861,10 +872,7 @@ namespace ARKViewer
             lblStatus.Text = "Updating selections...";
             lblStatus.Refresh();
 
-            Bitmap bitmap = new Bitmap(1024, 1024);
-            Graphics graphics = Graphics.FromImage(bitmap);
-
-
+            
             switch (tabFeatures.SelectedTab.Name)
             {
                 case "tpgWild":
@@ -998,11 +1006,6 @@ namespace ARKViewer
             lblStatus.Text = "Map display updated.";
             lblStatus.Refresh();
 
-        }
-
-        private void LvwSummary_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            LoadWildDetail();
         }
 
 
@@ -1634,7 +1637,7 @@ namespace ARKViewer
             this.Cursor = Cursors.WaitCursor;
 
             btnCopyCommandWild.Enabled = lvwWildDetail.SelectedItems.Count > 0;
-
+            
             if (lvwWildDetail.SelectedItems.Count > 0)
             {
 
@@ -1770,7 +1773,7 @@ namespace ARKViewer
             float selectedLon = (float)udWildLon.Value;
             float selectedRad = (float)udWildRadius.Value;
 
-            var wildSummary = cm.GetWildCreatures(minLevel, maxLevel, selectedLat, selectedLon, selectedRad, selectedClass == "-1"? "": selectedClass)
+            var wildSummary = cm.GetWildCreatures(minLevel, maxLevel, selectedLat, selectedLon, selectedRad, "")
                                                 .GroupBy(c => c.ClassName)
                                                 .Select(g => new { ClassName = g.Key, Name = ARKViewer.Program.ProgramConfig.DinoMap.Count(d => d.ClassName == g.Key) == 0 ? g.Key : ARKViewer.Program.ProgramConfig.DinoMap.Where(d => d.ClassName == g.Key).FirstOrDefault().FriendlyName, Count = g.Count(), Min = g.Min(l => l.BaseLevel), Max = g.Max(l => l.BaseLevel) })
                                                 .OrderBy(o => o.Name);
@@ -1839,7 +1842,7 @@ namespace ARKViewer
 
 
          
-            lblWildTotal.Text = "TOTAL: " + wildSummary.Sum(w => w.Count).ToString(); ;
+            lblWildTotal.Text = "Total: " + wildSummary.Sum(w => w.Count).ToString(); ;
             lblStatus.Text = "Wild creatures populated.";
             lblStatus.Refresh();
 
@@ -2069,6 +2072,7 @@ namespace ARKViewer
             decimal selectedX = 0;
             decimal selectedY = 0;
 
+
             if(lvwPlayers.SelectedItems.Count > 0)
             {
                 ListViewItem selectedItem = lvwPlayers.SelectedItems[0];
@@ -2078,6 +2082,7 @@ namespace ARKViewer
             }
 
             DrawMap(selectedX, selectedY);
+            
 
         }
 
@@ -2325,6 +2330,7 @@ namespace ARKViewer
 
             this.Cursor = Cursors.WaitCursor;
 
+            btnStructureInventory.Enabled = false;
             btnCopyCommandStructure.Enabled = false;
             lblStatus.Text = "Updating player structure selection.";
             lblStatus.Refresh();
@@ -2489,6 +2495,7 @@ namespace ARKViewer
             btnCopyCommandStructure.Enabled = lvwStructureLocations.SelectedItems.Count > 0;
             btnStructureInventory.Enabled = false;
 
+
             if(lvwStructureLocations.SelectedItems.Count > 0)
             {
                 ListViewItem selectedItem = lvwStructureLocations.SelectedItems[0];
@@ -2496,11 +2503,10 @@ namespace ARKViewer
                 
                 DrawMap((decimal)selectedStructure.Longitude.GetValueOrDefault(0), (decimal)selectedStructure.Latitude.GetValueOrDefault(0));
 
-                var inventory = cm.GetInventory(selectedStructure.InventoryId.GetValueOrDefault(0));
-                btnStructureInventory.Enabled = inventory != null && inventory.Items.Count > 0;
+                //var inventory = cm.GetInventory(selectedStructure.InventoryId.GetValueOrDefault(0));
+                btnStructureInventory.Enabled = selectedStructure.InventoryId.GetValueOrDefault(0) !=0;
                 
             }
-
 
         }
 
@@ -2752,14 +2758,14 @@ namespace ARKViewer
 
             btnCopyCommandTamed.Enabled = lvwTameDetail.SelectedItems.Count > 0;
             btnDinoInventory.Enabled = false;
-            btnDinoAncestors.Enabled = false;
+
 
             if (lvwTameDetail.SelectedItems.Count > 0)
             {
 
                 var selectedItem = lvwTameDetail.SelectedItems[0];
                 ContentTamedCreature selectedTame = (ContentTamedCreature)selectedItem.Tag;
-                btnDinoAncestors.Enabled = !(selectedTame.FatherId.GetValueOrDefault(0) == 0 && selectedTame.MotherId.GetValueOrDefault(0) == 0);
+                btnDinoAncestors.Enabled = true;
                 btnDinoInventory.Enabled = selectedTame.InventoryId.GetValueOrDefault(0) != 0;
                 
                 DrawMap((decimal)selectedTame.Longitude.GetValueOrDefault(0),(decimal)selectedTame.Latitude.GetValueOrDefault(0));
@@ -3184,8 +3190,7 @@ namespace ARKViewer
                 btnDropInventory.Enabled = false;
 
                 DrawMap(selectedX, selectedY);
-            }
-            
+            }            
 
         }
 
@@ -3240,7 +3245,7 @@ namespace ARKViewer
         private void lvwTribes_SelectedIndexChanged(object sender, EventArgs e)
         {
             DrawMap(0, 0);
-
+         
         }
 
         private void btnTribeLog_Click(object sender, EventArgs e)
@@ -4383,7 +4388,7 @@ namespace ARKViewer
             if (MapViewer == null || MapViewer.IsDisposed)
             {
                 MapViewer = frmMapView.GetForm(cm);
-                MapViewer.Owner = this;
+                //MapViewer.Owner = this;
 
                 MapViewer.OnMapClicked += MapViewer_OnMapClicked;
 
@@ -4518,6 +4523,11 @@ namespace ARKViewer
         private void frmViewer_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void frmViewer_LocationChanged(object sender, EventArgs e)
+        {
+            this.BringToFront();
         }
     }
 }

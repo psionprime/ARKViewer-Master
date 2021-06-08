@@ -162,7 +162,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.udLat.DecimalPlaces = 2;
             this.udLat.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.udLat.Location = new System.Drawing.Point(14, 410);
+            this.udLat.Location = new System.Drawing.Point(14, 364);
             this.udLat.Name = "udLat";
             this.udLat.Size = new System.Drawing.Size(235, 22);
             this.udLat.TabIndex = 12;
@@ -176,7 +176,7 @@
             this.lblLat.BackColor = System.Drawing.SystemColors.Control;
             this.lblLat.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLat.ForeColor = System.Drawing.Color.DimGray;
-            this.lblLat.Location = new System.Drawing.Point(11, 377);
+            this.lblLat.Location = new System.Drawing.Point(11, 340);
             this.lblLat.Name = "lblLat";
             this.lblLat.Size = new System.Drawing.Size(238, 23);
             this.lblLat.TabIndex = 11;
@@ -189,7 +189,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.udLon.DecimalPlaces = 2;
             this.udLon.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.udLon.Location = new System.Drawing.Point(14, 471);
+            this.udLon.Location = new System.Drawing.Point(14, 413);
             this.udLon.Name = "udLon";
             this.udLon.Size = new System.Drawing.Size(235, 22);
             this.udLon.TabIndex = 14;
@@ -203,7 +203,7 @@
             this.label7.BackColor = System.Drawing.SystemColors.Control;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.Color.DimGray;
-            this.label7.Location = new System.Drawing.Point(11, 440);
+            this.label7.Location = new System.Drawing.Point(11, 389);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(238, 23);
             this.label7.TabIndex = 13;
@@ -215,7 +215,7 @@
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnSave.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSave.Location = new System.Drawing.Point(93, 521);
+            this.btnSave.Location = new System.Drawing.Point(93, 449);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 15;
@@ -228,7 +228,7 @@
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClose.Location = new System.Drawing.Point(174, 521);
+            this.btnClose.Location = new System.Drawing.Point(174, 449);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 16;
@@ -259,7 +259,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(261, 558);
+            this.ClientSize = new System.Drawing.Size(261, 486);
             this.Controls.Add(this.pnlBackgroundColour);
             this.Controls.Add(this.pnlBorderColour);
             this.Controls.Add(this.btnSave);

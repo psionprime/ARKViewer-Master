@@ -109,7 +109,6 @@ namespace ArkSavegameToolkitNet.Domain
                 // Remove duplicates from object collection (objects are sometimes duplicated for structures, creatures etc.)
                 var objects = save.Objects.GroupBy(x => x.Names, new ArkNameCollectionComparer()).Select(x => x.OrderBy(y => y.ObjectId).First()).ToArray();
 
-
                 // Map all game data into domain model
                 // Note: objects.GroupBy(x => x.Names.Last().Token) would also get creature, status- and inventory component together
                 var statusComponents = objects.Where(x => x.IsDinoStatusComponent).ToDictionary(x => x.ObjectId, x => x);
@@ -124,6 +123,7 @@ namespace ArkSavegameToolkitNet.Domain
                     return returnValue;
                 }).ToArray();
 
+                
                 var wild = objects.Where(x => x.IsWildCreature).Select(x =>
                 {
                     GameObject status = null;

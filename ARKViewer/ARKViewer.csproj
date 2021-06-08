@@ -75,6 +75,12 @@
     <Compile Include="frmColourEditor.Designer.cs">
       <DependentUpon>frmColourEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmFtpConfirmPassword.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmFtpConfirmPassword.Designer.cs">
+      <DependentUpon>frmFtpConfirmPassword.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmFtpFileBrowser.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -216,6 +222,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmColourEditor.resx">
       <DependentUpon>frmColourEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmFtpConfirmPassword.resx">
+      <DependentUpon>frmFtpConfirmPassword.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmFtpFileBrowser.resx">
       <DependentUpon>frmFtpFileBrowser.cs</DependentUpon>
@@ -587,6 +596,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\map_astralark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\iconfinder_5172567_heart_like_love_icon_64px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icon_love.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\loveicon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

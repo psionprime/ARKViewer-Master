@@ -73,7 +73,7 @@ namespace ARKViewer
             // 
             this.btnCcancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCcancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCcancel.Location = new System.Drawing.Point(230, 249);
+            this.btnCcancel.Location = new System.Drawing.Point(230, 199);
             this.btnCcancel.Name = "btnCcancel";
             this.btnCcancel.Size = new System.Drawing.Size(75, 23);
             this.btnCcancel.TabIndex = 11;
@@ -83,7 +83,7 @@ namespace ARKViewer
             // btnSave
             // 
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSave.Location = new System.Drawing.Point(143, 249);
+            this.btnSave.Location = new System.Drawing.Point(143, 199);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 10;
@@ -172,7 +172,7 @@ namespace ARKViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(318, 284);
+            this.ClientSize = new System.Drawing.Size(318, 234);
             this.Controls.Add(this.udB);
             this.Controls.Add(this.udG);
             this.Controls.Add(this.udR);
@@ -183,7 +183,7 @@ namespace ARKViewer
             this.Controls.Add(this.lblClassName);
             this.Controls.Add(this.btnCcancel);
             this.Controls.Add(this.btnSave);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmColourEditor";

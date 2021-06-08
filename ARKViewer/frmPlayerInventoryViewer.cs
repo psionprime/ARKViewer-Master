@@ -312,9 +312,12 @@ namespace ARKViewer
             cm = manager;
             currentPlayer = selectedPlayer;
             playerTribe = cm.GetPlayerTribe(currentPlayer.Id);
-            playerInventory = cm.GetInventory(currentPlayer.InventoryId.GetValueOrDefault(0)).Items;
+            playerInventory = new List<ContentItem>();
+            
+            var inventCheck = cm.GetInventory(currentPlayer.InventoryId.GetValueOrDefault(0));
+            if (inventCheck != null && inventCheck.Items != null) playerInventory = inventCheck.Items;
 
-            var inventory = cm.GetInventory(currentPlayer.Id);
+            var inventory = cm.GetInventory(currentPlayer.InventoryId.GetValueOrDefault(0));
             if (inventory != null)
             {
                 playerInventory = inventory.Items;

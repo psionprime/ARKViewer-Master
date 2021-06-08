@@ -186,7 +186,7 @@ namespace ARKViewer
             this.udFTPPort.Size = new System.Drawing.Size(60, 20);
             this.udFTPPort.TabIndex = 5;
             this.udFTPPort.Value = new decimal(new int[] {
-            8821,
+            21,
             0,
             0,
             0});
@@ -198,6 +198,7 @@ namespace ARKViewer
             this.txtFTPPassword.PasswordChar = '●';
             this.txtFTPPassword.Size = new System.Drawing.Size(214, 20);
             this.txtFTPPassword.TabIndex = 9;
+            this.txtFTPPassword.TextChanged += new System.EventHandler(this.txtFTPPassword_TextChanged);
             // 
             // txtFTPUsername
             // 
@@ -216,6 +217,7 @@ namespace ARKViewer
             this.lblFTPPassword.Size = new System.Drawing.Size(69, 15);
             this.lblFTPPassword.TabIndex = 8;
             this.lblFTPPassword.Text = "Password";
+            this.lblFTPPassword.Click += new System.EventHandler(this.lblFTPPassword_Click);
             // 
             // lblFTPUsername
             // 

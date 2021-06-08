@@ -420,11 +420,7 @@ namespace ARKViewer
             {
                 case ViewerModes.Mode_SinglePlayer:
 
-                    if(cboMapSinglePlayer.Items.Count > 0)
-                    {
-                        optSinglePlayer.Checked = true;
-                    }
-
+                    optSinglePlayer.Checked = true;
                     break;
                 case ViewerModes.Mode_Offline:
                     optOffline.Checked = true;
@@ -549,14 +545,14 @@ namespace ARKViewer
 
         private void cboFTPServer_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            
             DisplayServerSettings();
         }
 
         private void DisplayServerSettings()
         {
 
-            if(cboFTPServer.SelectedItem==null || cboFTPServer.Visible == false)
+            if(cboFTPServer.SelectedItem==null)
             {
                 return;
             }
@@ -569,6 +565,8 @@ namespace ARKViewer
                 cboFtpMap.SelectedItem = selectedMapItem;
             }
             cboFtpMap.Enabled = cboFTPServer.Visible == false;
+
+            btnEditServer.Enabled = true;
             
         }
         private void btnSave_Click(object sender, EventArgs e)
@@ -1672,6 +1670,24 @@ namespace ARKViewer
         {
             if (cboFTPServer.SelectedItem == null) return;
             ServerConfiguration selectedServer = (ServerConfiguration)cboFTPServer.SelectedItem;
+
+
+            using (frmFtpConfirmPassword passConfirmation = new frmFtpConfirmPassword())
+            {
+                if (passConfirmation.ShowDialog() == DialogResult.OK)
+                {
+                    if (passConfirmation.ConfirmedPassword != selectedServer.Password)
+                    {
+                        MessageBox.Show("Password confirmation failed.", "Access Denied", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        return;
+                    }
+                }
+                else
+                {
+                    return;
+                }
+            }
+
             using (frmFtpFileBrowser serverSetup = new frmFtpFileBrowser(selectedServer))
             {
                 if(serverSetup.ShowDialog() == DialogResult.OK)

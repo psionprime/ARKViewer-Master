@@ -18,6 +18,39 @@ namespace ARKViewer
 {
     public class ContentManager
     {
+        //cached image params
+        Tuple<long, bool, bool, bool> cacheImageTribes = null;
+        Tuple<string, int, int, float, float, float> cacheImageWild = null;
+        Tuple<string, bool, long, long> cacheImageTamed = null;
+        Tuple<long, string> cacheImageDroppedItems = null;
+        Tuple<long> cacheImageDropBags = null;
+        Tuple<string, long, long> cacheImagePlayerStructures = null;
+        Tuple<long, long> cacheImagePlayers = null;
+        string lastDrawRequest = "";
+        //cached content image
+        Image gameContentMap = null; //wilds/tames/tribes/players etc.
+
+
+        Dictionary<string, string> mapFilenameMap = new Dictionary<string, string>
+            {
+                { "theisland.ark", "The Island" },
+                { "thecenter.ark", "The Center" },
+                { "scorchedearth_p.ark","Scorched Earth"},
+                { "aberration_p.ark", "Aberration"},
+                { "extinction.ark", "Extinction"},
+                { "ragnarok.ark", "Ragnarok"},
+                { "valguero_p.ark", "Valguero" },
+                { "crystalisles.ark", "Crystal Isles" },
+                { "genesis.ark", "Genesis" },
+                { "gen2.ark", "Genesis 2" },
+                { "astralark.ark", "AstralARK" },
+                { "hope.ark", "Hope"},
+                { "tunguska_p.ark", "Tunguska"},
+                { "caballus_p.ark", "Caballus"},
+                { "viking_p.ark", "Fjördur"},
+                { "tiamatprime.ark", "Tiamat Prime"}
+            };
+
         ContentPack pack = null;
 
         public DateTime ContentDate { 
@@ -28,7 +61,17 @@ namespace ARKViewer
             }
         }
 
-        public string MapName {
+        public string MapName
+        {
+            get
+            {
+                string mapFileCheck = $"{MapFilename.ToLower()}.ark";
+                if (!mapFilenameMap.ContainsKey(mapFileCheck)) return "Unknown Map";
+                return mapFilenameMap[mapFileCheck];
+            }
+        }
+
+        public string MapFilename {
             get
             {
                 if (pack == null) return "";
@@ -36,7 +79,51 @@ namespace ARKViewer
             }
         }
 
-        public Image MapImage { get; internal set; }
+
+        public Image MapImage
+        {
+            get
+            {
+                switch (MapFilename.ToLower())
+                {
+                    case "thecenter":
+                        return new Bitmap(ARKViewer.Properties.Resources.map_thecenter, new Size(1024, 1024));
+                    case "theisland":
+                        return new Bitmap(ARKViewer.Properties.Resources.map_theisland, new Size(1024, 1024));
+                    case "scorchedearth_p":
+                        return new Bitmap(ARKViewer.Properties.Resources.map_scorchedearth, new Size(1024, 1024));
+                    case "aberration_p":
+                        return new Bitmap(ARKViewer.Properties.Resources.map_aberration, new Size(1024, 1024));
+                    case "ragnarok":
+                        return new Bitmap(ARKViewer.Properties.Resources.map_ragnarok, new Size(1024, 1024));
+                    case "extinction":
+                        return new Bitmap(ARKViewer.Properties.Resources.map_extinction, new Size(1024, 1024));
+                    case "valguero_p":
+                        return new Bitmap(ARKViewer.Properties.Resources.map_valguero, new Size(1024, 1024));
+                    case "crystalisles":
+                        return new Bitmap(ARKViewer.Properties.Resources.map_crystalisles, new Size(1024, 1024));
+                    case "tunguska_p":
+                        return new Bitmap(ARKViewer.Properties.Resources.map_tunguska, new Size(1024, 1024));
+                    case "caballus_p":
+                        return new Bitmap(ARKViewer.Properties.Resources.map_caballus, new Size(1024, 1024));
+                    case "genesis":
+                        return new Bitmap(ARKViewer.Properties.Resources.map_genesis, new Size(1024, 1024));
+                    case "astralark":
+                        return new Bitmap(ARKViewer.Properties.Resources.map_astralark, new Size(1024, 1024));
+                    case "hope":
+                        return new Bitmap(ARKViewer.Properties.Resources.map_hope, new Size(1024, 1024));
+                    case "viking_p":
+                        return new Bitmap(ARKViewer.Properties.Resources.map_fjordur, new Size(1024, 1024));
+                    case "tiamatprime":
+                        return new Bitmap(ARKViewer.Properties.Resources.map_tiamat, new Size(1024, 1024));
+                    case "gen2":
+                        return new Bitmap(ARKViewer.Properties.Resources.map_gen2, new Size(1024, 1024));
+                    default:
+                        return new Bitmap(1024, 1024);
+                }
+            }
+
+        }
         public bool MapTerminals { get; set; } = true;
         public bool MapOilVeins { get; set; } = true;
         public bool MapGasVeins { get; set; } = true;
@@ -53,74 +140,14 @@ namespace ARKViewer
         public bool MapBeaverDams { get; set; } = true;
         public bool MapGlitches { get; set; } = true;
 
-        private void InitMapImage()
-        {
-            switch (MapName.ToLower())
-            {
-                case "thecenter":
-                    MapImage = new Bitmap(ARKViewer.Properties.Resources.map_thecenter, new Size(1024, 1024));
-                    break;
-                case "theisland":
-                    MapImage = new Bitmap(ARKViewer.Properties.Resources.map_theisland, new Size(1024, 1024));
-                    break;
-                case "scorchedearth_p":
-                    MapImage = new Bitmap(ARKViewer.Properties.Resources.map_scorchedearth, new Size(1024, 1024));
-                    break;
-                case "aberration_p":
-                    MapImage = new Bitmap(ARKViewer.Properties.Resources.map_aberration, new Size(1024, 1024));
-                    break;
-                case "ragnarok":
-                    MapImage = new Bitmap(ARKViewer.Properties.Resources.map_ragnarok, new Size(1024, 1024));
-                    break;
-                case "extinction":
-                    MapImage = new Bitmap(ARKViewer.Properties.Resources.map_extinction, new Size(1024, 1024));
-                    break;
-                case "valguero_p":
-                    MapImage = new Bitmap(ARKViewer.Properties.Resources.map_valguero, new Size(1024, 1024));
-                    break;
-                case "crystalisles":
-                    MapImage = new Bitmap(ARKViewer.Properties.Resources.map_crystalisles, new Size(1024, 1024));
-                    break;
-                case "tunguska_p":
-                    MapImage = new Bitmap(ARKViewer.Properties.Resources.map_tunguska, new Size(1024, 1024));
-                    break;
-                case "caballus_p":
-                    MapImage = new Bitmap(ARKViewer.Properties.Resources.map_caballus, new Size(1024, 1024));
-                    break;
-                case "genesis":
-                    MapImage = new Bitmap(ARKViewer.Properties.Resources.map_genesis, new Size(1024, 1024));
-                    break;
-                case "astralark":
-                    MapImage = new Bitmap(ARKViewer.Properties.Resources.map_astralark, new Size(1024, 1024));
-                    break;
-                case "hope":
-                    MapImage = new Bitmap(ARKViewer.Properties.Resources.map_hope, new Size(1024, 1024));
-                    break;
-                case "viking_p":
-                    MapImage = new Bitmap(ARKViewer.Properties.Resources.map_fjordur, new Size(1024, 1024));
-                    break;
-                case "tiamatprime":
-                    MapImage = new Bitmap(ARKViewer.Properties.Resources.map_tiamat, new Size(1024, 1024));
-                    break;
-                case "gen2":
-                    MapImage = new Bitmap(ARKViewer.Properties.Resources.map_gen2, new Size(1024, 1024));
-                    break;
-                default:
-                    MapImage = new Bitmap(1024, 1024);
-                    break;
-            }
-        }
-
         public ContentManager(ArkGameData data)
         {
             pack = new ContentPack(data,0,0,50,50,100);
-            InitMapImage();
         }
 
         public ContentManager(ContentPack data)
         {
             pack = data;
-            InitMapImage();
         }
 
         ~ContentManager()
@@ -131,8 +158,9 @@ namespace ARKViewer
 
         public ContentInventory GetInventory(long inventoryId)
         {
-            if (pack == null) return new ContentInventory();
-            var inventory = pack.Inventories.FirstOrDefault<ContentInventory>(i => i.InventoryId == inventoryId);
+            if (inventoryId == 0) return new ContentInventory();
+            if ((pack == null || pack.Inventories == null) || pack.Inventories.Count == 0) return new ContentInventory();
+            var inventory = pack.Inventories.FirstOrDefault(i => i.InventoryId == inventoryId);
             if (inventory == null) inventory = new ContentInventory();
             return inventory;
         }
@@ -140,6 +168,8 @@ namespace ARKViewer
         //Query options
         public List<ContentWildCreature> GetWildCreatures(int minLevel, int maxLevel, float fromLat, float fromLon, float fromRadius, string selectedClass)
         {
+            if (pack.WildCreatures == null) return new List<ContentWildCreature>();
+
             return pack.WildCreatures.Where(w =>
                                             ((w.ClassName == selectedClass || selectedClass == "") && ((w.BaseLevel >= minLevel && w.BaseLevel <= maxLevel) || w.BaseLevel == 0))
                                             && (Math.Abs(w.Latitude.GetValueOrDefault(0) - fromLat) <= fromRadius)
@@ -149,6 +179,7 @@ namespace ARKViewer
 
         public List<ContentTamedCreature> GetTamedCreatures(string selectedClass, long selectedTribeId, long selectedPlayerId, bool includeCryoVivarium)
         {
+            if (pack.Tribes == null) return new List<ContentTamedCreature>();
             return pack.Tribes
                 .Where(t => (t.TribeId == selectedTribeId || selectedTribeId == 0) || t.Players.Any(p => p.Id == selectedPlayerId))
                 .SelectMany(c =>
@@ -164,6 +195,7 @@ namespace ARKViewer
 
         public ContentTamedCreature GetTamedCreature(long tameId)
         {
+            if (pack.Tribes == null) return null;
             return pack.Tribes
                 .SelectMany(c =>
                                 c.Tames.Where(w => (long)w.Id == tameId)
@@ -172,79 +204,79 @@ namespace ARKViewer
 
         public List<ContentStructure> GetTerminals() 
         {
-            if (pack == null) return new List<ContentStructure>();
+            if (pack == null || pack.TerminalMarkers==null) return new List<ContentStructure>();
             return pack.TerminalMarkers;
         }
 
         public List<ContentStructure> GetGlitchMarkers() 
         {
-            if (pack == null) return new List<ContentStructure>();
+            if (pack == null || pack.GlitchMarkers==null) return new List<ContentStructure>();
             return pack.GlitchMarkers;
         }
 
         public List<ContentStructure> GetChargeNodes() 
         {
-            if (pack == null) return new List<ContentStructure>();
+            if (pack == null || pack.ChargeNodes == null) return new List<ContentStructure>();
             return pack.ChargeNodes;
         }
 
         public List<ContentStructure> GetBeaverDams() 
         {
-            if (pack == null) return new List<ContentStructure>();
+            if (pack == null || pack.BeaverDams == null) return new List<ContentStructure>();
             return pack.BeaverDams;
         }
 
         public List<ContentStructure> GetWyvernNests() 
         {
-            if (pack == null) return new List<ContentStructure>();
+            if (pack == null || pack.WyvernNests == null) return new List<ContentStructure>();
             return pack.WyvernNests;
         }
 
         public List<ContentStructure> GetDrakeNests() 
         {
-            if (pack == null) return new List<ContentStructure>();
+            if (pack == null || pack.DrakeNests==null) return new List<ContentStructure>();
             return pack.DrakeNests;
         }
 
         public List<ContentStructure> GetDeinoNests()
         {
-            if (pack == null) return new List<ContentStructure>();
+            if (pack == null || pack.DeinoNests == null) return new List<ContentStructure>();
             return pack.DeinoNests;
         }
 
         public List<ContentStructure> GetMagmaNests() 
         {
-            if (pack == null) return new List<ContentStructure>();
+            if (pack == null || pack.MagmaNests == null) return new List<ContentStructure>();
             return pack.MagmaNests;
         }
 
         public List<ContentStructure> GetOilVeins() 
         {
-            if (pack == null) return new List<ContentStructure>();
+            if (pack == null || pack.OilVeins == null) return new List<ContentStructure>();
             return pack.OilVeins;
         }
 
         public List<ContentStructure> GetWaterVeins() 
         {
-            if (pack == null) return new List<ContentStructure>();
+            if (pack == null || pack.WaterVeins == null) return new List<ContentStructure>();
             return pack.WaterVeins;
         }
 
         public List<ContentStructure> GetGasVeins() 
         {
-            if (pack == null) return new List<ContentStructure>();
+            if (pack == null || pack.GasVeins == null) return new List<ContentStructure>();
             return pack.GasVeins;
         }
 
         public List<ContentStructure> GetArtifacts() 
         {
-            if (pack == null) return new List<ContentStructure>();
+            if (pack == null || pack.Artifacts == null) return new List<ContentStructure>();
             return pack.Artifacts;
         }
 
         public List<ContentStructure> GetPlantZ()
         {
-            if (pack == null) return new List<ContentStructure>();
+            if (pack == null || pack.PlantZ == null) return new List<ContentStructure>();
             return pack.PlantZ;
 
 
@@ -252,16 +284,18 @@ namespace ARKViewer
 
         public List<ContentStructure> GetPlayerStructures(long selectedTribeId, long selectedPlayerId, string selectedClass, bool includeExcluded)
         {
+            if (pack.Tribes == null) return new List<ContentStructure>();
+
             var tribeStructures = pack.Tribes
                 .Where(t =>
-                    (t.TribeId == selectedTribeId || (selectedTribeId == 0 && selectedPlayerId==0))
-                    || t.Players.Any(p=>p.Id == selectedPlayerId)
+                    (t.TribeId == selectedTribeId || (selectedTribeId == 0 && selectedPlayerId == 0))
+                    || t.Players.Any(p => p.Id == selectedPlayerId)
+                    && t.Structures != null
                 ).SelectMany(s =>
                     s.Structures.Where(x =>
                         (selectedClass.Length == 0 || x.ClassName == selectedClass)
                         &&
                         (!Program.ProgramConfig.StructureExclusions.Contains(x.ClassName) || includeExcluded)
-
                     )
                 ).ToList();
 
@@ -270,6 +304,7 @@ namespace ARKViewer
 
         public List<ContentPlayer> GetPlayers(long selectedTribeId, long selectedPlayerId)
         {
+            if (pack.Tribes == null) return new List<ContentPlayer>();
             var tribePlayers = pack.Tribes
                 .Where(t =>
                     t.TribeId == selectedTribeId || selectedTribeId == 0
@@ -284,16 +319,23 @@ namespace ARKViewer
 
         public List<ContentTribe> GetTribes(long selectedTribeId)
         {
+            if (pack.Tribes == null) return new List<ContentTribe>();
             return pack.Tribes.Where(t => selectedTribeId == 0 || t.TribeId == selectedTribeId).ToList();
         }
 
         public ContentTribe GetPlayerTribe(long playerId)
         {
+            if (pack.Tribes == null) return new ContentTribe()
+            { 
+                TribeId = playerId,
+                TribeName = "N/a"
+            };
             return pack.Tribes.FirstOrDefault<ContentTribe>(t => t.Players.Any(p => p.Id == playerId));
         }
 
         public List<ContentDroppedItem> GetDroppedItems(long playerId, string className)
         {
+            if (pack.DroppedItems == null) return new List<ContentDroppedItem>();
             var foundItems = pack.DroppedItems
                 .Where(d =>
                     d.IsDeathCache == false
@@ -306,6 +348,7 @@ namespace ARKViewer
 
         public List<ContentDroppedItem> GetDeathCacheBags(long playerId)
         {
+            if (pack.DroppedItems == null) return new List<ContentDroppedItem>();
             return pack.DroppedItems
                 .Where(d => 
                     d.IsDeathCache
@@ -325,6 +368,7 @@ namespace ARKViewer
 
         public void ExportAll(string exportPath)
         {
+            if (!Directory.Exists(exportPath)) Directory.CreateDirectory(exportPath);
             ExportWild(Path.Combine(exportPath, "ASV_Wild.json"));
             ExportTamed(Path.Combine(exportPath, "ASV_Tamed.json"));
             ExportPlayerTribes(Path.Combine(exportPath, "ASV_Tribes.json"));
@@ -334,6 +378,10 @@ namespace ARKViewer
 
         public void ExportWild(string exportFilename)
         {
+
+            string exportFolder = Path.GetDirectoryName(exportFilename);
+            if (!Directory.Exists(exportFolder)) Directory.CreateDirectory(exportFolder);
+
             using (FileStream fs = File.Create(exportFilename))
             {
                 using (StreamWriter sw = new StreamWriter(fs))
@@ -425,6 +473,10 @@ namespace ARKViewer
 
         public void ExportTamed(string exportFilename)
         {
+            string exportFolder = Path.GetDirectoryName(exportFilename);
+            if (!Directory.Exists(exportFolder)) Directory.CreateDirectory(exportFolder);
+
+
             using (FileStream fs = File.Create(exportFilename))
             {
                 using (StreamWriter sw = new StreamWriter(fs))
@@ -620,6 +672,10 @@ namespace ARKViewer
 
         public void ExportPlayerStructures(string exportFilename)
         {
+            string exportFolder = Path.GetDirectoryName(exportFilename);
+            if (!Directory.Exists(exportFolder)) Directory.CreateDirectory(exportFolder);
+
+
             using (FileStream fs = File.Create(exportFilename))
             {
                 using (StreamWriter sw = new StreamWriter(fs))
@@ -709,6 +765,10 @@ namespace ARKViewer
 
         public void ExportPlayerTribes(string exportFilename)
         {
+            string exportFolder = Path.GetDirectoryName(exportFilename);
+            if (!Directory.Exists(exportFolder)) Directory.CreateDirectory(exportFolder);
+
+
             using (FileStream fs = File.Create(exportFilename))
             {
                 using (StreamWriter sw = new StreamWriter(fs))
@@ -784,6 +844,9 @@ namespace ARKViewer
 
         public void ExportPlayers(string exportFilename)
         {
+            string exportFolder = Path.GetDirectoryName(exportFilename);
+            if (!Directory.Exists(exportFolder)) Directory.CreateDirectory(exportFolder);
+
             using (FileStream fs = File.Create(exportFilename))
             {
                 using (StreamWriter sw = new StreamWriter(fs))
@@ -942,18 +1005,45 @@ namespace ARKViewer
             graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
 
-            graphics.DrawImage(MapImage, new Rectangle(0, 0, 1024, 1024));
 
-            var filteredWilds = GetWildCreatures(minLevel, maxLevel, filterLat, filterLon, filterRadius, className);
-            foreach(var wild in filteredWilds)
+            if (cacheImageWild != null 
+                && cacheImageWild.Item1 == className 
+                && cacheImageWild.Item2 == minLevel 
+                && cacheImageWild.Item3 == maxLevel
+                && cacheImageWild.Item4 == filterLat
+                && cacheImageWild.Item5 == filterLon
+                && cacheImageWild.Item6 == filterRadius
+                && lastDrawRequest == "wild")
             {
-                var  markerX = (decimal)(wild.Longitude.GetValueOrDefault(0)) * 1024 / 100;
-                var markerY = (decimal)(wild.Latitude.GetValueOrDefault(0)) * 1024 / 100;
-                var markerSize = 10f;
-
-                Color markerColor = Color.Blue;
-                graphics.FillEllipse(new SolidBrush(markerColor), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
+                //if all match, return cached content image
+                graphics.DrawImage(gameContentMap,0,0);
             }
+            else
+            {
+                lastDrawRequest = "wild";
+                cacheImageWild = new Tuple<string, int, int, float, float, float>(className, minLevel, maxLevel, filterLat, filterLon, filterRadius);
+
+                graphics.DrawImage(MapImage, new Rectangle(0, 0, 1024, 1024));
+
+                var filteredWilds = GetWildCreatures(minLevel, maxLevel, filterLat, filterLon, filterRadius, className);
+                foreach (var wild in filteredWilds)
+                {
+                    var markerX = (decimal)(wild.Longitude.GetValueOrDefault(0)) * 1024 / 100;
+                    var markerY = (decimal)(wild.Latitude.GetValueOrDefault(0)) * 1024 / 100;
+                    var markerSize = 10f;
+
+                    Color markerColor = Color.AliceBlue;
+                    graphics.FillEllipse(new SolidBrush(markerColor), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
+
+                    Color borderColour = Color.Blue;
+                    int borderSize = 1;
+                    graphics.DrawEllipse(new Pen(borderColour, borderSize), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
+                }
+
+                gameContentMap = (Image)bitmap;
+            }
+
+            
 
             graphics = AddMapStructures(graphics, includeTerminals, includeGlitches, includeChargeNodes, includeBeaverDams, includeDeinoNests, includeWyvernNests, includeDrakeNests, includeMagmaNests, includeOilVeins, includeWaterVeins, includeGasVeins, includeArtifacts);
 
@@ -974,19 +1064,44 @@ namespace ARKViewer
             graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
 
-            graphics.DrawImage(MapImage, new Rectangle(0, 0, 1024, 1024));
-
-
-            var filteredTames = GetTamedCreatures(className,tribeId,playerId,includeStored);
-            foreach (var wild in filteredTames)
+            if (cacheImageTamed != null 
+                && cacheImageTamed.Item1 == className 
+                && cacheImageTamed.Item2 == includeStored 
+                && cacheImageTamed.Item3 == tribeId 
+                && cacheImageTamed.Item4 == playerId
+                && lastDrawRequest == "tamed")
             {
-                var markerX = (decimal)(wild.Longitude.GetValueOrDefault(0)) * 1024 / 100;
-                var markerY = (decimal)(wild.Latitude.GetValueOrDefault(0)) * 1024 / 100;
-                var markerSize = 10f;
-
-                Color markerColor = Color.Blue;
-                graphics.FillEllipse(new SolidBrush(markerColor), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
+                //if all match, return cached content image
+                graphics.DrawImage(gameContentMap, 0, 0);
             }
+            else
+            {
+                lastDrawRequest = "tamed";
+                cacheImageTamed = new Tuple<string, bool, long, long>(className, includeStored, tribeId, playerId);
+
+                graphics.DrawImage(MapImage, new Rectangle(0, 0, 1024, 1024));
+
+
+                var filteredTames = GetTamedCreatures(className, tribeId, playerId, includeStored);
+                foreach (var wild in filteredTames)
+                {
+                    var markerX = (decimal)(wild.Longitude.GetValueOrDefault(0)) * 1024 / 100;
+                    var markerY = (decimal)(wild.Latitude.GetValueOrDefault(0)) * 1024 / 100;
+                    var markerSize = 10f;
+
+                    Color markerColor = Color.AliceBlue;
+                    graphics.FillEllipse(new SolidBrush(markerColor), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
+
+                    Color borderColour = Color.Blue;
+                    int borderSize = 1;
+                    graphics.DrawEllipse(new Pen(borderColour, borderSize), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
+                }
+
+                gameContentMap = (Image)bitmap;
+
+            }
+
+            
 
             graphics = AddMapStructures(graphics, includeTerminals, includeGlitches, includeChargeNodes, includeBeaverDams, includeDeinoNests, includeWyvernNests, includeDrakeNests, includeMagmaNests, includeOilVeins, includeWaterVeins, includeGasVeins, includeArtifacts);
             if (customMarkers != null && customMarkers.Count > 0)
@@ -1007,26 +1122,43 @@ namespace ARKViewer
             graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
 
-            graphics.DrawImage(MapImage, new Rectangle(0, 0, 1024, 1024));
 
-
-            var filteredDrops = GetDroppedItems(droppedPlayerId,droppedClass);
-            float markerSize = 10f;
-            foreach (var item in filteredDrops)
+            if (cacheImageDroppedItems != null 
+                && cacheImageDroppedItems.Item1 == droppedPlayerId 
+                && cacheImageDroppedItems.Item2 == droppedClass
+                && lastDrawRequest == "droppeditems")
             {
-
-                float latitude = item.Latitude.GetValueOrDefault(0);
-                float longitude = item.Longitude.GetValueOrDefault(0);
-
-                var markerX = (decimal)(longitude) * 1024 / 100;
-                var markerY = (decimal)(latitude) * 1024 / 100;
-
-                Color markerColor = Color.Blue;
-
-                graphics.FillEllipse(new SolidBrush(markerColor), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
+                //if all match, return cached content image
+                graphics.DrawImage(gameContentMap, 0, 0);
             }
+            else
+            {
+                lastDrawRequest = "droppeditems";
+                cacheImageDroppedItems = new Tuple<long, string>(droppedPlayerId, droppedClass);
 
+                graphics.DrawImage(MapImage, new Rectangle(0, 0, 1024, 1024));
 
+                var filteredDrops = GetDroppedItems(droppedPlayerId, droppedClass);
+                float markerSize = 10f;
+                foreach (var item in filteredDrops)
+                {
+
+                    float latitude = item.Latitude.GetValueOrDefault(0);
+                    float longitude = item.Longitude.GetValueOrDefault(0);
+
+                    var markerX = (decimal)(longitude) * 1024 / 100;
+                    var markerY = (decimal)(latitude) * 1024 / 100;
+
+                    Color markerColor = Color.AliceBlue;
+                    graphics.FillEllipse(new SolidBrush(markerColor), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
+
+                    Color borderColour = Color.Blue;
+                    int borderSize = 1;
+                    graphics.DrawEllipse(new Pen(borderColour, borderSize), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
+                }
+
+                gameContentMap = (Image)bitmap;
+            }
 
             graphics = AddMapStructures(graphics, includeTerminals, includeGlitches, includeChargeNodes, includeBeaverDams, includeDeinoNests, includeWyvernNests, includeDrakeNests, includeMagmaNests, includeOilVeins, includeWaterVeins, includeGasVeins, includeArtifacts);
             if (customMarkers != null && customMarkers.Count > 0)
@@ -1044,32 +1176,47 @@ namespace ARKViewer
 
         public Bitmap GetMapImageDropBags(long droppedPlayerId, decimal? selectedLat, decimal? selectedLon, bool includeTerminals, bool includeGlitches, bool includeChargeNodes, bool includeBeaverDams, bool includeDeinoNests, bool includeWyvernNests, bool includeDrakeNests, bool includeMagmaNests, bool includeOilVeins, bool includeWaterVeins, bool includeGasVeins, bool includeArtifacts, List<ContentMarker> customMarkers)
         {
-
             Bitmap bitmap = new Bitmap(1024, 1024);
             Graphics graphics = Graphics.FromImage(bitmap);
             graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
 
-            graphics.DrawImage(MapImage, new Rectangle(0, 0, 1024, 1024));
 
-
-            var filteredDrops = GetDeathCacheBags(droppedPlayerId);
-            float markerSize = 10f;
-            foreach (var item in filteredDrops)
+            if (cacheImageDropBags != null 
+                && droppedPlayerId == cacheImageDropBags.Item1
+                && lastDrawRequest == "dropbags")
             {
-
-                float latitude = item.Latitude.GetValueOrDefault(0);
-                float longitude = item.Longitude.GetValueOrDefault(0);
-
-                var markerX = (decimal)(longitude) * 1024 / 100;
-                var markerY = (decimal)(latitude) * 1024 / 100;
-
-                Color markerColor = Color.Blue;
-
-                graphics.FillEllipse(new SolidBrush(markerColor), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
+                //if all match, return cached content image
+                graphics.DrawImage(gameContentMap, 0, 0);
             }
+            else
+            {
+                lastDrawRequest = "dropbags";
+                cacheImageDropBags = new Tuple<long>(droppedPlayerId);
 
+                graphics.DrawImage(MapImage, new Rectangle(0, 0, 1024, 1024));
 
+                var filteredDrops = GetDeathCacheBags(droppedPlayerId);
+                float markerSize = 10f;
+                foreach (var item in filteredDrops)
+                {
+
+                    float latitude = item.Latitude.GetValueOrDefault(0);
+                    float longitude = item.Longitude.GetValueOrDefault(0);
+
+                    var markerX = (decimal)(longitude) * 1024 / 100;
+                    var markerY = (decimal)(latitude) * 1024 / 100;
+
+                    Color markerColor = Color.AliceBlue;
+                    graphics.FillEllipse(new SolidBrush(markerColor), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
+
+                    Color borderColour = Color.Blue;
+                    int borderSize = 1;
+                    graphics.DrawEllipse(new Pen(borderColour, borderSize), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
+                }
+
+                gameContentMap = (Image)bitmap;
+            }
 
             graphics = AddMapStructures(graphics, includeTerminals, includeGlitches, includeChargeNodes, includeBeaverDams, includeDeinoNests, includeWyvernNests, includeDrakeNests, includeMagmaNests, includeOilVeins, includeWaterVeins, includeGasVeins, includeArtifacts);
             if (customMarkers != null && customMarkers.Count > 0)
@@ -1092,20 +1239,38 @@ namespace ARKViewer
             graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
 
-            graphics.DrawImage(MapImage, new Rectangle(0, 0, 1024, 1024));
-
-            var filteredStructures = GetPlayerStructures(tribeId, playerId, className,false);
-            foreach (var playerStructure in filteredStructures)
+            if (cacheImagePlayerStructures != null 
+                && cacheImagePlayerStructures.Item1 == className 
+                && cacheImagePlayerStructures.Item2 == tribeId 
+                && cacheImagePlayerStructures.Item3 == playerId
+                && lastDrawRequest == "structures")
             {
-                var markerX = (decimal)(playerStructure.Longitude.GetValueOrDefault(0)) * 1024 / 100;
-                var markerY = (decimal)(playerStructure.Latitude.GetValueOrDefault(0)) * 1024 / 100;
-                var markerSize = 10f;
+                //if all match, return cached content image
+                graphics.DrawImage(gameContentMap, 0, 0);
+            }
+            else
+            {
+                lastDrawRequest = "structures";
+                cacheImagePlayerStructures = new Tuple<string, long, long>(className, tribeId, playerId);
 
-                graphics.FillEllipse(new SolidBrush(Color.AliceBlue), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
+                graphics.DrawImage(MapImage, new Rectangle(0, 0, 1024, 1024));
 
-                Color borderColour = Color.Blue;
-                int borderSize = 1;
-                graphics.DrawEllipse(new Pen(borderColour, borderSize), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
+                var filteredStructures = GetPlayerStructures(tribeId, playerId, className, false);
+                foreach (var playerStructure in filteredStructures)
+                {
+                    var markerX = (decimal)(playerStructure.Longitude.GetValueOrDefault(0)) * 1024 / 100;
+                    var markerY = (decimal)(playerStructure.Latitude.GetValueOrDefault(0)) * 1024 / 100;
+                    var markerSize = 10f;
+
+                    graphics.FillEllipse(new SolidBrush(Color.AliceBlue), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
+
+                    Color borderColour = Color.Blue;
+                    int borderSize = 1;
+                    graphics.DrawEllipse(new Pen(borderColour, borderSize), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
+
+                }
+
+                gameContentMap = (Image)bitmap;
 
             }
 
@@ -1128,105 +1293,121 @@ namespace ARKViewer
             graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
 
-            graphics.DrawImage(MapImage, new Rectangle(0, 0, 1024, 1024));
-
-            var tribe = GetTribes(tribeId).FirstOrDefault<ContentTribe>();
-            if (tribe != null)
+            if (cacheImageTribes != null
+                && cacheImageTribes.Item1 == tribeId
+                && cacheImageTribes.Item2 == showStructures
+                && cacheImageTribes.Item3 == showPlayers
+                && cacheImageTribes.Item4 == showTames
+                && lastDrawRequest == "tribes")
             {
-                if (showStructures)
-                {
-                    var tribeStructures = tribe.Structures.Where(s => !Program.ProgramConfig.StructureExclusions.Any(e=> e.ToLower() == s.ClassName.ToLower())).ToList();
-                    if (tribeStructures.Count() > 0)
-                    {
-                        foreach (var structure in tribeStructures)
-                        {
-                            if (!(structure.Latitude.GetValueOrDefault(0) == 0 && structure.Longitude.GetValueOrDefault(0) == 0))
-                            {
-                                float markerSize = 10f;
-
-                                var markerX = (decimal)(structure.Longitude.GetValueOrDefault(0)) * 1024 / 100;
-                                var markerY = (decimal)(structure.Latitude.GetValueOrDefault(0)) * 1024 / 100;
-
-                                graphics.FillEllipse(new SolidBrush(Color.PaleGreen), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
-
-                                /*
-                                Color borderColour = Color.Black;
-                                int borderSize = 1;
-                                graphics.DrawEllipse(new Pen(borderColour, borderSize), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
-                                */
-                            }
-
-
-                        }
-                    }
-
-
-                }
-
-                if (showTames)
-                {
-                    var tribeTames = tribe.Tames;;
-                    if (tribeTames.Count() > 0)
-                    {
-                        foreach (var tame in tribeTames)
-                        {
-                            if (!(tame.Latitude.GetValueOrDefault(0) == 0 && tame.Longitude.GetValueOrDefault(0) == 0))
-                            {
-                                float markerSize = 10f;
-
-                                var markerX = (decimal)(tame.Longitude.GetValueOrDefault(0)) * 1024 / 100;
-                                var markerY = (decimal)(tame.Latitude.GetValueOrDefault(0)) * 1024 / 100;
-
-                                graphics.FillEllipse(new SolidBrush(Color.Gold), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
-
-                                /*
-                                Color borderColour = Color.Black;
-                                int borderSize = 1;
-                                graphics.DrawEllipse(new Pen(borderColour, borderSize), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
-                                */
-                            }
-
-
-                        }
-                    }
-
-
-
-                }
-
-                if (showPlayers)
-                {
-                    var tribePlayers = tribe.Players;
-
-                    if (tribePlayers != null && tribePlayers.Count() > 0)
-                    {
-                        foreach (var player in tribePlayers)
-                        {
-                            if (!(player.Latitude.GetValueOrDefault(0) == 0 && player.Longitude.GetValueOrDefault(0) == 0))
-                            {
-
-                                var markerX = (decimal)(player.Longitude.GetValueOrDefault(0)) * 1024 / 100;
-                                var markerY = (decimal)(player.Latitude.GetValueOrDefault(0)) * 1024 / 100;
-
-                                graphics.FillEllipse(new SolidBrush(Color.FloralWhite), (float)markerX - 15.0f, (float)markerY - 15.0f, 30, 30);
-
-                                Color borderColour = Color.Blue;
-                                int borderSize = 1;
-                                graphics.DrawEllipse(new Pen(borderColour, borderSize), (float)markerX - 15.0f, (float)markerY - 15.0f, 30, 30);
-
-                                Bitmap playerMarker = new Bitmap(ARKViewer.Properties.Resources.marker_28, new Size(20, 20));
-                                if (player.Gender.ToLower() == "female")
-                                {
-                                    playerMarker = new Bitmap(ARKViewer.Properties.Resources.marker_29, new Size(20, 20));
-                                }
-                                graphics.DrawImage(playerMarker, (float)markerX - 10.0f, (float)markerY - 10.0f);
-                            }
-                        }
-                    }
-
-                }
-
+                //if all match, return cached content image
+                graphics.DrawImage(gameContentMap, 0, 0);
             }
+            else
+            {
+                lastDrawRequest = "tribes";
+                cacheImageTribes = new Tuple<long, bool, bool, bool>(tribeId, showStructures, showPlayers, showTames);
+
+                graphics.DrawImage(MapImage, new Rectangle(0, 0, 1024, 1024));
+
+                var tribe = GetTribes(tribeId).FirstOrDefault<ContentTribe>();
+                if (tribe != null)
+                {
+                    if (showStructures)
+                    {
+                        var tribeStructures = tribe.Structures.Where(s => !Program.ProgramConfig.StructureExclusions.Any(e => e.ToLower() == s.ClassName.ToLower())).ToList();
+                        if (tribeStructures.Count() > 0)
+                        {
+                            foreach (var structure in tribeStructures)
+                            {
+                                if (!(structure.Latitude.GetValueOrDefault(0) == 0 && structure.Longitude.GetValueOrDefault(0) == 0))
+                                {
+                                    float markerSize = 10f;
+
+                                    var markerX = (decimal)(structure.Longitude.GetValueOrDefault(0)) * 1024 / 100;
+                                    var markerY = (decimal)(structure.Latitude.GetValueOrDefault(0)) * 1024 / 100;
+
+                                    graphics.FillEllipse(new SolidBrush(Color.AliceBlue), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
+
+                                    Color borderColour = Color.PaleGreen;
+                                    int borderSize = 1;
+                                    graphics.DrawEllipse(new Pen(borderColour, borderSize), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
+                                }
+
+
+                            }
+                        }
+
+
+                    }
+
+                    if (showTames)
+                    {
+                        var tribeTames = tribe.Tames; ;
+                        if (tribeTames.Count() > 0)
+                        {
+                            foreach (var tame in tribeTames)
+                            {
+                                if (!(tame.Latitude.GetValueOrDefault(0) == 0 && tame.Longitude.GetValueOrDefault(0) == 0))
+                                {
+                                    float markerSize = 10f;
+
+                                    var markerX = (decimal)(tame.Longitude.GetValueOrDefault(0)) * 1024 / 100;
+                                    var markerY = (decimal)(tame.Latitude.GetValueOrDefault(0)) * 1024 / 100;
+
+                                    graphics.FillEllipse(new SolidBrush(Color.AliceBlue), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
+
+                                    Color borderColour = Color.Gold;
+                                    int borderSize = 1;
+                                    graphics.DrawEllipse(new Pen(borderColour, borderSize), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
+                                }
+
+
+                            }
+                        }
+
+
+
+                    }
+
+                    if (showPlayers)
+                    {
+                        var tribePlayers = tribe.Players;
+
+                        if (tribePlayers != null && tribePlayers.Count() > 0)
+                        {
+                            foreach (var player in tribePlayers)
+                            {
+                                if (!(player.Latitude.GetValueOrDefault(0) == 0 && player.Longitude.GetValueOrDefault(0) == 0))
+                                {
+
+                                    var markerX = (decimal)(player.Longitude.GetValueOrDefault(0)) * 1024 / 100;
+                                    var markerY = (decimal)(player.Latitude.GetValueOrDefault(0)) * 1024 / 100;
+
+                                    graphics.FillEllipse(new SolidBrush(Color.FloralWhite), (float)markerX - 15.0f, (float)markerY - 15.0f, 30, 30);
+
+                                    Color borderColour = Color.Blue;
+                                    int borderSize = 1;
+                                    graphics.DrawEllipse(new Pen(borderColour, borderSize), (float)markerX - 15.0f, (float)markerY - 15.0f, 30, 30);
+
+                                    Bitmap playerMarker = new Bitmap(ARKViewer.Properties.Resources.marker_28, new Size(20, 20));
+                                    if (player.Gender.ToLower() == "female")
+                                    {
+                                        playerMarker = new Bitmap(ARKViewer.Properties.Resources.marker_29, new Size(20, 20));
+                                    }
+                                    graphics.DrawImage(playerMarker, (float)markerX - 10.0f, (float)markerY - 10.0f);
+                                }
+                            }
+                        }
+
+                    }
+
+                }
+
+                gameContentMap = (Image)bitmap;
+            }
+
+            
 
 
             graphics = AddMapStructures(graphics, includeTerminals, includeGlitches, includeChargeNodes, includeBeaverDams, includeDeinoNests, includeWyvernNests, includeDrakeNests, includeMagmaNests, includeOilVeins, includeWaterVeins, includeGasVeins, includeArtifacts);
@@ -1247,32 +1428,55 @@ namespace ARKViewer
             graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
 
-            graphics.DrawImage(MapImage, new Rectangle(0, 0, 1024, 1024));
 
-            var filteredPlayers = GetPlayers(tribeId, playerId);
-            foreach (var player in filteredPlayers)
+            if (cacheImagePlayers != null 
+                && cacheImagePlayers.Item1 == tribeId 
+                && cacheImagePlayers.Item2 == playerId
+                && lastDrawRequest == "players")
             {
-                if (!(player.Latitude.GetValueOrDefault(0) == 0 && player.Longitude.GetValueOrDefault(0) == 0))
+                //if all match, return cached content image
+                graphics.DrawImage(gameContentMap, 0, 0);
+            }
+            else
+            {
+                lastDrawRequest = "players";
+
+                cacheImagePlayers = new Tuple<long, long>(tribeId, playerId);
+
+
+                graphics.DrawImage(MapImage, new Rectangle(0, 0, 1024, 1024));
+
+                var filteredPlayers = GetPlayers(tribeId, playerId);
+                foreach (var player in filteredPlayers)
                 {
-                    var markerX = (decimal)(player.Longitude.GetValueOrDefault(0)) * 1024 / 100;
-                    var markerY = (decimal)(player.Latitude.GetValueOrDefault(0)) * 1024 / 100;
-
-                    graphics.FillEllipse(new SolidBrush(Color.FloralWhite), (float)markerX - 15.0f, (float)markerY - 15.0f, 30, 30);
-
-                    Color borderColour = Color.Blue;
-                    int borderSize = 1;
-
-                    graphics.DrawEllipse(new Pen(borderColour, borderSize), (float)markerX - 15.0f, (float)markerY - 15.0f, 30, 30);
-
-                    Bitmap playerMarker = new Bitmap(ARKViewer.Properties.Resources.marker_28, new Size(20, 20));
-                    if (player.Gender == "Female")
+                    if (!(player.Latitude.GetValueOrDefault(0) == 0 && player.Longitude.GetValueOrDefault(0) == 0))
                     {
-                        playerMarker = new Bitmap(ARKViewer.Properties.Resources.marker_29, new Size(20, 20));
+                        var markerX = (decimal)(player.Longitude.GetValueOrDefault(0)) * 1024 / 100;
+                        var markerY = (decimal)(player.Latitude.GetValueOrDefault(0)) * 1024 / 100;
+
+                        graphics.FillEllipse(new SolidBrush(Color.FloralWhite), (float)markerX - 15.0f, (float)markerY - 15.0f, 30, 30);
+
+                        Color borderColour = Color.Blue;
+                        int borderSize = 1;
+
+                        graphics.DrawEllipse(new Pen(borderColour, borderSize), (float)markerX - 15.0f, (float)markerY - 15.0f, 30, 30);
+
+                        Bitmap playerMarker = new Bitmap(ARKViewer.Properties.Resources.marker_28, new Size(20, 20));
+                        if (player.Gender == "Female")
+                        {
+                            playerMarker = new Bitmap(ARKViewer.Properties.Resources.marker_29, new Size(20, 20));
+                        }
+                        graphics.DrawImage(playerMarker, (float)markerX - 10.0f, (float)markerY - 10.0f);
                     }
-                    graphics.DrawImage(playerMarker, (float)markerX - 10.0f, (float)markerY - 10.0f);
+
                 }
 
+
+                gameContentMap = (Image)bitmap;
+
             }
+
+            
 
             graphics = AddMapStructures(graphics, includeTerminals, includeGlitches, includeChargeNodes, includeBeaverDams, includeDeinoNests, includeWyvernNests, includeDrakeNests, includeMagmaNests, includeOilVeins, includeWaterVeins, includeGasVeins, includeArtifacts);
 
@@ -1292,6 +1496,7 @@ namespace ARKViewer
             Graphics graphics = Graphics.FromImage(bitmap);
             graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+
 
             graphics.DrawImage(MapImage, new Rectangle(0, 0, 1024, 1024));
 
@@ -1779,9 +1984,9 @@ namespace ARKViewer
                 }
 
             }
-            catch (Exception ex)
+            catch(Exception ex) 
             {
-
+                MessageBox.Show($"Unable to download latest game data.\n\n{ex.Message.ToString()}", "Connection Failed", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
             }
 
@@ -1850,108 +2055,111 @@ namespace ARKViewer
                     }
                 }
 
-                ftpClient.Connect();
-                var serverFiles = ftpClient.GetListing(selectedServer.SaveGamePath);
-                string localFilename = "";
+                //try catch
 
-                //get correct casing for the selected map file
-                var serverSaveFile = serverFiles.Where(f => f.Name.ToLower() == selectedServer.Map.ToLower()).FirstOrDefault();
-                if (serverSaveFile != null)
+                try
                 {
-                    localFilename = Path.Combine(downloadPath, serverSaveFile.Name);
-                    downloadedFilename = localFilename;
-                    bool shouldDownload = true;
+                    ftpClient.Connect();
+                    var serverFiles = ftpClient.GetListing(selectedServer.SaveGamePath);
+                    string localFilename = "";
 
-
-                    if (File.Exists(localFilename) && serverSaveFile.Modified.ToUniversalTime() <= File.GetLastWriteTimeUtc(localFilename))
+                    //get correct casing for the selected map file
+                    var serverSaveFile = serverFiles.Where(f => f.Name.ToLower() == selectedServer.Map.ToLower()).FirstOrDefault();
+                    if (serverSaveFile != null)
                     {
-                        if (Program.ProgramConfig.FtpDownloadMode == 0)
+                        localFilename = Path.Combine(downloadPath, serverSaveFile.Name);
+                        downloadedFilename = localFilename;
+                        bool shouldDownload = true;
+
+
+                        if (File.Exists(localFilename) && serverSaveFile.Modified.ToUniversalTime() <= File.GetLastWriteTimeUtc(localFilename))
                         {
-                            shouldDownload = false;
-                        }
-
-                    }
-
-                    if (shouldDownload)
-                    {
-                        using (FileStream outputStream = new FileStream(localFilename, FileMode.Create))
-                        {
-                            ftpClient.Download(outputStream, serverSaveFile.FullName);
-                            outputStream.Flush();
-                        }
-                        File.SetLastWriteTimeUtc(localFilename, serverSaveFile.Modified.ToUniversalTime());
-                    }
-
-
-
-                    //get .arktribe files
-                    var serverTribeFiles = serverFiles.Where(f => f.Name.EndsWith(".arktribe"));
-                    if (serverTribeFiles != null && serverTribeFiles.Count() > 0)
-                    {
-                        foreach (var serverTribeFile in serverTribeFiles)
-                        {
-                            localFilename = Path.Combine(downloadPath, serverTribeFile.Name);
-                            shouldDownload = true;
-                            if (File.Exists(localFilename) && serverTribeFile.Modified.ToUniversalTime() <= File.GetLastWriteTimeUtc(localFilename))
+                            if (Program.ProgramConfig.FtpDownloadMode == 0)
                             {
-                                if (Program.ProgramConfig.FtpDownloadMode == 0)
-                                {
-                                    shouldDownload = false;
-                                }
-
-                            }
-
-
-                            if (shouldDownload)
-                            {
-                                using (FileStream outputStream = new FileStream(localFilename, FileMode.Create))
-                                {
-                                    ftpClient.Download(outputStream, serverTribeFile.FullName);
-                                    outputStream.Flush();
-                                }
-                                File.SetLastWriteTimeUtc(localFilename, serverTribeFile.Modified.ToUniversalTime());
+                                shouldDownload = false;
                             }
 
                         }
 
-                    }
-
-
-                    //get .arkprofile files
-                    var serverProfileFiles = serverFiles.Where(f => f.Name.EndsWith(".arkprofile"));
-                    if (serverProfileFiles != null && serverProfileFiles.Count() > 0)
-                    {
-                        foreach (var serverProfileFile in serverProfileFiles)
+                        if (shouldDownload)
                         {
-
-                            localFilename = Path.Combine(downloadPath, serverProfileFile.Name);
-                            shouldDownload = true;
-                            if (File.Exists(localFilename) && serverProfileFile.Modified.ToUniversalTime() <= File.GetLastWriteTimeUtc(localFilename))
+                            using (FileStream outputStream = new FileStream(localFilename, FileMode.Create))
                             {
-                                if (Program.ProgramConfig.FtpDownloadMode == 0)
-                                {
-                                    shouldDownload = false;
-                                }
-
+                                ftpClient.Download(outputStream, serverSaveFile.FullName);
+                                outputStream.Flush();
                             }
-                            if (shouldDownload)
-                            {
-                                using (FileStream outputStream = new FileStream(localFilename, FileMode.Create))
-                                {
-                                    ftpClient.Download(outputStream, serverProfileFile.FullName);
-                                    outputStream.Flush();
-                                }
-                                File.SetLastWriteTimeUtc(localFilename, serverProfileFile.Modified.ToUniversalTime());
-                            }
+                            File.SetLastWriteTimeUtc(localFilename, serverSaveFile.Modified.ToUniversalTime());
                         }
 
+
+
+                        //get .arktribe files
+                        var serverTribeFiles = serverFiles.Where(f => f.Name.EndsWith(".arktribe"));
+                        if (serverTribeFiles != null && serverTribeFiles.Count() > 0)
+                        {
+                            foreach (var serverTribeFile in serverTribeFiles)
+                            {
+                                localFilename = Path.Combine(downloadPath, serverTribeFile.Name);
+                                shouldDownload = true;
+                                if (File.Exists(localFilename) && serverTribeFile.Modified.ToUniversalTime() <= File.GetLastWriteTimeUtc(localFilename))
+                                {
+                                    if (Program.ProgramConfig.FtpDownloadMode == 0)
+                                    {
+                                        shouldDownload = false;
+                                    }
+
+                                }
+
+
+                                if (shouldDownload)
+                                {
+                                    using (FileStream outputStream = new FileStream(localFilename, FileMode.Create))
+                                    {
+                                        ftpClient.Download(outputStream, serverTribeFile.FullName);
+                                        outputStream.Flush();
+                                    }
+                                    File.SetLastWriteTimeUtc(localFilename, serverTribeFile.Modified.ToUniversalTime());
+                                }
+
+                            }
+
+                        }
+
+
+                        //get .arkprofile files
+                        var serverProfileFiles = serverFiles.Where(f => f.Name.EndsWith(".arkprofile"));
+                        if (serverProfileFiles != null && serverProfileFiles.Count() > 0)
+                        {
+                            foreach (var serverProfileFile in serverProfileFiles)
+                            {
+
+                                localFilename = Path.Combine(downloadPath, serverProfileFile.Name);
+                                shouldDownload = true;
+                                if (File.Exists(localFilename) && serverProfileFile.Modified.ToUniversalTime() <= File.GetLastWriteTimeUtc(localFilename))
+                                {
+                                    if (Program.ProgramConfig.FtpDownloadMode == 0)
+                                    {
+                                        shouldDownload = false;
+                                    }
+
+                                }
+                                if (shouldDownload)
+                                {
+                                    using (FileStream outputStream = new FileStream(localFilename, FileMode.Create))
+                                    {
+                                        ftpClient.Download(outputStream, serverProfileFile.FullName);
+                                        outputStream.Flush();
+                                    }
+                                    File.SetLastWriteTimeUtc(localFilename, serverProfileFile.Modified.ToUniversalTime());
+                                }
+                            }
+
+                        }
                     }
                 }
-                else
+                catch(Exception ex)
                 {
-                    //save file not found on server.
-
-
+                    MessageBox.Show($"Unable to download latest game data.\n\n{ex.Message.ToString()}", "Connection Failed", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
 

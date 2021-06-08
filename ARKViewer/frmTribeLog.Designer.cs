@@ -49,7 +49,7 @@
             this.lblPlayerLevelLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblPlayerLevelLabel.AutoSize = true;
             this.lblPlayerLevelLabel.ForeColor = System.Drawing.Color.DarkGray;
-            this.lblPlayerLevelLabel.Location = new System.Drawing.Point(766, 14);
+            this.lblPlayerLevelLabel.Location = new System.Drawing.Point(763, 14);
             this.lblPlayerLevelLabel.Name = "lblPlayerLevelLabel";
             this.lblPlayerLevelLabel.Size = new System.Drawing.Size(65, 13);
             this.lblPlayerLevelLabel.TabIndex = 8;
@@ -60,7 +60,7 @@
             this.lblPlayerLevel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblPlayerLevel.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPlayerLevel.ForeColor = System.Drawing.Color.Black;
-            this.lblPlayerLevel.Location = new System.Drawing.Point(767, 27);
+            this.lblPlayerLevel.Location = new System.Drawing.Point(764, 27);
             this.lblPlayerLevel.Name = "lblPlayerLevel";
             this.lblPlayerLevel.Size = new System.Drawing.Size(62, 31);
             this.lblPlayerLevel.TabIndex = 9;
@@ -69,26 +69,24 @@
             // 
             // lblTribeName
             // 
-            this.lblTribeName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblTribeName.AutoSize = true;
             this.lblTribeName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTribeName.ForeColor = System.Drawing.Color.DimGray;
             this.lblTribeName.Location = new System.Drawing.Point(74, 41);
             this.lblTribeName.Name = "lblTribeName";
-            this.lblTribeName.Size = new System.Drawing.Size(614, 17);
+            this.lblTribeName.Size = new System.Drawing.Size(90, 16);
             this.lblTribeName.TabIndex = 7;
             this.lblTribeName.Text = "Tribe Name";
             this.lblTribeName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblPlayerName
             // 
-            this.lblPlayerName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblPlayerName.AutoSize = true;
             this.lblPlayerName.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPlayerName.ForeColor = System.Drawing.Color.Black;
             this.lblPlayerName.Location = new System.Drawing.Point(72, 8);
             this.lblPlayerName.Name = "lblPlayerName";
-            this.lblPlayerName.Size = new System.Drawing.Size(475, 31);
+            this.lblPlayerName.Size = new System.Drawing.Size(163, 29);
             this.lblPlayerName.TabIndex = 6;
             this.lblPlayerName.Text = "Player Name";
             this.lblPlayerName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -113,7 +111,7 @@
             this.pnlPlayerInventory.Controls.Add(this.lvwLog);
             this.pnlPlayerInventory.Location = new System.Drawing.Point(12, 73);
             this.pnlPlayerInventory.Name = "pnlPlayerInventory";
-            this.pnlPlayerInventory.Size = new System.Drawing.Size(819, 362);
+            this.pnlPlayerInventory.Size = new System.Drawing.Size(816, 318);
             this.pnlPlayerInventory.TabIndex = 10;
             // 
             // lvwLog
@@ -130,7 +128,7 @@
             this.lvwLog.HideSelection = false;
             this.lvwLog.Location = new System.Drawing.Point(22, 20);
             this.lvwLog.Name = "lvwLog";
-            this.lvwLog.Size = new System.Drawing.Size(767, 320);
+            this.lvwLog.Size = new System.Drawing.Size(764, 276);
             this.lvwLog.TabIndex = 0;
             this.lvwLog.UseCompatibleStateImageBehavior = false;
             this.lvwLog.View = System.Windows.Forms.View.Details;
@@ -151,7 +149,7 @@
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClose.Location = new System.Drawing.Point(756, 443);
+            this.btnClose.Location = new System.Drawing.Point(753, 399);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 12;
@@ -161,9 +159,9 @@
             // 
             // btnSettings
             // 
-            this.btnSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnSettings.Image = ((System.Drawing.Image)(resources.GetObject("btnSettings.Image")));
-            this.btnSettings.Location = new System.Drawing.Point(12, 443);
+            this.btnSettings.Location = new System.Drawing.Point(11, 395);
             this.btnSettings.Name = "btnSettings";
             this.btnSettings.Size = new System.Drawing.Size(33, 27);
             this.btnSettings.TabIndex = 20;
@@ -174,7 +172,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(843, 478);
+            this.ClientSize = new System.Drawing.Size(840, 434);
             this.Controls.Add(this.btnSettings);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.lblPlayerLevelLabel);
@@ -185,6 +183,7 @@
             this.Controls.Add(this.pnlPlayerInventory);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(350, 350);
             this.Name = "frmTribeLog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Tribe Log Viewer";

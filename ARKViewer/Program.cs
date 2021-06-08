@@ -76,8 +76,9 @@ namespace ARKViewer
 
                 //arguments provided, export and exit
                 using (TextWriter logWriter = new StreamWriter(logFilename))
-                {
+                {   
                     logWriter.WriteLine($"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")} - ASV Command Line Started: {commandArguments.Length}");
+                    logWriter.Flush();
 
                     int argIndex = 0;
                     foreach (string arg in commandArguments)
@@ -85,33 +86,115 @@ namespace ARKViewer
                         logWriter.WriteLine($"\tArg-{argIndex} = {arg}");
                         argIndex++;
                     }
+                    logWriter.Flush();
+
 
                     //command line, load save game data for export
-                    string jsonConfigFilename = "";
+                    string inputFilename = "";
                     if (commandArguments.Length > 2)
                     {
                         //config specified
-                        jsonConfigFilename = commandArguments[3].ToString().Trim().Replace("\"", "");
+                        inputFilename = commandArguments[2].ToString().Trim().Replace("\"", "");
                     }
 
-                    switch (commandOptionCheck)
+                    if (commandArguments.Length > 3)
                     {
-                        case "pack":
-                            ExportCommandLinePack(jsonConfigFilename);
-
-                            break;
-
-                        case "json":
-                            ExportCommandLine(jsonConfigFilename);
-
-                            break;
+                        exportFilename = commandArguments[3].ToString().Trim().Replace("\"", "");
+                        exportFilePath = Path.GetDirectoryName(exportFilename);
                     }
 
-                    logWriter.Flush();
+                    try
+                    {
+                        switch (commandOptionCheck)
+                        {
+                            case "pack":
+                                logWriter.WriteLine($"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")} - Exporting ASV pack for coniguration: {inputFilename}");
+                                logWriter.Flush();
 
-                    Application.Exit();
+                                ExportCommandLinePack(inputFilename);
+
+                                break;
+
+                            case "json":
+                                logWriter.WriteLine($"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")} - Exporting JSON for configuration: {inputFilename}");
+                                logWriter.Flush();
+
+                                ExportCommandLine(inputFilename);
+
+                                break;
+                            default:
+                                //direct command line export
+
+                                ArkGameData gd = LoadArkData(inputFilename);
+                                if (gd == null)
+                                {
+                                    //unable to load game data
+                                    return;
+                                }
+
+                                ContentPack exportPack = new ContentPack(gd, 0, 0, 50, 50, 250, true, true, true, true, true, true, true);
+                                ContentManager exportManger = new ContentManager(exportPack);
+
+                                switch (commandOptionCheck)
+                                {
+                                    case "all":
+                                        logWriter.WriteLine($"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")} - Exporting JSON (all) for: {inputFilename}");
+                                        logWriter.Flush();
+
+                                        exportManger.ExportAll(exportFilePath);
+                                        break;
+                                    case "structures":
+                                        logWriter.WriteLine($"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")} - Exporting JSON (structures) for: {inputFilename}");
+                                        logWriter.Flush();
+
+                                        exportManger.ExportPlayerStructures(exportFilename);
+                                        break;
+                                    case "tribes":
+                                        logWriter.WriteLine($"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")} - Exporting JSON (tribes) for: {inputFilename}");
+                                        logWriter.Flush();
+
+                                        exportManger.ExportPlayerTribes(exportFilename);
+                                        break;
+                                    case "players":
+                                        logWriter.WriteLine($"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")} - Exporting JSON (players) for: {inputFilename}");
+                                        logWriter.Flush();
+
+                                        exportManger.ExportPlayers(exportFilename);
+                                        break;
+                                    case "wild":
+                                        logWriter.WriteLine($"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")} - Exporting JSON (wild) for: {inputFilename}");
+                                        logWriter.Flush();
+
+                                        exportManger.ExportWild(exportFilename);
+                                        break;
+                                    case "tamed":
+                                        logWriter.WriteLine($"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")} - Exporting JSON (tamed) for: {inputFilename}");
+                                        logWriter.Flush();
+
+                                        exportManger.ExportTamed(exportFilename);
+                                        break;
+                                }
+                                exportPack = null;
+                                exportManger = null;
+
+                                logWriter.WriteLine($"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")} - Completed export for: {inputFilename}");
+
+                                break;
+                        }
+                    }
+                    catch(Exception ex)
+                    {
+                        logWriter.WriteLine($"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")} - Failed to export: \n{ex.Message.ToString()}");
+                        logWriter.Flush();
+                    }
+                    finally
+                    {
+                        logWriter.Flush();
+                    }
+
                 };
 
+                Application.Exit();
             }
             else
             {

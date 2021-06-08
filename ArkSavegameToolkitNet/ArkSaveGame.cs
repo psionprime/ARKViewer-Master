@@ -204,6 +204,8 @@ namespace ArkSavegameToolkitNet
             //Now parse out cryo creature data
             var cryoPodEntries = Objects.Where(WhereEmptyCryopodHasCustomItemDataBytesArrayBytes).ToList();
 
+            var allPodEntries = Objects.Where(x=>x.ClassName.Name.ToLower().Contains("cryo") &! cryoPodEntries.Any(p=>p.ObjectId == x.ObjectId)).ToList();
+
             nextObjectId = Objects.Count();
 
             if (cryoPodEntries != null && cryoPodEntries.Count() > 0)
@@ -277,11 +279,11 @@ namespace ArkSavegameToolkitNet
 
             bool WhereEmptyCryopodHasCustomItemDataBytesArrayBytes(GameObject o) => (o.ClassName.Name.Contains("Cryopod"))
                 && o.GetProperty<PropertyArray>(_customItemData)?.Value[0] is StructPropertyList customProperties
-                //&& customProperties.GetProperty<PropertyStruct>(_customDataBytesIdentifier) is PropertyStruct customDataBytes
-                //&& customDataBytes.Value is StructPropertyList byteArrays
-                //&& byteArrays.GetProperty<PropertyArray>(_byteArraysIdentifier)?.Value.Count > 0 && byteArrays.GetProperty<PropertyArray>(_byteArraysIdentifier)?.Value[0] is StructPropertyList bytes
-                //&& bytes != null && bytes.GetProperty<PropertyArray>(_bytesIdentifier) is PropertyArray byteList
-                //&& byteList != null && byteList.Value.Count > 0
+                && customProperties.GetProperty<PropertyStruct>(_customDataBytesIdentifier) is PropertyStruct customDataBytes
+                && customDataBytes.Value is StructPropertyList byteArrays
+                && byteArrays.GetProperty<PropertyArray>(_byteArraysIdentifier)?.Value.Count > 0 && byteArrays.GetProperty<PropertyArray>(_byteArraysIdentifier)?.Value[0] is StructPropertyList bytes
+                && bytes != null && bytes.GetProperty<PropertyArray>(_bytesIdentifier) is PropertyArray byteList
+                && byteList != null && byteList.Value.Count > 0
                 ;
 
             PropertyArray SelectCustomDataBytesArrayBytes(GameObject o) => ((StructPropertyList)((StructPropertyList)((StructPropertyList)o.GetProperty<PropertyArray>(_customItemData).Value[0]).GetProperty<PropertyStruct>(_customDataBytesIdentifier).Value).GetProperty<PropertyArray>(_byteArraysIdentifier).Value[0]).GetProperty<PropertyArray>(_bytesIdentifier);

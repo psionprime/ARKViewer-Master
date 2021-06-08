@@ -44,6 +44,8 @@
             this.optServer = new System.Windows.Forms.RadioButton();
             this.optSinglePlayer = new System.Windows.Forms.RadioButton();
             this.grpServer = new System.Windows.Forms.GroupBox();
+            this.btnEditServer = new System.Windows.Forms.Button();
+            this.lblFtpMap = new System.Windows.Forms.Label();
             this.cboFtpMap = new System.Windows.Forms.ComboBox();
             this.pnlServerDetails = new System.Windows.Forms.Panel();
             this.btnRemoveServer = new System.Windows.Forms.Button();
@@ -176,8 +178,22 @@
             this.lblOptionHeaderStructures = new System.Windows.Forms.Label();
             this.lblOptionTextStructures = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.lblFtpMap = new System.Windows.Forms.Label();
-            this.btnEditServer = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.listView1 = new System.Windows.Forms.ListView();
+            this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.button3 = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.listView2 = new System.Windows.Forms.ListView();
+            this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabSettings.SuspendLayout();
             this.tpgMap.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -205,13 +221,15 @@
             this.pnlPlayerSettingsBody.SuspendLayout();
             this.pnlPlayerSettingsTames.SuspendLayout();
             this.pnlPlayerSettingsStuctures.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnSave
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSave.Location = new System.Drawing.Point(405, 672);
+            this.btnSave.Location = new System.Drawing.Point(405, 669);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 6;
@@ -224,7 +242,7 @@
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClose.Location = new System.Drawing.Point(486, 672);
+            this.btnClose.Location = new System.Drawing.Point(486, 669);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 7;
@@ -384,6 +402,31 @@
             this.grpServer.Size = new System.Drawing.Size(471, 160);
             this.grpServer.TabIndex = 11;
             this.grpServer.TabStop = false;
+            // 
+            // btnEditServer
+            // 
+            this.btnEditServer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnEditServer.Enabled = false;
+            this.btnEditServer.Image = global::ARKViewer.Properties.Resources.button_edit;
+            this.btnEditServer.Location = new System.Drawing.Point(334, 24);
+            this.btnEditServer.Name = "btnEditServer";
+            this.btnEditServer.Size = new System.Drawing.Size(35, 35);
+            this.btnEditServer.TabIndex = 21;
+            this.toolTip1.SetToolTip(this.btnEditServer, "Edit server");
+            this.btnEditServer.UseVisualStyleBackColor = true;
+            this.btnEditServer.Click += new System.EventHandler(this.btnEditServer_Click);
+            // 
+            // lblFtpMap
+            // 
+            this.lblFtpMap.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblFtpMap.BackColor = System.Drawing.SystemColors.Control;
+            this.lblFtpMap.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFtpMap.Location = new System.Drawing.Point(22, 92);
+            this.lblFtpMap.Name = "lblFtpMap";
+            this.lblFtpMap.Size = new System.Drawing.Size(115, 22);
+            this.lblFtpMap.TabIndex = 20;
+            this.lblFtpMap.Text = "Map";
+            this.lblFtpMap.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // cboFtpMap
             // 
@@ -567,6 +610,7 @@
             // 
             // tpgColours
             // 
+            this.tpgColours.Controls.Add(this.groupBox1);
             this.tpgColours.Controls.Add(this.grpColours);
             this.tpgColours.Location = new System.Drawing.Point(4, 22);
             this.tpgColours.Name = "tpgColours";
@@ -577,6 +621,7 @@
             // 
             // grpColours
             // 
+            this.grpColours.Controls.Add(this.label1);
             this.grpColours.Controls.Add(this.chkApplyFilterColours);
             this.grpColours.Controls.Add(this.lblHeaderColours);
             this.grpColours.Controls.Add(this.txtFilterColour);
@@ -586,7 +631,7 @@
             this.grpColours.Controls.Add(this.btnNewColour);
             this.grpColours.Location = new System.Drawing.Point(18, 10);
             this.grpColours.Name = "grpColours";
-            this.grpColours.Size = new System.Drawing.Size(508, 581);
+            this.grpColours.Size = new System.Drawing.Size(508, 296);
             this.grpColours.TabIndex = 28;
             this.grpColours.TabStop = false;
             // 
@@ -595,10 +640,11 @@
             this.chkApplyFilterColours.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.chkApplyFilterColours.Appearance = System.Windows.Forms.Appearance.Button;
             this.chkApplyFilterColours.Image = global::ARKViewer.Properties.Resources.button_filter;
-            this.chkApplyFilterColours.Location = new System.Drawing.Point(429, 507);
+            this.chkApplyFilterColours.Location = new System.Drawing.Point(429, 257);
             this.chkApplyFilterColours.Name = "chkApplyFilterColours";
             this.chkApplyFilterColours.Size = new System.Drawing.Size(33, 27);
             this.chkApplyFilterColours.TabIndex = 27;
+            this.toolTip1.SetToolTip(this.chkApplyFilterColours, "Apply filter");
             this.chkApplyFilterColours.UseVisualStyleBackColor = true;
             this.chkApplyFilterColours.CheckedChanged += new System.EventHandler(this.chkApplyFilterColours_CheckedChanged);
             // 
@@ -616,17 +662,19 @@
             // 
             // txtFilterColour
             // 
-            this.txtFilterColour.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.txtFilterColour.Location = new System.Drawing.Point(92, 510);
+            this.txtFilterColour.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtFilterColour.Location = new System.Drawing.Point(92, 261);
             this.txtFilterColour.Name = "txtFilterColour";
             this.txtFilterColour.Size = new System.Drawing.Size(331, 20);
             this.txtFilterColour.TabIndex = 26;
             // 
             // btnEditColour
             // 
+            this.btnEditColour.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnEditColour.Enabled = false;
             this.btnEditColour.Image = ((System.Drawing.Image)(resources.GetObject("btnEditColour.Image")));
-            this.btnEditColour.Location = new System.Drawing.Point(465, 507);
+            this.btnEditColour.Location = new System.Drawing.Point(465, 258);
             this.btnEditColour.Name = "btnEditColour";
             this.btnEditColour.Size = new System.Drawing.Size(34, 27);
             this.btnEditColour.TabIndex = 25;
@@ -636,15 +684,18 @@
             // 
             // lvwColours
             // 
+            this.lvwColours.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lvwColours.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader4,
             this.columnHeader7,
             this.columnHeader8});
             this.lvwColours.FullRowSelect = true;
             this.lvwColours.HideSelection = false;
-            this.lvwColours.Location = new System.Drawing.Point(13, 19);
+            this.lvwColours.Location = new System.Drawing.Point(13, 45);
             this.lvwColours.Name = "lvwColours";
-            this.lvwColours.Size = new System.Drawing.Size(485, 482);
+            this.lvwColours.Size = new System.Drawing.Size(485, 207);
             this.lvwColours.TabIndex = 22;
             this.lvwColours.UseCompatibleStateImageBehavior = false;
             this.lvwColours.View = System.Windows.Forms.View.Details;
@@ -668,29 +719,32 @@
             // 
             // btnRemoveColour
             // 
+            this.btnRemoveColour.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnRemoveColour.Enabled = false;
             this.btnRemoveColour.Image = global::ARKViewer.Properties.Resources.button_remove;
-            this.btnRemoveColour.Location = new System.Drawing.Point(52, 507);
+            this.btnRemoveColour.Location = new System.Drawing.Point(52, 258);
             this.btnRemoveColour.Name = "btnRemoveColour";
             this.btnRemoveColour.Size = new System.Drawing.Size(34, 27);
             this.btnRemoveColour.TabIndex = 24;
-            this.toolTip1.SetToolTip(this.btnRemoveColour, "Remove display name");
+            this.toolTip1.SetToolTip(this.btnRemoveColour, "Remove mapping");
             this.btnRemoveColour.UseVisualStyleBackColor = true;
             this.btnRemoveColour.Click += new System.EventHandler(this.btnRemoveColour_Click);
             // 
             // btnNewColour
             // 
+            this.btnNewColour.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnNewColour.Image = global::ARKViewer.Properties.Resources.button_add;
-            this.btnNewColour.Location = new System.Drawing.Point(13, 507);
+            this.btnNewColour.Location = new System.Drawing.Point(13, 258);
             this.btnNewColour.Name = "btnNewColour";
             this.btnNewColour.Size = new System.Drawing.Size(34, 27);
             this.btnNewColour.TabIndex = 23;
-            this.toolTip1.SetToolTip(this.btnNewColour, "Add new display name");
+            this.toolTip1.SetToolTip(this.btnNewColour, "Add new mapping");
             this.btnNewColour.UseVisualStyleBackColor = true;
             this.btnNewColour.Click += new System.EventHandler(this.btnNewColour_Click);
             // 
             // tpgCreatures
             // 
+            this.tpgCreatures.Controls.Add(this.groupBox3);
             this.tpgCreatures.Controls.Add(this.grpCreatures);
             this.tpgCreatures.Location = new System.Drawing.Point(4, 22);
             this.tpgCreatures.Name = "tpgCreatures";
@@ -702,6 +756,7 @@
             // 
             // grpCreatures
             // 
+            this.grpCreatures.Controls.Add(this.label6);
             this.grpCreatures.Controls.Add(this.chkApplyFilterDinos);
             this.grpCreatures.Controls.Add(this.lblHeaderCreatures);
             this.grpCreatures.Controls.Add(this.txtCreatureFilter);
@@ -711,16 +766,15 @@
             this.grpCreatures.Controls.Add(this.btnRemoveDinoClass);
             this.grpCreatures.Location = new System.Drawing.Point(18, 10);
             this.grpCreatures.Name = "grpCreatures";
-            this.grpCreatures.Size = new System.Drawing.Size(508, 581);
+            this.grpCreatures.Size = new System.Drawing.Size(508, 332);
             this.grpCreatures.TabIndex = 29;
             this.grpCreatures.TabStop = false;
             // 
             // chkApplyFilterDinos
             // 
-            this.chkApplyFilterDinos.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.chkApplyFilterDinos.Appearance = System.Windows.Forms.Appearance.Button;
             this.chkApplyFilterDinos.Image = global::ARKViewer.Properties.Resources.button_filter;
-            this.chkApplyFilterDinos.Location = new System.Drawing.Point(429, 507);
+            this.chkApplyFilterDinos.Location = new System.Drawing.Point(429, 291);
             this.chkApplyFilterDinos.Name = "chkApplyFilterDinos";
             this.chkApplyFilterDinos.Size = new System.Drawing.Size(33, 27);
             this.chkApplyFilterDinos.TabIndex = 21;
@@ -741,8 +795,7 @@
             // 
             // txtCreatureFilter
             // 
-            this.txtCreatureFilter.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.txtCreatureFilter.Location = new System.Drawing.Point(92, 510);
+            this.txtCreatureFilter.Location = new System.Drawing.Point(92, 294);
             this.txtCreatureFilter.Name = "txtCreatureFilter";
             this.txtCreatureFilter.Size = new System.Drawing.Size(331, 20);
             this.txtCreatureFilter.TabIndex = 18;
@@ -756,9 +809,9 @@
             this.lvwDinoClasses_DisplayName});
             this.lvwDinoClasses.FullRowSelect = true;
             this.lvwDinoClasses.HideSelection = false;
-            this.lvwDinoClasses.Location = new System.Drawing.Point(13, 19);
+            this.lvwDinoClasses.Location = new System.Drawing.Point(13, 45);
             this.lvwDinoClasses.Name = "lvwDinoClasses";
-            this.lvwDinoClasses.Size = new System.Drawing.Size(485, 482);
+            this.lvwDinoClasses.Size = new System.Drawing.Size(485, 240);
             this.lvwDinoClasses.TabIndex = 3;
             this.lvwDinoClasses.UseCompatibleStateImageBehavior = false;
             this.lvwDinoClasses.View = System.Windows.Forms.View.Details;
@@ -781,7 +834,7 @@
             // 
             this.btnEditDinoClass.Enabled = false;
             this.btnEditDinoClass.Image = ((System.Drawing.Image)(resources.GetObject("btnEditDinoClass.Image")));
-            this.btnEditDinoClass.Location = new System.Drawing.Point(465, 507);
+            this.btnEditDinoClass.Location = new System.Drawing.Point(465, 291);
             this.btnEditDinoClass.Name = "btnEditDinoClass";
             this.btnEditDinoClass.Size = new System.Drawing.Size(34, 27);
             this.btnEditDinoClass.TabIndex = 6;
@@ -792,7 +845,7 @@
             // btnAddDinoClass
             // 
             this.btnAddDinoClass.Image = global::ARKViewer.Properties.Resources.button_add;
-            this.btnAddDinoClass.Location = new System.Drawing.Point(13, 507);
+            this.btnAddDinoClass.Location = new System.Drawing.Point(13, 291);
             this.btnAddDinoClass.Name = "btnAddDinoClass";
             this.btnAddDinoClass.Size = new System.Drawing.Size(34, 27);
             this.btnAddDinoClass.TabIndex = 4;
@@ -804,7 +857,7 @@
             // 
             this.btnRemoveDinoClass.Enabled = false;
             this.btnRemoveDinoClass.Image = global::ARKViewer.Properties.Resources.button_remove;
-            this.btnRemoveDinoClass.Location = new System.Drawing.Point(52, 507);
+            this.btnRemoveDinoClass.Location = new System.Drawing.Point(52, 291);
             this.btnRemoveDinoClass.Name = "btnRemoveDinoClass";
             this.btnRemoveDinoClass.Size = new System.Drawing.Size(34, 27);
             this.btnRemoveDinoClass.TabIndex = 5;
@@ -1886,35 +1939,183 @@
             this.toolTip1.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.toolTip1.ToolTipTitle = "Information";
             // 
-            // lblFtpMap
+            // label1
             // 
-            this.lblFtpMap.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.lblFtpMap.BackColor = System.Drawing.SystemColors.Control;
-            this.lblFtpMap.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFtpMap.Location = new System.Drawing.Point(22, 92);
-            this.lblFtpMap.Name = "lblFtpMap";
-            this.lblFtpMap.Size = new System.Drawing.Size(115, 22);
-            this.lblFtpMap.TabIndex = 20;
-            this.lblFtpMap.Text = "Map";
-            this.lblFtpMap.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(10, 16);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(198, 22);
+            this.label1.TabIndex = 28;
+            this.label1.Text = "Mapped";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // btnEditServer
+            // groupBox1
             // 
-            this.btnEditServer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnEditServer.Image = global::ARKViewer.Properties.Resources.button_edit;
-            this.btnEditServer.Location = new System.Drawing.Point(334, 24);
-            this.btnEditServer.Name = "btnEditServer";
-            this.btnEditServer.Size = new System.Drawing.Size(35, 35);
-            this.btnEditServer.TabIndex = 21;
-            this.toolTip1.SetToolTip(this.btnEditServer, "Add new server");
-            this.btnEditServer.UseVisualStyleBackColor = true;
-            this.btnEditServer.Click += new System.EventHandler(this.btnEditServer_Click);
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.checkBox1);
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this.listView1);
+            this.groupBox1.Controls.Add(this.button3);
+            this.groupBox1.Location = new System.Drawing.Point(18, 314);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(508, 296);
+            this.groupBox1.TabIndex = 29;
+            this.groupBox1.TabStop = false;
+            // 
+            // label4
+            // 
+            this.label4.BackColor = System.Drawing.Color.Transparent;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(10, 16);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(198, 22);
+            this.label4.TabIndex = 28;
+            this.label4.Text = "Not Mapped";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBox1.Appearance = System.Windows.Forms.Appearance.Button;
+            this.checkBox1.Image = global::ARKViewer.Properties.Resources.button_filter;
+            this.checkBox1.Location = new System.Drawing.Point(425, 257);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(33, 27);
+            this.checkBox1.TabIndex = 27;
+            this.toolTip1.SetToolTip(this.checkBox1, "Apply filter");
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // label5
+            // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label5.BackColor = System.Drawing.Color.Aqua;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(-2, 6);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(511, 6);
+            this.label5.TabIndex = 0;
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox1.Location = new System.Drawing.Point(13, 261);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(406, 20);
+            this.textBox1.TabIndex = 26;
+            // 
+            // listView1
+            // 
+            this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader9});
+            this.listView1.FullRowSelect = true;
+            this.listView1.HideSelection = false;
+            this.listView1.Location = new System.Drawing.Point(13, 45);
+            this.listView1.Name = "listView1";
+            this.listView1.Size = new System.Drawing.Size(485, 207);
+            this.listView1.TabIndex = 22;
+            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.listView1.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader9
+            // 
+            this.columnHeader9.Text = "Id";
+            this.columnHeader9.Width = 400;
+            // 
+            // button3
+            // 
+            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button3.Image = global::ARKViewer.Properties.Resources.button_add;
+            this.button3.Location = new System.Drawing.Point(464, 257);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(34, 27);
+            this.button3.TabIndex = 23;
+            this.toolTip1.SetToolTip(this.button3, "Add mapping");
+            this.button3.UseVisualStyleBackColor = true;
+            // 
+            // label6
+            // 
+            this.label6.BackColor = System.Drawing.Color.Transparent;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(10, 16);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(198, 22);
+            this.label6.TabIndex = 29;
+            this.label6.Text = "Mapped";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.label7);
+            this.groupBox3.Controls.Add(this.label8);
+            this.groupBox3.Controls.Add(this.listView2);
+            this.groupBox3.Location = new System.Drawing.Point(18, 351);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(508, 246);
+            this.groupBox3.TabIndex = 30;
+            this.groupBox3.TabStop = false;
+            // 
+            // label7
+            // 
+            this.label7.BackColor = System.Drawing.Color.Transparent;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(10, 16);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(198, 22);
+            this.label7.TabIndex = 29;
+            this.label7.Text = "Not Mapped";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label8
+            // 
+            this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label8.BackColor = System.Drawing.Color.Aqua;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(-2, 6);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(511, 6);
+            this.label8.TabIndex = 0;
+            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // listView2
+            // 
+            this.listView2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader10,
+            this.columnHeader11});
+            this.listView2.FullRowSelect = true;
+            this.listView2.HideSelection = false;
+            this.listView2.Location = new System.Drawing.Point(13, 45);
+            this.listView2.Name = "listView2";
+            this.listView2.Size = new System.Drawing.Size(485, 152);
+            this.listView2.TabIndex = 3;
+            this.listView2.UseCompatibleStateImageBehavior = false;
+            this.listView2.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader10
+            // 
+            this.columnHeader10.DisplayIndex = 1;
+            this.columnHeader10.Text = "Class Name";
+            this.columnHeader10.Width = 244;
+            // 
+            // columnHeader11
+            // 
+            this.columnHeader11.DisplayIndex = 0;
+            this.columnHeader11.Text = "Display Name";
+            this.columnHeader11.Width = 205;
             // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(576, 707);
+            this.ClientSize = new System.Drawing.Size(576, 704);
             this.Controls.Add(this.tabSettings);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnSave);
@@ -1969,6 +2170,9 @@
             this.pnlPlayerSettingsTames.PerformLayout();
             this.pnlPlayerSettingsStuctures.ResumeLayout(false);
             this.pnlPlayerSettingsStuctures.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -2122,5 +2326,21 @@
         private System.Windows.Forms.CheckBox chkDroppedItems;
         private System.Windows.Forms.Button btnEditServer;
         private System.Windows.Forms.Label lblFtpMap;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ColumnHeader columnHeader9;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.ListView listView2;
+        private System.Windows.Forms.ColumnHeader columnHeader10;
+        private System.Windows.Forms.ColumnHeader columnHeader11;
+        private System.Windows.Forms.Label label6;
     }
 }

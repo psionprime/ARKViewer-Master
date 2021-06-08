@@ -171,7 +171,7 @@ namespace ARKViewer
             {
                 //var serverFiles = ftpClient.GetListing(filePath).OrderByDescending(o => o.Type).ThenBy(o => o.Name).ToList();
 
-                var serverFiles = sftpClient.ListDirectory(filePath).Where(f => f.IsRegularFile || f.IsDirectory).OrderByDescending(o=>o.IsDirectory).ThenBy(o=>o.Name).ToList();
+                var serverFiles = sftpClient.ListDirectory(filePath).Where(f => (f.IsRegularFile || f.IsDirectory) && f.Name!="." && f.Name !="..").OrderByDescending(o=>o.IsDirectory).ThenBy(o=>o.Name).ToList();
 
                 if (filePath.Length > 0 && filePath != "/")
                 {
@@ -216,7 +216,7 @@ namespace ARKViewer
                     ListViewItem item = lvwFileBrowser.Items.Add(f.Name);
                     item.SubItems.Add(f.LastWriteTimeUtc.ToString("yyyy-MM-dd HH:mm:ss"));
                     item.SubItems.Add(f.LastWriteTimeUtc.ToString());
-                    item.ImageIndex = f.IsDirectory ? 0 : 1;
+                    item.ImageIndex = f.IsDirectory ? 1: 2;
                     item.Tag = browseItem;
                 });
             }
@@ -230,24 +230,18 @@ namespace ARKViewer
 
         private void PopulateServerFileList(string filePath)
         {
-            
-            bool isSecureFtp = false;
-
-            switch (isSecureFtp)
+            if (optFtpModeSftp.Checked)
             {
-                case true:
-                    //use sftp
-                    PopulateServerFileListSFtp(filePath);
-                    
-
-                    break;
-                default:
-                    //use normal ftp
-                    PopulateServerFileListFtp(filePath);
-
-                    break;
+                //use sftp
+                PopulateServerFileListSFtp(filePath);
 
             }
+            else
+            {
+                //use normal ftp
+                PopulateServerFileListFtp(filePath);
+            }
+
 
         }
 
@@ -315,6 +309,9 @@ namespace ARKViewer
             }
 
             btnConnect.Enabled = false;
+            optFtpModeFtp.Enabled = false;
+            optFtpModeSftp.Enabled = false;
+
             this.Cursor = Cursors.WaitCursor;
 
             lvwFileBrowser.Items.Clear();
@@ -355,6 +352,8 @@ namespace ARKViewer
                 {
                     MessageBox.Show("Unable to connect to server.\n\nPlease check entered information and try again.", "Connection Failed", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     btnConnect.Enabled = true;
+                    optFtpModeFtp.Enabled = true;
+                    optFtpModeSftp.Enabled = true;
                 }
 
 
@@ -386,12 +385,16 @@ namespace ARKViewer
                 {
                     MessageBox.Show("Unable to connect to server.\n\nPlease check entered information and try again.", "Connection Failed", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     btnConnect.Enabled = true;
+                    optFtpModeFtp.Enabled = true;
+                    optFtpModeSftp.Enabled = true;
                 }
 
             }
 
             this.Cursor = Cursors.Default;
             btnConnect.Enabled = true;
+            optFtpModeFtp.Enabled = true;
+            optFtpModeSftp.Enabled = true;
         }
 
         private void lvwFileBrowser_SelectedIndexChanged(object sender, EventArgs e)
@@ -445,6 +448,16 @@ namespace ARKViewer
                 udFTPPort.Value = enteredPort;
                 txtFTPAddress.Text = enteredAddress.Substring(0,enteredAddress.LastIndexOf(":"));
             }            
+        }
+
+        private void txtFTPPassword_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblFTPPassword_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

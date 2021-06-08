@@ -190,8 +190,7 @@ namespace ARKViewer.Models
 
                 //TerminalMarkers
                 ConcurrentBag<ContentStructure> loadedStructures = new ConcurrentBag<ContentStructure>();
-
-                var mapDetectedTerminals = gd.Structures.Where(s => s.ClassName.ToLower().Contains("terminal") && s.Location!=null);
+                var mapDetectedTerminals = gd.Structures.Where(s => (s.ClassName.StartsWith("TributeTerminal_") || s.ClassName.Contains("CityTerminal_")) && s.Location!=null);
                 if (mapDetectedTerminals != null)
                 {
                     Parallel.ForEach(mapDetectedTerminals, terminal =>
@@ -722,8 +721,15 @@ namespace ARKViewer.Models
                     .Where(p =>
                         (p.TribeId == null || (p.TribeId.HasValue && (p.TribeId == 0 || p.TribeId == p.Id)))
                         && (ExportedForPlayer == 0 || p.Id == ExportedForPlayer)
-                        && (Math.Abs((decimal)p.Location.Latitude - FilterLatitude) <= FilterRadius)
-                        && (Math.Abs((decimal)p.Location.Longitude - FilterLongitude) <= FilterRadius)
+                        &! loadedTribes.Any(t=>t.Players.Any(tp => tp.Id == p.Id))
+                        &&
+                        (p.Location== null
+                        || (
+                                p.Location != null 
+                                && (Math.Abs((decimal)p.Location.Latitude - FilterLatitude) <= FilterRadius)
+                                && (Math.Abs((decimal)p.Location.Longitude - FilterLongitude) <= FilterRadius)
+                           )
+                        )
                     ).ToList();
 
                 Parallel.ForEach(soloPlayers, player =>
@@ -746,16 +752,16 @@ namespace ARKViewer.Models
                         Id = player.Id,
                         CharacterName = player.CharacterName,
                         LastActive = player.LastActiveTime,
-                        Latitude = player.Location.Latitude,
-                        Longitude = player.Location.Longitude,
+                        Latitude = player.Location == null ?0 : player.Location.Latitude,
+                        Longitude = player.Location == null ? 0 : player.Location.Longitude,
                         Level = player.CharacterLevel,
                         Name = player.Name,
                         Gender = player.Gender.ToString(),
                         SteamId = player.SteamId,
                         Stats = player.Stats,
-                        X = player.Location.X,
-                        Y = player.Location.Y,
-                        Z = player.Location.Z,
+                        X = player.Location == null ? 0 : player.Location.X,
+                        Y = player.Location == null ? 0 : player.Location.Y,
+                        Z = player.Location == null ? 0 : player.Location.Z,
                         InventoryId = addInventory(player.Inventory)
                     };
                     soloTribe.Players.Add(soloPlayer);
@@ -998,10 +1004,12 @@ namespace ARKViewer.Models
 
             });
 
+            var allItems = invItems.ToList();
+
             Inventories.Add(new ContentInventory()
             {
                 InventoryId = nextId,
-                Items = invItems.ToList()
+                Items = allItems
             });
 
             return nextId;

@@ -44,7 +44,7 @@
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancel.Location = new System.Drawing.Point(296, 483);
+            this.btnCancel.Location = new System.Drawing.Point(317, 428);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 17;
@@ -63,7 +63,7 @@
             this.pnlCreatureInventory.Controls.Add(this.txtFilter);
             this.pnlCreatureInventory.Location = new System.Drawing.Point(12, 46);
             this.pnlCreatureInventory.Name = "pnlCreatureInventory";
-            this.pnlCreatureInventory.Size = new System.Drawing.Size(359, 420);
+            this.pnlCreatureInventory.Size = new System.Drawing.Size(380, 365);
             this.pnlCreatureInventory.TabIndex = 16;
             // 
             // lstStructureFilter
@@ -74,7 +74,7 @@
             this.lstStructureFilter.FormattingEnabled = true;
             this.lstStructureFilter.Location = new System.Drawing.Point(18, 15);
             this.lstStructureFilter.Name = "lstStructureFilter";
-            this.lstStructureFilter.Size = new System.Drawing.Size(321, 364);
+            this.lstStructureFilter.Size = new System.Drawing.Size(342, 304);
             this.lstStructureFilter.TabIndex = 23;
             this.lstStructureFilter.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.lstStructureFilter_ItemCheck);
             // 
@@ -83,7 +83,7 @@
             this.chkApplyFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.chkApplyFilter.Appearance = System.Windows.Forms.Appearance.Button;
             this.chkApplyFilter.Image = global::ARKViewer.Properties.Resources.button_filter;
-            this.chkApplyFilter.Location = new System.Drawing.Point(306, 385);
+            this.chkApplyFilter.Location = new System.Drawing.Point(327, 330);
             this.chkApplyFilter.Name = "chkApplyFilter";
             this.chkApplyFilter.Size = new System.Drawing.Size(33, 27);
             this.chkApplyFilter.TabIndex = 22;
@@ -94,7 +94,7 @@
             // 
             this.lblCreatureFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblCreatureFilter.AutoSize = true;
-            this.lblCreatureFilter.Location = new System.Drawing.Point(15, 391);
+            this.lblCreatureFilter.Location = new System.Drawing.Point(15, 336);
             this.lblCreatureFilter.Name = "lblCreatureFilter";
             this.lblCreatureFilter.Size = new System.Drawing.Size(29, 13);
             this.lblCreatureFilter.TabIndex = 1;
@@ -104,9 +104,9 @@
             // 
             this.txtFilter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtFilter.Location = new System.Drawing.Point(50, 388);
+            this.txtFilter.Location = new System.Drawing.Point(50, 333);
             this.txtFilter.Name = "txtFilter";
-            this.txtFilter.Size = new System.Drawing.Size(250, 20);
+            this.txtFilter.Size = new System.Drawing.Size(271, 20);
             this.txtFilter.TabIndex = 2;
             // 
             // lblWindowTitle
@@ -125,7 +125,7 @@
             this.btnApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnApply.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnApply.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnApply.Location = new System.Drawing.Point(215, 483);
+            this.btnApply.Location = new System.Drawing.Point(236, 428);
             this.btnApply.Name = "btnApply";
             this.btnApply.Size = new System.Drawing.Size(75, 23);
             this.btnApply.TabIndex = 19;
@@ -137,12 +137,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(383, 518);
+            this.ClientSize = new System.Drawing.Size(404, 463);
             this.Controls.Add(this.btnApply);
             this.Controls.Add(this.lblWindowTitle);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.pnlCreatureInventory);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.MinimumSize = new System.Drawing.Size(265, 300);
             this.Name = "frmStructureExclusionFilter";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Structure Exclusions";
