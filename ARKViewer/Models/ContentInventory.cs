@@ -10,7 +10,7 @@ namespace ARKViewer.Models
     [DataContract]
     public class ContentInventory
     {
-        [DataMember] public int InventoryId { get; set; } = 0;
+        [DataMember] public long InventoryId { get; set; } = 0;
         [DataMember] public List<ContentItem> Items { get; set; } = new List<ContentItem>();
 
         public ContentInventory()

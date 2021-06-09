@@ -63,11 +63,11 @@
     <Compile Include="Configuration\ViewerWindow.cs" />
     <Compile Include="CustomNameMaps\ColourMap.cs" />
     <Compile Include="ContentManager.cs" />
-    <Compile Include="frmAncestorView.cs">
+    <Compile Include="frmBreedingLines.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmAncestorView.Designer.cs">
-      <DependentUpon>frmAncestorView.cs</DependentUpon>
+    <Compile Include="frmBreedingLines.Designer.cs">
+      <DependentUpon>frmBreedingLines.cs</DependentUpon>
     </Compile>
     <Compile Include="frmColourEditor.cs">
       <SubType>Form</SubType>
@@ -150,6 +150,12 @@
     <Compile Include="frmPlayerInventoryViewer.Designer.cs">
       <DependentUpon>frmPlayerInventoryViewer.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmRestClientEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmRestClientEditor.Designer.cs">
+      <DependentUpon>frmRestClientEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmStructureInventoryViewer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -217,8 +223,8 @@
     <Compile Include="StructureMarker.cs" />
     <Compile Include="CustomNameMaps\TribeMap.cs" />
     <Compile Include="Configuration\ViewerConfiguration.cs" />
-    <EmbeddedResource Include="frmAncestorView.resx">
-      <DependentUpon>frmAncestorView.cs</DependentUpon>
+    <EmbeddedResource Include="frmBreedingLines.resx">
+      <DependentUpon>frmBreedingLines.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmColourEditor.resx">
       <DependentUpon>frmColourEditor.cs</DependentUpon>
@@ -262,6 +268,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmPlayerInventoryViewer.resx">
       <DependentUpon>frmPlayerInventoryViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmRestClientEditor.resx">
+      <DependentUpon>frmRestClientEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmStructureInventoryViewer.resx">
       <DependentUpon>frmStructureInventoryViewer.cs</DependentUpon>
@@ -605,6 +614,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\loveicon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\playicon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\stopicon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="REST\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

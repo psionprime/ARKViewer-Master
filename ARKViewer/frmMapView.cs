@@ -42,14 +42,19 @@ namespace ARKViewer
         {
             var savedWindow = ARKViewer.Program.ProgramConfig.Windows.FirstOrDefault(w => w.Name == this.Name);
 
-
             if (savedWindow != null)
             {
-                this.StartPosition = FormStartPosition.Manual;
-                this.Left = savedWindow.Left;
-                this.Top = savedWindow.Top;
-                this.Width = savedWindow.Width;
-                this.Height = savedWindow.Height;
+                var targetScreen = Screen.FromPoint(new Point(savedWindow.Left, savedWindow.Top));
+                if (targetScreen == null) return;
+
+                if (targetScreen.DeviceName == null || targetScreen.DeviceName == savedWindow.Monitor)
+                {
+                    this.StartPosition = FormStartPosition.Manual;
+                    this.Left = savedWindow.Left;
+                    this.Top = savedWindow.Top;
+                    this.Width = savedWindow.Width;
+                    this.Height = savedWindow.Height;
+                }
             }
         }
 
@@ -68,10 +73,14 @@ namespace ARKViewer
 
                 if (savedWindow != null)
                 {
+                    var restoreScreen = Screen.FromHandle(this.Handle);
+
                     savedWindow.Left = this.Left;
                     savedWindow.Top = this.Top;
                     savedWindow.Width = this.Width;
                     savedWindow.Height = this.Height;
+                    savedWindow.Monitor = restoreScreen.DeviceName;
+
                 }
             }
         }

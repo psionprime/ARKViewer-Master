@@ -1329,7 +1329,7 @@ namespace ARKViewer
 
                                     graphics.FillEllipse(new SolidBrush(Color.AliceBlue), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
 
-                                    Color borderColour = Color.PaleGreen;
+                                    Color borderColour = Color.Green;
                                     int borderSize = 1;
                                     graphics.DrawEllipse(new Pen(borderColour, borderSize), (float)markerX - (markerSize / 2), (float)markerY - (markerSize / 2), markerSize, markerSize);
                                 }

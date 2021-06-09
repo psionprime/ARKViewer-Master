@@ -113,7 +113,6 @@ namespace ArkSavegameToolkitNet.Domain
                 // Note: objects.GroupBy(x => x.Names.Last().Token) would also get creature, status- and inventory component together
                 var statusComponents = objects.Where(x => x.IsDinoStatusComponent).ToDictionary(x => x.ObjectId, x => x);
                 
-
                 var tamed = objects.Where(x => x.IsTamedCreature).Select(x =>
                 {
                     GameObject status = null;

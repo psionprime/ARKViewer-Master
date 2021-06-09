@@ -34,7 +34,7 @@ namespace ARKViewer.Models
         [DataMember] public decimal ImprintQuality { get; set; }
         [DataMember] public int RandomMutationsFemale { get; set; }
         [DataMember] public int RandomMutationsMale { get; set; }
-        [DataMember] public int? InventoryId { get; set; } = null;
+        [DataMember] public long? InventoryId { get; set; } = null;
         [DataMember] public int ImprintedPlayerId { get; set; }
         [DataMember] public long? MotherId { get; set; }
         [DataMember] public string MotherName { get; set; }

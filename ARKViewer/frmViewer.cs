@@ -41,18 +41,24 @@ namespace ARKViewer
         //wrapper for the information we need from ARK save data
         ContentManager cm = null;
 
+
         private void LoadWindowSettings()
         {
             var savedWindow = ARKViewer.Program.ProgramConfig.Windows.FirstOrDefault(w => w.Name == this.Name);
 
-
             if (savedWindow != null)
             {
-                this.StartPosition = FormStartPosition.Manual;
-                this.Left = savedWindow.Left;
-                this.Top = savedWindow.Top;
-                this.Width = savedWindow.Width;
-                this.Height = savedWindow.Height;
+                var targetScreen = Screen.FromPoint(new Point(savedWindow.Left, savedWindow.Top));
+                if (targetScreen == null) return;
+
+                if (targetScreen.DeviceName == null || targetScreen.DeviceName == savedWindow.Monitor)
+                {
+                    this.StartPosition = FormStartPosition.Manual;
+                    this.Left = savedWindow.Left;
+                    this.Top = savedWindow.Top;
+                    this.Width = savedWindow.Width;
+                    this.Height = savedWindow.Height;
+                }
             }
         }
 
@@ -71,13 +77,19 @@ namespace ARKViewer
 
                 if (savedWindow != null)
                 {
+                    var restoreScreen = Screen.FromHandle(this.Handle);
+
                     savedWindow.Left = this.Left;
                     savedWindow.Top = this.Top;
                     savedWindow.Width = this.Width;
                     savedWindow.Height = this.Height;
+                    savedWindow.Monitor = restoreScreen.DeviceName;
+
                 }
             }
         }
+
+
 
         private void InitializeDefaults()
         {
@@ -168,7 +180,6 @@ namespace ARKViewer
             List<ComboValuePair> newItems = new List<ComboValuePair>();
 
             var tribes = cm.GetTribes(0);
-            var kaos = tribes.Where(t => t.TribeName == "Kaos").ToList();
 
             if (tribes.Count() > 0)
             {
@@ -200,6 +211,92 @@ namespace ARKViewer
             }
 
             cboTribes.SelectedIndex = 0;
+        }
+
+        private void RefreshItemListTribes()
+        {
+            if (cm == null) return;
+
+            cboItemListTribe.Items.Clear();
+            cboItemListTribe.Items.Add(new ComboValuePair("0", "[All Tribes]"));
+
+            List<ComboValuePair> newItems = new List<ComboValuePair>();
+
+            var tribes = cm.GetTribes(0);
+            
+            if (tribes.Count() > 0)
+            {
+                foreach (var tribe in tribes)
+                {
+                    bool addTribe = true;
+                    if (Program.ProgramConfig.HideNoBody)
+                    {
+
+                        addTribe = tribe.Players.Count > 0 && !tribe.Players.All(p => (p.Latitude == 0 && p.Longitude == 0));
+                    }
+
+                    if (addTribe)
+                    {
+                        ComboValuePair valuePair = new ComboValuePair(tribe.TribeId.ToString(), tribe.TribeName);
+                        newItems.Add(valuePair);
+                    }
+                }
+            }
+            if (newItems.Count > 0)
+            {
+                cboItemListTribe.BeginUpdate();
+                foreach (var newItem in newItems.OrderBy(o => o.Value))
+                {
+                    cboItemListTribe.Items.Add(newItem);
+                }
+
+                cboItemListTribe.EndUpdate();
+            }
+
+            cboItemListTribe.SelectedIndex = 0;
+        }
+
+        private void RefreshItemListItems()
+        {
+            if (cm == null) return;
+
+            cboItemListItem.Items.Clear();
+            cboItemListItem.Items.Add(new ComboValuePair("", "[All Items]"));
+
+            List<ComboValuePair> newItems = new List<ComboValuePair>();
+
+            var tribes = cm.GetTribes(0);
+
+            if (tribes.Count() > 0)
+            {
+                foreach (var tribe in tribes)
+                {
+                    bool addTribe = true;
+                    if (Program.ProgramConfig.HideNoBody)
+                    {
+
+                        addTribe = tribe.Players.Count > 0 && !tribe.Players.All(p => (p.Latitude == 0 && p.Longitude == 0));
+                    }
+
+                    if (addTribe)
+                    {
+                        ComboValuePair valuePair = new ComboValuePair(tribe.TribeId.ToString(), tribe.TribeName);
+                        newItems.Add(valuePair);
+                    }
+                }
+            }
+            if (newItems.Count > 0)
+            {
+                cboItemListItem.BeginUpdate();
+                foreach (var newItem in newItems.OrderBy(o => o.Value))
+                {
+                    cboItemListItem.Items.Add(newItem);
+                }
+
+                cboItemListItem.EndUpdate();
+            }
+
+            cboItemListItem.SelectedIndex = 0;
         }
 
         private void RefreshTamedTribes()
@@ -2167,7 +2264,7 @@ namespace ARKViewer
             //MessageBox.Show("Dino ancestor explorer coming soon.", "Coming Soon!", MessageBoxButtons.OK, MessageBoxIcon.Information);
             ListViewItem selectedItem = lvwTameDetail.SelectedItems[0];
             ContentTamedCreature selectedTame = (ContentTamedCreature)selectedItem.Tag;
-            using (frmAncestorView ancestors = new frmAncestorView(selectedTame, cm))
+            using (frmBreedingLines ancestors = new frmBreedingLines(selectedTame, cm))
             {
                 ancestors.ShowDialog();
             }
@@ -2757,15 +2854,14 @@ namespace ARKViewer
             this.Cursor = Cursors.WaitCursor;
 
             btnCopyCommandTamed.Enabled = lvwTameDetail.SelectedItems.Count > 0;
-            btnDinoInventory.Enabled = false;
-
+            btnDinoInventory.Enabled = lvwTameDetail.SelectedItems.Count > 0;
+            btnDinoAncestors.Enabled = lvwTameDetail.SelectedItems.Count > 0;
 
             if (lvwTameDetail.SelectedItems.Count > 0)
             {
 
                 var selectedItem = lvwTameDetail.SelectedItems[0];
                 ContentTamedCreature selectedTame = (ContentTamedCreature)selectedItem.Tag;
-                btnDinoAncestors.Enabled = true;
                 btnDinoInventory.Enabled = selectedTame.InventoryId.GetValueOrDefault(0) != 0;
                 
                 DrawMap((decimal)selectedTame.Longitude.GetValueOrDefault(0),(decimal)selectedTame.Latitude.GetValueOrDefault(0));

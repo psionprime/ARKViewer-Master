@@ -15,5 +15,7 @@ namespace ARKViewer.Configuration
         [DataMember] public int Left { get; set; } = 0;
         [DataMember] public int Width { get; set; } = 0;
         [DataMember] public int Height { get; set; } = 0;
+        [DataMember] public string Monitor { get; set; } = "";
+
     }
 }

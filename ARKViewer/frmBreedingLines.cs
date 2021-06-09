@@ -17,26 +17,33 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace ARKViewer
 {
-    public partial class frmAncestorView : Form
+    public partial class frmBreedingLines : Form
     {
 
-        ColumnHeader SortingColumn_DetailTame = null;
+        ColumnHeader SortingColumn_Ancestors = null;
+        ColumnHeader SortingColumn_Tamed = null;
+        ColumnHeader SortingColumn_Wild = null;
+
         ContentTamedCreature tame = null;
         ContentManager cm = null;
         bool isLoading = false;
-        
+
         private void LoadWindowSettings()
         {
             var savedWindow = ARKViewer.Program.ProgramConfig.Windows.FirstOrDefault(w => w.Name == this.Name);
 
-
             if (savedWindow != null)
             {
-                this.StartPosition = FormStartPosition.Manual;
-                this.Left = savedWindow.Left;
-                this.Top = savedWindow.Top;
-                this.Width = savedWindow.Width;
-                this.Height = savedWindow.Height;
+                var targetScreen = Screen.FromPoint(new Point(savedWindow.Left, savedWindow.Top));
+                if (targetScreen == null) return;
+
+                if(targetScreen.DeviceName == null || targetScreen.DeviceName == savedWindow.Monitor) {
+                    this.StartPosition = FormStartPosition.Manual;
+                    this.Left = savedWindow.Left;
+                    this.Top = savedWindow.Top;
+                    this.Width = savedWindow.Width;
+                    this.Height = savedWindow.Height;
+                }
             }
         }
 
@@ -55,15 +62,288 @@ namespace ARKViewer
 
                 if (savedWindow != null)
                 {
+                    var restoreScreen = Screen.FromHandle(this.Handle);
+
                     savedWindow.Left = this.Left;
                     savedWindow.Top = this.Top;
                     savedWindow.Width = this.Width;
                     savedWindow.Height = this.Height;
+                    savedWindow.Monitor = restoreScreen.DeviceName;
+
                 }
             }
         }
 
-        public frmAncestorView(ContentTamedCreature selectedTame, ContentManager manager)
+
+
+        private void PopulateWildLovers()
+        {
+            var wildMatches = cm.GetWildCreatures(0, int.MaxValue, 50, 50, 250, tame.ClassName).Where(w => w.Gender != tame.Gender).ToList();
+            lvwWildLovers.BeginUpdate();
+            lvwWildLovers.Items.Clear();
+
+            if (wildMatches != null && wildMatches.Count > 0)
+            {
+                ConcurrentBag<ListViewItem> wildBag = new ConcurrentBag<ListViewItem>();
+
+                Parallel.ForEach(wildMatches, wild =>
+                {
+                    //Rank, Lvl, Lat, Lon, HP, Stam, Melee, Weight, Speed, Food, Oxygen, Craft, c0, c1, c2, c3, c4, c5
+                    ListViewItem newItem = new ListViewItem(wild.BaseLevel.ToString());
+                    newItem.UseItemStyleForSubItems = false;
+
+                    newItem.SubItems.Add(wild.Latitude.GetValueOrDefault(0).ToString("f2"));
+                    newItem.SubItems.Add(wild.Longitude.GetValueOrDefault(0).ToString("f2"));
+
+                    newItem.SubItems.Add(wild.BaseStats[0].ToString());
+                    newItem.SubItems.Add(wild.BaseStats[1].ToString());
+                    newItem.SubItems.Add(wild.BaseStats[8].ToString());
+                    newItem.SubItems.Add(wild.BaseStats[7].ToString());
+                    newItem.SubItems.Add(wild.BaseStats[9].ToString());
+                    newItem.SubItems.Add(wild.BaseStats[4].ToString());
+                    newItem.SubItems.Add(wild.BaseStats[3].ToString());
+                    newItem.SubItems.Add(wild.BaseStats[11].ToString());
+
+                    int colourCheck = (int)wild.Colors[0];
+                    newItem.SubItems.Add(colourCheck == 0 ? "N/A" : wild.Colors[0].ToString()); //14
+                    ColourMap selectedColor = Program.ProgramConfig.ColourMap.Where(c => c.Id == (int)wild.Colors[0]).FirstOrDefault();
+                    if (selectedColor != null && selectedColor.Hex.Length > 0)
+                    {
+                        newItem.SubItems[newItem.SubItems.Count - 1].BackColor = selectedColor.Color;
+                        newItem.SubItems[newItem.SubItems.Count - 1].ForeColor = selectedColor.Color;
+                    }
+
+                    colourCheck = (int)wild.Colors[1];
+                    newItem.SubItems.Add(colourCheck == 0 ? "N/A" : wild.Colors[1].ToString()); //15
+                    selectedColor = Program.ProgramConfig.ColourMap.Where(c => c.Id == (int)wild.Colors[1]).FirstOrDefault();
+                    if (selectedColor != null && selectedColor.Hex.Length > 0)
+                    {
+                        newItem.SubItems[newItem.SubItems.Count - 1].BackColor = selectedColor.Color;
+                        newItem.SubItems[newItem.SubItems.Count - 1].ForeColor = selectedColor.Color;
+                    }
+
+                    colourCheck = (int)wild.Colors[2];
+                    newItem.SubItems.Add(colourCheck == 0 ? "N/A" : wild.Colors[2].ToString()); //16
+                    selectedColor = Program.ProgramConfig.ColourMap.Where(c => c.Id == (int)wild.Colors[2]).FirstOrDefault();
+                    if (selectedColor != null && selectedColor.Hex.Length > 0)
+                    {
+                        newItem.SubItems[newItem.SubItems.Count - 1].BackColor = selectedColor.Color;
+                        newItem.SubItems[newItem.SubItems.Count - 1].ForeColor = selectedColor.Color;
+                    }
+
+                    colourCheck = (int)wild.Colors[3];
+                    newItem.SubItems.Add(colourCheck == 0 ? "N/A" : wild.Colors[3].ToString()); //17
+                    selectedColor = Program.ProgramConfig.ColourMap.Where(c => c.Id == (int)wild.Colors[3]).FirstOrDefault();
+                    if (selectedColor != null && selectedColor.Hex.Length > 0)
+                    {
+                        newItem.SubItems[newItem.SubItems.Count - 1].BackColor = selectedColor.Color;
+                        newItem.SubItems[newItem.SubItems.Count - 1].ForeColor = selectedColor.Color;
+                    }
+
+                    colourCheck = (int)wild.Colors[4];
+                    newItem.SubItems.Add(colourCheck == 0 ? "N/A" : wild.Colors[4].ToString()); //18
+                    selectedColor = Program.ProgramConfig.ColourMap.Where(c => c.Id == (int)wild.Colors[4]).FirstOrDefault();
+                    if (selectedColor != null && selectedColor.Hex.Length > 0)
+                    {
+                        newItem.SubItems[newItem.SubItems.Count - 1].BackColor = selectedColor.Color;
+                        newItem.SubItems[newItem.SubItems.Count - 1].ForeColor = selectedColor.Color;
+                    }
+
+                    colourCheck = (int)wild.Colors[5];
+                    newItem.SubItems.Add(colourCheck == 0 ? "N/A" : wild.Colors[5].ToString()); //19
+                    selectedColor = Program.ProgramConfig.ColourMap.Where(c => c.Id == (int)wild.Colors[5]).FirstOrDefault();
+                    if (selectedColor != null && selectedColor.Hex.Length > 0)
+                    {
+                        newItem.SubItems[newItem.SubItems.Count - 1].BackColor = selectedColor.Color;
+                        newItem.SubItems[newItem.SubItems.Count - 1].ForeColor = selectedColor.Color;
+                    }
+
+
+                    newItem.Tag = wild;
+
+                    wildBag.Add(newItem);
+                });
+
+                if (wildBag != null && wildBag.Count > 0)
+                {
+                    lvwWildLovers.Items.AddRange(wildBag.OrderByDescending(o => ((ContentWildCreature)o.Tag).BaseLevel).ToArray());
+                }
+            }
+
+            lvwWildLovers.EndUpdate();
+
+        }
+
+        private void PopulateTamedLovers()
+        {
+            var tameMatches = cm.GetTamedCreatures(tame.ClassName, chkAllTribes.Checked ? 0 : tame.TargetingTeam, 0, true)
+                                .Where(t => t.Gender != tame.Gender)
+                                .OrderByDescending(o => o.BaseLevel)
+                                .ToList();
+
+            lvwTameLovers.BeginUpdate();
+            lvwTameLovers.Items.Clear();
+
+            if (tameMatches != null && tameMatches.Count > 0)
+            {
+                ConcurrentBag<ListViewItem> tameBag = new ConcurrentBag<ListViewItem>();
+
+                Parallel.ForEach(tameMatches, tamedCreature =>
+                {
+                    var dinoMap = ARKViewer.Program.ProgramConfig.DinoMap.Where(dino => dino.ClassName == tamedCreature.ClassName).FirstOrDefault();
+
+                    string creatureClassName = dinoMap == null ? tamedCreature.ClassName : dinoMap.FriendlyName;
+                    string creatureName = dinoMap == null ? tamedCreature.ClassName : dinoMap.FriendlyName;
+
+                    if (tamedCreature.Name != null)
+                    {
+                        creatureName = tamedCreature.Name;
+                    }
+
+                    //Rank, Lvl, Lat, Lon, HP, Stam, Melee, Weight, Speed, Food, Oxygen, Craft, c0, c1, c2, c3, c4, c5
+                    ListViewItem newItem = new ListViewItem(tamedCreature.TribeName);
+                    newItem.UseItemStyleForSubItems = false;
+                    newItem.SubItems.Add(creatureName);
+                    newItem.SubItems.Add(tamedCreature.BaseLevel.ToString());
+                    newItem.SubItems.Add(tamedCreature.Level.ToString());
+
+                    newItem.SubItems.Add(tamedCreature.Latitude.GetValueOrDefault(0).ToString("f2"));
+                    newItem.SubItems.Add(tamedCreature.Longitude.GetValueOrDefault(0).ToString("f2"));
+                    if (optStatsBase.Checked)
+                    {
+
+                        newItem.SubItems.Add(tamedCreature.BaseStats[0].ToString());
+                        newItem.SubItems.Add(tamedCreature.BaseStats[1].ToString());
+                        newItem.SubItems.Add(tamedCreature.BaseStats[8].ToString());
+                        newItem.SubItems.Add(tamedCreature.BaseStats[7].ToString());
+                        newItem.SubItems.Add(tamedCreature.BaseStats[9].ToString());
+                        newItem.SubItems.Add(tamedCreature.BaseStats[4].ToString());
+                        newItem.SubItems.Add(tamedCreature.BaseStats[3].ToString());
+                        newItem.SubItems.Add(tamedCreature.BaseStats[11].ToString());
+                    }
+                    else
+                    {
+                        newItem.SubItems.Add(tamedCreature.TamedStats[0].ToString());
+                        newItem.SubItems.Add(tamedCreature.TamedStats[1].ToString());
+                        newItem.SubItems.Add(tamedCreature.TamedStats[8].ToString());
+                        newItem.SubItems.Add(tamedCreature.TamedStats[7].ToString());
+                        newItem.SubItems.Add(tamedCreature.TamedStats[9].ToString());
+                        newItem.SubItems.Add(tamedCreature.TamedStats[4].ToString());
+                        newItem.SubItems.Add(tamedCreature.TamedStats[3].ToString());
+                        newItem.SubItems.Add(tamedCreature.TamedStats[11].ToString());
+
+                    }
+
+                    newItem.SubItems.Add(tamedCreature.TamedOnServerName);
+                    string tamerName = tamedCreature.TamerName != null ? tamedCreature.TamerName : "";
+                    string imprinterName = tamedCreature.ImprinterName;
+                    if (tamerName.Length == 0)
+                    {
+                        if (tamedCreature.ImprintedPlayerId != 0)
+                        {
+                            var tamer = cm.GetPlayers(0, tamedCreature.ImprintedPlayerId).FirstOrDefault<ContentPlayer>();
+                            if (tamer != null) tamerName = tamer.CharacterName;
+                        }
+                    }
+
+                    newItem.SubItems.Add(tamerName);
+                    newItem.SubItems.Add(tamedCreature.ImprinterName);
+                    newItem.SubItems.Add((tamedCreature.ImprintQuality * 100).ToString("f0"));
+
+                    bool isStored = tamedCreature.IsCryo | tamedCreature.IsVivarium;
+
+                    newItem.SubItems.Add(isStored.ToString());
+
+                    if (tamedCreature.IsCryo)
+                    {
+                        newItem.BackColor = Color.LightSkyBlue;
+                        foreach(ListViewItem.ListViewSubItem subItem in newItem.SubItems)
+                        {
+                            subItem.BackColor = Color.LightSkyBlue;
+                        }
+                    }
+                    else if (tamedCreature.IsVivarium)
+                    {
+                        newItem.BackColor = Color.LightGreen;
+                        foreach (ListViewItem.ListViewSubItem subItem in newItem.SubItems)
+                        {
+                            subItem.BackColor = Color.LightGreen;
+                        }
+                    }
+
+                    int colourCheck = (int)tamedCreature.Colors[0];
+                    newItem.SubItems.Add(colourCheck == 0 ? "N/A" : tamedCreature.Colors[0].ToString()); //14
+                    ColourMap selectedColor = Program.ProgramConfig.ColourMap.Where(c => c.Id == (int)tamedCreature.Colors[0]).FirstOrDefault();
+                    if (selectedColor != null && selectedColor.Hex.Length > 0)
+                    {
+                        newItem.SubItems[newItem.SubItems.Count - 1].BackColor = selectedColor.Color;
+                        newItem.SubItems[newItem.SubItems.Count - 1].ForeColor = selectedColor.Color;
+                    }
+
+                    colourCheck = (int)tamedCreature.Colors[1];
+                    newItem.SubItems.Add(colourCheck == 0 ? "N/A" : tamedCreature.Colors[1].ToString()); //15
+                    selectedColor = Program.ProgramConfig.ColourMap.Where(c => c.Id == (int)tamedCreature.Colors[1]).FirstOrDefault();
+                    if (selectedColor != null && selectedColor.Hex.Length > 0)
+                    {
+                        newItem.SubItems[newItem.SubItems.Count - 1].BackColor = selectedColor.Color;
+                        newItem.SubItems[newItem.SubItems.Count - 1].ForeColor = selectedColor.Color;
+                    }
+
+                    colourCheck = (int)tamedCreature.Colors[2];
+                    newItem.SubItems.Add(colourCheck == 0 ? "N/A" : tamedCreature.Colors[2].ToString()); //16
+                    selectedColor = Program.ProgramConfig.ColourMap.Where(c => c.Id == (int)tamedCreature.Colors[2]).FirstOrDefault();
+                    if (selectedColor != null && selectedColor.Hex.Length > 0)
+                    {
+                        newItem.SubItems[newItem.SubItems.Count - 1].BackColor = selectedColor.Color;
+                        newItem.SubItems[newItem.SubItems.Count - 1].ForeColor = selectedColor.Color;
+                    }
+
+                    colourCheck = (int)tamedCreature.Colors[3];
+                    newItem.SubItems.Add(colourCheck == 0 ? "N/A" : tamedCreature.Colors[3].ToString()); //17
+                    selectedColor = Program.ProgramConfig.ColourMap.Where(c => c.Id == (int)tamedCreature.Colors[3]).FirstOrDefault();
+                    if (selectedColor != null && selectedColor.Hex.Length > 0)
+                    {
+                        newItem.SubItems[newItem.SubItems.Count - 1].BackColor = selectedColor.Color;
+                        newItem.SubItems[newItem.SubItems.Count - 1].ForeColor = selectedColor.Color;
+                    }
+
+                    colourCheck = (int)tamedCreature.Colors[4];
+                    newItem.SubItems.Add(colourCheck == 0 ? "N/A" : tamedCreature.Colors[4].ToString()); //18
+                    selectedColor = Program.ProgramConfig.ColourMap.Where(c => c.Id == (int)tamedCreature.Colors[4]).FirstOrDefault();
+                    if (selectedColor != null && selectedColor.Hex.Length > 0)
+                    {
+                        newItem.SubItems[newItem.SubItems.Count - 1].BackColor = selectedColor.Color;
+                        newItem.SubItems[newItem.SubItems.Count - 1].ForeColor = selectedColor.Color;
+                    }
+
+                    colourCheck = (int)tamedCreature.Colors[5];
+                    newItem.SubItems.Add(colourCheck == 0 ? "N/A" : tamedCreature.Colors[5].ToString()); //19
+                    selectedColor = Program.ProgramConfig.ColourMap.Where(c => c.Id == (int)tamedCreature.Colors[5]).FirstOrDefault();
+                    if (selectedColor != null && selectedColor.Hex.Length > 0)
+                    {
+                        newItem.SubItems[newItem.SubItems.Count - 1].BackColor = selectedColor.Color;
+                        newItem.SubItems[newItem.SubItems.Count - 1].ForeColor = selectedColor.Color;
+                    }
+
+
+                    newItem.Tag = tamedCreature;
+
+                    tameBag.Add(newItem);
+                });
+
+                if (tameBag != null && tameBag.Count > 0)
+                {
+                    lvwTameLovers.Items.AddRange(tameBag.OrderByDescending(o => ((ContentTamedCreature)o.Tag).BaseLevel).ToArray());
+                }
+            }
+
+            lvwTameLovers.EndUpdate();
+
+
+        }
+
+
+        public frmBreedingLines(ContentTamedCreature selectedTame, ContentManager manager)
         {
             InitializeComponent();
             LoadWindowSettings();
@@ -88,6 +368,8 @@ namespace ARKViewer
 
             PopulateTameDetails();
             PopulateAncestorLevels();
+            PopulateWildLovers();
+            PopulateTamedLovers();
         }
 
         private void PopulateTameDetails()
@@ -317,13 +599,14 @@ namespace ARKViewer
         {
             if (tame == null) return;
 
-            lblStatus.Text = "Finding available generations...";
-            lblStatus.Refresh();
-
-
             //determine ancestry line
             var currentTame = tame;
             if (tame.FatherId.GetValueOrDefault(0) == 0 || tame.MotherId.GetValueOrDefault(0) == 0) return;
+
+
+            lblStatus.Text = "Finding available generations...";
+            lblStatus.Refresh();
+
 
             cboGeneration.Items.Clear();
             cboGeneration.Items.Add(new ContentAncestor(0,0,"All", "",0));
@@ -347,7 +630,7 @@ namespace ARKViewer
             lvwTameDetail.Items.Clear();
             if (cboGeneration.SelectedItem == null) return;
 
-            lblStatus.Text = "Finding available stats...";
+            lblStatus.Text = "Finding ancestor details...";
             lblStatus.Refresh();
 
             ContentAncestor ancestorGroup = (ContentAncestor)cboGeneration.SelectedItem;
@@ -605,10 +888,10 @@ namespace ARKViewer
             }
 
 
-            if (SortingColumn_DetailTame != null)
+            if (SortingColumn_Ancestors != null)
             {
                 lvwTameDetail.ListViewItemSorter =
-                    new ListViewComparer(SortingColumn_DetailTame.Index, SortingColumn_DetailTame.Text.Contains(">") ? SortOrder.Ascending : SortOrder.Descending);
+                    new ListViewComparer(SortingColumn_Ancestors.Index, SortingColumn_Ancestors.Text.Contains(">") ? SortOrder.Ascending : SortOrder.Descending);
 
                 // Sort.
                 lvwTameDetail.Sort();
@@ -616,8 +899,8 @@ namespace ARKViewer
             else
             {
 
-                SortingColumn_DetailTame = lvwTameDetail.Columns[0]; ;
-                SortingColumn_DetailTame.Text = "> " + SortingColumn_DetailTame.Text;
+                SortingColumn_Ancestors = lvwTameDetail.Columns[0]; ;
+                SortingColumn_Ancestors.Text = "> " + SortingColumn_Ancestors.Text;
 
                 lvwTameDetail.ListViewItemSorter =
                     new ListViewComparer(0, SortOrder.Ascending);
@@ -831,6 +1114,266 @@ namespace ARKViewer
         private void lvwTameDetail_Click(object sender, EventArgs e)
         {
             btnCopyCommandTamed.Enabled = lvwTameDetail.SelectedItems.Count == 1;
+        }
+
+        private void lvwTameLovers_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnTameCopyCommand.Enabled = lvwTameLovers.SelectedItems.Count == 1;
+        }
+
+        private void lvwWildDetail_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnWildCopyCommand.Enabled = lvwWildLovers.SelectedItems.Count == 1;
+        }
+
+        private void btnTameCopyCommand_Click(object sender, EventArgs e)
+        {
+            if (cboTameCommand.SelectedItem == null) return;
+            if (lvwTameLovers.SelectedItems.Count <= 0) return;
+
+            ListViewItem selectedItem = lvwTameLovers.SelectedItems[0];
+
+            var commandText = cboTameCommand.SelectedItem.ToString();
+            if (commandText != null)
+            {
+                ContentTamedCreature selectedCreature = (ContentTamedCreature)selectedItem.Tag;
+                commandText = commandText.Replace("<ClassName>", selectedCreature.ClassName);
+                commandText = commandText.Replace("<Level>", (selectedCreature.BaseLevel / 1.5).ToString("f0"));
+                commandText = commandText.Replace("<TribeID>", selectedCreature.TargetingTeam.ToString("f0"));
+
+                commandText = commandText.Replace("<x>", System.FormattableString.Invariant($"{selectedCreature.X:0.00}"));
+                commandText = commandText.Replace("<y>", System.FormattableString.Invariant($"{selectedCreature.Y:0.00}"));
+                commandText = commandText.Replace("<z>", System.FormattableString.Invariant($"{selectedCreature.Z + 250:0.00}"));
+
+                switch (Program.ProgramConfig.CommandPrefix)
+                {
+                    case 1:
+                        commandText = commandText.Replace("<DoTame>", "admincheat DoTame");
+                        commandText = $"admincheat {commandText}";
+
+                        break;
+                    case 2:
+                        commandText = commandText.Replace("<DoTame>", "cheat DoTame");
+                        commandText = $"cheat {commandText}";
+                        break;
+                }
+
+                Clipboard.SetText(commandText);
+
+                lblStatus.Text = $"Command copied to clipboard: {commandText}";
+                lblStatus.Refresh();
+            }
+        }
+
+        private void btnWildCopyCommand_Click(object sender, EventArgs e)
+        {
+            if (cboWildCommand.SelectedItem == null) return;
+            if (lvwWildLovers.SelectedItems.Count <= 0) return;
+
+            ListViewItem selectedItem = lvwWildLovers.SelectedItems[0];
+
+            var commandText = cboWildCommand.SelectedItem.ToString();
+            if (commandText != null)
+            {
+                ContentWildCreature selectedCreature = (ContentWildCreature)selectedItem.Tag;
+                commandText = commandText.Replace("<ClassName>", selectedCreature.ClassName);
+                commandText = commandText.Replace("<Level>", (selectedCreature.BaseLevel / 1.5).ToString("f0"));
+                
+                commandText = commandText.Replace("<x>", System.FormattableString.Invariant($"{selectedCreature.X:0.00}"));
+                commandText = commandText.Replace("<y>", System.FormattableString.Invariant($"{selectedCreature.Y:0.00}"));
+                commandText = commandText.Replace("<z>", System.FormattableString.Invariant($"{selectedCreature.Z + 250:0.00}"));
+
+                switch (Program.ProgramConfig.CommandPrefix)
+                {
+                    case 1:
+                        commandText = commandText.Replace("<DoTame>", "admincheat DoTame");
+                        commandText = $"admincheat {commandText}";
+
+                        break;
+                    case 2:
+                        commandText = commandText.Replace("<DoTame>", "cheat DoTame");
+                        commandText = $"cheat {commandText}";
+                        break;
+                }
+
+                Clipboard.SetText(commandText);
+
+                lblStatus.Text = $"Command copied to clipboard: {commandText}";
+                lblStatus.Refresh();
+            }
+        }
+
+        private void chkAllTribes_CheckedChanged(object sender, EventArgs e)
+        {
+            PopulateTamedLovers();
+        }
+
+        private void lvwTameDetail_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            // Get the new sorting column.
+            ColumnHeader new_sorting_column = lvwTameDetail.Columns[e.Column];
+
+            // Figure out the new sorting order.
+            System.Windows.Forms.SortOrder sort_order;
+            if (SortingColumn_Ancestors == null)
+            {
+                // New column. Sort ascending.
+                sort_order = SortOrder.Ascending;
+            }
+            else
+            {
+                // See if this is the same column.
+                if (new_sorting_column == SortingColumn_Ancestors)
+                {
+                    // Same column. Switch the sort order.
+                    if (SortingColumn_Ancestors.Text.StartsWith("> "))
+                    {
+                        sort_order = SortOrder.Descending;
+                    }
+                    else
+                    {
+                        sort_order = SortOrder.Ascending;
+                    }
+                }
+                else
+                {
+                    // New column. Sort ascending.
+                    sort_order = SortOrder.Ascending;
+                }
+
+                // Remove the old sort indicator.
+                SortingColumn_Ancestors.Text = SortingColumn_Ancestors.Text.Substring(2);
+            }
+
+            // Display the new sort order.
+            SortingColumn_Ancestors = new_sorting_column;
+            if (sort_order == SortOrder.Ascending)
+            {
+                SortingColumn_Ancestors.Text = "> " + SortingColumn_Ancestors.Text;
+            }
+            else
+            {
+                SortingColumn_Ancestors.Text = "< " + SortingColumn_Ancestors.Text;
+            }
+
+            // Create a comparer.
+            lvwTameDetail.ListViewItemSorter =
+                new ListViewComparer(e.Column, sort_order);
+
+            // Sort.
+            lvwTameDetail.Sort();
+        }
+
+        private void lvwTameLovers_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            // Get the new sorting column.
+            ColumnHeader new_sorting_column = lvwTameLovers.Columns[e.Column];
+
+            // Figure out the new sorting order.
+            System.Windows.Forms.SortOrder sort_order;
+            if (SortingColumn_Tamed == null)
+            {
+                // New column. Sort ascending.
+                sort_order = SortOrder.Ascending;
+            }
+            else
+            {
+                // See if this is the same column.
+                if (new_sorting_column == SortingColumn_Tamed)
+                {
+                    // Same column. Switch the sort order.
+                    if (SortingColumn_Tamed.Text.StartsWith("> "))
+                    {
+                        sort_order = SortOrder.Descending;
+                    }
+                    else
+                    {
+                        sort_order = SortOrder.Ascending;
+                    }
+                }
+                else
+                {
+                    // New column. Sort ascending.
+                    sort_order = SortOrder.Ascending;
+                }
+
+                // Remove the old sort indicator.
+                SortingColumn_Tamed.Text = SortingColumn_Tamed.Text.Substring(2);
+            }
+
+            // Display the new sort order.
+            SortingColumn_Tamed = new_sorting_column;
+            if (sort_order == SortOrder.Ascending)
+            {
+                SortingColumn_Tamed.Text = "> " + SortingColumn_Tamed.Text;
+            }
+            else
+            {
+                SortingColumn_Tamed.Text = "< " + SortingColumn_Tamed.Text;
+            }
+
+            // Create a comparer.
+            lvwTameLovers.ListViewItemSorter =
+                new ListViewComparer(e.Column, sort_order);
+
+            // Sort.
+            lvwTameLovers.Sort();
+        }
+
+        private void lvwWildLovers_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            // Get the new sorting column.
+            ColumnHeader new_sorting_column = lvwWildLovers.Columns[e.Column];
+
+            // Figure out the new sorting order.
+            System.Windows.Forms.SortOrder sort_order;
+            if (SortingColumn_Wild == null)
+            {
+                // New column. Sort ascending.
+                sort_order = SortOrder.Ascending;
+            }
+            else
+            {
+                // See if this is the same column.
+                if (new_sorting_column == SortingColumn_Wild)
+                {
+                    // Same column. Switch the sort order.
+                    if (SortingColumn_Wild.Text.StartsWith("> "))
+                    {
+                        sort_order = SortOrder.Descending;
+                    }
+                    else
+                    {
+                        sort_order = SortOrder.Ascending;
+                    }
+                }
+                else
+                {
+                    // New column. Sort ascending.
+                    sort_order = SortOrder.Ascending;
+                }
+
+                // Remove the old sort indicator.
+                SortingColumn_Wild.Text = SortingColumn_Wild.Text.Substring(2);
+            }
+
+            // Display the new sort order.
+            SortingColumn_Wild = new_sorting_column;
+            if (sort_order == SortOrder.Ascending)
+            {
+                SortingColumn_Wild.Text = "> " + SortingColumn_Wild.Text;
+            }
+            else
+            {
+                SortingColumn_Wild.Text = "< " + SortingColumn_Wild.Text;
+            }
+
+            // Create a comparer.
+            lvwWildLovers.ListViewItemSorter =
+                new ListViewComparer(e.Column, sort_order);
+
+            // Sort.
+            lvwWildLovers.Sort();
         }
     }
 }
