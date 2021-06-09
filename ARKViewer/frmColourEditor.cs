@@ -17,7 +17,6 @@ namespace ARKViewer
         public ColourMap SelectedMap { get; set; } = new ColourMap();
         bool isLoading = false;
 
-
         private void LoadWindowSettings()
         {
             var savedWindow = ARKViewer.Program.ProgramConfig.Windows.FirstOrDefault(w => w.Name == this.Name);
@@ -71,6 +70,26 @@ namespace ARKViewer
         {
             InitializeComponent();
             LoadWindowSettings();
+            isLoading = true;
+
+            udId.Minimum = 0;
+            udId.Value = 0;
+            udId.Maximum = int.MaxValue;
+            
+            isLoading = false;
+
+        }
+        public frmColourEditor(int newColourId)
+        {
+            InitializeComponent();
+            LoadWindowSettings();
+
+            isLoading = true;
+            udId.Enabled = false;
+            udId.Maximum = int.MaxValue;
+            udId.Value = newColourId;
+            isLoading = false;
+
         }
 
         public frmColourEditor(ColourMap selectedMap)
@@ -82,6 +101,7 @@ namespace ARKViewer
 
             isLoading = true;
             udId.Value = selectedMap.Id;
+            udId.Maximum = int.MaxValue;
             udId.Enabled = false;
 
             udR.Value = selectedMap.Color.R;
@@ -144,7 +164,7 @@ namespace ARKViewer
 
         private void udId_ValueChanged(object sender, EventArgs e)
         {
-            udId.ForeColor = Program.ProgramConfig.ColourMap.Any(c =>  SelectedMap.Id == 0 && c.Id == (int)udId.Value) ? Color.Red : SystemColors.Window;
+            udId.ForeColor = Program.ProgramConfig.ColourMap.Any(c =>  SelectedMap.Id == 0 && c.Id == (int)udId.Value) ? Color.Red : SystemColors.WindowText;
             if (udId.ForeColor != Color.Red)
             {
                 SelectedMap.Id = (int)udId.Value;
@@ -157,6 +177,12 @@ namespace ARKViewer
             {
                 this.DialogResult = DialogResult.OK;
                 this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Please select a unique id for this colour.", "Duplicate Entry", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                udId.Focus();
+                return;
             }
         }
 

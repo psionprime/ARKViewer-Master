@@ -15,9 +15,9 @@ namespace ARKViewer
     public partial class frmGenericClassMap : Form
     {
 
-        private ColumnHeader SortingColumn_ClassMap = null;
         public IGenericClassMap ClassMap { get; set; } = null;
 
+        IGenericClassMap LoadedClassMap { get; set; } = null;
 
         private void LoadWindowSettings()
         {
@@ -72,9 +72,12 @@ namespace ARKViewer
             InitializeComponent();
             LoadWindowSettings();
 
+            LoadedClassMap = selectedClassMap;
             ClassMap = selectedClassMap;
             txtClassName.Text = selectedClassMap.ClassName;
             txtDisplayName.Text = selectedClassMap.FriendlyName;
+            
+
 
         }
 
@@ -88,11 +91,69 @@ namespace ARKViewer
         {
             ClassMap.ClassName = txtClassName.Text;
             ClassMap.FriendlyName = txtDisplayName.Text;
+
+            if (ClassMap.ClassName.Length == 0)
+            {
+                MessageBox.Show("Please enter a class name for this class.", "Missing Value", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                txtClassName.Focus();
+                return;
+            }
+            else
+            {
+                if(LoadedClassMap.ClassName != ClassMap.ClassName)
+                {
+                    //name changed, check it doesn't arleady exist in the map
+                    switch (LoadedClassMap)
+                    {
+                        case DinoClassMap dinoMap:
+                            if(Program.ProgramConfig.DinoMap.Any(d=>d.ClassName == ClassMap.ClassName))
+                            {
+                                MessageBox.Show("Please enter a unique class name for this class.", "Duplicate Entry", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                                return;
+                            }
+                            break;
+                        case StructureClassMap structureMap:
+
+                            break;
+                    }
+                }
+                
+            }
+
+            if (ClassMap.FriendlyName.Length == 0)
+            {
+                MessageBox.Show("Please enter a display name for this class.", "Missing Value", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                txtDisplayName.Focus();
+                return;
+            }
+
+            this.DialogResult = DialogResult.OK;
+            this.Close();
+
         }
 
         private void frmGenericClassMap_FormClosed(object sender, FormClosedEventArgs e)
         {
             UpdateWindowSettings();
+        }
+
+        private void frmGenericClassMap_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void frmGenericClassMap_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void frmGenericClassMap_Shown(object sender, EventArgs e)
+        {
+            if (ClassMap.ClassName.Length > 0)
+            {
+                txtDisplayName.Focus();
+                txtDisplayName.SelectAll();
+            }
         }
     }
 }

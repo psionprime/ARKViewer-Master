@@ -78,6 +78,12 @@ namespace ArkSavegameToolkitNet.Domain
 
         }
 
+        public static ArkDeathCache AsBodyDeathCache(this IGameObject self, ISaveState saveState)
+        {
+            ArkDeathCache deathCache = new ArkDeathCache(self, saveState,true);
+            return deathCache;
+
+        }
 
         public static ArkCloudInventory AsCloudInventory(this IGameObject self, string steamId, ISaveState saveState, ICloudInventoryDinoData[] dinoData)
         {

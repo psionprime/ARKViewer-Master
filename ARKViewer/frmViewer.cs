@@ -3226,7 +3226,7 @@ namespace ARKViewer
                 case "tpgTribes":
                     if(lvwTribes.SelectedItems.Count > 0)
                     {
-                        TribeMap selectedTribe = (TribeMap)lvwTribes.SelectedItems[0].Tag;
+                        ContentTribe selectedTribe = (ContentTribe)lvwTribes.SelectedItems[0].Tag;
 
                         Clipboard.SetText(selectedTribe.TribeId.ToString("f0"));
                         MessageBox.Show("Tribe ID copied to the clipboard!", "Copy Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -3245,11 +3245,6 @@ namespace ARKViewer
             Program.ProgramConfig.StoredTames = chkCryo.Checked;
 
             LoadTameDetail();
-        }
-
-        private void splitContainer1_SplitterMoved(object sender, SplitterEventArgs e)
-        {
-            //Program.ProgramConfig.SplitterDistance = splitContainer1.SplitterDistance;
         }
 
         private void cboDroppedTribe_SelectedIndexChanged(object sender, EventArgs e)
@@ -3283,7 +3278,7 @@ namespace ARKViewer
                 selectedX = (decimal)droppedItem.Longitude.GetValueOrDefault(0);
                 selectedY = (decimal)droppedItem.Latitude.GetValueOrDefault(0);
 
-                btnDropInventory.Enabled = false;
+                btnDropInventory.Enabled = droppedItem.InventoryId > 0;
 
                 DrawMap(selectedX, selectedY);
             }            
@@ -3611,7 +3606,7 @@ namespace ARKViewer
 
 
                                             JObject jsonField = new JObject();
-                                            if (item.SubItems[header.Index].Text.IsNumeric())
+                                            if (double.TryParse(item.SubItems[header.Index].Text, out _))
                                             {
                                                 if (item.SubItems[header.Index].Text.Contains("."))
                                                 {
@@ -3677,7 +3672,7 @@ namespace ARKViewer
                                         for (int colIndex = 0; colIndex < lvwWildDetail.Columns.Count; colIndex++)
                                         {
 
-                                            if (item.SubItems[colIndex].Text.IsNumeric())
+                                            if (double.TryParse(item.SubItems[colIndex].Text, out _))
                                             {
                                                 csvBuilder.Append(item.SubItems[colIndex].Text);
                                             }
@@ -3727,7 +3722,7 @@ namespace ARKViewer
 
 
                                             JObject jsonField = new JObject();
-                                            if (item.SubItems[header.Index].Text.IsNumeric())
+                                            if (double.TryParse(item.SubItems[header.Index].Text, out _))
                                             {
                                                 if (item.SubItems[header.Index].Text.Contains("."))
                                                 {
@@ -3793,7 +3788,7 @@ namespace ARKViewer
                                         for (int colIndex = 0; colIndex < lvwTameDetail.Columns.Count; colIndex++)
                                         {
 
-                                            if (item.SubItems[colIndex].Text.IsNumeric())
+                                            if (double.TryParse(item.SubItems[colIndex].Text, out _))
                                             {
                                                 csvBuilder.Append(item.SubItems[colIndex].Text);
                                             }
@@ -3844,7 +3839,7 @@ namespace ARKViewer
 
 
                                             JObject jsonField = new JObject();
-                                            if (item.SubItems[header.Index].Text.IsNumeric())
+                                            if (double.TryParse(item.SubItems[header.Index].Text, out _))
                                             {
                                                 if (item.SubItems[header.Index].Text.Contains("."))
                                                 {
@@ -3910,7 +3905,7 @@ namespace ARKViewer
                                         for (int colIndex = 0; colIndex < lvwStructureLocations.Columns.Count; colIndex++)
                                         {
 
-                                            if (item.SubItems[colIndex].Text.IsNumeric())
+                                            if (double.TryParse(item.SubItems[colIndex].Text, out _))
                                             {
                                                 csvBuilder.Append(item.SubItems[colIndex].Text);
                                             }
@@ -3960,7 +3955,7 @@ namespace ARKViewer
 
 
                                             JObject jsonField = new JObject();
-                                            if (item.SubItems[header.Index].Text.IsNumeric())
+                                            if (double.TryParse(item.SubItems[header.Index].Text, out _))
                                             {
                                                 if (item.SubItems[header.Index].Text.Contains("."))
                                                 {
@@ -4026,7 +4021,7 @@ namespace ARKViewer
                                         for (int colIndex = 0; colIndex < lvwTribes.Columns.Count; colIndex++)
                                         {
 
-                                            if (item.SubItems[colIndex].Text.IsNumeric())
+                                            if (double.TryParse(item.SubItems[colIndex].Text, out _))
                                             {
                                                 csvBuilder.Append(item.SubItems[colIndex].Text);
                                             }
@@ -4077,7 +4072,7 @@ namespace ARKViewer
 
 
                                             JObject jsonField = new JObject();
-                                            if (item.SubItems[header.Index].Text.IsNumeric())
+                                            if (double.TryParse(item.SubItems[header.Index].Text, out _))
                                             {
                                                 if (item.SubItems[header.Index].Text.Contains("."))
                                                 {
@@ -4143,7 +4138,7 @@ namespace ARKViewer
                                         for (int colIndex = 0; colIndex < lvwPlayers.Columns.Count; colIndex++)
                                         {
 
-                                            if (item.SubItems[colIndex].Text.IsNumeric())
+                                            if (double.TryParse(item.SubItems[colIndex].Text, out _))
                                             {
                                                 csvBuilder.Append(item.SubItems[colIndex].Text);
                                             }
@@ -4193,7 +4188,7 @@ namespace ARKViewer
 
 
                                             JObject jsonField = new JObject();
-                                            if (item.SubItems[header.Index].Text.IsNumeric())
+                                            if (double.TryParse(item.SubItems[header.Index].Text, out _))
                                             {
                                                 if (item.SubItems[header.Index].Text.Contains("."))
                                                 {
@@ -4259,7 +4254,7 @@ namespace ARKViewer
                                         for (int colIndex = 0; colIndex < lvwDroppedItems.Columns.Count; colIndex++)
                                         {
 
-                                            if (item.SubItems[colIndex].Text.IsNumeric())
+                                            if (double.TryParse(item.SubItems[colIndex].Text, out _))
                                             {
                                                 csvBuilder.Append(item.SubItems[colIndex].Text);
                                             }

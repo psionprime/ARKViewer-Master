@@ -197,6 +197,8 @@ namespace ArkSavegameToolkitNet.Domain
             OwningPlayerId = creature.GetPropertyValue<int?>(_owningPlayerID);
             OwningPlayerName = creature.GetPropertyValue<string>(_owningPlayerName);
             Name = creature.GetPropertyValue<string>(_tamedName);
+
+
             TamedOnServerName = creature.GetPropertyValue<string>(_tamedOnServerName);
             TamerName = creature.GetPropertyValue<string>(_tamerString);
             ImprinterName = creature.GetPropertyValue<string>(_imprinterName);

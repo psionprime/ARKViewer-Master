@@ -910,6 +910,8 @@ namespace ARKViewer.Models
                                 && (Math.Abs((decimal)t.Location.Longitude - FilterLongitude) <= FilterRadius)
                             ).ToList();
 
+
+
                         //Tamed
                         if(tamed!=null && tamed.Count > 0)
                         {
@@ -1010,6 +1012,7 @@ namespace ARKViewer.Models
                         && (Math.Abs((decimal)i.Location.Longitude - FilterLongitude) <= FilterRadius)
                     ).ToList();
 
+
                 if(dropBags!=null && dropBags.Count > 0)
                 {
                     Parallel.ForEach(dropBags, droppedItem =>
@@ -1033,6 +1036,9 @@ namespace ARKViewer.Models
                     });
                 }
                 if (!loadedDroppedItems.IsEmpty) DroppedItems.AddRange(loadedDroppedItems.ToList());
+
+
+
             }
         }
 
@@ -1040,33 +1046,27 @@ namespace ARKViewer.Models
         {
             if (items.Length == 0) return 0; //no point creating one if no content
             long nextId = Inventories.Count + 1;
-            
-            Task.Run(() =>
+
+            List<ContentItem> invItems = new List<ContentItem>();
+            foreach(var item in items)
             {
-                
-                ConcurrentBag<ContentItem> invItems = new ConcurrentBag<ContentItem>();
-                Parallel.ForEach(items, item =>
+                invItems.Add(new ContentItem()
                 {
-                    invItems.Add(new ContentItem()
-                    {
-                        ClassName = item.ClassName,
-                        CustomName = item.CustomName,
-                        CraftedByPlayer = item.CraftedPlayerName,
-                        CraftedByTribe = item.CraftedTribeName,
-                        IsBlueprint = item.IsBlueprint,
-                        Quantity = (int)item.Quantity
-                    });
-
+                    ClassName = item.ClassName,
+                    CustomName = item.CustomName,
+                    CraftedByPlayer = item.CraftedPlayerName,
+                    CraftedByTribe = item.CraftedTribeName,
+                    IsBlueprint = item.IsBlueprint,
+                    Quantity = (int)item.Quantity
                 });
 
-                var allItems = invItems.ToList();
+            };
 
-                Inventories.Add(new ContentInventory()
-                {
-                    InventoryId = nextId,
-                    Items = allItems
-                });
-            }).Wait();
+            Inventories.Add(new ContentInventory()
+            {
+                InventoryId = nextId,
+                Items = invItems
+            });
 
             return nextId;
         }

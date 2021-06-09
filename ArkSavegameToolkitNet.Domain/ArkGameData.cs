@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using ArkName = ArkSavegameToolkitNet.Types.ArkName;
 using ObjectReference = ArkSavegameToolkitNet.Types.ObjectReference;
 using StructPropertyList = ArkSavegameToolkitNet.Structs.StructPropertyList;
@@ -25,6 +26,8 @@ namespace ArkSavegameToolkitNet.Domain
         private static readonly ArkName _playerDataID = ArkName.Create("PlayerDataID");
         private static readonly ArkName _linkedPlayerDataID = ArkName.Create("LinkedPlayerDataID");
         private static readonly ArkName _uniqueID = ArkName.Create("UniqueID");
+        private static readonly ArkName _isDead = ArkName.Create("bIsDead");
+        private static readonly ArkName _tamedName = ArkName.Create("TamedName");
 
         internal static readonly ArkNameTree _dependencies = new ArkNameTree
         {
@@ -73,6 +76,7 @@ namespace ArkSavegameToolkitNet.Domain
                 save = new ArkSavegame(_saveFilePath, null, _savegameMaxDegreeOfParallelism, exclusivePropertyNameTree);
                 save.LoadEverything();
 
+
                 ct.ThrowIfCancellationRequested();
 
                 var arktribes = Directory.GetFiles(directoryPath, "*.arktribe", SearchOption.TopDirectoryOnly).Select(x =>
@@ -112,18 +116,20 @@ namespace ArkSavegameToolkitNet.Domain
                 // Map all game data into domain model
                 // Note: objects.GroupBy(x => x.Names.Last().Token) would also get creature, status- and inventory component together
                 var statusComponents = objects.Where(x => x.IsDinoStatusComponent).ToDictionary(x => x.ObjectId, x => x);
-                
-                var tamed = objects.Where(x => x.IsTamedCreature).Select(x =>
+
+                var tamedAll = save.Objects.Where(x => x.IsTamedCreature).ToArray();
+                List<ArkTamedCreature> tamesAdded = new List<ArkTamedCreature>();
+
+                foreach(GameObject x in tamedAll)
                 {
                     GameObject status = null;
                     statusComponents.TryGetValue(x.GetPropertyValue<ObjectReference>(_myCharacterStatusComponent).ObjectId, out status);
                     ArkTamedCreature returnValue = x.AsTamedCreature(status, save.SaveState);
-
-                    return returnValue;
-                }).ToArray();
-
+                    tamesAdded.Add(returnValue);
+                }
+                var tamed = tamesAdded.ToArray();
                 
-                var wild = objects.Where(x => x.IsWildCreature).Select(x =>
+                var wild = save.Objects.Where(x => x.IsWildCreature).Select(x =>
                 {
                     GameObject status = null;
                     statusComponents.TryGetValue(x.GetPropertyValue<ObjectReference>(_myCharacterStatusComponent).ObjectId, out status);
@@ -213,12 +219,26 @@ namespace ArkSavegameToolkitNet.Domain
 
                 }).ToArray();
 
-                var playerDeathCache = objects.Where(x => x.IsDeathItemCache).Select(x => x.AsDeathCache(save.SaveState)).ToArray();
+                //only lists bags - nothing returned if body still exists
+                var playerDeathCache = objects.Where(x => x.IsDeathItemCache).Select(x => x.AsDeathCache(save.SaveState)).ToList();
 
+                //find bodies
+                var playerCorpsCache = objects.Where(x => 
+                                                        (x.ClassName.Name == "PlayerPawnTest_Male_C" || x.ClassName.Name == "PlayerPawnTest_Female_C")
+                                                        && (x.properties.ContainsKey(_isDead))
+                                                    )
+                                                    .Select(x=>x.AsBodyDeathCache(save.SaveState))
+                                                    .ToList();
+
+                if(playerCorpsCache!=null && playerCorpsCache.Count > 0)
+                {
+                    playerDeathCache.AddRange(playerCorpsCache);
+                }
+                var deathCacheArray = playerDeathCache.ToArray();
                 var structures = objects.Where(x => x.IsStructure).Select(x => x.AsStructure(save.SaveState)).ToArray();
 
 
-                ApplyOrSaveNewData(deferApplyNewData, save, tamed, wild, allplayers, tribes, items, droppedItems, structures, playerDeathCache, anonymize);
+                ApplyOrSaveNewData(deferApplyNewData, save, tamed, wild, allplayers, tribes, items, droppedItems, structures, deathCacheArray, anonymize);
 
 
 

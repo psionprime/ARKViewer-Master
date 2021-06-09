@@ -68,14 +68,12 @@
             this.lblSelectedMapSP = new System.Windows.Forms.Label();
             this.cboMapSinglePlayer = new System.Windows.Forms.ComboBox();
             this.tpgColours = new System.Windows.Forms.TabPage();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.grpColoursNotMapped = new System.Windows.Forms.GroupBox();
+            this.lblColourNotMapped = new System.Windows.Forms.Label();
+            this.lblHeaderColoursNotMatched = new System.Windows.Forms.Label();
+            this.lvwColoursNotMapped = new System.Windows.Forms.ListView();
             this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.button3 = new System.Windows.Forms.Button();
+            this.btnColoursNotMatchedAdd = new System.Windows.Forms.Button();
             this.grpColours = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.chkApplyFilterColours = new System.Windows.Forms.CheckBox();
@@ -89,13 +87,11 @@
             this.btnRemoveColour = new System.Windows.Forms.Button();
             this.btnNewColour = new System.Windows.Forms.Button();
             this.tpgCreatures = new System.Windows.Forms.TabPage();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.listView2 = new System.Windows.Forms.ListView();
+            this.grpCreaturesNotMapped = new System.Windows.Forms.GroupBox();
+            this.btnCreaturesNotMappedAdd = new System.Windows.Forms.Button();
+            this.lblCreaturesNotMapped = new System.Windows.Forms.Label();
+            this.lblHeaderCreaturesNotMapped = new System.Windows.Forms.Label();
+            this.lvwCreaturesNotMapped = new System.Windows.Forms.ListView();
             this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.grpCreatures = new System.Windows.Forms.GroupBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -109,13 +105,11 @@
             this.btnAddDinoClass = new System.Windows.Forms.Button();
             this.btnRemoveDinoClass = new System.Windows.Forms.Button();
             this.tpgStructures = new System.Windows.Forms.TabPage();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.button2 = new System.Windows.Forms.Button();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.listView3 = new System.Windows.Forms.ListView();
+            this.grpStructuresNotMapped = new System.Windows.Forms.GroupBox();
+            this.btnStructuresNotMappedAdd = new System.Windows.Forms.Button();
+            this.lblStructuresNotMapped = new System.Windows.Forms.Label();
+            this.lblHeaderStructuresNotMapped = new System.Windows.Forms.Label();
+            this.lvwStructuresNotMapped = new System.Windows.Forms.ListView();
             this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.grpStructures = new System.Windows.Forms.GroupBox();
             this.chkApplyFilterStructures = new System.Windows.Forms.CheckBox();
@@ -128,13 +122,11 @@
             this.btnAddStructure = new System.Windows.Forms.Button();
             this.btnRemoveStructure = new System.Windows.Forms.Button();
             this.tpgItems = new System.Windows.Forms.TabPage();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.button4 = new System.Windows.Forms.Button();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.listView4 = new System.Windows.Forms.ListView();
+            this.grpItemsNotMatched = new System.Windows.Forms.GroupBox();
+            this.btnItemsNotMatchedAdd = new System.Windows.Forms.Button();
+            this.lblItemsNotMatched = new System.Windows.Forms.Label();
+            this.lblHeaderItemsNotMatched = new System.Windows.Forms.Label();
+            this.lvwItemsNotMatched = new System.Windows.Forms.ListView();
             this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.grpItems = new System.Windows.Forms.GroupBox();
             this.chkApplyFilterItems = new System.Windows.Forms.CheckBox();
@@ -219,6 +211,9 @@
             this.lblOptionTextStructures = new System.Windows.Forms.Label();
             this.tpgRestService = new System.Windows.Forms.TabPage();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.checkBox5 = new System.Windows.Forms.CheckBox();
+            this.udFTPPort = new System.Windows.Forms.NumericUpDown();
+            this.label19 = new System.Windows.Forms.Label();
             this.textBox8 = new System.Windows.Forms.TextBox();
             this.button10 = new System.Windows.Forms.Button();
             this.txtContents = new System.Windows.Forms.TextBox();
@@ -227,6 +222,7 @@
             this.button5 = new System.Windows.Forms.Button();
             this.label16 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.label24 = new System.Windows.Forms.Label();
             this.checkBox12 = new System.Windows.Forms.CheckBox();
@@ -239,10 +235,6 @@
             this.button7 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.label19 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
-            this.udFTPPort = new System.Windows.Forms.NumericUpDown();
-            this.checkBox5 = new System.Windows.Forms.CheckBox();
             this.tabSettings.SuspendLayout();
             this.tpgMap.SuspendLayout();
             this.groupBox6.SuspendLayout();
@@ -251,16 +243,16 @@
             this.grpOffline.SuspendLayout();
             this.grpSinglePlayer.SuspendLayout();
             this.tpgColours.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.grpColoursNotMapped.SuspendLayout();
             this.grpColours.SuspendLayout();
             this.tpgCreatures.SuspendLayout();
-            this.groupBox3.SuspendLayout();
+            this.grpCreaturesNotMapped.SuspendLayout();
             this.grpCreatures.SuspendLayout();
             this.tpgStructures.SuspendLayout();
-            this.groupBox4.SuspendLayout();
+            this.grpStructuresNotMapped.SuspendLayout();
             this.grpStructures.SuspendLayout();
             this.tpgItems.SuspendLayout();
-            this.groupBox5.SuspendLayout();
+            this.grpItemsNotMatched.SuspendLayout();
             this.grpItems.SuspendLayout();
             this.tpgExport.SuspendLayout();
             this.grpJsonExport.SuspendLayout();
@@ -277,8 +269,8 @@
             this.pnlPlayerSettingsStuctures.SuspendLayout();
             this.tpgRestService.SuspendLayout();
             this.groupBox7.SuspendLayout();
-            this.groupBox8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udFTPPort)).BeginInit();
+            this.groupBox8.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnSave
@@ -739,7 +731,7 @@
             // 
             // tpgColours
             // 
-            this.tpgColours.Controls.Add(this.groupBox1);
+            this.tpgColours.Controls.Add(this.grpColoursNotMapped);
             this.tpgColours.Controls.Add(this.grpColours);
             this.tpgColours.Location = new System.Drawing.Point(4, 22);
             this.tpgColours.Name = "tpgColours";
@@ -748,95 +740,75 @@
             this.tpgColours.Text = "Colours";
             this.tpgColours.UseVisualStyleBackColor = true;
             // 
-            // groupBox1
+            // grpColoursNotMapped
             // 
-            this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.checkBox1);
-            this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.textBox1);
-            this.groupBox1.Controls.Add(this.listView1);
-            this.groupBox1.Controls.Add(this.button3);
-            this.groupBox1.Location = new System.Drawing.Point(18, 348);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(508, 256);
-            this.groupBox1.TabIndex = 29;
-            this.groupBox1.TabStop = false;
+            this.grpColoursNotMapped.Controls.Add(this.lblColourNotMapped);
+            this.grpColoursNotMapped.Controls.Add(this.lblHeaderColoursNotMatched);
+            this.grpColoursNotMapped.Controls.Add(this.lvwColoursNotMapped);
+            this.grpColoursNotMapped.Controls.Add(this.btnColoursNotMatchedAdd);
+            this.grpColoursNotMapped.Location = new System.Drawing.Point(18, 348);
+            this.grpColoursNotMapped.Name = "grpColoursNotMapped";
+            this.grpColoursNotMapped.Size = new System.Drawing.Size(508, 256);
+            this.grpColoursNotMapped.TabIndex = 29;
+            this.grpColoursNotMapped.TabStop = false;
             // 
-            // label4
+            // lblColourNotMapped
             // 
-            this.label4.BackColor = System.Drawing.Color.Transparent;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(10, 16);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(198, 22);
-            this.label4.TabIndex = 28;
-            this.label4.Text = "Not Mapped";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblColourNotMapped.BackColor = System.Drawing.Color.Transparent;
+            this.lblColourNotMapped.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblColourNotMapped.Location = new System.Drawing.Point(10, 16);
+            this.lblColourNotMapped.Name = "lblColourNotMapped";
+            this.lblColourNotMapped.Size = new System.Drawing.Size(198, 22);
+            this.lblColourNotMapped.TabIndex = 28;
+            this.lblColourNotMapped.Text = "Not Mapped";
+            this.lblColourNotMapped.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // checkBox1
+            // lblHeaderColoursNotMatched
             // 
-            this.checkBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkBox1.Appearance = System.Windows.Forms.Appearance.Button;
-            this.checkBox1.Image = global::ARKViewer.Properties.Resources.button_filter;
-            this.checkBox1.Location = new System.Drawing.Point(425, 212);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(35, 35);
-            this.checkBox1.TabIndex = 27;
-            this.toolTip1.SetToolTip(this.checkBox1, "Apply filter");
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
-            // label5
-            // 
-            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.lblHeaderColoursNotMatched.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label5.BackColor = System.Drawing.Color.Gainsboro;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(-2, 6);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(511, 6);
-            this.label5.TabIndex = 0;
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblHeaderColoursNotMatched.BackColor = System.Drawing.Color.Gainsboro;
+            this.lblHeaderColoursNotMatched.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHeaderColoursNotMatched.Location = new System.Drawing.Point(-2, 6);
+            this.lblHeaderColoursNotMatched.Name = "lblHeaderColoursNotMatched";
+            this.lblHeaderColoursNotMatched.Size = new System.Drawing.Size(511, 6);
+            this.lblHeaderColoursNotMatched.TabIndex = 0;
+            this.lblHeaderColoursNotMatched.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // textBox1
+            // lvwColoursNotMapped
             // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Location = new System.Drawing.Point(13, 219);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(406, 20);
-            this.textBox1.TabIndex = 26;
-            // 
-            // listView1
-            // 
-            this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.lvwColoursNotMapped.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.lvwColoursNotMapped.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader9});
-            this.listView1.FullRowSelect = true;
-            this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(13, 45);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(485, 162);
-            this.listView1.TabIndex = 22;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
+            this.lvwColoursNotMapped.FullRowSelect = true;
+            this.lvwColoursNotMapped.HideSelection = false;
+            this.lvwColoursNotMapped.Location = new System.Drawing.Point(13, 45);
+            this.lvwColoursNotMapped.Name = "lvwColoursNotMapped";
+            this.lvwColoursNotMapped.Size = new System.Drawing.Size(485, 162);
+            this.lvwColoursNotMapped.TabIndex = 22;
+            this.lvwColoursNotMapped.UseCompatibleStateImageBehavior = false;
+            this.lvwColoursNotMapped.View = System.Windows.Forms.View.Details;
+            this.lvwColoursNotMapped.SelectedIndexChanged += new System.EventHandler(this.lvwColoursNotMapped_SelectedIndexChanged);
             // 
             // columnHeader9
             // 
             this.columnHeader9.Text = "Detected Colour Id";
             this.columnHeader9.Width = 400;
             // 
-            // button3
+            // btnColoursNotMatchedAdd
             // 
-            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button3.Image = global::ARKViewer.Properties.Resources.button_add;
-            this.button3.Location = new System.Drawing.Point(464, 212);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(35, 35);
-            this.button3.TabIndex = 23;
-            this.toolTip1.SetToolTip(this.button3, "Add mapping");
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnColoursNotMatchedAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnColoursNotMatchedAdd.Enabled = false;
+            this.btnColoursNotMatchedAdd.Image = global::ARKViewer.Properties.Resources.button_add;
+            this.btnColoursNotMatchedAdd.Location = new System.Drawing.Point(464, 212);
+            this.btnColoursNotMatchedAdd.Name = "btnColoursNotMatchedAdd";
+            this.btnColoursNotMatchedAdd.Size = new System.Drawing.Size(35, 35);
+            this.btnColoursNotMatchedAdd.TabIndex = 23;
+            this.toolTip1.SetToolTip(this.btnColoursNotMatchedAdd, "Add mapping");
+            this.btnColoursNotMatchedAdd.UseVisualStyleBackColor = true;
+            this.btnColoursNotMatchedAdd.Click += new System.EventHandler(this.btnColoursNotMatchedAdd_Click);
             // 
             // grpColours
             // 
@@ -974,7 +946,7 @@
             // 
             // tpgCreatures
             // 
-            this.tpgCreatures.Controls.Add(this.groupBox3);
+            this.tpgCreatures.Controls.Add(this.grpCreaturesNotMapped);
             this.tpgCreatures.Controls.Add(this.grpCreatures);
             this.tpgCreatures.Location = new System.Drawing.Point(4, 22);
             this.tpgCreatures.Name = "tpgCreatures";
@@ -984,87 +956,67 @@
             this.tpgCreatures.Text = "Creatures";
             this.tpgCreatures.UseVisualStyleBackColor = true;
             // 
-            // groupBox3
+            // grpCreaturesNotMapped
             // 
-            this.groupBox3.Controls.Add(this.checkBox2);
-            this.groupBox3.Controls.Add(this.textBox2);
-            this.groupBox3.Controls.Add(this.button1);
-            this.groupBox3.Controls.Add(this.label7);
-            this.groupBox3.Controls.Add(this.label8);
-            this.groupBox3.Controls.Add(this.listView2);
-            this.groupBox3.Location = new System.Drawing.Point(18, 348);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(508, 256);
-            this.groupBox3.TabIndex = 30;
-            this.groupBox3.TabStop = false;
+            this.grpCreaturesNotMapped.Controls.Add(this.btnCreaturesNotMappedAdd);
+            this.grpCreaturesNotMapped.Controls.Add(this.lblCreaturesNotMapped);
+            this.grpCreaturesNotMapped.Controls.Add(this.lblHeaderCreaturesNotMapped);
+            this.grpCreaturesNotMapped.Controls.Add(this.lvwCreaturesNotMapped);
+            this.grpCreaturesNotMapped.Location = new System.Drawing.Point(18, 348);
+            this.grpCreaturesNotMapped.Name = "grpCreaturesNotMapped";
+            this.grpCreaturesNotMapped.Size = new System.Drawing.Size(508, 256);
+            this.grpCreaturesNotMapped.TabIndex = 30;
+            this.grpCreaturesNotMapped.TabStop = false;
             // 
-            // checkBox2
+            // btnCreaturesNotMappedAdd
             // 
-            this.checkBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkBox2.Appearance = System.Windows.Forms.Appearance.Button;
-            this.checkBox2.Image = global::ARKViewer.Properties.Resources.button_filter;
-            this.checkBox2.Location = new System.Drawing.Point(425, 212);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(35, 35);
-            this.checkBox2.TabIndex = 32;
-            this.toolTip1.SetToolTip(this.checkBox2, "Apply filter");
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.btnCreaturesNotMappedAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnCreaturesNotMappedAdd.Enabled = false;
+            this.btnCreaturesNotMappedAdd.Image = global::ARKViewer.Properties.Resources.button_add;
+            this.btnCreaturesNotMappedAdd.Location = new System.Drawing.Point(464, 212);
+            this.btnCreaturesNotMappedAdd.Name = "btnCreaturesNotMappedAdd";
+            this.btnCreaturesNotMappedAdd.Size = new System.Drawing.Size(35, 35);
+            this.btnCreaturesNotMappedAdd.TabIndex = 30;
+            this.toolTip1.SetToolTip(this.btnCreaturesNotMappedAdd, "Add mapping");
+            this.btnCreaturesNotMappedAdd.UseVisualStyleBackColor = true;
+            this.btnCreaturesNotMappedAdd.Click += new System.EventHandler(this.btnCreaturesNotMappedAdd_Click);
             // 
-            // textBox2
+            // lblCreaturesNotMapped
             // 
-            this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.lblCreaturesNotMapped.BackColor = System.Drawing.Color.Transparent;
+            this.lblCreaturesNotMapped.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCreaturesNotMapped.Location = new System.Drawing.Point(10, 16);
+            this.lblCreaturesNotMapped.Name = "lblCreaturesNotMapped";
+            this.lblCreaturesNotMapped.Size = new System.Drawing.Size(198, 22);
+            this.lblCreaturesNotMapped.TabIndex = 29;
+            this.lblCreaturesNotMapped.Text = "Not Mapped";
+            this.lblCreaturesNotMapped.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblHeaderCreaturesNotMapped
+            // 
+            this.lblHeaderCreaturesNotMapped.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox2.Location = new System.Drawing.Point(13, 219);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(406, 20);
-            this.textBox2.TabIndex = 31;
+            this.lblHeaderCreaturesNotMapped.BackColor = System.Drawing.Color.Gainsboro;
+            this.lblHeaderCreaturesNotMapped.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHeaderCreaturesNotMapped.Location = new System.Drawing.Point(-2, 6);
+            this.lblHeaderCreaturesNotMapped.Name = "lblHeaderCreaturesNotMapped";
+            this.lblHeaderCreaturesNotMapped.Size = new System.Drawing.Size(511, 6);
+            this.lblHeaderCreaturesNotMapped.TabIndex = 0;
+            this.lblHeaderCreaturesNotMapped.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // button1
+            // lvwCreaturesNotMapped
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button1.Image = global::ARKViewer.Properties.Resources.button_add;
-            this.button1.Location = new System.Drawing.Point(464, 212);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(35, 35);
-            this.button1.TabIndex = 30;
-            this.toolTip1.SetToolTip(this.button1, "Add mapping");
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // label7
-            // 
-            this.label7.BackColor = System.Drawing.Color.Transparent;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(10, 16);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(198, 22);
-            this.label7.TabIndex = 29;
-            this.label7.Text = "Not Mapped";
-            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label8
-            // 
-            this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label8.BackColor = System.Drawing.Color.Gainsboro;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(-2, 6);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(511, 6);
-            this.label8.TabIndex = 0;
-            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // listView2
-            // 
-            this.listView2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.lvwCreaturesNotMapped.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader12});
-            this.listView2.FullRowSelect = true;
-            this.listView2.HideSelection = false;
-            this.listView2.Location = new System.Drawing.Point(13, 45);
-            this.listView2.Name = "listView2";
-            this.listView2.Size = new System.Drawing.Size(485, 162);
-            this.listView2.TabIndex = 3;
-            this.listView2.UseCompatibleStateImageBehavior = false;
-            this.listView2.View = System.Windows.Forms.View.Details;
+            this.lvwCreaturesNotMapped.FullRowSelect = true;
+            this.lvwCreaturesNotMapped.HideSelection = false;
+            this.lvwCreaturesNotMapped.Location = new System.Drawing.Point(13, 45);
+            this.lvwCreaturesNotMapped.Name = "lvwCreaturesNotMapped";
+            this.lvwCreaturesNotMapped.Size = new System.Drawing.Size(485, 162);
+            this.lvwCreaturesNotMapped.TabIndex = 3;
+            this.lvwCreaturesNotMapped.UseCompatibleStateImageBehavior = false;
+            this.lvwCreaturesNotMapped.View = System.Windows.Forms.View.Details;
+            this.lvwCreaturesNotMapped.SelectedIndexChanged += new System.EventHandler(this.lvwCreaturesNotMapped_SelectedIndexChanged);
             // 
             // columnHeader12
             // 
@@ -1195,7 +1147,7 @@
             // 
             // tpgStructures
             // 
-            this.tpgStructures.Controls.Add(this.groupBox4);
+            this.tpgStructures.Controls.Add(this.grpStructuresNotMapped);
             this.tpgStructures.Controls.Add(this.grpStructures);
             this.tpgStructures.Location = new System.Drawing.Point(4, 22);
             this.tpgStructures.Name = "tpgStructures";
@@ -1204,87 +1156,65 @@
             this.tpgStructures.Text = "Structures";
             this.tpgStructures.UseVisualStyleBackColor = true;
             // 
-            // groupBox4
+            // grpStructuresNotMapped
             // 
-            this.groupBox4.Controls.Add(this.checkBox3);
-            this.groupBox4.Controls.Add(this.textBox3);
-            this.groupBox4.Controls.Add(this.button2);
-            this.groupBox4.Controls.Add(this.label9);
-            this.groupBox4.Controls.Add(this.label10);
-            this.groupBox4.Controls.Add(this.listView3);
-            this.groupBox4.Location = new System.Drawing.Point(18, 348);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(508, 256);
-            this.groupBox4.TabIndex = 31;
-            this.groupBox4.TabStop = false;
+            this.grpStructuresNotMapped.Controls.Add(this.btnStructuresNotMappedAdd);
+            this.grpStructuresNotMapped.Controls.Add(this.lblStructuresNotMapped);
+            this.grpStructuresNotMapped.Controls.Add(this.lblHeaderStructuresNotMapped);
+            this.grpStructuresNotMapped.Controls.Add(this.lvwStructuresNotMapped);
+            this.grpStructuresNotMapped.Location = new System.Drawing.Point(18, 348);
+            this.grpStructuresNotMapped.Name = "grpStructuresNotMapped";
+            this.grpStructuresNotMapped.Size = new System.Drawing.Size(508, 256);
+            this.grpStructuresNotMapped.TabIndex = 31;
+            this.grpStructuresNotMapped.TabStop = false;
             // 
-            // checkBox3
+            // btnStructuresNotMappedAdd
             // 
-            this.checkBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkBox3.Appearance = System.Windows.Forms.Appearance.Button;
-            this.checkBox3.Image = global::ARKViewer.Properties.Resources.button_filter;
-            this.checkBox3.Location = new System.Drawing.Point(425, 212);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(35, 35);
-            this.checkBox3.TabIndex = 32;
-            this.toolTip1.SetToolTip(this.checkBox3, "Apply filter");
-            this.checkBox3.UseVisualStyleBackColor = true;
+            this.btnStructuresNotMappedAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnStructuresNotMappedAdd.Enabled = false;
+            this.btnStructuresNotMappedAdd.Image = global::ARKViewer.Properties.Resources.button_add;
+            this.btnStructuresNotMappedAdd.Location = new System.Drawing.Point(464, 212);
+            this.btnStructuresNotMappedAdd.Name = "btnStructuresNotMappedAdd";
+            this.btnStructuresNotMappedAdd.Size = new System.Drawing.Size(35, 35);
+            this.btnStructuresNotMappedAdd.TabIndex = 30;
+            this.toolTip1.SetToolTip(this.btnStructuresNotMappedAdd, "Add mapping");
+            this.btnStructuresNotMappedAdd.UseVisualStyleBackColor = true;
             // 
-            // textBox3
+            // lblStructuresNotMapped
             // 
-            this.textBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.lblStructuresNotMapped.BackColor = System.Drawing.Color.Transparent;
+            this.lblStructuresNotMapped.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblStructuresNotMapped.Location = new System.Drawing.Point(10, 16);
+            this.lblStructuresNotMapped.Name = "lblStructuresNotMapped";
+            this.lblStructuresNotMapped.Size = new System.Drawing.Size(198, 22);
+            this.lblStructuresNotMapped.TabIndex = 29;
+            this.lblStructuresNotMapped.Text = "Not Mapped";
+            this.lblStructuresNotMapped.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblHeaderStructuresNotMapped
+            // 
+            this.lblHeaderStructuresNotMapped.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox3.Location = new System.Drawing.Point(13, 219);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(406, 20);
-            this.textBox3.TabIndex = 31;
+            this.lblHeaderStructuresNotMapped.BackColor = System.Drawing.Color.Gainsboro;
+            this.lblHeaderStructuresNotMapped.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHeaderStructuresNotMapped.Location = new System.Drawing.Point(-2, 6);
+            this.lblHeaderStructuresNotMapped.Name = "lblHeaderStructuresNotMapped";
+            this.lblHeaderStructuresNotMapped.Size = new System.Drawing.Size(511, 6);
+            this.lblHeaderStructuresNotMapped.TabIndex = 0;
+            this.lblHeaderStructuresNotMapped.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // button2
+            // lvwStructuresNotMapped
             // 
-            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button2.Image = global::ARKViewer.Properties.Resources.button_add;
-            this.button2.Location = new System.Drawing.Point(464, 212);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(35, 35);
-            this.button2.TabIndex = 30;
-            this.toolTip1.SetToolTip(this.button2, "Add mapping");
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // label9
-            // 
-            this.label9.BackColor = System.Drawing.Color.Transparent;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(10, 16);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(198, 22);
-            this.label9.TabIndex = 29;
-            this.label9.Text = "Not Mapped";
-            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label10
-            // 
-            this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label10.BackColor = System.Drawing.Color.Gainsboro;
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(-2, 6);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(511, 6);
-            this.label10.TabIndex = 0;
-            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // listView3
-            // 
-            this.listView3.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.lvwStructuresNotMapped.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader10});
-            this.listView3.FullRowSelect = true;
-            this.listView3.HideSelection = false;
-            this.listView3.Location = new System.Drawing.Point(13, 45);
-            this.listView3.Name = "listView3";
-            this.listView3.Size = new System.Drawing.Size(485, 162);
-            this.listView3.TabIndex = 3;
-            this.listView3.UseCompatibleStateImageBehavior = false;
-            this.listView3.View = System.Windows.Forms.View.Details;
+            this.lvwStructuresNotMapped.FullRowSelect = true;
+            this.lvwStructuresNotMapped.HideSelection = false;
+            this.lvwStructuresNotMapped.Location = new System.Drawing.Point(13, 45);
+            this.lvwStructuresNotMapped.Name = "lvwStructuresNotMapped";
+            this.lvwStructuresNotMapped.Size = new System.Drawing.Size(485, 162);
+            this.lvwStructuresNotMapped.TabIndex = 3;
+            this.lvwStructuresNotMapped.UseCompatibleStateImageBehavior = false;
+            this.lvwStructuresNotMapped.View = System.Windows.Forms.View.Details;
             // 
             // columnHeader10
             // 
@@ -1405,7 +1335,7 @@
             // 
             // tpgItems
             // 
-            this.tpgItems.Controls.Add(this.groupBox5);
+            this.tpgItems.Controls.Add(this.grpItemsNotMatched);
             this.tpgItems.Controls.Add(this.grpItems);
             this.tpgItems.Location = new System.Drawing.Point(4, 22);
             this.tpgItems.Name = "tpgItems";
@@ -1414,87 +1344,67 @@
             this.tpgItems.Text = "Items";
             this.tpgItems.UseVisualStyleBackColor = true;
             // 
-            // groupBox5
+            // grpItemsNotMatched
             // 
-            this.groupBox5.Controls.Add(this.checkBox4);
-            this.groupBox5.Controls.Add(this.textBox4);
-            this.groupBox5.Controls.Add(this.button4);
-            this.groupBox5.Controls.Add(this.label11);
-            this.groupBox5.Controls.Add(this.label12);
-            this.groupBox5.Controls.Add(this.listView4);
-            this.groupBox5.Location = new System.Drawing.Point(18, 348);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(508, 256);
-            this.groupBox5.TabIndex = 32;
-            this.groupBox5.TabStop = false;
+            this.grpItemsNotMatched.Controls.Add(this.btnItemsNotMatchedAdd);
+            this.grpItemsNotMatched.Controls.Add(this.lblItemsNotMatched);
+            this.grpItemsNotMatched.Controls.Add(this.lblHeaderItemsNotMatched);
+            this.grpItemsNotMatched.Controls.Add(this.lvwItemsNotMatched);
+            this.grpItemsNotMatched.Location = new System.Drawing.Point(18, 348);
+            this.grpItemsNotMatched.Name = "grpItemsNotMatched";
+            this.grpItemsNotMatched.Size = new System.Drawing.Size(508, 256);
+            this.grpItemsNotMatched.TabIndex = 32;
+            this.grpItemsNotMatched.TabStop = false;
             // 
-            // checkBox4
+            // btnItemsNotMatchedAdd
             // 
-            this.checkBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkBox4.Appearance = System.Windows.Forms.Appearance.Button;
-            this.checkBox4.Image = global::ARKViewer.Properties.Resources.button_filter;
-            this.checkBox4.Location = new System.Drawing.Point(425, 212);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(35, 35);
-            this.checkBox4.TabIndex = 32;
-            this.toolTip1.SetToolTip(this.checkBox4, "Apply filter");
-            this.checkBox4.UseVisualStyleBackColor = true;
+            this.btnItemsNotMatchedAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnItemsNotMatchedAdd.Enabled = false;
+            this.btnItemsNotMatchedAdd.Image = global::ARKViewer.Properties.Resources.button_add;
+            this.btnItemsNotMatchedAdd.Location = new System.Drawing.Point(464, 212);
+            this.btnItemsNotMatchedAdd.Name = "btnItemsNotMatchedAdd";
+            this.btnItemsNotMatchedAdd.Size = new System.Drawing.Size(35, 35);
+            this.btnItemsNotMatchedAdd.TabIndex = 30;
+            this.toolTip1.SetToolTip(this.btnItemsNotMatchedAdd, "Add mapping");
+            this.btnItemsNotMatchedAdd.UseVisualStyleBackColor = true;
+            this.btnItemsNotMatchedAdd.Click += new System.EventHandler(this.btnItemsNotMatchedAdd_Click);
             // 
-            // textBox4
+            // lblItemsNotMatched
             // 
-            this.textBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.lblItemsNotMatched.BackColor = System.Drawing.Color.Transparent;
+            this.lblItemsNotMatched.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblItemsNotMatched.Location = new System.Drawing.Point(10, 16);
+            this.lblItemsNotMatched.Name = "lblItemsNotMatched";
+            this.lblItemsNotMatched.Size = new System.Drawing.Size(198, 22);
+            this.lblItemsNotMatched.TabIndex = 29;
+            this.lblItemsNotMatched.Text = "Not Mapped";
+            this.lblItemsNotMatched.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblHeaderItemsNotMatched
+            // 
+            this.lblHeaderItemsNotMatched.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox4.Location = new System.Drawing.Point(13, 219);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(406, 20);
-            this.textBox4.TabIndex = 31;
+            this.lblHeaderItemsNotMatched.BackColor = System.Drawing.Color.Gainsboro;
+            this.lblHeaderItemsNotMatched.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHeaderItemsNotMatched.Location = new System.Drawing.Point(-2, 6);
+            this.lblHeaderItemsNotMatched.Name = "lblHeaderItemsNotMatched";
+            this.lblHeaderItemsNotMatched.Size = new System.Drawing.Size(511, 6);
+            this.lblHeaderItemsNotMatched.TabIndex = 0;
+            this.lblHeaderItemsNotMatched.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // button4
+            // lvwItemsNotMatched
             // 
-            this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button4.Image = global::ARKViewer.Properties.Resources.button_add;
-            this.button4.Location = new System.Drawing.Point(464, 212);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(35, 35);
-            this.button4.TabIndex = 30;
-            this.toolTip1.SetToolTip(this.button4, "Add mapping");
-            this.button4.UseVisualStyleBackColor = true;
-            // 
-            // label11
-            // 
-            this.label11.BackColor = System.Drawing.Color.Transparent;
-            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(10, 16);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(198, 22);
-            this.label11.TabIndex = 29;
-            this.label11.Text = "Not Mapped";
-            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label12
-            // 
-            this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label12.BackColor = System.Drawing.Color.Gainsboro;
-            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(-2, 6);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(511, 6);
-            this.label12.TabIndex = 0;
-            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // listView4
-            // 
-            this.listView4.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.lvwItemsNotMatched.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader11});
-            this.listView4.FullRowSelect = true;
-            this.listView4.HideSelection = false;
-            this.listView4.Location = new System.Drawing.Point(13, 45);
-            this.listView4.Name = "listView4";
-            this.listView4.Size = new System.Drawing.Size(485, 162);
-            this.listView4.TabIndex = 3;
-            this.listView4.UseCompatibleStateImageBehavior = false;
-            this.listView4.View = System.Windows.Forms.View.Details;
+            this.lvwItemsNotMatched.FullRowSelect = true;
+            this.lvwItemsNotMatched.HideSelection = false;
+            this.lvwItemsNotMatched.Location = new System.Drawing.Point(13, 45);
+            this.lvwItemsNotMatched.Name = "lvwItemsNotMatched";
+            this.lvwItemsNotMatched.Size = new System.Drawing.Size(485, 162);
+            this.lvwItemsNotMatched.TabIndex = 3;
+            this.lvwItemsNotMatched.UseCompatibleStateImageBehavior = false;
+            this.lvwItemsNotMatched.View = System.Windows.Forms.View.Details;
+            this.lvwItemsNotMatched.SelectedIndexChanged += new System.EventHandler(this.lvwItemsNotMatched_SelectedIndexChanged);
             // 
             // columnHeader11
             // 
@@ -2462,6 +2372,44 @@
             this.groupBox7.TabIndex = 30;
             this.groupBox7.TabStop = false;
             // 
+            // checkBox5
+            // 
+            this.checkBox5.AutoSize = true;
+            this.checkBox5.Location = new System.Drawing.Point(287, 66);
+            this.checkBox5.Name = "checkBox5";
+            this.checkBox5.Size = new System.Drawing.Size(119, 17);
+            this.checkBox5.TabIndex = 53;
+            this.checkBox5.Text = "Auto Start with ASV";
+            this.checkBox5.UseVisualStyleBackColor = true;
+            // 
+            // udFTPPort
+            // 
+            this.udFTPPort.Location = new System.Drawing.Point(221, 65);
+            this.udFTPPort.Maximum = new decimal(new int[] {
+            9999999,
+            0,
+            0,
+            0});
+            this.udFTPPort.Name = "udFTPPort";
+            this.udFTPPort.Size = new System.Drawing.Size(60, 20);
+            this.udFTPPort.TabIndex = 52;
+            this.udFTPPort.Value = new decimal(new int[] {
+            21,
+            0,
+            0,
+            0});
+            // 
+            // label19
+            // 
+            this.label19.BackColor = System.Drawing.Color.Transparent;
+            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label19.Location = new System.Drawing.Point(10, 39);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(198, 22);
+            this.label19.TabIndex = 50;
+            this.label19.Text = "Service Status";
+            this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // textBox8
             // 
             this.textBox8.Location = new System.Drawing.Point(13, 64);
@@ -2550,6 +2498,17 @@
             this.label17.Size = new System.Drawing.Size(499, 6);
             this.label17.TabIndex = 0;
             this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label20
+            // 
+            this.label20.BackColor = System.Drawing.Color.Transparent;
+            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label20.Location = new System.Drawing.Point(214, 39);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(198, 22);
+            this.label20.TabIndex = 51;
+            this.label20.Text = "Service Port";
+            this.label20.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // groupBox8
             // 
@@ -2684,55 +2643,6 @@
             this.toolTip1.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.toolTip1.ToolTipTitle = "Information";
             // 
-            // label19
-            // 
-            this.label19.BackColor = System.Drawing.Color.Transparent;
-            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label19.Location = new System.Drawing.Point(10, 39);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(198, 22);
-            this.label19.TabIndex = 50;
-            this.label19.Text = "Service Status";
-            this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label20
-            // 
-            this.label20.BackColor = System.Drawing.Color.Transparent;
-            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label20.Location = new System.Drawing.Point(214, 39);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(198, 22);
-            this.label20.TabIndex = 51;
-            this.label20.Text = "Service Port";
-            this.label20.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // udFTPPort
-            // 
-            this.udFTPPort.Location = new System.Drawing.Point(221, 65);
-            this.udFTPPort.Maximum = new decimal(new int[] {
-            9999999,
-            0,
-            0,
-            0});
-            this.udFTPPort.Name = "udFTPPort";
-            this.udFTPPort.Size = new System.Drawing.Size(60, 20);
-            this.udFTPPort.TabIndex = 52;
-            this.udFTPPort.Value = new decimal(new int[] {
-            21,
-            0,
-            0,
-            0});
-            // 
-            // checkBox5
-            // 
-            this.checkBox5.AutoSize = true;
-            this.checkBox5.Location = new System.Drawing.Point(287, 66);
-            this.checkBox5.Name = "checkBox5";
-            this.checkBox5.Size = new System.Drawing.Size(119, 17);
-            this.checkBox5.TabIndex = 53;
-            this.checkBox5.Text = "Auto Start with ASV";
-            this.checkBox5.UseVisualStyleBackColor = true;
-            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2762,23 +2672,19 @@
             this.grpSinglePlayer.ResumeLayout(false);
             this.grpSinglePlayer.PerformLayout();
             this.tpgColours.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.grpColoursNotMapped.ResumeLayout(false);
             this.grpColours.ResumeLayout(false);
             this.grpColours.PerformLayout();
             this.tpgCreatures.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
+            this.grpCreaturesNotMapped.ResumeLayout(false);
             this.grpCreatures.ResumeLayout(false);
             this.grpCreatures.PerformLayout();
             this.tpgStructures.ResumeLayout(false);
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
+            this.grpStructuresNotMapped.ResumeLayout(false);
             this.grpStructures.ResumeLayout(false);
             this.grpStructures.PerformLayout();
             this.tpgItems.ResumeLayout(false);
-            this.groupBox5.ResumeLayout(false);
-            this.groupBox5.PerformLayout();
+            this.grpItemsNotMatched.ResumeLayout(false);
             this.grpItems.ResumeLayout(false);
             this.grpItems.PerformLayout();
             this.tpgExport.ResumeLayout(false);
@@ -2805,9 +2711,9 @@
             this.tpgRestService.ResumeLayout(false);
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.udFTPPort)).EndInit();
             this.groupBox8.ResumeLayout(false);
             this.groupBox8.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.udFTPPort)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2960,40 +2866,32 @@
         private System.Windows.Forms.CheckBox chkDroppedItems;
         private System.Windows.Forms.Button btnEditServer;
         private System.Windows.Forms.Label lblFtpMap;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.GroupBox grpColoursNotMapped;
+        private System.Windows.Forms.Label lblColourNotMapped;
+        private System.Windows.Forms.Label lblHeaderColoursNotMatched;
+        private System.Windows.Forms.ListView lvwColoursNotMapped;
         private System.Windows.Forms.ColumnHeader columnHeader9;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btnColoursNotMatchedAdd;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.ListView listView2;
+        private System.Windows.Forms.GroupBox grpCreaturesNotMapped;
+        private System.Windows.Forms.Label lblCreaturesNotMapped;
+        private System.Windows.Forms.Label lblHeaderCreaturesNotMapped;
+        private System.Windows.Forms.ListView lvwCreaturesNotMapped;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ColumnHeader columnHeader12;
-        private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.ListView listView3;
+        private System.Windows.Forms.GroupBox grpStructuresNotMapped;
+        private System.Windows.Forms.Label lblStructuresNotMapped;
+        private System.Windows.Forms.Label lblHeaderStructuresNotMapped;
+        private System.Windows.Forms.ListView lvwStructuresNotMapped;
         private System.Windows.Forms.ColumnHeader columnHeader10;
-        private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.ListView listView4;
+        private System.Windows.Forms.GroupBox grpItemsNotMatched;
+        private System.Windows.Forms.Label lblItemsNotMatched;
+        private System.Windows.Forms.Label lblHeaderItemsNotMatched;
+        private System.Windows.Forms.ListView lvwItemsNotMatched;
         private System.Windows.Forms.ColumnHeader columnHeader11;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.CheckBox checkBox3;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.CheckBox checkBox4;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button btnCreaturesNotMappedAdd;
+        private System.Windows.Forms.Button btnStructuresNotMappedAdd;
+        private System.Windows.Forms.Button btnItemsNotMatchedAdd;
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.TextBox textBox5;

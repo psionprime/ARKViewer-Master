@@ -15,7 +15,6 @@ namespace ARKViewer
 {
     public partial class frmItemClassMap : Form
     {
-        ColumnHeader SortingColumn_ClassMap = null;
         string imageFolder = "";
         string loadedClassName = "";
 
@@ -65,8 +64,6 @@ namespace ARKViewer
                 }
             }
         }
-
-
 
         public ItemClassMap ClassMap { get; set; } = new ItemClassMap();
 
@@ -147,15 +144,7 @@ namespace ARKViewer
 
         private void txtClassName_Validating(object sender, CancelEventArgs e)
         {
-            bool canUse = txtClassName.Text.Trim().ToLower() == loadedClassName.ToLower() ||  !Program.ProgramConfig.ItemMap.Any(m => m.ClassName.ToLower() == txtClassName.Text.Trim().ToLower());
 
-            if (!canUse)
-            {
-                MessageBox.Show("Class name already in use.\n\nPlease edit the class name or close and edit the existing class map.", "Already Used", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return;
-            }
-
-            ClassMap.ClassName = txtClassName.Text.Trim();
         }
 
         private void txtDisplayName_Validating(object sender, CancelEventArgs e)
@@ -171,6 +160,39 @@ namespace ARKViewer
         private void frmItemClassMap_FormClosed(object sender, FormClosedEventArgs e)
         {
             UpdateWindowSettings();
+        }
+
+        private void frmItemClassMap_Shown(object sender, EventArgs e)
+        {
+            if (ClassMap.ClassName.Length > 0)
+            {
+                txtDisplayName.Focus();
+                txtDisplayName.SelectAll();
+            }
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            bool canUse = txtClassName.Text.Trim().ToLower() == loadedClassName.ToLower() || !Program.ProgramConfig.ItemMap.Any(m => m.ClassName.ToLower() == txtClassName.Text.Trim().ToLower());
+
+            if (!canUse)
+            {
+                MessageBox.Show("Class name already in use.\n\nPlease edit the class name or close and edit the existing class map.", "Duplicate Entry", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                txtClassName.Focus();
+                txtClassName.SelectAll();
+                return;
+            }
+            ClassMap.ClassName = txtClassName.Text.Trim();
+
+            if(txtDisplayName.TextLength == 0)
+            {
+                MessageBox.Show("Please enter a display name for this class.", "Missing Value", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                txtDisplayName.Focus();
+                return;
+            }
+
+            this.DialogResult = DialogResult.OK;
+            this.Close();
         }
     }
 }

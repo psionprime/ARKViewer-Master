@@ -121,8 +121,8 @@ namespace ArkSavegameToolkitNet
         public bool LoadEverything()
         {
             readBinary(_archive, _mmf);
-            bool returnValue  = LoadCryopodEntries();
 
+            bool returnValue  = LoadCryopodEntries();
             return returnValue;
         }
 
@@ -136,7 +136,7 @@ namespace ArkSavegameToolkitNet
             Guid currentId = Guid.Empty;
             
         
-            ConcurrentBag<Tuple<GameObject,GameObject,GameObject>> vivariumObjects = new ConcurrentBag<Tuple<GameObject, GameObject, GameObject>>();
+            ConcurrentBag<Tuple<GameObject,GameObject>> vivariumObjects = new ConcurrentBag<Tuple<GameObject, GameObject>>();
 
             Parallel.For(0, vivariumList.Count-1, vivariumIndex =>
             {
@@ -204,19 +204,10 @@ namespace ArkSavegameToolkitNet
                 var statusComponentRef = vivObject.Item1.GetProperty<PropertyObject>(_myCharacterStatusComponent);
                 statusComponentRef.Value.ObjectId = vivObject.Item2.ObjectId;
 
-                Objects.Add(vivObject.Item1);
                 Objects.Add(vivObject.Item2);
-                if (vivObject.Item3 != null)
-                {
-                    nextObjectId++;
-                    vivObject.Item3.ObjectId = nextObjectId;
-                    Objects.Add(vivObject.Item3);
-                }
-
+                Objects.Add(vivObject.Item1);
 
             };
-
-
 
 
             //Now parse out cryo creature data
@@ -225,7 +216,7 @@ namespace ArkSavegameToolkitNet
 
             if (cryoPodEntries != null && cryoPodEntries.Count() > 0)
             {
-                ConcurrentBag<Tuple<GameObject,GameObject,GameObject>> cryoObjects = new ConcurrentBag<Tuple<GameObject, GameObject, GameObject>>();
+                ConcurrentBag<Tuple<GameObject,GameObject>> cryoObjects = new ConcurrentBag<Tuple<GameObject, GameObject>>();
 
                 int podCount = cryoPodEntries.Count - 1;
 
@@ -265,7 +256,10 @@ namespace ArkSavegameToolkitNet
                                         var currentTarget = (PropertyInt32)result.Item1.Properties[_targetingTeam];
                                         var currentContainer = (PropertyInt32)ownerContainer.Properties[_targetingTeam];
 
-                                        if (currentContainer.Value != currentTarget.Value) currentTarget.Value = currentContainer.Value;
+                                        if (currentContainer.Value != currentTarget.Value) {
+                                            currentTarget.Value = currentContainer.Value;
+                                            ownerContainer.Properties[_targetingTeam] = currentTarget;
+                                        }
 
                                         result.Item1.Location = ownerContainer.Location;
                                     }
@@ -278,6 +272,8 @@ namespace ArkSavegameToolkitNet
 
                     }
                 });
+
+                nextObjectId = Objects.Count + 1;
 
                 int cryoCount = cryoObjects.Count;
                 var cryoArray = cryoObjects.ToArray();
@@ -296,15 +292,16 @@ namespace ArkSavegameToolkitNet
                     //update reference to new statusObject.ObjectId
                     var statusComponentRef = cryoObject.Item1.GetProperty<PropertyObject>(_myCharacterStatusComponent);
                     statusComponentRef.Value.ObjectId = cryoObject.Item2.ObjectId;
+                    cryoObject.Item1.Properties[_myCharacterStatusComponent] = statusComponentRef;
 
-                    Objects.Add(cryoObject.Item1);
                     Objects.Add(cryoObject.Item2);
-
+                    Objects.Add(cryoObject.Item1); 
 
                 };
 
             }
             
+
             return true;
 
             bool WhereEmptyCryopodHasCustomItemDataBytesArrayBytes(GameObject o) => (o.ClassName.Name.Contains("Cryopod"))
@@ -318,9 +315,9 @@ namespace ArkSavegameToolkitNet
 
             PropertyArray SelectCustomDataBytesArrayBytes(GameObject o) => ((StructPropertyList)((StructPropertyList)((StructPropertyList)o.GetProperty<PropertyArray>(_customItemData).Value[0]).GetProperty<PropertyStruct>(_customDataBytesIdentifier).Value).GetProperty<PropertyArray>(_byteArraysIdentifier).Value[0]).GetProperty<PropertyArray>(_bytesIdentifier);
 
-            Tuple<GameObject, GameObject, GameObject> UpdateCryoCreatureStatus(ArkArchive cryoArchive)
+            Tuple<GameObject, GameObject> UpdateCryoCreatureStatus(ArkArchive cryoArchive)
             {
-                int count = cryoArchive.GetInt();
+                cryoArchive.GetBytes(4);
 
                 var dino = new GameObject(cryoArchive)
                 {
@@ -328,24 +325,16 @@ namespace ArkSavegameToolkitNet
                 };
 
                 var statusObject = new GameObject(cryoArchive);
-                GameObject inventoryObject = null;
-                if(count > 2)
-                {
-                    inventoryObject = new GameObject(cryoArchive);
-                }
                 
                 dino.loadProperties(cryoArchive, new GameObject(), 0, null);
                 statusObject.loadProperties(cryoArchive, new GameObject(), 0, null);
-                if (inventoryObject != null)
-                {
-                    inventoryObject.loadProperties(cryoArchive, new GameObject(), 0, null);
-                }
-                return new Tuple<GameObject, GameObject, GameObject>(dino, statusObject, inventoryObject);
+                
+                return new Tuple<GameObject, GameObject>(dino, statusObject);
             }
 
-            Tuple<GameObject, GameObject, GameObject> UpdateVivariumCreatureStatus(ArkArchive vivariumArchive)
+            Tuple<GameObject, GameObject> UpdateVivariumCreatureStatus(ArkArchive vivariumArchive)
             {
-                int count = vivariumArchive.GetInt();
+                vivariumArchive.GetBytes(4);
 
                 var dino = new GameObject(vivariumArchive)
                 {
@@ -353,20 +342,13 @@ namespace ArkSavegameToolkitNet
                 };
 
                 var statusObject = new GameObject(vivariumArchive);
-                GameObject inventoryObject = null;
-                if (count > 2)
-                {
-                    inventoryObject = new GameObject(vivariumArchive);
-                }
+
 
                 dino.loadProperties(vivariumArchive, new GameObject(), 0, null);
                 statusObject.loadProperties(vivariumArchive, new GameObject(), 0, null);
-                if (inventoryObject != null)
-                {
-                    inventoryObject.loadProperties(vivariumArchive, new GameObject(), 0, null);
-                }
 
-                return new Tuple<GameObject, GameObject, GameObject>(dino, statusObject, inventoryObject);
+
+                return new Tuple<GameObject, GameObject>(dino, statusObject);
             }
 
 

@@ -51,7 +51,6 @@
             // btnSave
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSave.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSave.Location = new System.Drawing.Point(143, 150);
             this.btnSave.Name = "btnSave";
@@ -130,6 +129,9 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Class Map Editor";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmGenericClassMap_FormClosed);
+            this.Load += new System.EventHandler(this.frmGenericClassMap_Load);
+            this.Shown += new System.EventHandler(this.frmGenericClassMap_Shown);
+            this.Enter += new System.EventHandler(this.frmGenericClassMap_Enter);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -152,6 +152,41 @@ namespace ARKViewer
 
             }
 
+            if(cm!=null && cm.MapFilename.Length > 0)
+            {
+                btnColoursNotMatchedAdd.Enabled = false;
+                lvwColoursNotMapped.BeginUpdate();
+                lvwColoursNotMapped.Items.Clear();
+
+                //map loaded
+                var wilds = cm.GetWildCreatures(0, int.MaxValue, 50, 50, 250, "");
+                var knownMap = SavedConfig.ColourMap.ToList();
+                var unknownMap = new List<int>();
+                for(int i = 0; i < 6; i++)
+                {
+                    var unmappedColours = wilds.Select(c => (int)c.Colors[i]).Where(x => x !=0 
+                                                                                        &! knownMap.Any(c => c.Id == x) 
+                                                                                        &! unknownMap.Any(c=>c == x)
+                                                                                   ).ToList()
+                                                                                   .Distinct();
+
+                    unknownMap.AddRange(unmappedColours);
+
+                }
+
+                if (unknownMap != null && unknownMap.Count() > 0)
+                {
+                    foreach (var unmappedColour in unknownMap)
+                    {
+                        ListViewItem newItem = new ListViewItem(unmappedColour.ToString());
+                        newItem.Tag = unmappedColour;
+                        lvwColoursNotMapped.Items.Add(newItem);
+                    }
+                }
+                lvwColoursNotMapped.EndUpdate();
+            }
+
+
             lvwColours.EndUpdate();
 
             this.Cursor = Cursors.Default;
@@ -190,12 +225,36 @@ namespace ARKViewer
                     }
 
                 }
-
-
-
             }
 
             lvwDinoClasses.EndUpdate();
+
+
+            if (cm != null && cm.MapFilename.Length > 0)
+            {
+                lvwCreaturesNotMapped.BeginUpdate();
+                lvwCreaturesNotMapped.Items.Clear();
+
+                //map loaded
+                var wilds = cm.GetWildCreatures(0, int.MaxValue, 50, 50, 250, "");
+                var knownMap = SavedConfig.DinoMap.ToList();
+                var unknownMap = new List<string>();
+
+                var unmappedClasses = wilds.Where(w => !knownMap.Any(m=>m.ClassName == w.ClassName)).Select(s=> s.ClassName).Distinct().ToList();
+                if(unmappedClasses!=null && unmappedClasses.Count >0) unknownMap.AddRange(unmappedClasses);
+
+                if (unknownMap != null && unknownMap.Count() > 0)
+                {
+                    foreach (var unmappedClass in unknownMap)
+                    {
+                        ListViewItem newItem = new ListViewItem(unmappedClass.ToString());
+                        newItem.Tag = unmappedClass;
+                        lvwCreaturesNotMapped.Items.Add(newItem);
+                    }
+                }
+                lvwCreaturesNotMapped.EndUpdate();
+            }
+
 
             this.Cursor = Cursors.Default;
         }
@@ -242,6 +301,46 @@ namespace ARKViewer
 
             }
             lvwItemMap.EndUpdate();
+
+
+            if (cm != null && cm.MapFilename.Length > 0)
+            {
+                lvwItemsNotMatched.BeginUpdate();
+                lvwItemsNotMatched.Items.Clear();
+
+                //map loaded
+                var allItems = cm.GetInventories();
+                if(allItems!=null && allItems.Count > 0)
+                {
+                    var knownMap = SavedConfig.StructureMap.ToList();
+                    var unknownMap = new List<string>();
+
+                    var unmappedClasses = allItems.SelectMany(
+                            x =>
+                                x.Items.Where(w =>
+                                                !knownMap.Any(m => m.ClassName == w.ClassName)
+                                              )).ToList();
+
+                    if (unmappedClasses != null && unmappedClasses.Count > 0)
+                    {
+                        var distinctClassNames = unmappedClasses.Select(s => s.ClassName).Distinct().ToList();
+                        if (distinctClassNames != null && distinctClassNames.Count > 0) unknownMap.AddRange(distinctClassNames);
+                    }
+
+                    if (unknownMap != null && unknownMap.Count() > 0)
+                    {
+                        foreach (var unmappedClass in unknownMap)
+                        {
+                            ListViewItem newItem = new ListViewItem(unmappedClass.ToString());
+                            newItem.Tag = unmappedClass;
+                            lvwItemsNotMatched.Items.Add(newItem);
+                        }
+                    }
+                    lvwItemsNotMatched.EndUpdate();
+                }
+                
+            }
+
             this.Cursor = Cursors.Default;
         }
 
@@ -264,9 +363,8 @@ namespace ARKViewer
             {
                 string filterText = txtStructureFilter.Text;
 
-                foreach (var item in SavedConfig.StructureMap.OrderBy(d => d.FriendlyName))
+                foreach (var item in SavedConfig.StructureMap.Where(x=>!x.ClassName.StartsWith("ASV_")).OrderBy(d => d.FriendlyName))
                 {
-
                     ListViewItem newItem = lvwStructureMap.Items.Add(item.FriendlyName);
                     newItem.SubItems.Add(item.ClassName);
                     newItem.Tag = item;
@@ -284,6 +382,33 @@ namespace ARKViewer
 
             }
             lvwStructureMap.EndUpdate();
+
+
+            if (cm != null && cm.MapFilename.Length > 0)
+            {
+                lvwStructuresNotMapped.BeginUpdate();
+                lvwStructuresNotMapped.Items.Clear();
+
+                //map loaded
+                var structures = cm.GetPlayerStructures(0,0,"",true);
+                var knownMap = SavedConfig.StructureMap.ToList();
+                var unknownMap = new List<string>();
+
+                var unmappedClasses = structures.Where(w => !knownMap.Any(m => m.ClassName == w.ClassName)).Select(s => s.ClassName).Distinct().ToList();
+                if (unmappedClasses != null && unmappedClasses.Count > 0) unknownMap.AddRange(unmappedClasses);
+
+                if (unknownMap != null && unknownMap.Count() > 0)
+                {
+                    foreach (var unmappedClass in unknownMap)
+                    {
+                        ListViewItem newItem = new ListViewItem(unmappedClass.ToString());
+                        newItem.Tag = unmappedClass;
+                        lvwStructuresNotMapped.Items.Add(newItem);
+                    }
+                }
+                lvwStructuresNotMapped.EndUpdate();
+            }
+
             this.Cursor = Cursors.Default;
         }
 
@@ -1008,10 +1133,13 @@ namespace ARKViewer
         {
             if (lvwItemMap.SelectedItems.Count == 0) return;
             ListViewItem selectedItem = lvwItemMap.SelectedItems[0];
-            ItemClassMap itemMap = (ItemClassMap)selectedItem.Tag;
+            ItemClassMap selectedClassMap = (ItemClassMap)selectedItem.Tag;
 
-            Program.ProgramConfig.ItemMap.Remove(itemMap);
-            lvwItemMap.Items.Remove(selectedItem);
+            if (MessageBox.Show($"Are you sure you want to remove the details name for '{selectedClassMap.ClassName}'?", "Remove Mapping?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                SavedConfig.ItemMap.Remove(selectedClassMap);
+                PopulateItemClassMap("");
+            }
         }
 
         private void btnEditItem_Click(object sender, EventArgs e)
@@ -1699,5 +1827,94 @@ namespace ARKViewer
 
             }
         }
+
+        private void btnColoursNotMatchedAdd_Click(object sender, EventArgs e)
+        {
+            if (lvwColoursNotMapped.SelectedItems.Count == 0) return;
+            ListViewItem selectedItem = lvwColoursNotMapped.SelectedItems[0];
+            int selectedColourId = (int)selectedItem.Tag;
+
+            using (frmColourEditor colourEditor = new frmColourEditor(selectedColourId))
+            {
+                colourEditor.Owner = this;
+                if (colourEditor.ShowDialog() == DialogResult.OK)
+                {
+                    ColourMap existingMap = Program.ProgramConfig.ColourMap.FirstOrDefault(m => m.Id == colourEditor.SelectedMap.Id);
+                    if (existingMap != null)
+                    {
+                        //update existing
+                        existingMap.Hex = colourEditor.SelectedMap.Hex;
+                    }
+                    else
+                    {
+                        //add new
+                        Program.ProgramConfig.ColourMap.Add(colourEditor.SelectedMap);
+                    }
+
+                    PopulateColours();
+                }
+            }
+        }
+
+        private void lvwColoursNotMapped_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnColoursNotMatchedAdd.Enabled = lvwColoursNotMapped.SelectedItems.Count > 0;
+        }
+
+        private void btnCreaturesNotMappedAdd_Click(object sender, EventArgs e)
+        {
+            if (lvwCreaturesNotMapped.SelectedItems.Count == 0) return;
+            var selectedItem = lvwCreaturesNotMapped.SelectedItems[0];
+            string selectedClass = selectedItem.Tag.ToString();
+
+            frmGenericClassMap mapEditor = new frmGenericClassMap(new DinoClassMap() { ClassName = selectedClass});
+            mapEditor.Owner = this;
+            if (mapEditor.ShowDialog() == DialogResult.OK)
+            {
+                //if line already exist for this class update the friendly name.
+                DinoClassMap existingMap = SavedConfig.DinoMap.Where(d => d.ClassName.ToLower() == mapEditor.ClassMap.ClassName.ToLower()).FirstOrDefault<DinoClassMap>();
+                if (existingMap != null && existingMap.ClassName.Length != 0)
+                {
+                    //found it, update
+                    existingMap.FriendlyName = mapEditor.ClassMap.FriendlyName;
+                }
+                else
+                {
+                    //not found, add new
+                    SavedConfig.DinoMap.Add((DinoClassMap)mapEditor.ClassMap);
+                }
+
+                PopulateDinoClassMap(mapEditor.ClassMap.ClassName);
+
+            }
+        }
+
+        private void lvwCreaturesNotMapped_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnCreaturesNotMappedAdd.Enabled = lvwCreaturesNotMapped.SelectedItems.Count > 0;
+        }
+
+        private void btnItemsNotMatchedAdd_Click(object sender, EventArgs e)
+        {
+            if (lvwItemsNotMatched.SelectedItems.Count == 0) return;
+            string selectedClass = lvwItemsNotMatched.SelectedItems[0].Tag.ToString();
+            frmItemClassMap mapEditor = new frmItemClassMap(new ItemClassMap() { ClassName = selectedClass});
+            mapEditor.Owner = this;
+            if (mapEditor.ShowDialog() == DialogResult.OK)
+            {
+                //if line already exist for this class update the friendly name.
+                ItemClassMap existingMap = SavedConfig.ItemMap.Where(i => i.ClassName.ToLower() == mapEditor.ClassMap.ClassName.ToLower()).FirstOrDefault<ItemClassMap>();
+                SavedConfig.ItemMap.Add(mapEditor.ClassMap);
+
+                PopulateItemClassMap(mapEditor.ClassMap.ClassName);
+            }
+        }
+
+        private void lvwItemsNotMatched_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnItemsNotMatchedAdd.Enabled = lvwItemsNotMatched.SelectedItems.Count > 0;
+        }
+
+       
     }
 }

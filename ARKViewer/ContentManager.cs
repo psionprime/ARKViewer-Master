@@ -302,6 +302,12 @@ namespace ARKViewer
             return tribeStructures;
         }
 
+        public List<ContentInventory> GetInventories()
+        {
+            if (pack == null) return new List<ContentInventory>();
+            return pack.Inventories;
+        }
+
         public List<ContentPlayer> GetPlayers(long selectedTribeId, long selectedPlayerId)
         {
             if (pack.Tribes == null) return new List<ContentPlayer>();

@@ -23,6 +23,7 @@ namespace ARKViewer
 {
     static class Program
     {
+
         static Dictionary<string, int> ItemImageKeyMap = new Dictionary<string, int>();
         static Dictionary<string, int> MarkerImageKeyMap = new Dictionary<string, int>();
         public static ImageList ItemImageList { get; set; } = new ImageList();
@@ -31,6 +32,20 @@ namespace ARKViewer
         public static string MarkerImageFolder { get; set; } = "";
 
         public static string LastLoadedSaveFilename { get; set; }  = "";
+
+
+        public static void StartApi()
+        {
+            string serviceAddress = "http://localhost:1234";
+
+        }
+
+
+        public static void StopApi()
+        {
+            
+
+        }
 
         /// <summary>
         /// The main entry point for the application.
@@ -44,8 +59,7 @@ namespace ARKViewer
             Application.ThreadException += Application_ThreadException;
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
-    
-
+            StartApi();
 
             //param setup
             string appFolder = AppContext.BaseDirectory;
