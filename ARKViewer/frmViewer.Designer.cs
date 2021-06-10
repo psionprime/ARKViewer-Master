@@ -230,6 +230,7 @@
             this.picIcon = new System.Windows.Forms.PictureBox();
             this.lblTitle = new System.Windows.Forms.Label();
             this.lblSubTitle = new System.Windows.Forms.Label();
+            this.lblMapTypeName = new System.Windows.Forms.Label();
             this.mnuContext.SuspendLayout();
             this.tabFeatures.SuspendLayout();
             this.tpgWild.SuspendLayout();
@@ -281,7 +282,7 @@
             this.lvwWildDetail.Location = new System.Drawing.Point(11, 77);
             this.lvwWildDetail.MultiSelect = false;
             this.lvwWildDetail.Name = "lvwWildDetail";
-            this.lvwWildDetail.Size = new System.Drawing.Size(959, 350);
+            this.lvwWildDetail.Size = new System.Drawing.Size(780, 323);
             this.lvwWildDetail.TabIndex = 11;
             this.lvwWildDetail.UseCompatibleStateImageBehavior = false;
             this.lvwWildDetail.View = System.Windows.Forms.View.Details;
@@ -437,7 +438,7 @@
             this.lblWildTotal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblWildTotal.BackColor = System.Drawing.Color.PowderBlue;
             this.lblWildTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblWildTotal.Location = new System.Drawing.Point(841, 437);
+            this.lblWildTotal.Location = new System.Drawing.Point(662, 410);
             this.lblWildTotal.Name = "lblWildTotal";
             this.lblWildTotal.Size = new System.Drawing.Size(130, 30);
             this.lblWildTotal.TabIndex = 9;
@@ -447,11 +448,11 @@
             // lblMapDate
             // 
             this.lblMapDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblMapDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMapDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMapDate.ForeColor = System.Drawing.Color.CadetBlue;
-            this.lblMapDate.Location = new System.Drawing.Point(668, 68);
+            this.lblMapDate.Location = new System.Drawing.Point(492, 9);
             this.lblMapDate.Name = "lblMapDate";
-            this.lblMapDate.Size = new System.Drawing.Size(327, 19);
+            this.lblMapDate.Size = new System.Drawing.Size(328, 18);
             this.lblMapDate.TabIndex = 1;
             this.lblMapDate.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
@@ -464,17 +465,17 @@
             this.cboWildClass.FormattingEnabled = true;
             this.cboWildClass.Location = new System.Drawing.Point(82, 45);
             this.cboWildClass.Name = "cboWildClass";
-            this.cboWildClass.Size = new System.Drawing.Size(887, 21);
+            this.cboWildClass.Size = new System.Drawing.Size(708, 21);
             this.cboWildClass.TabIndex = 10;
             this.cboWildClass.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.cboSelected_DrawItem);
             this.cboWildClass.SelectedIndexChanged += new System.EventHandler(this.CboWildClass_SelectedIndexChanged);
             // 
             // btnRefresh
             // 
-            this.btnRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRefresh.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnRefresh.Image = ((System.Drawing.Image)(resources.GetObject("btnRefresh.Image")));
-            this.btnRefresh.Location = new System.Drawing.Point(835, 8);
+            this.btnRefresh.Location = new System.Drawing.Point(714, 564);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(50, 50);
             this.btnRefresh.TabIndex = 18;
@@ -483,10 +484,10 @@
             // 
             // btnSettings
             // 
-            this.btnSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSettings.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnSettings.Image = global::ARKViewer.Properties.Resources.button_settings;
-            this.btnSettings.Location = new System.Drawing.Point(947, 8);
+            this.btnSettings.Location = new System.Drawing.Point(658, 564);
             this.btnSettings.Name = "btnSettings";
             this.btnSettings.Size = new System.Drawing.Size(50, 50);
             this.btnSettings.TabIndex = 19;
@@ -588,7 +589,7 @@
             this.btnCopyCommandWild.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCopyCommandWild.Enabled = false;
             this.btnCopyCommandWild.Image = global::ARKViewer.Properties.Resources.button_document;
-            this.btnCopyCommandWild.Location = new System.Drawing.Point(350, 434);
+            this.btnCopyCommandWild.Location = new System.Drawing.Point(350, 407);
             this.btnCopyCommandWild.Name = "btnCopyCommandWild";
             this.btnCopyCommandWild.Size = new System.Drawing.Size(35, 35);
             this.btnCopyCommandWild.TabIndex = 35;
@@ -702,10 +703,10 @@
             // 
             // btnViewMap
             // 
-            this.btnViewMap.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnViewMap.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnViewMap.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnViewMap.Image = global::ARKViewer.Properties.Resources.ModernXP_73_Globe_icon;
-            this.btnViewMap.Location = new System.Drawing.Point(891, 8);
+            this.btnViewMap.Location = new System.Drawing.Point(770, 564);
             this.btnViewMap.Name = "btnViewMap";
             this.btnViewMap.Size = new System.Drawing.Size(50, 50);
             this.btnViewMap.TabIndex = 42;
@@ -728,7 +729,7 @@
             this.tabFeatures.Location = new System.Drawing.Point(9, 69);
             this.tabFeatures.Name = "tabFeatures";
             this.tabFeatures.SelectedIndex = 0;
-            this.tabFeatures.Size = new System.Drawing.Size(992, 516);
+            this.tabFeatures.Size = new System.Drawing.Size(813, 489);
             this.tabFeatures.TabIndex = 16;
             this.tabFeatures.SelectedIndexChanged += new System.EventHandler(this.tabFeatures_SelectedIndexChanged);
             // 
@@ -755,7 +756,7 @@
             this.tpgWild.Location = new System.Drawing.Point(4, 22);
             this.tpgWild.Name = "tpgWild";
             this.tpgWild.Padding = new System.Windows.Forms.Padding(3);
-            this.tpgWild.Size = new System.Drawing.Size(984, 490);
+            this.tpgWild.Size = new System.Drawing.Size(805, 463);
             this.tpgWild.TabIndex = 0;
             this.tpgWild.Text = "Wild Creatures";
             this.tpgWild.UseVisualStyleBackColor = true;
@@ -766,7 +767,7 @@
             this.lblWildRadius.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblWildRadius.AutoSize = true;
             this.lblWildRadius.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblWildRadius.Location = new System.Drawing.Point(851, 18);
+            this.lblWildRadius.Location = new System.Drawing.Point(672, 18);
             this.lblWildRadius.Name = "lblWildRadius";
             this.lblWildRadius.Size = new System.Drawing.Size(50, 13);
             this.lblWildRadius.TabIndex = 45;
@@ -776,7 +777,7 @@
             // 
             this.udWildRadius.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.udWildRadius.DecimalPlaces = 2;
-            this.udWildRadius.Location = new System.Drawing.Point(905, 15);
+            this.udWildRadius.Location = new System.Drawing.Point(726, 15);
             this.udWildRadius.Name = "udWildRadius";
             this.udWildRadius.Size = new System.Drawing.Size(64, 20);
             this.udWildRadius.TabIndex = 44;
@@ -792,7 +793,7 @@
             this.lblWildLon.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblWildLon.AutoSize = true;
             this.lblWildLon.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblWildLon.Location = new System.Drawing.Point(736, 18);
+            this.lblWildLon.Location = new System.Drawing.Point(557, 18);
             this.lblWildLon.Name = "lblWildLon";
             this.lblWildLon.Size = new System.Drawing.Size(32, 13);
             this.lblWildLon.TabIndex = 43;
@@ -802,7 +803,7 @@
             // 
             this.udWildLon.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.udWildLon.DecimalPlaces = 2;
-            this.udWildLon.Location = new System.Drawing.Point(772, 15);
+            this.udWildLon.Location = new System.Drawing.Point(593, 15);
             this.udWildLon.Name = "udWildLon";
             this.udWildLon.Size = new System.Drawing.Size(64, 20);
             this.udWildLon.TabIndex = 42;
@@ -818,7 +819,7 @@
             this.lblWildLat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblWildLat.AutoSize = true;
             this.lblWildLat.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblWildLat.Location = new System.Drawing.Point(614, 18);
+            this.lblWildLat.Location = new System.Drawing.Point(435, 18);
             this.lblWildLat.Name = "lblWildLat";
             this.lblWildLat.Size = new System.Drawing.Size(29, 13);
             this.lblWildLat.TabIndex = 41;
@@ -828,7 +829,7 @@
             // 
             this.udWildLat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.udWildLat.DecimalPlaces = 2;
-            this.udWildLat.Location = new System.Drawing.Point(650, 15);
+            this.udWildLat.Location = new System.Drawing.Point(471, 15);
             this.udWildLat.Name = "udWildLat";
             this.udWildLat.Size = new System.Drawing.Size(64, 20);
             this.udWildLat.TabIndex = 40;
@@ -910,7 +911,7 @@
             this.lblWildCommand.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblWildCommand.AutoSize = true;
             this.lblWildCommand.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblWildCommand.Location = new System.Drawing.Point(14, 444);
+            this.lblWildCommand.Location = new System.Drawing.Point(14, 417);
             this.lblWildCommand.Name = "lblWildCommand";
             this.lblWildCommand.Size = new System.Drawing.Size(65, 13);
             this.lblWildCommand.TabIndex = 34;
@@ -925,7 +926,7 @@
             "DestroyAll <ClassName>",
             "GMSummon \"<ClassName>\" <Level> ",
             "SetPlayerPos  <x> <y> <z>"});
-            this.cboConsoleCommandsWild.Location = new System.Drawing.Point(82, 441);
+            this.cboConsoleCommandsWild.Location = new System.Drawing.Point(82, 414);
             this.cboConsoleCommandsWild.Name = "cboConsoleCommandsWild";
             this.cboConsoleCommandsWild.Size = new System.Drawing.Size(262, 21);
             this.cboConsoleCommandsWild.TabIndex = 33;
@@ -935,7 +936,7 @@
             this.lblSelectedWildTotal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblSelectedWildTotal.BackColor = System.Drawing.Color.PowderBlue;
             this.lblSelectedWildTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSelectedWildTotal.Location = new System.Drawing.Point(714, 437);
+            this.lblSelectedWildTotal.Location = new System.Drawing.Point(535, 410);
             this.lblSelectedWildTotal.Name = "lblSelectedWildTotal";
             this.lblSelectedWildTotal.Size = new System.Drawing.Size(123, 30);
             this.lblSelectedWildTotal.TabIndex = 32;
@@ -2206,11 +2207,12 @@
             this.lblStatus.BackColor = System.Drawing.Color.PowderBlue;
             this.lblStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblStatus.ForeColor = System.Drawing.Color.CadetBlue;
-            this.lblStatus.Location = new System.Drawing.Point(16, 595);
+            this.lblStatus.Location = new System.Drawing.Point(16, 564);
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(981, 25);
+            this.lblStatus.Size = new System.Drawing.Size(638, 50);
             this.lblStatus.TabIndex = 22;
             this.lblStatus.Text = "Loading...";
+            this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // picIcon
             // 
@@ -2242,12 +2244,24 @@
             this.lblSubTitle.TabIndex = 41;
             this.lblSubTitle.Text = "ARK Savegame Visualiser";
             // 
+            // lblMapTypeName
+            // 
+            this.lblMapTypeName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblMapTypeName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMapTypeName.ForeColor = System.Drawing.Color.CadetBlue;
+            this.lblMapTypeName.Location = new System.Drawing.Point(316, 30);
+            this.lblMapTypeName.Name = "lblMapTypeName";
+            this.lblMapTypeName.Size = new System.Drawing.Size(504, 18);
+            this.lblMapTypeName.TabIndex = 43;
+            this.lblMapTypeName.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // frmViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.PowderBlue;
-            this.ClientSize = new System.Drawing.Size(1004, 625);
+            this.ClientSize = new System.Drawing.Size(834, 625);
+            this.Controls.Add(this.lblMapTypeName);
             this.Controls.Add(this.lblMapDate);
             this.Controls.Add(this.btnViewMap);
             this.Controls.Add(this.lblSubTitle);
@@ -2496,6 +2510,7 @@
         private System.Windows.Forms.ColumnHeader lvwItemList_Quantity;
         private System.Windows.Forms.ColumnHeader lvwItemList_Lat;
         private System.Windows.Forms.ColumnHeader lvwItemList_Lon;
+        private System.Windows.Forms.Label lblMapTypeName;
     }
 }
 

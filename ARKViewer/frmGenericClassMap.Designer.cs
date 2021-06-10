@@ -40,8 +40,8 @@
             // 
             this.btnCcancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCcancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCcancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCcancel.Location = new System.Drawing.Point(230, 150);
+            this.btnCcancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.btnCcancel.Location = new System.Drawing.Point(12, 150);
             this.btnCcancel.Name = "btnCcancel";
             this.btnCcancel.Size = new System.Drawing.Size(75, 23);
             this.btnCcancel.TabIndex = 5;
@@ -51,8 +51,9 @@
             // btnSave
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSave.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSave.Location = new System.Drawing.Point(143, 150);
+            this.btnSave.Location = new System.Drawing.Point(228, 150);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 4;
@@ -113,8 +114,10 @@
             // 
             // frmGenericClassMap
             // 
+            this.AcceptButton = this.btnSave;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnCcancel;
             this.ClientSize = new System.Drawing.Size(317, 185);
             this.Controls.Add(this.txtDisplayName);
             this.Controls.Add(this.txtClassName);

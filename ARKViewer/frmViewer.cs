@@ -127,8 +127,31 @@ namespace ARKViewer
             UpdateProgress("Loading content.");
 
 
-            string mapFileDateString = (manager.ContentDate.Equals(new DateTime()) ? "n/a" : manager.ContentDate.ToString("dd MMM yyyy - HH:mm"));
-            lblMapDate.Text = $"({manager.MapName}) - {mapFileDateString}";
+            string mapFileDateString = (manager.ContentDate.Equals(new DateTime()) ? "n/a" : manager.ContentDate.ToString("dd MMM yyyy HH:mm"));
+            lblMapDate.Text = $"{manager.MapName}: {mapFileDateString}";
+
+            switch (Program.ProgramConfig.Mode)
+            {
+                case ViewerModes.Mode_SinglePlayer:
+                    lblMapTypeName.Text = $"Single Player";
+                    break;
+                case ViewerModes.Mode_Offline:
+                    lblMapTypeName.Text = $"Offline: {Program.ProgramConfig.SelectedFile}";
+                    break;
+                case ViewerModes.Mode_ContentPack:
+                    lblMapTypeName.Text = $"ASV: {Program.ProgramConfig.SelectedFile}";
+
+                    break;
+                case ViewerModes.Mode_Ftp:
+                    lblMapTypeName.Text = $"FTP: {Program.ProgramConfig.SelectedServer}";
+
+                    break;
+                default:
+                    lblMapTypeName.Text = "";
+                    break;
+            }
+
+
 
             var allWilds = manager.GetWildCreatures(0, int.MaxValue, 50, 50, float.MaxValue, "");
             if (allWilds.Count > 0)
@@ -2017,7 +2040,10 @@ namespace ARKViewer
             settings.Owner = this;
             while(settings.ShowDialog() == DialogResult.OK)
             {
+                settings.SavedConfig.Save();
                 ARKViewer.Program.ProgramConfig = settings.SavedConfig;
+                
+
                 if (!File.Exists(settings.SavedConfig.SelectedFile))
                 {
                     if(settings.SavedConfig.Mode == ViewerModes.Mode_Ftp)

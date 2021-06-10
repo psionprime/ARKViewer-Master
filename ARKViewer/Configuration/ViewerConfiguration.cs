@@ -119,8 +119,7 @@ namespace ARKViewer.Configuration
             File.WriteAllText(saveFilename, jsonFileContent);
 
             //save dinomap
-            var dinoMapFilename = Path.Combine(savePath, "creaturemap.json");
-           
+            var dinoMapFilename = Path.Combine(savePath, "creaturemap.json");           
             JArray dinoArray = new JArray();
             if(DinoMap.Count > 0)
             {
@@ -134,13 +133,29 @@ namespace ARKViewer.Configuration
             }
             JObject dinoSaves = new JObject();
             dinoSaves.Add(new JProperty("creatures", dinoArray));
-
             File.WriteAllText(dinoMapFilename, dinoSaves.ToString(Formatting.None));
+
+
+            //save structuremap
+            var structureMapFilename = Path.Combine(savePath, "structuremap.json");
+            JArray structureArray = new JArray();
+            if (StructureMap.Count > 0)
+            {
+                foreach (var structure in StructureMap)
+                {
+                    JObject structureObject = new JObject();
+                    structureObject.Add(new JProperty("ClassName", structure.ClassName));
+                    structureObject.Add(new JProperty("FriendlyName", structure.FriendlyName));
+                    structureArray.Add(structureObject);
+                }
+            }
+            JObject structureSaved = new JObject();
+            structureSaved.Add(new JProperty("structures", structureArray));
+            File.WriteAllText(structureMapFilename, structureSaved.ToString(Formatting.None));
 
 
             //save itemmap
             var itemMapFilename = Path.Combine(savePath, "itemmap.json");
-
             JArray itemArray = new JArray();
             if (ItemMap.Count > 0)
             {

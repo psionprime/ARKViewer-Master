@@ -28,5 +28,10 @@ namespace ARKViewer
         {
             ConfirmedPassword = txtFTPPassword.Text.Trim();
         }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

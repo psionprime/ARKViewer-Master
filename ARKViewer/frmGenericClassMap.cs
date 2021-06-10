@@ -77,6 +77,8 @@ namespace ARKViewer
             txtClassName.Text = selectedClassMap.ClassName;
             txtDisplayName.Text = selectedClassMap.FriendlyName;
             
+            
+
 
 
         }
@@ -89,6 +91,8 @@ namespace ARKViewer
 
         private void btnSave_Click(object sender, EventArgs e)
         {
+            this.DialogResult = DialogResult.None;
+
             ClassMap.ClassName = txtClassName.Text;
             ClassMap.FriendlyName = txtDisplayName.Text;
 
@@ -149,7 +153,7 @@ namespace ARKViewer
 
         private void frmGenericClassMap_Shown(object sender, EventArgs e)
         {
-            if (ClassMap.ClassName.Length > 0)
+            if (ClassMap.ClassName !=null && ClassMap.ClassName.Length > 0)
             {
                 txtDisplayName.Focus();
                 txtDisplayName.SelectAll();

@@ -87,10 +87,10 @@
             // 
             // btnCcancel
             // 
-            this.btnCcancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCcancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnCcancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCcancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCcancel.Location = new System.Drawing.Point(228, 370);
+            this.btnCcancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.btnCcancel.Location = new System.Drawing.Point(10, 370);
             this.btnCcancel.Name = "btnCcancel";
             this.btnCcancel.Size = new System.Drawing.Size(75, 23);
             this.btnCcancel.TabIndex = 11;
@@ -99,9 +99,9 @@
             // 
             // btnSave
             // 
-            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSave.Location = new System.Drawing.Point(10, 370);
+            this.btnSave.Location = new System.Drawing.Point(234, 370);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 10;
@@ -117,6 +117,7 @@
             this.txtCategory.Size = new System.Drawing.Size(291, 22);
             this.txtCategory.TabIndex = 13;
             this.txtCategory.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtCategory.TextChanged += new System.EventHandler(this.txtCategory_TextChanged);
             this.txtCategory.Validating += new System.ComponentModel.CancelEventHandler(this.txtCategory_Validating);
             // 
             // label1
@@ -159,8 +160,10 @@
             // 
             // frmItemClassMap
             // 
+            this.AcceptButton = this.btnSave;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnCcancel;
             this.ClientSize = new System.Drawing.Size(323, 405);
             this.Controls.Add(this.lblIcon);
             this.Controls.Add(this.picIcon);

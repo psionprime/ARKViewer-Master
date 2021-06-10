@@ -277,7 +277,7 @@
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSave.Location = new System.Drawing.Point(405, 669);
+            this.btnSave.Location = new System.Drawing.Point(486, 669);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 6;
@@ -287,10 +287,10 @@
             // 
             // btnClose
             // 
-            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClose.Location = new System.Drawing.Point(486, 669);
+            this.btnClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.btnClose.Location = new System.Drawing.Point(16, 670);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 7;
@@ -866,7 +866,7 @@
             // 
             this.txtFilterColour.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtFilterColour.Location = new System.Drawing.Point(92, 295);
+            this.txtFilterColour.Location = new System.Drawing.Point(92, 294);
             this.txtFilterColour.Name = "txtFilterColour";
             this.txtFilterColour.Size = new System.Drawing.Size(327, 20);
             this.txtFilterColour.TabIndex = 26;
@@ -1179,6 +1179,7 @@
             this.btnStructuresNotMappedAdd.TabIndex = 30;
             this.toolTip1.SetToolTip(this.btnStructuresNotMappedAdd, "Add mapping");
             this.btnStructuresNotMappedAdd.UseVisualStyleBackColor = true;
+            this.btnStructuresNotMappedAdd.Click += new System.EventHandler(this.btnStructuresNotMappedAdd_Click);
             // 
             // lblStructuresNotMapped
             // 
@@ -1215,6 +1216,7 @@
             this.lvwStructuresNotMapped.TabIndex = 3;
             this.lvwStructuresNotMapped.UseCompatibleStateImageBehavior = false;
             this.lvwStructuresNotMapped.View = System.Windows.Forms.View.Details;
+            this.lvwStructuresNotMapped.SelectedIndexChanged += new System.EventHandler(this.lvwStructuresNotMapped_SelectedIndexChanged);
             // 
             // columnHeader10
             // 
@@ -1239,9 +1241,8 @@
             // chkApplyFilterStructures
             // 
             this.chkApplyFilterStructures.Appearance = System.Windows.Forms.Appearance.Button;
-            this.chkApplyFilterStructures.Enabled = false;
             this.chkApplyFilterStructures.Image = global::ARKViewer.Properties.Resources.button_filter;
-            this.chkApplyFilterStructures.Location = new System.Drawing.Point(424, 287);
+            this.chkApplyFilterStructures.Location = new System.Drawing.Point(425, 287);
             this.chkApplyFilterStructures.Name = "chkApplyFilterStructures";
             this.chkApplyFilterStructures.Size = new System.Drawing.Size(35, 35);
             this.chkApplyFilterStructures.TabIndex = 26;
@@ -1263,7 +1264,6 @@
             // 
             // txtStructureFilter
             // 
-            this.txtStructureFilter.Enabled = false;
             this.txtStructureFilter.Location = new System.Drawing.Point(92, 294);
             this.txtStructureFilter.Name = "txtStructureFilter";
             this.txtStructureFilter.Size = new System.Drawing.Size(327, 20);
@@ -1311,7 +1311,6 @@
             // 
             // btnAddStructure
             // 
-            this.btnAddStructure.Enabled = false;
             this.btnAddStructure.Image = global::ARKViewer.Properties.Resources.button_add;
             this.btnAddStructure.Location = new System.Drawing.Point(13, 287);
             this.btnAddStructure.Name = "btnAddStructure";
@@ -1430,7 +1429,7 @@
             // 
             this.chkApplyFilterItems.Appearance = System.Windows.Forms.Appearance.Button;
             this.chkApplyFilterItems.Image = global::ARKViewer.Properties.Resources.button_filter;
-            this.chkApplyFilterItems.Location = new System.Drawing.Point(426, 286);
+            this.chkApplyFilterItems.Location = new System.Drawing.Point(425, 287);
             this.chkApplyFilterItems.Name = "chkApplyFilterItems";
             this.chkApplyFilterItems.Size = new System.Drawing.Size(35, 35);
             this.chkApplyFilterItems.TabIndex = 20;
@@ -1496,7 +1495,7 @@
             // 
             this.btnEditItem.Enabled = false;
             this.btnEditItem.Image = ((System.Drawing.Image)(resources.GetObject("btnEditItem.Image")));
-            this.btnEditItem.Location = new System.Drawing.Point(465, 286);
+            this.btnEditItem.Location = new System.Drawing.Point(465, 287);
             this.btnEditItem.Name = "btnEditItem";
             this.btnEditItem.Size = new System.Drawing.Size(35, 35);
             this.btnEditItem.TabIndex = 10;
@@ -1507,7 +1506,7 @@
             // btnAddItem
             // 
             this.btnAddItem.Image = global::ARKViewer.Properties.Resources.button_add;
-            this.btnAddItem.Location = new System.Drawing.Point(13, 286);
+            this.btnAddItem.Location = new System.Drawing.Point(13, 287);
             this.btnAddItem.Name = "btnAddItem";
             this.btnAddItem.Size = new System.Drawing.Size(35, 35);
             this.btnAddItem.TabIndex = 8;
@@ -1519,7 +1518,7 @@
             // 
             this.btnRemoveItem.Enabled = false;
             this.btnRemoveItem.Image = global::ARKViewer.Properties.Resources.button_remove;
-            this.btnRemoveItem.Location = new System.Drawing.Point(52, 286);
+            this.btnRemoveItem.Location = new System.Drawing.Point(52, 287);
             this.btnRemoveItem.Name = "btnRemoveItem";
             this.btnRemoveItem.Size = new System.Drawing.Size(35, 35);
             this.btnRemoveItem.TabIndex = 9;
@@ -2647,6 +2646,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnClose;
             this.ClientSize = new System.Drawing.Size(576, 704);
             this.Controls.Add(this.tabSettings);
             this.Controls.Add(this.btnClose);

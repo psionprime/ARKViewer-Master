@@ -160,29 +160,34 @@ namespace ARKViewer
 
                 //map loaded
                 var wilds = cm.GetWildCreatures(0, int.MaxValue, 50, 50, 250, "");
-                var knownMap = SavedConfig.ColourMap.ToList();
-                var unknownMap = new List<int>();
-                for(int i = 0; i < 6; i++)
+                if(wilds!=null && wilds.Count > 0)
                 {
-                    var unmappedColours = wilds.Select(c => (int)c.Colors[i]).Where(x => x !=0 
-                                                                                        &! knownMap.Any(c => c.Id == x) 
-                                                                                        &! unknownMap.Any(c=>c == x)
-                                                                                   ).ToList()
-                                                                                   .Distinct();
-
-                    unknownMap.AddRange(unmappedColours);
-
-                }
-
-                if (unknownMap != null && unknownMap.Count() > 0)
-                {
-                    foreach (var unmappedColour in unknownMap)
+                    var knownMap = SavedConfig.ColourMap.ToList();
+                    var unknownMap = new List<int>();
+                    for (int i = 0; i < 6; i++)
                     {
-                        ListViewItem newItem = new ListViewItem(unmappedColour.ToString());
-                        newItem.Tag = unmappedColour;
-                        lvwColoursNotMapped.Items.Add(newItem);
+                        var unmappedColours = wilds.Select(c => (int)c.Colors[i]).Where(x => x != 0
+                                                                                            & !knownMap.Any(c => c.Id == x)
+                                                                                            & !unknownMap.Any(c => c == x)
+                                                                                       ).Distinct()
+                                                                                       .OrderBy(o => o)
+                                                                                       .ToList();
+
+                        if(unmappedColours!=null && unmappedColours.Count>0) unknownMap.AddRange(unmappedColours);
+
+                    }
+
+                    if (unknownMap != null && unknownMap.Count() > 0)
+                    {
+                        foreach (var unmappedColour in unknownMap)
+                        {
+                            ListViewItem newItem = new ListViewItem(unmappedColour.ToString());
+                            newItem.Tag = unmappedColour;
+                            lvwColoursNotMapped.Items.Add(newItem);
+                        }
                     }
                 }
+                
                 lvwColoursNotMapped.EndUpdate();
             }
 
@@ -237,21 +242,25 @@ namespace ARKViewer
 
                 //map loaded
                 var wilds = cm.GetWildCreatures(0, int.MaxValue, 50, 50, 250, "");
-                var knownMap = SavedConfig.DinoMap.ToList();
-                var unknownMap = new List<string>();
-
-                var unmappedClasses = wilds.Where(w => !knownMap.Any(m=>m.ClassName == w.ClassName)).Select(s=> s.ClassName).Distinct().ToList();
-                if(unmappedClasses!=null && unmappedClasses.Count >0) unknownMap.AddRange(unmappedClasses);
-
-                if (unknownMap != null && unknownMap.Count() > 0)
+                if(wilds!=null && wilds.Count > 0)
                 {
-                    foreach (var unmappedClass in unknownMap)
+                    var knownMap = SavedConfig.DinoMap.ToList();
+                    var unknownMap = new List<string>();
+
+                    var unmappedClasses = wilds.Where(w => !knownMap.Any(m => m.ClassName == w.ClassName)).Select(s => s.ClassName).Distinct().OrderBy(s => s).ToList();
+                    if (unmappedClasses != null && unmappedClasses.Count > 0) unknownMap.AddRange(unmappedClasses);
+
+                    if (unknownMap != null && unknownMap.Count() > 0)
                     {
-                        ListViewItem newItem = new ListViewItem(unmappedClass.ToString());
-                        newItem.Tag = unmappedClass;
-                        lvwCreaturesNotMapped.Items.Add(newItem);
+                        foreach (var unmappedClass in unknownMap)
+                        {
+                            ListViewItem newItem = new ListViewItem(unmappedClass.ToString());
+                            newItem.Tag = unmappedClass;
+                            lvwCreaturesNotMapped.Items.Add(newItem);
+                        }
                     }
                 }
+                
                 lvwCreaturesNotMapped.EndUpdate();
             }
 
@@ -309,21 +318,21 @@ namespace ARKViewer
                 lvwItemsNotMatched.Items.Clear();
 
                 //map loaded
-                var allItems = cm.GetInventories();
+                var allItems = cm.GetInventories().Where(x => x!=null && x.Items!=null).ToList();
                 if(allItems!=null && allItems.Count > 0)
                 {
-                    var knownMap = SavedConfig.StructureMap.ToList();
+                    var knownMap = SavedConfig.ItemMap.ToList();
                     var unknownMap = new List<string>();
 
-                    var unmappedClasses = allItems.SelectMany(
-                            x =>
-                                x.Items.Where(w =>
-                                                !knownMap.Any(m => m.ClassName == w.ClassName)
-                                              )).ToList();
+                    var unmappedClasses = allItems.SelectMany(x =>
+                                                                    x.Items.Where(w =>
+                                                                        !knownMap.Any(m => m.ClassName == w.ClassName)
+                                                                    )
+                                                             ).ToList();
 
                     if (unmappedClasses != null && unmappedClasses.Count > 0)
                     {
-                        var distinctClassNames = unmappedClasses.Select(s => s.ClassName).Distinct().ToList();
+                        var distinctClassNames = unmappedClasses.Select(s => s.ClassName).Distinct().OrderBy(s=>s).ToList();
                         if (distinctClassNames != null && distinctClassNames.Count > 0) unknownMap.AddRange(distinctClassNames);
                     }
 
@@ -390,22 +399,27 @@ namespace ARKViewer
                 lvwStructuresNotMapped.Items.Clear();
 
                 //map loaded
-                var structures = cm.GetPlayerStructures(0,0,"",true);
-                var knownMap = SavedConfig.StructureMap.ToList();
-                var unknownMap = new List<string>();
+                var structures = cm.GetPlayerStructures(0,0,"",false);
 
-                var unmappedClasses = structures.Where(w => !knownMap.Any(m => m.ClassName == w.ClassName)).Select(s => s.ClassName).Distinct().ToList();
-                if (unmappedClasses != null && unmappedClasses.Count > 0) unknownMap.AddRange(unmappedClasses);
-
-                if (unknownMap != null && unknownMap.Count() > 0)
+                if(structures!=null && structures.Count > 0)
                 {
-                    foreach (var unmappedClass in unknownMap)
+                    var knownMap = SavedConfig.StructureMap.ToList();
+                    var unknownMap = new List<string>();
+
+                    var unmappedClasses = structures.Where(w => !knownMap.Any(m => m.ClassName == w.ClassName)).Select(s => s.ClassName).Distinct().OrderBy(s => s).ToList();
+                    if (unmappedClasses != null && unmappedClasses.Count > 0) unknownMap.AddRange(unmappedClasses);
+
+                    if (unknownMap != null && unknownMap.Count() > 0)
                     {
-                        ListViewItem newItem = new ListViewItem(unmappedClass.ToString());
-                        newItem.Tag = unmappedClass;
-                        lvwStructuresNotMapped.Items.Add(newItem);
+                        foreach (var unmappedClass in unknownMap)
+                        {
+                            ListViewItem newItem = new ListViewItem(unmappedClass.ToString());
+                            newItem.Tag = unmappedClass;
+                            lvwStructuresNotMapped.Items.Add(newItem);
+                        }
                     }
                 }
+                
                 lvwStructuresNotMapped.EndUpdate();
             }
 
@@ -1094,7 +1108,7 @@ namespace ARKViewer
                     ListViewItem item = lvwItemMap.Items[currentIndex];
                     bool shouldKeep = false;
 
-                    foreach (ListViewItem subItem in item.SubItems)
+                    foreach (ListViewItem.ListViewSubItem subItem in item.SubItems)
                     {
                         if (subItem.Text.ToLower().Contains(txtItemFilter.Text.ToLower()))
                         {
@@ -1408,7 +1422,7 @@ namespace ARKViewer
                 for (int currentIndex = lastIndex; currentIndex >= 0; currentIndex--)
                 {
                     ListViewItem item = selectedListview.Items[currentIndex];
-                    if (!(item.SubItems[1].Text.ToLower().Contains(filterText) | item.SubItems[2].Text.ToLower().Contains(filterText)))
+                    if (!(item.SubItems[0].Text.ToLower().Contains(filterText) | item.SubItems[1].Text.ToLower().Contains(filterText)))
                     {
                         selectedListview.Items.Remove(item);
                     }
@@ -1463,13 +1477,13 @@ namespace ARKViewer
                 
 
                 selectedListview.BeginUpdate();
-                int lastIndex = lvwStructureMap.Items.Count - 1;
+                int lastIndex = selectedListview.Items.Count - 1;
                 for (int currentIndex = lastIndex; currentIndex >= 0; currentIndex--)
                 {
                     ListViewItem item = selectedListview.Items[currentIndex];
                     bool shouldKeep = false;
 
-                    foreach(ListViewItem subItem in item.SubItems)
+                    foreach(ListViewItem.ListViewSubItem subItem in item.SubItems)
                     {
                         if (subItem.Text.ToLower().Contains(filterText))
                         {
@@ -1534,7 +1548,8 @@ namespace ARKViewer
 
         private void lvwStructureMap_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            btnEditStructure.Enabled = lvwStructureMap.SelectedItems.Count > 0;
+            btnRemoveStructure.Enabled = lvwStructureMap.SelectedItems.Count > 0;
         }
 
         private void lvwColours_Click(object sender, EventArgs e)
@@ -1915,6 +1930,35 @@ namespace ARKViewer
             btnItemsNotMatchedAdd.Enabled = lvwItemsNotMatched.SelectedItems.Count > 0;
         }
 
-       
+        private void lvwStructuresNotMapped_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnStructuresNotMappedAdd.Enabled = lvwStructuresNotMapped.SelectedItems.Count > 0;
+        }
+
+        private void btnStructuresNotMappedAdd_Click(object sender, EventArgs e)
+        {
+            if (lvwStructuresNotMapped.SelectedItems.Count == 0) return;
+            string selectedClass = lvwStructuresNotMapped.SelectedItems[0].Tag.ToString();
+
+            frmGenericClassMap mapEditor = new frmGenericClassMap(new StructureClassMap() { ClassName = selectedClass });
+            mapEditor.Owner = this;
+            if (mapEditor.ShowDialog() == DialogResult.OK)
+            {
+                //if line already exist for this class update the friendly name.
+                StructureClassMap existingMap = SavedConfig.StructureMap.Where(d => d.ClassName.ToLower() == mapEditor.ClassMap.ClassName.ToLower()).FirstOrDefault<StructureClassMap>();
+                if (existingMap != null && existingMap.ClassName.Length != 0)
+                {
+                    //found it, update
+                    existingMap.FriendlyName = mapEditor.ClassMap.FriendlyName;
+                }
+                else
+                {
+                    //not found, add new
+                    SavedConfig.StructureMap.Add((StructureClassMap)mapEditor.ClassMap);
+                }
+
+                PopulateStructureClassMap("");
+            }
+        }
     }
 }

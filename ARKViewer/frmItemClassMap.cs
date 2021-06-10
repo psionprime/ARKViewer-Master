@@ -154,7 +154,7 @@ namespace ARKViewer
 
         private void txtCategory_Validating(object sender, CancelEventArgs e)
         {
-            ClassMap.Category = txtClassName.Text.Trim();
+            ClassMap.Category = txtCategory.Text.Trim();
         }
 
         private void frmItemClassMap_FormClosed(object sender, FormClosedEventArgs e)
@@ -193,6 +193,11 @@ namespace ARKViewer
 
             this.DialogResult = DialogResult.OK;
             this.Close();
+        }
+
+        private void txtCategory_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

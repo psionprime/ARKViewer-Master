@@ -49,13 +49,16 @@ namespace ARKViewer
             // 
             // lvwTextColours
             // 
+            this.lvwTextColours.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lvwTextColours.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
             this.columnHeader2});
             this.lvwTextColours.HideSelection = false;
             this.lvwTextColours.Location = new System.Drawing.Point(12, 157);
             this.lvwTextColours.Name = "lvwTextColours";
-            this.lvwTextColours.Size = new System.Drawing.Size(533, 193);
+            this.lvwTextColours.Size = new System.Drawing.Size(479, 196);
             this.lvwTextColours.TabIndex = 0;
             this.lvwTextColours.UseCompatibleStateImageBehavior = false;
             this.lvwTextColours.View = System.Windows.Forms.View.Details;
@@ -77,7 +80,7 @@ namespace ARKViewer
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSave.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSave.Location = new System.Drawing.Point(386, 408);
+            this.btnSave.Location = new System.Drawing.Point(417, 421);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 17;
@@ -87,10 +90,10 @@ namespace ARKViewer
             // 
             // btnClose
             // 
-            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClose.Location = new System.Drawing.Point(468, 408);
+            this.btnClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.btnClose.Location = new System.Drawing.Point(12, 421);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 18;
@@ -119,10 +122,11 @@ namespace ARKViewer
             // 
             // pnlGameColour
             // 
+            this.pnlGameColour.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.pnlGameColour.BackColor = System.Drawing.SystemColors.Control;
             this.pnlGameColour.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlGameColour.Enabled = false;
-            this.pnlGameColour.Location = new System.Drawing.Point(15, 355);
+            this.pnlGameColour.Location = new System.Drawing.Point(15, 358);
             this.pnlGameColour.Name = "pnlGameColour";
             this.pnlGameColour.Size = new System.Drawing.Size(243, 30);
             this.pnlGameColour.TabIndex = 31;
@@ -130,12 +134,14 @@ namespace ARKViewer
             // 
             // pnlCustomColour
             // 
+            this.pnlCustomColour.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlCustomColour.BackColor = System.Drawing.SystemColors.Control;
             this.pnlCustomColour.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlCustomColour.Enabled = false;
-            this.pnlCustomColour.Location = new System.Drawing.Point(269, 355);
+            this.pnlCustomColour.Location = new System.Drawing.Point(269, 358);
             this.pnlCustomColour.Name = "pnlCustomColour";
-            this.pnlCustomColour.Size = new System.Drawing.Size(208, 30);
+            this.pnlCustomColour.Size = new System.Drawing.Size(154, 30);
             this.pnlCustomColour.TabIndex = 32;
             this.pnlCustomColour.Click += new System.EventHandler(this.pnlCustomColour_Click);
             this.pnlCustomColour.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlCustomColour_Paint);
@@ -162,8 +168,9 @@ namespace ARKViewer
             // 
             // btnAddUpdate
             // 
+            this.btnAddUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAddUpdate.Enabled = false;
-            this.btnAddUpdate.Location = new System.Drawing.Point(483, 355);
+            this.btnAddUpdate.Location = new System.Drawing.Point(429, 358);
             this.btnAddUpdate.Name = "btnAddUpdate";
             this.btnAddUpdate.Size = new System.Drawing.Size(60, 29);
             this.btnAddUpdate.TabIndex = 35;
@@ -183,8 +190,9 @@ namespace ARKViewer
             // 
             // pictureBox1
             // 
+            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(455, 7);
+            this.pictureBox1.Location = new System.Drawing.Point(401, 7);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(90, 87);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -195,7 +203,8 @@ namespace ARKViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(555, 443);
+            this.CancelButton = this.btnClose;
+            this.ClientSize = new System.Drawing.Size(504, 456);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.btnAddUpdate);
@@ -212,6 +221,7 @@ namespace ARKViewer
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(520, 495);
             this.Name = "frmTribeLogColourMap";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Tribe Log Colour Options";

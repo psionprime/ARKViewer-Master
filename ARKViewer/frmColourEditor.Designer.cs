@@ -71,9 +71,10 @@ namespace ARKViewer
             // 
             // btnCcancel
             // 
+            this.btnCcancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnCcancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCcancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCcancel.Location = new System.Drawing.Point(230, 199);
+            this.btnCcancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.btnCcancel.Location = new System.Drawing.Point(13, 199);
             this.btnCcancel.Name = "btnCcancel";
             this.btnCcancel.Size = new System.Drawing.Size(75, 23);
             this.btnCcancel.TabIndex = 11;
@@ -82,8 +83,9 @@ namespace ARKViewer
             // 
             // btnSave
             // 
+            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSave.Location = new System.Drawing.Point(143, 199);
+            this.btnSave.Location = new System.Drawing.Point(228, 199);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 10;
@@ -172,6 +174,7 @@ namespace ARKViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnCcancel;
             this.ClientSize = new System.Drawing.Size(318, 234);
             this.Controls.Add(this.udB);
             this.Controls.Add(this.udG);

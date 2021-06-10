@@ -299,7 +299,7 @@
             this.tpgCreatureInventory.Location = new System.Drawing.Point(4, 22);
             this.tpgCreatureInventory.Name = "tpgCreatureInventory";
             this.tpgCreatureInventory.Padding = new System.Windows.Forms.Padding(3);
-            this.tpgCreatureInventory.Size = new System.Drawing.Size(708, 467);
+            this.tpgCreatureInventory.Size = new System.Drawing.Size(724, 483);
             this.tpgCreatureInventory.TabIndex = 1;
             this.tpgCreatureInventory.Text = "Creature Inventory";
             this.tpgCreatureInventory.UseVisualStyleBackColor = true;
@@ -452,7 +452,7 @@
             this.tpgStorageInventory.Controls.Add(this.pnlStorageInventory);
             this.tpgStorageInventory.Location = new System.Drawing.Point(4, 22);
             this.tpgStorageInventory.Name = "tpgStorageInventory";
-            this.tpgStorageInventory.Size = new System.Drawing.Size(708, 467);
+            this.tpgStorageInventory.Size = new System.Drawing.Size(724, 483);
             this.tpgStorageInventory.TabIndex = 2;
             this.tpgStorageInventory.Text = "Storage Inventory";
             this.tpgStorageInventory.UseVisualStyleBackColor = true;
@@ -603,7 +603,7 @@
             this.tpgMissions.Location = new System.Drawing.Point(4, 22);
             this.tpgMissions.Name = "tpgMissions";
             this.tpgMissions.Padding = new System.Windows.Forms.Padding(3);
-            this.tpgMissions.Size = new System.Drawing.Size(708, 467);
+            this.tpgMissions.Size = new System.Drawing.Size(724, 483);
             this.tpgMissions.TabIndex = 3;
             this.tpgMissions.Text = "Mission Scores";
             this.tpgMissions.UseVisualStyleBackColor = true;
@@ -680,7 +680,7 @@
             // 
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.btnClose.Location = new System.Drawing.Point(665, 541);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
@@ -702,6 +702,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnClose;
             this.ClientSize = new System.Drawing.Size(760, 577);
             this.Controls.Add(this.lblPlayerId);
             this.Controls.Add(this.btnClose);
