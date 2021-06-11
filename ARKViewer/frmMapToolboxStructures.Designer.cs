@@ -134,7 +134,7 @@ namespace ARKViewer
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.Size = new System.Drawing.Size(361, 280);
-            this.tableLayoutPanel1.TabIndex = 41;
+            this.tableLayoutPanel1.TabIndex = 0;
             // 
             // panel13
             // 
@@ -145,7 +145,7 @@ namespace ARKViewer
             this.panel13.Location = new System.Drawing.Point(3, 233);
             this.panel13.Name = "panel13";
             this.panel13.Size = new System.Drawing.Size(174, 44);
-            this.panel13.TabIndex = 50;
+            this.panel13.TabIndex = 10;
             // 
             // pictureBox11
             // 
@@ -166,7 +166,7 @@ namespace ARKViewer
             this.chkMapArtifacts.Location = new System.Drawing.Point(55, 12);
             this.chkMapArtifacts.Name = "chkMapArtifacts";
             this.chkMapArtifacts.Size = new System.Drawing.Size(64, 17);
-            this.chkMapArtifacts.TabIndex = 16;
+            this.chkMapArtifacts.TabIndex = 0;
             this.chkMapArtifacts.Text = "Artifacts";
             this.chkMapArtifacts.UseVisualStyleBackColor = true;
             this.chkMapArtifacts.CheckedChanged += new System.EventHandler(this.chkMapArtifacts_CheckedChanged);
@@ -180,7 +180,7 @@ namespace ARKViewer
             this.panel12.Location = new System.Drawing.Point(183, 233);
             this.panel12.Name = "panel12";
             this.panel12.Size = new System.Drawing.Size(175, 44);
-            this.panel12.TabIndex = 49;
+            this.panel12.TabIndex = 11;
             // 
             // pictureBox12
             // 
@@ -201,7 +201,7 @@ namespace ARKViewer
             this.chkMapGlitches.Location = new System.Drawing.Point(53, 12);
             this.chkMapGlitches.Name = "chkMapGlitches";
             this.chkMapGlitches.Size = new System.Drawing.Size(64, 17);
-            this.chkMapGlitches.TabIndex = 28;
+            this.chkMapGlitches.TabIndex = 0;
             this.chkMapGlitches.Text = "Glitches";
             this.chkMapGlitches.UseVisualStyleBackColor = true;
             this.chkMapGlitches.CheckedChanged += new System.EventHandler(this.chkMapGlitches_CheckedChanged);
@@ -215,7 +215,7 @@ namespace ARKViewer
             this.panel11.Location = new System.Drawing.Point(3, 187);
             this.panel11.Name = "panel11";
             this.panel11.Size = new System.Drawing.Size(174, 40);
-            this.panel11.TabIndex = 48;
+            this.panel11.TabIndex = 8;
             // 
             // pictureBox9
             // 
@@ -236,7 +236,7 @@ namespace ARKViewer
             this.chkMapChargeNodes.Location = new System.Drawing.Point(55, 12);
             this.chkMapChargeNodes.Name = "chkMapChargeNodes";
             this.chkMapChargeNodes.Size = new System.Drawing.Size(94, 17);
-            this.chkMapChargeNodes.TabIndex = 18;
+            this.chkMapChargeNodes.TabIndex = 0;
             this.chkMapChargeNodes.Text = "Charge Nodes";
             this.chkMapChargeNodes.UseVisualStyleBackColor = true;
             this.chkMapChargeNodes.CheckedChanged += new System.EventHandler(this.chkMapChargeNodes_CheckedChanged);
@@ -250,7 +250,7 @@ namespace ARKViewer
             this.panel10.Location = new System.Drawing.Point(183, 187);
             this.panel10.Name = "panel10";
             this.panel10.Size = new System.Drawing.Size(175, 40);
-            this.panel10.TabIndex = 47;
+            this.panel10.TabIndex = 9;
             // 
             // pictureBox10
             // 
@@ -271,7 +271,7 @@ namespace ARKViewer
             this.chkMapBeaverDams.Location = new System.Drawing.Point(53, 12);
             this.chkMapBeaverDams.Name = "chkMapBeaverDams";
             this.chkMapBeaverDams.Size = new System.Drawing.Size(90, 17);
-            this.chkMapBeaverDams.TabIndex = 2;
+            this.chkMapBeaverDams.TabIndex = 0;
             this.chkMapBeaverDams.Text = "Beaver Dams";
             this.chkMapBeaverDams.UseVisualStyleBackColor = true;
             this.chkMapBeaverDams.CheckedChanged += new System.EventHandler(this.chkMapBeaverDams_CheckedChanged);
@@ -285,7 +285,7 @@ namespace ARKViewer
             this.panel9.Location = new System.Drawing.Point(3, 141);
             this.panel9.Name = "panel9";
             this.panel9.Size = new System.Drawing.Size(174, 40);
-            this.panel9.TabIndex = 46;
+            this.panel9.TabIndex = 6;
             // 
             // pictureBox7
             // 
@@ -306,7 +306,7 @@ namespace ARKViewer
             this.chkMapWaterVeins.Location = new System.Drawing.Point(55, 13);
             this.chkMapWaterVeins.Name = "chkMapWaterVeins";
             this.chkMapWaterVeins.Size = new System.Drawing.Size(84, 17);
-            this.chkMapWaterVeins.TabIndex = 10;
+            this.chkMapWaterVeins.TabIndex = 0;
             this.chkMapWaterVeins.Text = "Water Veins";
             this.chkMapWaterVeins.UseVisualStyleBackColor = true;
             this.chkMapWaterVeins.CheckedChanged += new System.EventHandler(this.chkMapWaterVeins_CheckedChanged);
@@ -320,7 +320,7 @@ namespace ARKViewer
             this.panel8.Location = new System.Drawing.Point(183, 141);
             this.panel8.Name = "panel8";
             this.panel8.Size = new System.Drawing.Size(175, 40);
-            this.panel8.TabIndex = 45;
+            this.panel8.TabIndex = 7;
             // 
             // chkMapMagmaNests
             // 
@@ -328,7 +328,7 @@ namespace ARKViewer
             this.chkMapMagmaNests.Location = new System.Drawing.Point(53, 13);
             this.chkMapMagmaNests.Name = "chkMapMagmaNests";
             this.chkMapMagmaNests.Size = new System.Drawing.Size(111, 17);
-            this.chkMapMagmaNests.TabIndex = 26;
+            this.chkMapMagmaNests.TabIndex = 0;
             this.chkMapMagmaNests.Text = "Magmasaur Nests";
             this.chkMapMagmaNests.UseVisualStyleBackColor = true;
             this.chkMapMagmaNests.CheckedChanged += new System.EventHandler(this.chkMapMagmaNests_CheckedChanged);
@@ -355,7 +355,7 @@ namespace ARKViewer
             this.panel7.Location = new System.Drawing.Point(3, 95);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(174, 40);
-            this.panel7.TabIndex = 44;
+            this.panel7.TabIndex = 4;
             // 
             // chkMapGasVeins
             // 
@@ -363,7 +363,7 @@ namespace ARKViewer
             this.chkMapGasVeins.Location = new System.Drawing.Point(55, 13);
             this.chkMapGasVeins.Name = "chkMapGasVeins";
             this.chkMapGasVeins.Size = new System.Drawing.Size(74, 17);
-            this.chkMapGasVeins.TabIndex = 6;
+            this.chkMapGasVeins.TabIndex = 0;
             this.chkMapGasVeins.Text = "Gas Veins";
             this.chkMapGasVeins.UseVisualStyleBackColor = true;
             this.chkMapGasVeins.CheckedChanged += new System.EventHandler(this.chkMapGasVeins_CheckedChanged);
@@ -390,7 +390,7 @@ namespace ARKViewer
             this.panel6.Location = new System.Drawing.Point(183, 95);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(175, 40);
-            this.panel6.TabIndex = 43;
+            this.panel6.TabIndex = 5;
             // 
             // chkMapDrakeNests
             // 
@@ -398,7 +398,7 @@ namespace ARKViewer
             this.chkMapDrakeNests.Location = new System.Drawing.Point(53, 13);
             this.chkMapDrakeNests.Name = "chkMapDrakeNests";
             this.chkMapDrakeNests.Size = new System.Drawing.Size(114, 17);
-            this.chkMapDrakeNests.TabIndex = 24;
+            this.chkMapDrakeNests.TabIndex = 0;
             this.chkMapDrakeNests.Text = "Rock Drake Nests";
             this.chkMapDrakeNests.UseVisualStyleBackColor = true;
             this.chkMapDrakeNests.CheckedChanged += new System.EventHandler(this.chkMapDrakeNests_CheckedChanged);
@@ -425,7 +425,7 @@ namespace ARKViewer
             this.panel4.Location = new System.Drawing.Point(3, 49);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(174, 40);
-            this.panel4.TabIndex = 42;
+            this.panel4.TabIndex = 2;
             // 
             // chkMapOilVeins
             // 
@@ -433,7 +433,7 @@ namespace ARKViewer
             this.chkMapOilVeins.Location = new System.Drawing.Point(55, 13);
             this.chkMapOilVeins.Name = "chkMapOilVeins";
             this.chkMapOilVeins.Size = new System.Drawing.Size(67, 17);
-            this.chkMapOilVeins.TabIndex = 8;
+            this.chkMapOilVeins.TabIndex = 0;
             this.chkMapOilVeins.Text = "Oil Veins";
             this.chkMapOilVeins.UseVisualStyleBackColor = true;
             this.chkMapOilVeins.CheckedChanged += new System.EventHandler(this.chkMapOilVeins_CheckedChanged);
@@ -460,7 +460,7 @@ namespace ARKViewer
             this.panel3.Location = new System.Drawing.Point(183, 49);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(175, 40);
-            this.panel3.TabIndex = 41;
+            this.panel3.TabIndex = 3;
             // 
             // chkMapDeinoNests
             // 
@@ -468,7 +468,7 @@ namespace ARKViewer
             this.chkMapDeinoNests.Location = new System.Drawing.Point(53, 13);
             this.chkMapDeinoNests.Name = "chkMapDeinoNests";
             this.chkMapDeinoNests.Size = new System.Drawing.Size(118, 17);
-            this.chkMapDeinoNests.TabIndex = 4;
+            this.chkMapDeinoNests.TabIndex = 0;
             this.chkMapDeinoNests.Text = "Deinonychus Nests";
             this.chkMapDeinoNests.UseVisualStyleBackColor = true;
             this.chkMapDeinoNests.CheckedChanged += new System.EventHandler(this.chkMapDeinoNests_CheckedChanged);
@@ -495,7 +495,7 @@ namespace ARKViewer
             this.panel2.Location = new System.Drawing.Point(3, 3);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(174, 40);
-            this.panel2.TabIndex = 40;
+            this.panel2.TabIndex = 0;
             // 
             // pictureBox2
             // 
@@ -516,7 +516,7 @@ namespace ARKViewer
             this.chkMapTerminals.Location = new System.Drawing.Point(55, 12);
             this.chkMapTerminals.Name = "chkMapTerminals";
             this.chkMapTerminals.Size = new System.Drawing.Size(122, 17);
-            this.chkMapTerminals.TabIndex = 12;
+            this.chkMapTerminals.TabIndex = 0;
             this.chkMapTerminals.Text = "Obelisks / Terminals";
             this.chkMapTerminals.UseVisualStyleBackColor = true;
             this.chkMapTerminals.CheckedChanged += new System.EventHandler(this.chkMapTerminals_CheckedChanged);
@@ -530,7 +530,7 @@ namespace ARKViewer
             this.panel1.Location = new System.Drawing.Point(183, 3);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(175, 40);
-            this.panel1.TabIndex = 39;
+            this.panel1.TabIndex = 1;
             // 
             // pictureBox1
             // 
@@ -551,7 +551,7 @@ namespace ARKViewer
             this.chkMapWyvernNests.Location = new System.Drawing.Point(53, 11);
             this.chkMapWyvernNests.Name = "chkMapWyvernNests";
             this.chkMapWyvernNests.Size = new System.Drawing.Size(93, 17);
-            this.chkMapWyvernNests.TabIndex = 14;
+            this.chkMapWyvernNests.TabIndex = 0;
             this.chkMapWyvernNests.Text = "Wyvern Nests";
             this.chkMapWyvernNests.UseVisualStyleBackColor = true;
             this.chkMapWyvernNests.CheckedChanged += new System.EventHandler(this.chkMapWyvernNests_CheckedChanged);
@@ -571,7 +571,7 @@ namespace ARKViewer
             this.lvwStructureLocations.MultiSelect = false;
             this.lvwStructureLocations.Name = "lvwStructureLocations";
             this.lvwStructureLocations.Size = new System.Drawing.Size(358, 62);
-            this.lvwStructureLocations.TabIndex = 42;
+            this.lvwStructureLocations.TabIndex = 1;
             this.lvwStructureLocations.UseCompatibleStateImageBehavior = false;
             this.lvwStructureLocations.View = System.Windows.Forms.View.Details;
             this.lvwStructureLocations.SelectedIndexChanged += new System.EventHandler(this.lvwStructureLocations_SelectedIndexChanged);
@@ -600,7 +600,7 @@ namespace ARKViewer
             this.chkGroup.Location = new System.Drawing.Point(279, 407);
             this.chkGroup.Name = "chkGroup";
             this.chkGroup.Size = new System.Drawing.Size(91, 17);
-            this.chkGroup.TabIndex = 47;
+            this.chkGroup.TabIndex = 5;
             this.chkGroup.Text = "Group Stacks";
             this.chkGroup.UseVisualStyleBackColor = true;
             // 
@@ -614,7 +614,7 @@ namespace ARKViewer
             this.txtContents.ReadOnly = true;
             this.txtContents.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtContents.Size = new System.Drawing.Size(354, 154);
-            this.txtContents.TabIndex = 46;
+            this.txtContents.TabIndex = 6;
             // 
             // lblInventory
             // 
@@ -624,7 +624,7 @@ namespace ARKViewer
             this.lblInventory.Location = new System.Drawing.Point(13, 402);
             this.lblInventory.Name = "lblInventory";
             this.lblInventory.Size = new System.Drawing.Size(125, 25);
-            this.lblInventory.TabIndex = 45;
+            this.lblInventory.TabIndex = 4;
             this.lblInventory.Text = "Selected  Content(s)";
             this.lblInventory.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -635,7 +635,7 @@ namespace ARKViewer
             this.btnCopyCommand.Location = new System.Drawing.Point(340, 367);
             this.btnCopyCommand.Name = "btnCopyCommand";
             this.btnCopyCommand.Size = new System.Drawing.Size(30, 30);
-            this.btnCopyCommand.TabIndex = 44;
+            this.btnCopyCommand.TabIndex = 3;
             this.btnCopyCommand.UseVisualStyleBackColor = true;
             this.btnCopyCommand.Click += new System.EventHandler(this.btnCopyCommand_Click);
             // 
@@ -650,7 +650,7 @@ namespace ARKViewer
             this.cboConsoleCommands.Location = new System.Drawing.Point(15, 371);
             this.cboConsoleCommands.Name = "cboConsoleCommands";
             this.cboConsoleCommands.Size = new System.Drawing.Size(319, 21);
-            this.cboConsoleCommands.TabIndex = 43;
+            this.cboConsoleCommands.TabIndex = 2;
             // 
             // lblStatus
             // 
@@ -661,7 +661,7 @@ namespace ARKViewer
             this.lblStatus.Location = new System.Drawing.Point(13, 593);
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(359, 13);
-            this.lblStatus.TabIndex = 48;
+            this.lblStatus.TabIndex = 7;
             this.lblStatus.Text = "Loading...";
             // 
             // frmMapToolboxStructures

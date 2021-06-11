@@ -52,7 +52,7 @@
             this.lblPlayerLevelLabel.Location = new System.Drawing.Point(763, 14);
             this.lblPlayerLevelLabel.Name = "lblPlayerLevelLabel";
             this.lblPlayerLevelLabel.Size = new System.Drawing.Size(65, 13);
-            this.lblPlayerLevelLabel.TabIndex = 8;
+            this.lblPlayerLevelLabel.TabIndex = 2;
             this.lblPlayerLevelLabel.Text = "Player Level";
             // 
             // lblPlayerLevel
@@ -63,7 +63,7 @@
             this.lblPlayerLevel.Location = new System.Drawing.Point(764, 27);
             this.lblPlayerLevel.Name = "lblPlayerLevel";
             this.lblPlayerLevel.Size = new System.Drawing.Size(62, 31);
-            this.lblPlayerLevel.TabIndex = 9;
+            this.lblPlayerLevel.TabIndex = 3;
             this.lblPlayerLevel.Text = "135";
             this.lblPlayerLevel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -75,7 +75,7 @@
             this.lblTribeName.Location = new System.Drawing.Point(74, 41);
             this.lblTribeName.Name = "lblTribeName";
             this.lblTribeName.Size = new System.Drawing.Size(90, 16);
-            this.lblTribeName.TabIndex = 7;
+            this.lblTribeName.TabIndex = 1;
             this.lblTribeName.Text = "Tribe Name";
             this.lblTribeName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -87,7 +87,7 @@
             this.lblPlayerName.Location = new System.Drawing.Point(72, 8);
             this.lblPlayerName.Name = "lblPlayerName";
             this.lblPlayerName.Size = new System.Drawing.Size(163, 29);
-            this.lblPlayerName.TabIndex = 6;
+            this.lblPlayerName.TabIndex = 0;
             this.lblPlayerName.Text = "Player Name";
             this.lblPlayerName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -112,7 +112,7 @@
             this.pnlPlayerInventory.Location = new System.Drawing.Point(12, 73);
             this.pnlPlayerInventory.Name = "pnlPlayerInventory";
             this.pnlPlayerInventory.Size = new System.Drawing.Size(816, 318);
-            this.pnlPlayerInventory.TabIndex = 10;
+            this.pnlPlayerInventory.TabIndex = 4;
             // 
             // lvwLog
             // 
@@ -152,7 +152,7 @@
             this.btnClose.Location = new System.Drawing.Point(753, 399);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
-            this.btnClose.TabIndex = 12;
+            this.btnClose.TabIndex = 6;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
@@ -164,7 +164,7 @@
             this.btnSettings.Location = new System.Drawing.Point(11, 395);
             this.btnSettings.Name = "btnSettings";
             this.btnSettings.Size = new System.Drawing.Size(35, 35);
-            this.btnSettings.TabIndex = 20;
+            this.btnSettings.TabIndex = 5;
             this.btnSettings.UseVisualStyleBackColor = true;
             this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
             // 

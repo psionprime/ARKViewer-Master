@@ -12,13 +12,15 @@ using System.Collections.Concurrent;
 using System.IO.Compression;
 using System.Web.Routing;
 using System.Diagnostics;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
-namespace ARKViewer.Models
+namespace ARKViewer.Models.ASVPack
 {
     [DataContract]
     public class ContentPack
     {
         [DataMember] public string MapFilename { get; set; } = "TheIsland.ark";
+        [DataMember] public DateTime ContentDate { get; internal set; } = DateTime.Now;
         [DataMember] public long ExportedForTribe { get; set; } = 0;
         [DataMember] public long ExportedForPlayer { get; set; } = 0;
         [DataMember] public DateTime ExportedTimestamp { get; set; } = DateTime.Now;
@@ -38,8 +40,10 @@ namespace ARKViewer.Models
         [DataMember] public List<ContentInventory> Inventories { get; set; } = new List<ContentInventory>();
         [DataMember] public List<ContentDroppedItem> DroppedItems { get; set; } = new List<ContentDroppedItem>();
         [DataMember] public List<ContentWildCreature> WildCreatures { get; set; } = new List<ContentWildCreature>();
-
         [DataMember] public List<ContentTribe> Tribes { get; set; } = new List<ContentTribe>();
+
+        public List<ContentStructure> OrphanedStructures { get; set; } = new List<ContentStructure>();
+        public List<ContentTamedCreature> OrphanedTames { get; set; } = new List<ContentTamedCreature>();
 
         bool IncludeGameStructures { get; set; } = true;
         bool IncludeGameStructureContent { get; set; } = true;
@@ -51,8 +55,8 @@ namespace ARKViewer.Models
         decimal FilterLatitude { get; set; } = 50;
         decimal FilterLongitude { get; set; } = 50;
         decimal FilterRadius { get; set; } = 100;
-        public DateTime ContentDate { get; internal set; }
 
+        ConcurrentBag<ContentInventory> inventoryBag = new ConcurrentBag<ContentInventory>();
 
         public ContentPack()
         {
@@ -81,6 +85,27 @@ namespace ARKViewer.Models
             WildCreatures = new List<ContentWildCreature>();
             Tribes = new List<ContentTribe>();
             DroppedItems = new List<ContentDroppedItem>();
+        }
+
+        public ContentPack(ContentPack sourcePack, long selectedTribeId, long selectedPlayerId, decimal lat, decimal lon, decimal rad, bool includeGameStructures, bool includeGameStructureContent, bool includeTribesPlayers, bool includeTamed, bool includeWild, bool includePlayerStructures, bool includeDropped) : this()
+        {
+            
+            ExportedForTribe = selectedTribeId;
+            ExportedForPlayer = selectedPlayerId;
+
+            FilterLatitude = lat;
+            FilterLongitude = lon;
+            FilterRadius = rad;
+
+            IncludeGameStructures = includeGameStructures;
+            IncludeGameStructureContent = includeGameStructureContent;
+            IncludeTribesPlayers = includeTribesPlayers;
+            IncludeTamed = includeTamed;
+            IncludeWild = includeWild;
+            IncludePlayerStructures = includePlayerStructures;
+
+            LoadPackData(sourcePack);
+
         }
 
         public ContentPack(ArkGameData gd, long selectedTribeId, long selectedPlayerId, decimal lat, decimal lon, decimal rad, bool includeGameStructures, bool includeGameStructureContent, bool includeTribesPlayers, bool includeTamed, bool includeWild, bool includePlayerStructures, bool includeDropped): this()
@@ -153,6 +178,11 @@ namespace ARKViewer.Models
             
         }
 
+        public string ToJson()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
+
         public void ExportPack(string fileName)
         {
            
@@ -177,7 +207,6 @@ namespace ARKViewer.Models
             }
             
         }
-
 
         private void LoadGameData(ArkGameData gd)
         {
@@ -682,7 +711,8 @@ namespace ARKViewer.Models
                             Longitude = wild.Location.Longitude,
                             Latitude = wild.Location.Latitude,
                             Colors = wild.Colors,
-                            BaseStats = wild.BaseStats
+                            BaseStats = wild.BaseStats,
+                            Resources = wild.ProductionResources
                         });
 
 
@@ -805,9 +835,6 @@ namespace ARKViewer.Models
                         };
                         soloTribe.Players.Add(soloPlayer);
 
-                        //structures
-
-
                         loadedTribes.Add(soloTribe);
 
                     });
@@ -825,6 +852,18 @@ namespace ARKViewer.Models
                     Tames = new List<ContentTamedCreature>()
                 };
                 loadedTribes.Add(unclaimedTribe);
+
+                var orphanedTribe = new ContentTribe()
+                {
+                    TribeId = int.MinValue,
+                    TribeName = $"[Abandoned]",
+                    LastActive = DateTime.Now,
+                    Logs = new string[0],
+                    Players = new List<ContentPlayer>(),
+                    Structures = new List<ContentStructure>(),
+                    Tames = new List<ContentTamedCreature>()
+                };
+                loadedTribes.Add(orphanedTribe);
 
                 if (!loadedTribes.IsEmpty) Tribes.AddRange(loadedTribes.ToList());
             }
@@ -944,6 +983,7 @@ namespace ARKViewer.Models
                                     TamedStats = tame.TamedStats,
                                     RandomMutationsFemale = tame.RandomMutationsFemale,
                                     RandomMutationsMale = tame.RandomMutationsMale,
+                                    Resources = tame.ProductionResources,
                                     InventoryId = addInventory(tame.Inventory)
                                 };
 
@@ -963,9 +1003,92 @@ namespace ARKViewer.Models
                         }
 
                         if (!loadedTames.IsEmpty) tribe.Tames.AddRange(loadedTames.ToList());
+
+
+                        
+
                     }
 
                 });
+            }
+
+            //check for abandoned tames
+            ConcurrentBag<ContentTamedCreature> abandonedTames = new ConcurrentBag<ContentTamedCreature>();
+            var abandoned = gd.TamedCreatures.Where(x => !Tribes.Any(t => t.TribeId == x.TargetingTeam)).ToList();
+            if (abandoned != null && abandoned.Count > 0)
+            {
+                Parallel.ForEach(abandoned, tame =>
+                {
+                    var loadedTame = new ContentTamedCreature()
+                    {
+                        Id = (long)tame.Id,
+                        ClassName = tame.ClassName,
+                        BaseLevel = tame.BaseLevel,
+                        Gender = tame.Gender.ToString(),
+                        ImprintedPlayerId = (int)tame.ImprinterPlayerDataId.GetValueOrDefault(0),
+                        ImprinterName = tame.ImprinterName,
+                        ImprintQuality = (decimal)tame.DinoImprintingQuality.GetValueOrDefault(0),
+                        Level = tame.Level,
+                        Name = tame.Name,
+                        TamedOnServerName = tame.TamedOnServerName,
+                        TribeName = tame.TribeName,
+                        TamerName = tame.TamerName,
+                        TargetingTeam = int.MinValue,
+                        AbandonedTeam = tame.TargetingTeam,
+                        IsCryo = tame.IsCryo,
+                        IsVivarium = tame.IsVivarium,
+                        Latitude = tame.Location.Latitude.GetValueOrDefault(0),
+                        Longitude = tame.Location.Longitude.GetValueOrDefault(0),
+                        X = tame.Location.X,
+                        Y = tame.Location.Y,
+                        Z = tame.Location.Z,
+                        Colors = tame.Colors,
+                        BaseStats = tame.BaseStats,
+                        TamedStats = tame.TamedStats,
+                        RandomMutationsFemale = tame.RandomMutationsFemale,
+                        RandomMutationsMale = tame.RandomMutationsMale,
+                        InventoryId = addInventory(tame.Inventory)
+                    };
+
+                    if ((tame.DinoAncestors != null && tame.DinoAncestors.Length > 0))
+                    {
+                        var parents = tame.DinoAncestors.First();
+                        loadedTame.MotherId = (long)parents.FemaleId;
+                        loadedTame.MotherName = parents.FemaleName;
+                        loadedTame.FatherId = (long)parents.MaleId;
+                        loadedTame.FatherName = parents.MaleName;
+                    }
+                    
+                    abandonedTames.Add(loadedTame);
+                });
+
+                if (!abandonedTames.IsEmpty) Tribes.First(t=>t.TribeId == int.MinValue).Tames.AddRange(abandonedTames.ToList());
+            }
+
+            //check for abandoned
+            ConcurrentBag<ContentStructure> abandonedStructures = new ConcurrentBag<ContentStructure>();
+            var derelics = gd.TamedCreatures.Where(x => !Tribes.Any(t => t.TribeId == x.TargetingTeam)).ToList();
+            if (derelics != null && derelics.Count > 0)
+            {
+                Parallel.ForEach(abandoned, structure =>
+                {
+                    ContentStructure loadedStructure = new ContentStructure()
+                    {
+                        ClassName = structure.ClassName,
+                        Latitude = structure.Location.Latitude,
+                        Longitude = structure.Location.Longitude,
+                        X = structure.Location.X,
+                        Y = structure.Location.Y,
+                        Z = structure.Location.Z,
+                        TargetingTeam = int.MinValue,
+                        AbandonedTeam = structure.TargetingTeam,
+                        InventoryId = addInventory(structure.Inventory)
+                    };
+
+                    abandonedStructures.Add(loadedStructure);
+                });
+
+                if (!abandonedStructures.IsEmpty) Tribes.First(t => t.TribeId == int.MinValue).Structures.AddRange(abandonedStructures.ToList());
             }
 
 
@@ -1036,16 +1159,210 @@ namespace ARKViewer.Models
                     });
                 }
                 if (!loadedDroppedItems.IsEmpty) DroppedItems.AddRange(loadedDroppedItems.ToList());
-
-
-
+                if (inventoryBag != null && inventoryBag.Count > 0) Inventories.AddRange(inventoryBag.ToList());
             }
         }
 
+        private void LoadPackData(ContentPack pack)
+        {
+            //load content pack from Ark savegame 
+            MapFilename = pack.MapFilename;
+            ContentDate = pack.ContentDate;
+
+            if (IncludeGameStructures)
+            {
+                //all locations
+                TerminalMarkers = pack.TerminalMarkers;
+                                
+                
+                
+                //possibly location restricted
+                ChargeNodes = pack.ChargeNodes.Where(w =>
+                                                            (Math.Abs((decimal)w.Latitude.GetValueOrDefault(0) - FilterLatitude) <= FilterRadius)
+                                                            && (Math.Abs((decimal)w.Longitude.GetValueOrDefault(0) - FilterLongitude) <= FilterRadius)
+                                                        ).ToList(); 
+                GlitchMarkers = pack.GlitchMarkers.Where(w =>
+                                                            (Math.Abs((decimal)w.Latitude.GetValueOrDefault(0) - FilterLatitude) <= FilterRadius)
+                                                            && (Math.Abs((decimal)w.Longitude.GetValueOrDefault(0) - FilterLongitude) <= FilterRadius)
+                                                        ).ToList(); 
+                BeaverDams = pack.BeaverDams.Where(w =>
+                                                            (Math.Abs((decimal)w.Latitude.GetValueOrDefault(0) - FilterLatitude) <= FilterRadius)
+                                                            && (Math.Abs((decimal)w.Longitude.GetValueOrDefault(0) - FilterLongitude) <= FilterRadius)
+                                                        ).ToList();
+                WyvernNests = pack.WyvernNests.Where(w =>
+                                                            (Math.Abs((decimal)w.Latitude.GetValueOrDefault(0) - FilterLatitude) <= FilterRadius)
+                                                            && (Math.Abs((decimal)w.Longitude.GetValueOrDefault(0) - FilterLongitude) <= FilterRadius)
+                                                        ).ToList();
+                DrakeNests = pack.DrakeNests.Where(w =>
+                                                            (Math.Abs((decimal)w.Latitude.GetValueOrDefault(0) - FilterLatitude) <= FilterRadius)
+                                                            && (Math.Abs((decimal)w.Longitude.GetValueOrDefault(0) - FilterLongitude) <= FilterRadius)
+                                                        ).ToList();
+                DeinoNests = pack.DeinoNests.Where(w =>
+                                                            (Math.Abs((decimal)w.Latitude.GetValueOrDefault(0) - FilterLatitude) <= FilterRadius)
+                                                            && (Math.Abs((decimal)w.Longitude.GetValueOrDefault(0) - FilterLongitude) <= FilterRadius)
+                                                        ).ToList();
+                MagmaNests = pack.MagmaNests.Where(w =>
+                                                            (Math.Abs((decimal)w.Latitude.GetValueOrDefault(0) - FilterLatitude) <= FilterRadius)
+                                                            && (Math.Abs((decimal)w.Longitude.GetValueOrDefault(0) - FilterLongitude) <= FilterRadius)
+                                                        ).ToList();
+                OilVeins = pack.OilVeins.Where(w =>
+                                                            (Math.Abs((decimal)w.Latitude.GetValueOrDefault(0) - FilterLatitude) <= FilterRadius)
+                                                            && (Math.Abs((decimal)w.Longitude.GetValueOrDefault(0) - FilterLongitude) <= FilterRadius)
+                                                        ).ToList();
+                WaterVeins = pack.WaterVeins.Where(w =>
+                                                            (Math.Abs((decimal)w.Latitude.GetValueOrDefault(0) - FilterLatitude) <= FilterRadius)
+                                                            && (Math.Abs((decimal)w.Longitude.GetValueOrDefault(0) - FilterLongitude) <= FilterRadius)
+                                                        ).ToList(); 
+                GasVeins = pack.GasVeins.Where(w =>
+                                                            (Math.Abs((decimal)w.Latitude.GetValueOrDefault(0) - FilterLatitude) <= FilterRadius)
+                                                            && (Math.Abs((decimal)w.Longitude.GetValueOrDefault(0) - FilterLongitude) <= FilterRadius)
+                                                        ).ToList(); 
+                Artifacts = pack.Artifacts.Where(w =>
+                                                            (Math.Abs((decimal)w.Latitude.GetValueOrDefault(0) - FilterLatitude) <= FilterRadius)
+                                                            && (Math.Abs((decimal)w.Longitude.GetValueOrDefault(0) - FilterLongitude) <= FilterRadius)
+                                                        ).ToList();
+                PlantZ = pack.PlantZ.Where(w =>
+                                                            (Math.Abs((decimal)w.Latitude.GetValueOrDefault(0) - FilterLatitude) <= FilterRadius)
+                                                            && (Math.Abs((decimal)w.Longitude.GetValueOrDefault(0) - FilterLongitude) <= FilterRadius)
+                                                        ).ToList(); 
+
+                if (!IncludeGameStructureContent)
+                {
+                    //remove linked inventory, and then unassign
+                    BeaverDams.ForEach(x =>
+                    {
+                        if(x.InventoryId > 0)
+                        {
+                            if(Inventories!=null && Inventories.Count > 0)
+                            {
+                                Inventories.RemoveAll(i => i.InventoryId == x.InventoryId);
+                            }
+                            x.InventoryId = 0;
+                        }
+                        
+                    });
+                    WyvernNests.ForEach(x =>
+                    {
+                        if (x.InventoryId > 0)
+                        {
+                            if (Inventories != null && Inventories.Count > 0)
+                            {
+                                Inventories.RemoveAll(i => i.InventoryId == x.InventoryId);
+                            }
+                            x.InventoryId = 0;
+                        }
+
+                    });
+                    DrakeNests.ForEach(x =>
+                    {
+                        if (x.InventoryId > 0)
+                        {
+                            if (Inventories != null && Inventories.Count > 0)
+                            {
+                                Inventories.RemoveAll(i => i.InventoryId == x.InventoryId);
+                            }
+                            x.InventoryId = 0;
+                        }
+
+                    });
+                    DeinoNests.ForEach(x =>
+                    {
+                        if (x.InventoryId > 0)
+                        {
+                            if (Inventories != null && Inventories.Count > 0)
+                            {
+                                Inventories.RemoveAll(i => i.InventoryId == x.InventoryId);
+                            }
+                            x.InventoryId = 0;
+                        }
+
+                    });
+                    MagmaNests.ForEach(x =>
+                    {
+                        if (x.InventoryId > 0)
+                        {
+                            if (Inventories != null && Inventories.Count > 0)
+                            {
+                                Inventories.RemoveAll(i => i.InventoryId == x.InventoryId);
+                            }
+                            x.InventoryId = 0;
+                        }
+
+                    });
+
+
+                }
+
+            }
+
+
+            if (IncludeWild)
+            {
+                //WildCreatures
+                WildCreatures = pack.WildCreatures.Where(w =>
+                                                            (Math.Abs((decimal)w.Latitude.GetValueOrDefault(0) - FilterLatitude) <= FilterRadius)
+                                                            && (Math.Abs((decimal)w.Longitude.GetValueOrDefault(0) - FilterLongitude) <= FilterRadius)
+                                                        ).ToList();
+            }
+
+            if (IncludeTribesPlayers)
+            {
+                //Tribes 
+                Tribes = pack.Tribes.Where(t => (t.TribeId == ExportedForTribe || ExportedForTribe == 0) || (t.Players.Any(p=>p.Id == ExportedForPlayer && ExportedForPlayer!=0))).ToList();
+            }
+
+            //player structures
+            if (Tribes != null && Tribes.Count > 0)
+            {
+                if (!IncludePlayerStructures)
+                {
+                    //remove structures, not included in the filter
+                    Tribes.ForEach(t => {
+                        //clear down inventories
+                        Inventories.RemoveAll(i => t.Structures.Any(s => s.InventoryId == i.InventoryId));
+
+                        //then structures
+                        t.Structures.Clear();
+                    });
+                }
+                if (!IncludeTamed)
+                {
+                    Tribes.ForEach(t => {
+                        //clear down inventories
+                        Inventories.RemoveAll(i => t.Tames.Any(s => s.InventoryId == i.InventoryId));
+
+                        //then tames
+                        t.Tames.Clear();
+
+                    });
+                }
+
+                if (ExportedForPlayer != 0)
+                {
+                    //specific player, dont give data for all tribe members
+                    Tribes.ForEach(t => {
+                            Inventories.RemoveAll(i=> t.Players.Any(p=>p.Id != ExportedForPlayer && p.InventoryId == i.InventoryId));
+                            t.Players.RemoveAll(p => p.Id != ExportedForPlayer);
+                        
+                        });
+                }
+            }
+
+            if (IncludeDroppedItems)
+            {
+                DroppedItems = pack.DroppedItems.Where(i =>
+                                                            (i.DroppedByPlayerId == ExportedForPlayer || ExportedForPlayer == 0)
+                                                            &&  (Math.Abs((decimal)i.Latitude.GetValueOrDefault(0) - FilterLatitude) <= FilterRadius)
+                                                            && (Math.Abs((decimal)i.Longitude.GetValueOrDefault(0) - FilterLongitude) <= FilterRadius)
+                                                      ).ToList();
+            }
+        }
+
+
         private long addInventory(ArkItem[] items)
         {
-            if (items.Length == 0) return 0; //no point creating one if no content
-            long nextId = Inventories.Count + 1;
+            if (items == null || items.Length == 0) return 0; //no point creating one if no content
+            long nextId = inventoryBag.Count + 1;
 
             List<ContentItem> invItems = new List<ContentItem>();
             foreach(var item in items)
@@ -1062,33 +1379,18 @@ namespace ARKViewer.Models
 
             };
 
-            Inventories.Add(new ContentInventory()
+            if (invItems == null || invItems.Count == 0) return 0;
+
+            var invent = new ContentInventory()
             {
                 InventoryId = nextId,
                 Items = invItems
-            });
+            };
+            if (invent == null || invent.Items == null) return 0;
+
+            inventoryBag.Add(invent);
 
             return nextId;
-        }
-
-
-        private string GetOrphansTribeName(ArkTamedCreature tame)
-        {
-            if(tame.TribeName != null && tame.TribeName.Length >0)
-            {
-                return tame.TribeName;
-            }
-
-            if (tame.ImprinterName != null && tame.ImprinterName.Length > 0)
-            {
-                return tame.ImprinterName;
-            }
-
-            if (tame.OwningPlayerName  != null && tame.OwningPlayerName.Length > 0)
-            {
-                return tame.OwningPlayerName;
-            }
-            return "";
         }
 
         private void CopyTo(Stream src, Stream dest)

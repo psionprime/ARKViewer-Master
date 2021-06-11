@@ -17,6 +17,8 @@ using System.Collections.Concurrent;
 using ARKViewer.CustomNameMaps;
 using ARKViewer.Configuration;
 using ARKViewer.Models;
+using ARKViewer.Models.ASVPack;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar;
 
 namespace ARKViewer
 {
@@ -97,8 +99,9 @@ namespace ARKViewer
 
             LoadWindowSettings();
             chkCryo.Checked = Program.ProgramConfig.StoredTames;
-
+            lblVersion.Text = $"{Application.ProductVersion}";
             Application.DoEvents();
+
 
             isLoading = false;
         }
@@ -332,7 +335,7 @@ namespace ARKViewer
             List<ComboValuePair> newItems = new List<ComboValuePair>();
 
             var allTribes = cm.GetTribes(0);
-            if (allTribes.Count() > 0)
+            if (allTribes!=null && allTribes.Count() > 0)
             {
                 foreach (var tribe in allTribes)
                 {
@@ -1373,6 +1376,10 @@ namespace ARKViewer
                             var tamer = cm.GetPlayers(0, detail.ImprintedPlayerId).FirstOrDefault<ContentPlayer>();
                             if(tamer!=null) tamerName = tamer.CharacterName;
                         }
+                        else
+                        {
+                            tamerName = detail.TribeName;
+                        }
                     }
                     
 
@@ -1584,7 +1591,6 @@ namespace ARKViewer
                 }
                 lvwWildDetail.BeginUpdate();
                 lvwWildDetail.Items.Clear();
-                
 
                 string className = selectedSummary.ClassName;
 
@@ -1594,7 +1600,14 @@ namespace ARKViewer
                 float selectedLon = (float)udWildLon.Value;
                 float selectedRad = (float)udWildRadius.Value;
 
-                var detailList = cm.GetWildCreatures(minLevel, maxLevel, selectedLat, selectedLon, selectedRad, className).OrderByDescending(c => c.BaseLevel);
+                var detailList = cm.GetWildCreatures(minLevel, maxLevel, selectedLat, selectedLon, selectedRad, className).OrderByDescending(c => c.BaseLevel).ToList();
+                if (cboWildResource.SelectedIndex != 0)
+                {
+                    //limit by resource production
+                    ComboValuePair selectedResourceValue = (ComboValuePair)cboWildResource.SelectedItem;
+                    string selectedResourceClass = selectedResourceValue.Key;
+                    detailList.RemoveAll(d => d.Resources == null || !d.Resources.Any(r => r == selectedResourceClass));
+                }
 
                 ConcurrentBag<ListViewItem> listItems = new ConcurrentBag<ListViewItem>();
 
@@ -1829,25 +1842,30 @@ namespace ARKViewer
                                 .OrderBy(o => o.Name);
 
             cboTameClass.Items.Clear();
-            cboTameClass.Items.Add(new DinoSummary() { ClassName = "", Name = "[All Creatures]", Count = tamedSummary.Sum(s => s.Count) });
-
-            foreach (var summary in tamedSummary)
+            if(tamedSummary!=null && tamedSummary.Count() > 0)
             {
-                DinoSummary newSummary = new DinoSummary()
+                cboTameClass.Items.Add(new DinoSummary() { ClassName = "", Name = "[All Creatures]", Count = tamedSummary.Sum(s => s.Count) });
+
+                foreach (var summary in tamedSummary)
                 {
-                    ClassName = summary.ClassName,
-                    Name = summary.Name,
-                    Count = summary.Count,
-                    MinLevel = summary.Min,
-                    MaxLevel = summary.Max,
-                    MaxLength = 100
-                };
-                int newIndex = cboTameClass.Items.Add(newSummary);
-                if(selectedClass == summary.ClassName)
-                {
-                    classIndex = newIndex;
+                    DinoSummary newSummary = new DinoSummary()
+                    {
+                        ClassName = summary.ClassName,
+                        Name = summary.Name,
+                        Count = summary.Count,
+                        MinLevel = summary.Min,
+                        MaxLevel = summary.Max,
+                        MaxLength = 100
+                    };
+                    int newIndex = cboTameClass.Items.Add(newSummary);
+                    if (selectedClass == summary.ClassName)
+                    {
+                        classIndex = newIndex;
+                    }
                 }
+
             }
+            
 
             lblTameTotal.Text = "Count: 0";
 
@@ -1893,12 +1911,8 @@ namespace ARKViewer
             float selectedLon = (float)udWildLon.Value;
             float selectedRad = (float)udWildRadius.Value;
 
-            var wildSummary = cm.GetWildCreatures(minLevel, maxLevel, selectedLat, selectedLon, selectedRad, "")
-                                                .GroupBy(c => c.ClassName)
-                                                .Select(g => new { ClassName = g.Key, Name = ARKViewer.Program.ProgramConfig.DinoMap.Count(d => d.ClassName == g.Key) == 0 ? g.Key : ARKViewer.Program.ProgramConfig.DinoMap.Where(d => d.ClassName == g.Key).FirstOrDefault().FriendlyName, Count = g.Count(), Min = g.Min(l => l.BaseLevel), Max = g.Max(l => l.BaseLevel) })
-                                                .OrderBy(o => o.Name);
+            var wildDinos = cm.GetWildCreatures(minLevel, maxLevel, selectedLat, selectedLon, selectedRad, "");
 
-            
             cboWildClass.Items.Clear();
             int newIndex = 0;
 
@@ -1913,66 +1927,109 @@ namespace ARKViewer
                 MaxLength = 100
             };
 
-            newIndex = cboWildClass.Items.Add(noneSummary);
+            cboWildResource.Items.Clear();
+            cboWildResource.Items.Add(new ComboValuePair("", "[Any Resource]"));
+            cboWildResource.SelectedIndex = 0;
 
-            //add "All" summary
-            int minLevelDefault = 1;
-            int maxLevelDefault = 150;
-            if(wildSummary!=null && wildSummary.Count() > 0)
+            if (wildDinos != null)
             {
-                minLevelDefault = wildSummary.Min(s => s.Min);
-                maxLevelDefault = wildSummary.Max(s => s.Max);
-            }
+                List<ComboValuePair> productionComboValues = new List<ComboValuePair>();
 
-            DinoSummary allSummary = new DinoSummary()
-            {
-                ClassName = "",
-                Name = "[All Creatures]",
-                Count = wildSummary.Sum(s => s.Count),
-                MinLevel = minLevelDefault,
-                MaxLevel = maxLevelDefault,
-                MaxLength = 100
-            };
-
-            newIndex = cboWildClass.Items.Add(allSummary);
-
-
-
-
-            foreach (var summary in wildSummary.OrderBy(o=>o.Name))
-            {
-
-                DinoSummary newSummary = new DinoSummary()
+                var productionResources = wildDinos.Where(x=>x.Resources!=null).SelectMany(d => d.Resources).Distinct().ToList();
+                if(productionResources!=null && productionResources.Count > 0)
                 {
-                    ClassName = summary.ClassName,
-                    Name = summary.Name,
-                    Count = summary.Count,
-                    MinLevel = summary.Min,
-                    MaxLevel = summary.Max,
+                    foreach(var resourceClass in productionResources)
+                    {
+                        string displayName = resourceClass;
+                        var itemMap = Program.ProgramConfig.ItemMap.FirstOrDefault(i => i.ClassName == resourceClass);
+                        if (itemMap != null && itemMap.FriendlyName.Length > 0) displayName = itemMap.FriendlyName;
+
+                        productionComboValues.Add(new ComboValuePair(resourceClass, displayName));
+                    }
+                }
+
+                if(productionComboValues!=null && productionComboValues.Count > 0)
+                {
+                    cboWildResource.Items.AddRange(productionComboValues.OrderBy(o => o.Value).ToArray());
+                }
+
+                var wildSummary = wildDinos
+                                .GroupBy(c => c.ClassName)
+                                .Select(g => new { ClassName = g.Key, Name = ARKViewer.Program.ProgramConfig.DinoMap.Count(d => d.ClassName == g.Key) == 0 ? g.Key : ARKViewer.Program.ProgramConfig.DinoMap.Where(d => d.ClassName == g.Key).FirstOrDefault().FriendlyName, Count = g.Count(), Min = g.Min(l => l.BaseLevel), Max = g.Max(l => l.BaseLevel) })
+                                .OrderBy(o => o.Name);
+
+
+
+
+                if (wildSummary != null)
+                {
+                    noneSummary.Count = wildSummary.Sum(s => s.Count);
+                    noneSummary.MinLevel = wildSummary.Min(s => s.Min);
+                    noneSummary.MaxLevel = wildSummary.Max(s => s.Max);
+                }
+                newIndex = cboWildClass.Items.Add(noneSummary);
+
+                //add "All" summary
+                int minLevelDefault = 1;
+                int maxLevelDefault = 150;
+                if (wildSummary != null && wildSummary.Count() > 0)
+                {
+                    minLevelDefault = wildSummary.Min(s => s.Min);
+                    maxLevelDefault = wildSummary.Max(s => s.Max);
+                }
+
+                DinoSummary allSummary = new DinoSummary()
+                {
+                    ClassName = "",
+                    Name = "[All Creatures]",
+                    Count = wildSummary.Sum(s => s.Count),
+                    MinLevel = minLevelDefault,
+                    MaxLevel = maxLevelDefault,
                     MaxLength = 100
                 };
 
+                newIndex = cboWildClass.Items.Add(allSummary);
 
-                newIndex = cboWildClass.Items.Add(newSummary);
-                if (selectedClass == summary.ClassName)
+
+
+
+                foreach (var summary in wildSummary.OrderBy(o => o.Name))
                 {
-                    classIndex = newIndex;
+
+                    DinoSummary newSummary = new DinoSummary()
+                    {
+                        ClassName = summary.ClassName,
+                        Name = summary.Name,
+                        Count = summary.Count,
+                        MinLevel = summary.Min,
+                        MaxLevel = summary.Max,
+                        MaxLength = 100
+                    };
+
+
+                    newIndex = cboWildClass.Items.Add(newSummary);
+                    if (selectedClass == summary.ClassName)
+                    {
+                        classIndex = newIndex;
+                    }
                 }
+
+                lblWildTotal.Text = "Total: " + wildSummary.Sum(w => w.Count).ToString();
             }
 
 
-         
-            lblWildTotal.Text = "Total: " + wildSummary.Sum(w => w.Count).ToString(); ;
             lblStatus.Text = "Wild creatures populated.";
             lblStatus.Refresh();
 
-
+            
             if (cboWildClass.Items.Count > 0) cboWildClass.SelectedIndex = classIndex;
 
         }
 
+
         private void CboWildClass_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (cboWildClass.SelectedIndex != 1 && cboWildResource.SelectedIndex > 0) cboWildResource.SelectedIndex = 0;
             LoadWildDetail();
         }
 
@@ -2767,9 +2824,15 @@ namespace ARKViewer
             {
                 ContentStructure selectedStructure = (ContentStructure)selectedItem.Tag;
 
-                long selectedTribeId = selectedStructure.TargetingTeam;
+                if (selectedStructure.AbandonedTeam != 0)
+                {
+                    commandText = commandText.Replace("<TribeID>", selectedStructure.AbandonedTeam.ToString("f0"));
+                }
+                else
+                {
+                    commandText = commandText.Replace("<TribeID>", selectedStructure.TargetingTeam.ToString("f0"));
+                }
 
-                commandText = commandText.Replace("<TribeID>", selectedTribeId.ToString("f0"));
                 commandText = commandText.Replace("<x>", System.FormattableString.Invariant($"{selectedStructure.X:0.00}"));
                 commandText = commandText.Replace("<y>", System.FormattableString.Invariant($"{selectedStructure.Y:0.00}"));
                 commandText = commandText.Replace("<z>", System.FormattableString.Invariant($"{selectedStructure.Z + 250:0.00}"));
@@ -3110,7 +3173,15 @@ namespace ARKViewer
                 ContentTamedCreature selectedCreature = (ContentTamedCreature)selectedItem.Tag;
                 commandText = commandText.Replace("<ClassName>", selectedCreature.ClassName);
                 commandText = commandText.Replace("<Level>", (selectedCreature.BaseLevel / 1.5).ToString("f0"));
-                commandText = commandText.Replace("<TribeID>", selectedCreature.TargetingTeam.ToString("f0"));
+                
+                if(selectedCreature.AbandonedTeam != 0)
+                {
+                    commandText = commandText.Replace("<TribeID>", selectedCreature.AbandonedTeam.ToString("f0"));
+                }
+                else
+                {
+                    commandText = commandText.Replace("<TribeID>", selectedCreature.TargetingTeam.ToString("f0"));
+                }
 
                 commandText = commandText.Replace("<x>", System.FormattableString.Invariant($"{selectedCreature.X:0.00}"));
                 commandText = commandText.Replace("<y>", System.FormattableString.Invariant($"{selectedCreature.Y:0.00}"));
@@ -4645,6 +4716,72 @@ namespace ARKViewer
         private void frmViewer_LocationChanged(object sender, EventArgs e)
         {
             this.BringToFront();
+        }
+
+        private void udWildMin_Enter(object sender, EventArgs e)
+        {
+            udWildMin.Select(0, udWildMin.Value.ToString().Length);
+        }
+
+        private void udWildMax_Enter(object sender, EventArgs e)
+        {
+            udWildMax.Select(0, udWildMax.Value.ToString().Length);
+        }
+
+        private void udWildLat_Enter(object sender, EventArgs e)
+        {
+            udWildLat.Select(0, udWildLat.Value.ToString().Length);
+        }
+
+        private void udWildLon_Enter(object sender, EventArgs e)
+        {
+            udWildLon.Select(0, udWildLon.Value.ToString().Length);
+        }
+
+        private void udWildRadius_Enter(object sender, EventArgs e)
+        {
+            udWildRadius.Select(0, udWildRadius.Value.ToString().Length);
+        }
+
+        private void udWildRadius_MouseClick(object sender, MouseEventArgs e)
+        {
+            udWildRadius.Select(0, udWildRadius.Value.ToString().Length);
+        }
+
+        private void udWildMin_MouseClick(object sender, MouseEventArgs e)
+        {
+            udWildMin.Select(0, udWildMin.Value.ToString().Length);
+        }
+
+        private void udWildMax_MouseClick(object sender, MouseEventArgs e)
+        {
+            udWildMax.Select(0, udWildMax.Value.ToString().Length);
+        }
+
+        private void udWildLat_MouseClick(object sender, MouseEventArgs e)
+        {
+            udWildLat.Select(0, udWildLat.Value.ToString().Length);
+        }
+
+        private void udWildLon_MouseClick(object sender, MouseEventArgs e)
+        {
+            udWildLon.Select(0, udWildLon.Value.ToString().Length);
+        }
+
+        private void cboWildResource_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+            if(cboWildClass.Items.Count > 1 && cboWildResource.SelectedIndex > 0)
+            {
+                if (cboWildClass.SelectedIndex != 1)
+                {
+                    cboWildClass.SelectedIndex = 1;
+                }
+                else
+                {
+                    LoadWildDetail();
+                }
+            }
         }
     }
 }

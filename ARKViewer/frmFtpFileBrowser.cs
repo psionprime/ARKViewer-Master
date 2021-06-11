@@ -1,5 +1,6 @@
 ﻿using ARKViewer.Configuration;
 using ARKViewer.Models;
+using ARKViewer.Models.Ftp;
 using FluentFTP;
 using Renci.SshNet;
 using System;
@@ -467,6 +468,11 @@ namespace ARKViewer
         }
 
         private void lblFTPPassword_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
         {
 
         }

@@ -128,7 +128,7 @@
             this.chkApplyFilterPlayer.Location = new System.Drawing.Point(631, 328);
             this.chkApplyFilterPlayer.Name = "chkApplyFilterPlayer";
             this.chkApplyFilterPlayer.Size = new System.Drawing.Size(30, 30);
-            this.chkApplyFilterPlayer.TabIndex = 22;
+            this.chkApplyFilterPlayer.TabIndex = 3;
             this.chkApplyFilterPlayer.UseVisualStyleBackColor = true;
             this.chkApplyFilterPlayer.CheckedChanged += new System.EventHandler(this.chkApplyFilterPlayer_CheckedChanged);
             // 
@@ -212,7 +212,7 @@
             this.tabInventory.Name = "tabInventory";
             this.tabInventory.SelectedIndex = 0;
             this.tabInventory.Size = new System.Drawing.Size(732, 509);
-            this.tabInventory.TabIndex = 1;
+            this.tabInventory.TabIndex = 0;
             // 
             // tpgPlayerInventory
             // 
@@ -347,7 +347,7 @@
             this.pnlCreatureInventory.Location = new System.Drawing.Point(18, 83);
             this.pnlCreatureInventory.Name = "pnlCreatureInventory";
             this.pnlCreatureInventory.Size = new System.Drawing.Size(671, 346);
-            this.pnlCreatureInventory.TabIndex = 4;
+            this.pnlCreatureInventory.TabIndex = 2;
             // 
             // chkApplyFilterCreature
             // 
@@ -356,7 +356,7 @@
             this.chkApplyFilterCreature.Location = new System.Drawing.Point(613, 308);
             this.chkApplyFilterCreature.Name = "chkApplyFilterCreature";
             this.chkApplyFilterCreature.Size = new System.Drawing.Size(30, 30);
-            this.chkApplyFilterCreature.TabIndex = 23;
+            this.chkApplyFilterCreature.TabIndex = 3;
             this.chkApplyFilterCreature.UseVisualStyleBackColor = true;
             this.chkApplyFilterCreature.CheckedChanged += new System.EventHandler(this.chkApplyFilterCreature_CheckedChanged);
             // 
@@ -474,7 +474,7 @@
             this.cboStorageType.Location = new System.Drawing.Point(107, 42);
             this.cboStorageType.Name = "cboStorageType";
             this.cboStorageType.Size = new System.Drawing.Size(367, 21);
-            this.cboStorageType.TabIndex = 1;
+            this.cboStorageType.TabIndex = 2;
             this.cboStorageType.SelectedIndexChanged += new System.EventHandler(this.cboStorageType_SelectedIndexChanged);
             // 
             // lblStorageType
@@ -484,7 +484,7 @@
             this.lblStorageType.Location = new System.Drawing.Point(104, 25);
             this.lblStorageType.Name = "lblStorageType";
             this.lblStorageType.Size = new System.Drawing.Size(93, 13);
-            this.lblStorageType.TabIndex = 0;
+            this.lblStorageType.TabIndex = 1;
             this.lblStorageType.Text = "Container Type";
             // 
             // pnlStorageInventory
@@ -500,7 +500,7 @@
             this.pnlStorageInventory.Location = new System.Drawing.Point(18, 83);
             this.pnlStorageInventory.Name = "pnlStorageInventory";
             this.pnlStorageInventory.Size = new System.Drawing.Size(673, 348);
-            this.pnlStorageInventory.TabIndex = 2;
+            this.pnlStorageInventory.TabIndex = 0;
             // 
             // chkApplyFilterStorage
             // 
@@ -509,7 +509,7 @@
             this.chkApplyFilterStorage.Location = new System.Drawing.Point(615, 310);
             this.chkApplyFilterStorage.Name = "chkApplyFilterStorage";
             this.chkApplyFilterStorage.Size = new System.Drawing.Size(30, 30);
-            this.chkApplyFilterStorage.TabIndex = 23;
+            this.chkApplyFilterStorage.TabIndex = 3;
             this.chkApplyFilterStorage.UseVisualStyleBackColor = true;
             this.chkApplyFilterStorage.CheckedChanged += new System.EventHandler(this.chkFilterStorage_CheckedChanged);
             // 
@@ -618,7 +618,7 @@
             this.panel1.Location = new System.Drawing.Point(18, 59);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(673, 348);
-            this.panel1.TabIndex = 3;
+            this.panel1.TabIndex = 0;
             // 
             // lvwPlayerScores
             // 
@@ -684,7 +684,7 @@
             this.btnClose.Location = new System.Drawing.Point(665, 541);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
-            this.btnClose.TabIndex = 2;
+            this.btnClose.TabIndex = 1;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             // 
@@ -695,7 +695,7 @@
             this.lblPlayerId.Location = new System.Drawing.Point(13, 546);
             this.lblPlayerId.Name = "lblPlayerId";
             this.lblPlayerId.Size = new System.Drawing.Size(51, 13);
-            this.lblPlayerId.TabIndex = 8;
+            this.lblPlayerId.TabIndex = 0;
             this.lblPlayerId.Text = "Player Id:";
             // 
             // frmPlayerInventoryViewer

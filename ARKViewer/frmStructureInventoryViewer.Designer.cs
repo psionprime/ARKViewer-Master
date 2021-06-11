@@ -57,7 +57,7 @@
             this.pnlCreatureInventory.Location = new System.Drawing.Point(11, 56);
             this.pnlCreatureInventory.Name = "pnlCreatureInventory";
             this.pnlCreatureInventory.Size = new System.Drawing.Size(610, 374);
-            this.pnlCreatureInventory.TabIndex = 18;
+            this.pnlCreatureInventory.TabIndex = 2;
             // 
             // chkApplyFilter
             // 
@@ -67,7 +67,7 @@
             this.chkApplyFilter.Location = new System.Drawing.Point(557, 339);
             this.chkApplyFilter.Name = "chkApplyFilter";
             this.chkApplyFilter.Size = new System.Drawing.Size(33, 27);
-            this.chkApplyFilter.TabIndex = 22;
+            this.chkApplyFilter.TabIndex = 3;
             this.chkApplyFilter.UseVisualStyleBackColor = true;
             this.chkApplyFilter.CheckedChanged += new System.EventHandler(this.chkApplyFilter_CheckedChanged);
             // 
@@ -131,7 +131,7 @@
             this.lblWindowTitle.Location = new System.Drawing.Point(404, 13);
             this.lblWindowTitle.Name = "lblWindowTitle";
             this.lblWindowTitle.Size = new System.Drawing.Size(178, 31);
-            this.lblWindowTitle.TabIndex = 16;
+            this.lblWindowTitle.TabIndex = 1;
             this.lblWindowTitle.Text = "Inventory View";
             this.lblWindowTitle.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
@@ -154,7 +154,7 @@
             this.btnClose.Location = new System.Drawing.Point(546, 436);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
-            this.btnClose.TabIndex = 23;
+            this.btnClose.TabIndex = 3;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             // 
@@ -166,7 +166,7 @@
             this.lblStructureName.Location = new System.Drawing.Point(12, 16);
             this.lblStructureName.Name = "lblStructureName";
             this.lblStructureName.Size = new System.Drawing.Size(175, 25);
-            this.lblStructureName.TabIndex = 19;
+            this.lblStructureName.TabIndex = 0;
             this.lblStructureName.Text = "Structure Name";
             this.lblStructureName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 

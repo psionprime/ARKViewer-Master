@@ -56,7 +56,7 @@ namespace ARKViewer
             this.pnlCreatureInventory.Location = new System.Drawing.Point(12, 45);
             this.pnlCreatureInventory.Name = "pnlCreatureInventory";
             this.pnlCreatureInventory.Size = new System.Drawing.Size(608, 303);
-            this.pnlCreatureInventory.TabIndex = 25;
+            this.pnlCreatureInventory.TabIndex = 2;
             // 
             // chkApplyFilter
             // 
@@ -66,7 +66,7 @@ namespace ARKViewer
             this.chkApplyFilter.Location = new System.Drawing.Point(555, 268);
             this.chkApplyFilter.Name = "chkApplyFilter";
             this.chkApplyFilter.Size = new System.Drawing.Size(33, 27);
-            this.chkApplyFilter.TabIndex = 22;
+            this.chkApplyFilter.TabIndex = 3;
             this.chkApplyFilter.UseVisualStyleBackColor = true;
             this.chkApplyFilter.CheckedChanged += new System.EventHandler(this.chkApplyFilterDinos_CheckedChanged);
             // 
@@ -130,7 +130,7 @@ namespace ARKViewer
             this.lblWindowTitle.Location = new System.Drawing.Point(442, 11);
             this.lblWindowTitle.Name = "lblWindowTitle";
             this.lblWindowTitle.Size = new System.Drawing.Size(178, 31);
-            this.lblWindowTitle.TabIndex = 24;
+            this.lblWindowTitle.TabIndex = 1;
             this.lblWindowTitle.Text = "Death Cache";
             this.lblWindowTitle.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
@@ -142,7 +142,7 @@ namespace ARKViewer
             this.btnClose.Location = new System.Drawing.Point(545, 360);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
-            this.btnClose.TabIndex = 28;
+            this.btnClose.TabIndex = 3;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             // 
@@ -154,7 +154,7 @@ namespace ARKViewer
             this.lblPlayerName.Location = new System.Drawing.Point(12, 11);
             this.lblPlayerName.Name = "lblPlayerName";
             this.lblPlayerName.Size = new System.Drawing.Size(146, 25);
-            this.lblPlayerName.TabIndex = 26;
+            this.lblPlayerName.TabIndex = 0;
             this.lblPlayerName.Text = "Player Name";
             this.lblPlayerName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 

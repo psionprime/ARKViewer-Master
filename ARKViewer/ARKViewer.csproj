@@ -62,7 +62,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="api\ASVController.cs" />
+    <Compile Include="Api\ASVController.cs" />
+    <Compile Include="Configuration\ApiConfiguration.cs" />
+    <Compile Include="Configuration\ApiUserConfiguration.cs" />
     <Compile Include="Configuration\ViewerWindow.cs" />
     <Compile Include="CustomNameMaps\ColourMap.cs" />
     <Compile Include="ContentManager.cs" />
@@ -153,11 +155,11 @@
     <Compile Include="frmPlayerInventoryViewer.Designer.cs">
       <DependentUpon>frmPlayerInventoryViewer.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmRestClientEditor.cs">
+    <Compile Include="frmClientAccess.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmRestClientEditor.Designer.cs">
-      <DependentUpon>frmRestClientEditor.cs</DependentUpon>
+    <Compile Include="frmClientAccess.Designer.cs">
+      <DependentUpon>frmClientAccess.cs</DependentUpon>
     </Compile>
     <Compile Include="frmStructureInventoryViewer.cs">
       <SubType>Form</SubType>
@@ -201,19 +203,19 @@
     <Compile Include="CustomNameMaps\LogColourMap.cs" />
     <Compile Include="CustomNameMaps\LogTextColourMap.cs" />
     <Compile Include="MapMarker.cs" />
-    <Compile Include="Models\ContentAncestor.cs" />
-    <Compile Include="Models\ContentDroppedItem.cs" />
-    <Compile Include="Models\ContentInventory.cs" />
-    <Compile Include="Models\ContentItem.cs" />
-    <Compile Include="Models\ContentMarker.cs" />
-    <Compile Include="Models\ContentStructure.cs" />
-    <Compile Include="Models\ContentPack.cs" />
-    <Compile Include="Models\ContentPlayer.cs" />
-    <Compile Include="Models\ContentTamedCreature.cs" />
-    <Compile Include="Models\ContentTribe.cs" />
-    <Compile Include="Models\ContentWildCreature.cs" />
+    <Compile Include="Models\ASVPack\ContentAncestor.cs" />
+    <Compile Include="Models\ASVPack\ContentDroppedItem.cs" />
+    <Compile Include="Models\ASVPack\ContentInventory.cs" />
+    <Compile Include="Models\ASVPack\ContentItem.cs" />
+    <Compile Include="Models\ASVPack\ContentMarker.cs" />
+    <Compile Include="Models\ASVPack\ContentStructure.cs" />
+    <Compile Include="Models\ASVPack\ContentPack.cs" />
+    <Compile Include="Models\ASVPack\ContentPlayer.cs" />
+    <Compile Include="Models\ASVPack\ContentTamedCreature.cs" />
+    <Compile Include="Models\ASVPack\ContentTribe.cs" />
+    <Compile Include="Models\ASVPack\ContentWildCreature.cs" />
     <Compile Include="CustomNameMaps\PlayerMap.cs" />
-    <Compile Include="Models\FtpBrowseItem.cs" />
+    <Compile Include="Models\Ftp\FtpBrowseItem.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -272,8 +274,8 @@
     <EmbeddedResource Include="frmPlayerInventoryViewer.resx">
       <DependentUpon>frmPlayerInventoryViewer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmRestClientEditor.resx">
-      <DependentUpon>frmRestClientEditor.cs</DependentUpon>
+    <EmbeddedResource Include="frmClientAccess.resx">
+      <DependentUpon>frmClientAccess.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmStructureInventoryViewer.resx">
       <DependentUpon>frmStructureInventoryViewer.cs</DependentUpon>

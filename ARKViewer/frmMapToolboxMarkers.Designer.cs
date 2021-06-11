@@ -56,7 +56,7 @@ namespace ARKViewer
             this.lvwMapMarkers.Location = new System.Drawing.Point(6, 6);
             this.lvwMapMarkers.Name = "lvwMapMarkers";
             this.lvwMapMarkers.Size = new System.Drawing.Size(301, 294);
-            this.lvwMapMarkers.TabIndex = 39;
+            this.lvwMapMarkers.TabIndex = 0;
             this.lvwMapMarkers.UseCompatibleStateImageBehavior = false;
             this.lvwMapMarkers.View = System.Windows.Forms.View.Details;
             this.lvwMapMarkers.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lvwMapMarkers_ColumnClick);
@@ -84,7 +84,7 @@ namespace ARKViewer
             this.btnRemoveMarker.Location = new System.Drawing.Point(42, 310);
             this.btnRemoveMarker.Name = "btnRemoveMarker";
             this.btnRemoveMarker.Size = new System.Drawing.Size(30, 30);
-            this.btnRemoveMarker.TabIndex = 41;
+            this.btnRemoveMarker.TabIndex = 2;
             this.btnRemoveMarker.UseVisualStyleBackColor = true;
             // 
             // chkApplyFilterMarkers
@@ -95,7 +95,7 @@ namespace ARKViewer
             this.chkApplyFilterMarkers.Location = new System.Drawing.Point(239, 310);
             this.chkApplyFilterMarkers.Name = "chkApplyFilterMarkers";
             this.chkApplyFilterMarkers.Size = new System.Drawing.Size(30, 30);
-            this.chkApplyFilterMarkers.TabIndex = 44;
+            this.chkApplyFilterMarkers.TabIndex = 4;
             this.chkApplyFilterMarkers.UseVisualStyleBackColor = true;
             // 
             // btnAddMarker
@@ -105,7 +105,7 @@ namespace ARKViewer
             this.btnAddMarker.Location = new System.Drawing.Point(6, 310);
             this.btnAddMarker.Name = "btnAddMarker";
             this.btnAddMarker.Size = new System.Drawing.Size(30, 30);
-            this.btnAddMarker.TabIndex = 40;
+            this.btnAddMarker.TabIndex = 1;
             this.btnAddMarker.UseVisualStyleBackColor = true;
             this.btnAddMarker.Click += new System.EventHandler(this.btnAddMarker_Click);
             // 
@@ -117,7 +117,7 @@ namespace ARKViewer
             this.btnEditMarker.Location = new System.Drawing.Point(277, 310);
             this.btnEditMarker.Name = "btnEditMarker";
             this.btnEditMarker.Size = new System.Drawing.Size(30, 30);
-            this.btnEditMarker.TabIndex = 43;
+            this.btnEditMarker.TabIndex = 5;
             this.btnEditMarker.UseVisualStyleBackColor = true;
             // 
             // txtMarkerFilter
@@ -128,7 +128,7 @@ namespace ARKViewer
             this.txtMarkerFilter.Location = new System.Drawing.Point(81, 312);
             this.txtMarkerFilter.Name = "txtMarkerFilter";
             this.txtMarkerFilter.Size = new System.Drawing.Size(152, 22);
-            this.txtMarkerFilter.TabIndex = 42;
+            this.txtMarkerFilter.TabIndex = 3;
             // 
             // frmMapToolboxMarkers
             // 

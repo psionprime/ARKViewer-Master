@@ -3,6 +3,7 @@ using ArkSavegameToolkitNet.Structs;
 using ARKViewer.Configuration;
 using ARKViewer.CustomNameMaps;
 using ARKViewer.Models;
+using ARKViewer.Models.ASVPack;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -32,7 +33,7 @@ namespace ARKViewer
         public static string MarkerImageFolder { get; set; } = "";
 
         public static string LastLoadedSaveFilename { get; set; }  = "";
-
+        static ContentManager contentManager = null;
 
         public static void StartApi()
         {
@@ -85,7 +86,7 @@ namespace ARKViewer
 
                 //used when exporting ASV pack data
                 string commandOptionCheck = commandArguments[1].ToString().Trim().ToLower();
-                string exportFilePath = AppContext.BaseDirectory;
+                string exportFilePath = Path.Combine(AppContext.BaseDirectory, @"Export\");
                 string exportFilename = Path.Combine(exportFilePath, "");
 
                 //arguments provided, export and exit
@@ -195,11 +196,15 @@ namespace ARKViewer
 
                                 break;
                         }
+
+                        Environment.ExitCode = 0;
                     }
                     catch(Exception ex)
                     {
+
                         logWriter.WriteLine($"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")} - Failed to export: \n{ex.Message.ToString()}");
                         logWriter.Flush();
+                        Environment.ExitCode = -1;
                     }
                     finally
                     {
@@ -212,6 +217,9 @@ namespace ARKViewer
             }
             else
             {
+                ApiConfig = new ApiConfiguration();
+
+
                 frmViewer mainForm = new frmViewer();
                 PopulateImageLists();
 
@@ -237,7 +245,7 @@ namespace ARKViewer
 
                 loadedPack = LoadContentPack(saveFullFilename);
 
-                ContentManager contentManager = new ContentManager(loadedPack);
+                contentManager = new ContentManager(loadedPack);
                 mainForm.LoadContent(contentManager);
                 mainForm.Cursor = Cursors.Default;
                 //run viewer
@@ -246,13 +254,25 @@ namespace ARKViewer
             }
         }
 
+        public static ContentPack GetFilteredPackCurrent(int tribeId, int playerId, decimal latitude, decimal longitude, decimal radius, bool includeGameStructures, bool includeGameInventories,bool includeTribesPlayers, bool includeTamed, bool includeWild, bool includeTribeStructures, bool includeDropped)
+        {
+            ContentPack exportPack = new ContentPack(contentManager.GetPack(),tribeId,playerId,latitude,longitude,radius,includeGameStructures,includeGameInventories,true,includeTamed,includeWild,includeTribeStructures,includeDropped);
+            return exportPack;
+        }
+
+        public static ContentPack GetFilteredPack(ContentPack sourcePack, int tribeId, int playerId, decimal latitude, decimal longitude, decimal radius, bool includeGameStructures, bool includeGameInventories, bool includeTribesPlayers, bool includeTamed, bool includeWild, bool includeTribeStructures, bool includeDropped)
+        {
+            ContentPack exportPack = new ContentPack(sourcePack, tribeId, playerId, latitude, longitude, radius, includeGameStructures, includeGameInventories, true, includeTamed, includeWild, includeTribeStructures, includeDropped);
+            return exportPack;
+        }
+
 
         private static void ExportCommandLinePack(string configFilename)
         {
 
             //defaults
             string mapFilename = "";
-            string exportFilename = Path.Combine(AppContext.BaseDirectory, "ASV_ContentPack.asv");
+            string exportFilename = Path.Combine(AppContext.BaseDirectory, @"Export\ASV_ContentPack.asv");
             long tribeId = 0;
             long playerId = 0;
             decimal filterLat = 50;
@@ -309,7 +329,7 @@ namespace ARKViewer
 
             //ensure folder exists
             string exportFolder = Path.GetDirectoryName(exportFilename);
-            if (exportFolder.Length == 0) exportFolder = AppContext.BaseDirectory;
+            if (exportFolder.Length == 0) exportFolder = Path.Combine(AppContext.BaseDirectory, @"Export\");
             if (!Directory.Exists(exportFolder)) Directory.CreateDirectory(exportFolder);
 
             //ensure filename set, and ends with .asv
@@ -332,29 +352,29 @@ namespace ARKViewer
             decimal filterLon = 50;
             decimal filterRad = 250;
 
-            string tribeExportFilename = Path.Combine(AppContext.BaseDirectory, "ASV_Export_Tribes.json");
-            string tribeImageFilename = Path.Combine(AppContext.BaseDirectory, "ASV_Export_Tribes.png");
+            string tribeExportFilename = Path.Combine(AppContext.BaseDirectory, @"Export\ASV_Export_Tribes.json");
+            string tribeImageFilename = Path.Combine(AppContext.BaseDirectory, @"Export\ASV_Export_Tribes.png");
             bool tribeStructures = true;
             bool tribeStructureContent = true;
             bool tribePlayers = true;
             bool tribeTames = true;
 
-            string structureExportFilename = Path.Combine(AppContext.BaseDirectory, "ASV_Export_Structures.json");
-            string structureImageFilename = Path.Combine(AppContext.BaseDirectory, "ASV_Export_Structures.png");
+            string structureExportFilename = Path.Combine(AppContext.BaseDirectory, @"Export\ASV_Export_Structures.json");
+            string structureImageFilename = Path.Combine(AppContext.BaseDirectory, @"Export\ASV_Export_Structures.png");
             string structureClassName = "";
 
-            string playerExportFilename = Path.Combine(AppContext.BaseDirectory, "ASV_Export_Players.json");
-            string playerImageFilename = Path.Combine(AppContext.BaseDirectory, "ASV_Export_Players.png");
+            string playerExportFilename = Path.Combine(AppContext.BaseDirectory, @"Export\ASV_Export_Players.json");
+            string playerImageFilename = Path.Combine(AppContext.BaseDirectory, @"Export\ASV_Export_Players.png");
 
-            string wildExportFilename = Path.Combine(AppContext.BaseDirectory, "ASV_Export_Wild.json");
-            string wildImageFilename = Path.Combine(AppContext.BaseDirectory, "ASV_Export_Wild.png");
+            string wildExportFilename = Path.Combine(AppContext.BaseDirectory, @"Export\ASV_Export_Wild.json");
+            string wildImageFilename = Path.Combine(AppContext.BaseDirectory, @"Export\ASV_Export_Wild.png");
             string wildClassName = "";
             int wildMinLevel = 0;
             int wildMaxLevel = 999;
 
 
-            string tamedExportFilename = Path.Combine(AppContext.BaseDirectory, "ASV_Export_Tamed.json");
-            string tamedImageFilename = Path.Combine(AppContext.BaseDirectory, "ASV_Export_Tamed.png");
+            string tamedExportFilename = Path.Combine(AppContext.BaseDirectory, @"Export\ASV_Export_Tamed.json");
+            string tamedImageFilename = Path.Combine(AppContext.BaseDirectory, @"Export\ASV_Export_Tamed.png");
             string tamedClassName = "";
             bool tamedStored = true;
 
@@ -715,7 +735,7 @@ namespace ARKViewer
         }
 
         public static ViewerConfiguration ProgramConfig { get; set; }
-
+        public static ApiConfiguration ApiConfig { get; set; }
 
 
         public static int GetItemImageIndex(string itemImageFilename)

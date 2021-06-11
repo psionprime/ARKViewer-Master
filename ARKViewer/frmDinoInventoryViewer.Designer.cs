@@ -56,7 +56,7 @@
             this.lblWindowTitle.Location = new System.Drawing.Point(410, 10);
             this.lblWindowTitle.Name = "lblWindowTitle";
             this.lblWindowTitle.Size = new System.Drawing.Size(178, 31);
-            this.lblWindowTitle.TabIndex = 8;
+            this.lblWindowTitle.TabIndex = 4;
             this.lblWindowTitle.Text = "Inventory View";
             this.lblWindowTitle.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
@@ -84,7 +84,7 @@
             this.pnlCreatureInventory.Location = new System.Drawing.Point(12, 70);
             this.pnlCreatureInventory.Name = "pnlCreatureInventory";
             this.pnlCreatureInventory.Size = new System.Drawing.Size(615, 287);
-            this.pnlCreatureInventory.TabIndex = 10;
+            this.pnlCreatureInventory.TabIndex = 5;
             // 
             // chkApplyFilterDinos
             // 
@@ -94,7 +94,7 @@
             this.chkApplyFilterDinos.Location = new System.Drawing.Point(562, 252);
             this.chkApplyFilterDinos.Name = "chkApplyFilterDinos";
             this.chkApplyFilterDinos.Size = new System.Drawing.Size(33, 27);
-            this.chkApplyFilterDinos.TabIndex = 22;
+            this.chkApplyFilterDinos.TabIndex = 3;
             this.chkApplyFilterDinos.UseVisualStyleBackColor = true;
             this.chkApplyFilterDinos.CheckedChanged += new System.EventHandler(this.chkApplyFilterDinos_CheckedChanged);
             // 
@@ -158,7 +158,7 @@
             this.lblPlayerLevelLabel.Location = new System.Drawing.Point(12, 17);
             this.lblPlayerLevelLabel.Name = "lblPlayerLevelLabel";
             this.lblPlayerLevelLabel.Size = new System.Drawing.Size(70, 13);
-            this.lblPlayerLevelLabel.TabIndex = 13;
+            this.lblPlayerLevelLabel.TabIndex = 0;
             this.lblPlayerLevelLabel.Text = "Current Level";
             // 
             // lblPlayerLevel
@@ -168,7 +168,7 @@
             this.lblPlayerLevel.Location = new System.Drawing.Point(13, 30);
             this.lblPlayerLevel.Name = "lblPlayerLevel";
             this.lblPlayerLevel.Size = new System.Drawing.Size(62, 19);
-            this.lblPlayerLevel.TabIndex = 14;
+            this.lblPlayerLevel.TabIndex = 1;
             this.lblPlayerLevel.Text = "135";
             this.lblPlayerLevel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -180,7 +180,7 @@
             this.lblTribeName.Location = new System.Drawing.Point(92, 39);
             this.lblTribeName.Name = "lblTribeName";
             this.lblTribeName.Size = new System.Drawing.Size(90, 16);
-            this.lblTribeName.TabIndex = 12;
+            this.lblTribeName.TabIndex = 3;
             this.lblTribeName.Text = "Tribe Name";
             this.lblTribeName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -192,7 +192,7 @@
             this.lblPlayerName.Location = new System.Drawing.Point(90, 8);
             this.lblPlayerName.Name = "lblPlayerName";
             this.lblPlayerName.Size = new System.Drawing.Size(170, 25);
-            this.lblPlayerName.TabIndex = 11;
+            this.lblPlayerName.TabIndex = 2;
             this.lblPlayerName.Text = "Creature Name";
             this.lblPlayerName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -204,7 +204,7 @@
             this.btnClose.Location = new System.Drawing.Point(552, 365);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
-            this.btnClose.TabIndex = 15;
+            this.btnClose.TabIndex = 6;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             // 

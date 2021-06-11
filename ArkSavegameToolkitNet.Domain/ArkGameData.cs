@@ -29,6 +29,8 @@ namespace ArkSavegameToolkitNet.Domain
         private static readonly ArkName _isDead = ArkName.Create("bIsDead");
         private static readonly ArkName _tamedName = ArkName.Create("TamedName");
 
+
+
         internal static readonly ArkNameTree _dependencies = new ArkNameTree
         {
             { _myCharacterStatusComponent, null },
@@ -138,7 +140,7 @@ namespace ArkSavegameToolkitNet.Domain
                     return returnValue;
                 }).ToArray();
 
-
+                
                 var playerdict = objects.Where(x => x.IsPlayerCharacter).ToLookup(x => x.GetPropertyValue<long>(_linkedPlayerDataID), x => x);
 
                 //var duplicates = playerdict.Where(x => x.Count() > 1).ToArray();

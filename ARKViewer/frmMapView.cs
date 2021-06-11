@@ -1,10 +1,12 @@
 ﻿using ARKViewer.Configuration;
 using ARKViewer.Models;
+using ARKViewer.Models.ASVPack;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -242,6 +244,15 @@ namespace ARKViewer
         private void frmMapView_FormClosed(object sender, FormClosedEventArgs e)
         {
             UpdateWindowSettings();
+            try
+            {
+                Application.OpenForms["frmViewer"].BringToFront();
+            }
+            catch
+            {
+
+            }
+            
         }
 
         private void btnMapStructures_Click(object sender, EventArgs e)
@@ -284,14 +295,21 @@ namespace ARKViewer
 
             using(SaveFileDialog dialog = new SaveFileDialog())
             {
-                dialog.DefaultExt = "png";
-                dialog.Filter = "PNG (*.png)|*.png";
-                dialog.InitialDirectory = AppContext.BaseDirectory;
+                string exportFolder = Path.Combine(AppContext.BaseDirectory, @"Export\");
+                if (!Directory.Exists(exportFolder)) Directory.CreateDirectory(exportFolder);
+
+                dialog.DefaultExt = "jpg";
+                dialog.Filter = "Jpeg (*.jpg, *.jpeg)|*.jpg;*.jpeg";
+                dialog.InitialDirectory = exportFolder;
+                dialog.DefaultExt = ".jpg";
+
                 if(dialog.ShowDialog() == DialogResult.OK)
                 {
                     string fileFolder = Path.GetDirectoryName(dialog.FileName);
                     if (!Directory.Exists(fileFolder)) Directory.CreateDirectory(fileFolder);
-                    currentMapImage.Save(dialog.FileName);
+                    currentMapImage.Save(dialog.FileName, ImageFormat.Jpeg);
+                    
+                    
                     MessageBox.Show("Map image saved.", "Save Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }

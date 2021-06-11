@@ -19,6 +19,7 @@ namespace ArkSavegameToolkitNet.Domain
         private static readonly ArkName _bIsBaby = ArkName.Create("bIsBaby");
         private static readonly ArkName _babyAge = ArkName.Create("BabyAge");
         private static readonly ArkName _bIsFemale = ArkName.Create("bIsFemale");
+        private static readonly ArkName _resourceProduction = ArkName.Create("ResourceProduction");
         private static readonly ArkName[] _colorSetIndices = new[]
         {
             ArkName.Create("ColorSetIndices", 0),
@@ -109,6 +110,76 @@ namespace ArkSavegameToolkitNet.Domain
             }
 
             if (creature.Location != null) Location = new ArkLocation(creature.Location, saveState);
+
+
+            //resource production stuff
+            List<string> productionList = new List<string>();
+            if (creature.Properties.ContainsKey(_resourceProduction))
+            {
+                //has resource production list (gacha?)
+                var productionContainer = creature.GetProperty<Property.PropertyArray>(_resourceProduction);
+                foreach(Structs.StructPropertyList prop in productionContainer.Value)
+                {
+                    Property.PropertyObject resourceRef = (Property.PropertyObject)prop.Properties.First().Value;
+                    string fullPathValue = resourceRef.Value.ObjectString.Name.ToString();
+                    string className = fullPathValue.Substring(fullPathValue.LastIndexOf(".") + 1);
+
+                    if (!productionList.Contains(className)) productionList.Add(className);
+                }
+            }
+
+            //known producers of set resources
+            switch (ClassName)
+            {
+                case "Achatina_Character_BP_C":
+                case "Achatina_Character_BP_Aberrant":
+                    //achatina paste, organic polymer
+                    productionList.Add("PrimalItemResource_SnailPaste_C");
+                    productionList.Add("PrimalItemResource_Polymer_Organic_C");
+
+                    break;
+                case "Toad_Character_BP_Aberrant_C":
+                case "Toad_Character_BP_Aberrant":
+                    //cement paste
+                    productionList.Add("PrimalItemResource_ChitinPaste_C");
+
+                    break;
+                case "DungBeetle_Character_BP_C":
+                case "DungBeetle_Character_BP_Aberrant_C":
+                    //oil/fertilizer
+                    productionList.Add("PrimalItemResource_Oil_C");
+                    productionList.Add("PrimalItemConsumable_Fertilizer_Compost_C");
+
+                    break;
+
+                case "Hesperornis_Character_BP_C":
+                case "Tusoteuthis_Character_BP_C":
+                case "Basilosaurus_Character_BP_C":
+                case "Ocean_Basilosaurus_Character_BP_C":
+                    //oil
+                    productionList.Add("PrimalItemResource_Oil_C");
+
+                    break;
+                case "GiantTurtle_Character_BP_C":
+                    //rare flower, rare mushroom
+                    productionList.Add("PrimalItemResource_RareFlower_C");
+                    productionList.Add("PrimalItemResource_RareMushroom_C");
+
+
+                    break;
+                case "Shapeshifter_Small_Character_BP_C":
+                case "Shapeshifter_Large_Character_BP_C":
+                    //element dust
+                    productionList.Add("PrimalItemResource_ElementDust_C");
+
+                    break;
+            }
+
+            if(productionList!=null && productionList.Count > 0)
+            {
+                ProductionResources = productionList.ToArray();
+            }
+
         }
 
         //public int Id { get; set; }
@@ -125,5 +196,6 @@ namespace ArkSavegameToolkitNet.Domain
         public byte[] Colors { get; set; }
         public byte[] BaseStats { get; set; }
         public ArkLocation Location { get; set; }
+        public string[] ProductionResources { get; set; }
     }
 }

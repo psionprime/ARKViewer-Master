@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ARKViewer.Models
+namespace ARKViewer.Models.Ftp
 {
     public class FtpBrowseItem
     {

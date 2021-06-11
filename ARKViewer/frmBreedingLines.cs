@@ -1,6 +1,7 @@
 ﻿using ARKViewer.Configuration;
 using ARKViewer.CustomNameMaps;
 using ARKViewer.Models;
+using ARKViewer.Models.ASVPack;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -441,7 +442,7 @@ namespace ARKViewer
             {
                 if (tameDetail.ImprintedPlayerId != 0)
                 {
-                    var tamer = cm.GetPlayers(0, tameDetail.ImprintedPlayerId).FirstOrDefault<ContentPlayer>();
+                    var tamer = cm.GetPlayers(0, tameDetail.ImprintedPlayerId).FirstOrDefault();
                     if (tamer != null) tamerName = tamer.CharacterName;
                 }
             }
@@ -730,7 +731,7 @@ namespace ARKViewer
                 {
                     if (tameAncestor.ImprintedPlayerId != 0)
                     {
-                        var tamer = cm.GetPlayers(0, tameAncestor.ImprintedPlayerId).FirstOrDefault<ContentPlayer>();
+                        var tamer = cm.GetPlayers(0, tameAncestor.ImprintedPlayerId).FirstOrDefault();
                         if (tamer != null) tamerName = tamer.CharacterName;
                     }
                 }
@@ -1374,6 +1375,11 @@ namespace ARKViewer
 
             // Sort.
             lvwWildLovers.Sort();
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

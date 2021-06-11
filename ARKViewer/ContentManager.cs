@@ -1,6 +1,7 @@
 ﻿using ArkSavegameToolkitNet.Domain;
 using ARKViewer.Configuration;
 using ARKViewer.Models;
+using ARKViewer.Models.ASVPack;
 using FluentFTP;
 using Newtonsoft.Json;
 using Renci.SshNet;
@@ -181,7 +182,7 @@ namespace ARKViewer
         {
             if (pack.Tribes == null) return new List<ContentTamedCreature>();
             return pack.Tribes
-                .Where(t => (t.TribeId == selectedTribeId || selectedTribeId == 0) || t.Players.Any(p => p.Id == selectedPlayerId))
+                .Where(t => (t.TribeId == selectedTribeId || selectedTribeId == 0) || t.Players.Any(p => p.Id == selectedPlayerId && selectedPlayerId!=0))
                 .SelectMany(c =>
                                 c.Tames.Where(w =>
                                     (w.ClassName == selectedClass || selectedClass == "")
@@ -272,6 +273,11 @@ namespace ARKViewer
         {
             if (pack == null || pack.Artifacts == null) return new List<ContentStructure>();
             return pack.Artifacts;
+        }
+
+        public ContentPack GetPack()
+        {
+            return pack;
         }
 
         public List<ContentStructure> GetPlantZ()

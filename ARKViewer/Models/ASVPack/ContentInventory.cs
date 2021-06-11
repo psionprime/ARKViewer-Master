@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ARKViewer.Models
+namespace ARKViewer.Models.ASVPack
 {
     [DataContract]
     public class ContentInventory

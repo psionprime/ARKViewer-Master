@@ -29,6 +29,7 @@ namespace ARKViewer
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMapView));
             this.pnlZoom = new System.Windows.Forms.Panel();
             this.trackZoom = new System.Windows.Forms.TrackBar();
@@ -39,6 +40,7 @@ namespace ARKViewer
             this.lblTitle = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnSave = new System.Windows.Forms.Button();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.pnlZoom.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackZoom)).BeginInit();
             this.pnlMap.SuspendLayout();
@@ -60,13 +62,15 @@ namespace ARKViewer
             // 
             // trackZoom
             // 
+            this.trackZoom.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.trackZoom.AutoSize = false;
             this.trackZoom.LargeChange = 10;
             this.trackZoom.Location = new System.Drawing.Point(10, 1);
             this.trackZoom.Maximum = 200;
             this.trackZoom.Minimum = 1;
             this.trackZoom.Name = "trackZoom";
-            this.trackZoom.Size = new System.Drawing.Size(605, 23);
+            this.trackZoom.Size = new System.Drawing.Size(536, 23);
             this.trackZoom.TabIndex = 3;
             this.trackZoom.TickStyle = System.Windows.Forms.TickStyle.None;
             this.trackZoom.Value = 5;
@@ -111,6 +115,8 @@ namespace ARKViewer
             this.btnMapMarkers.Name = "btnMapMarkers";
             this.btnMapMarkers.Size = new System.Drawing.Size(50, 50);
             this.btnMapMarkers.TabIndex = 48;
+            this.btnMapMarkers.TabStop = false;
+            this.toolTip1.SetToolTip(this.btnMapMarkers, "Show custom map markers.");
             this.btnMapMarkers.UseVisualStyleBackColor = true;
             this.btnMapMarkers.Click += new System.EventHandler(this.btnMapMarkers_Click);
             // 
@@ -123,6 +129,8 @@ namespace ARKViewer
             this.btnMapStructures.Name = "btnMapStructures";
             this.btnMapStructures.Size = new System.Drawing.Size(50, 50);
             this.btnMapStructures.TabIndex = 47;
+            this.btnMapStructures.TabStop = false;
+            this.toolTip1.SetToolTip(this.btnMapStructures, "Show map structures options.");
             this.btnMapStructures.UseVisualStyleBackColor = true;
             this.btnMapStructures.Click += new System.EventHandler(this.btnMapStructures_Click);
             // 
@@ -156,6 +164,8 @@ namespace ARKViewer
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(50, 50);
             this.btnSave.TabIndex = 51;
+            this.btnSave.TabStop = false;
+            this.toolTip1.SetToolTip(this.btnSave, "Save map image.");
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
@@ -198,5 +208,6 @@ namespace ARKViewer
         private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

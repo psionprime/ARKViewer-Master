@@ -39,10 +39,14 @@ namespace ARKViewer
             this.udR = new System.Windows.Forms.NumericUpDown();
             this.udG = new System.Windows.Forms.NumericUpDown();
             this.udB = new System.Windows.Forms.NumericUpDown();
+            this.grpEditor = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.udId)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udR)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udG)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udB)).BeginInit();
+            this.grpEditor.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblDisplayName
@@ -50,10 +54,10 @@ namespace ARKViewer
             this.lblDisplayName.BackColor = System.Drawing.SystemColors.Control;
             this.lblDisplayName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDisplayName.ForeColor = System.Drawing.Color.DimGray;
-            this.lblDisplayName.Location = new System.Drawing.Point(13, 71);
+            this.lblDisplayName.Location = new System.Drawing.Point(24, 95);
             this.lblDisplayName.Name = "lblDisplayName";
             this.lblDisplayName.Size = new System.Drawing.Size(292, 23);
-            this.lblDisplayName.TabIndex = 8;
+            this.lblDisplayName.TabIndex = 2;
             this.lblDisplayName.Text = "RGB";
             this.lblDisplayName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -62,40 +66,40 @@ namespace ARKViewer
             this.lblClassName.BackColor = System.Drawing.SystemColors.Control;
             this.lblClassName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblClassName.ForeColor = System.Drawing.Color.DimGray;
-            this.lblClassName.Location = new System.Drawing.Point(12, 9);
+            this.lblClassName.Location = new System.Drawing.Point(23, 43);
             this.lblClassName.Name = "lblClassName";
-            this.lblClassName.Size = new System.Drawing.Size(293, 23);
-            this.lblClassName.TabIndex = 6;
+            this.lblClassName.Size = new System.Drawing.Size(278, 23);
+            this.lblClassName.TabIndex = 0;
             this.lblClassName.Text = "Id";
             this.lblClassName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // btnCcancel
             // 
-            this.btnCcancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnCcancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCcancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCcancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.btnCcancel.Location = new System.Drawing.Point(13, 199);
+            this.btnCcancel.Location = new System.Drawing.Point(280, 255);
             this.btnCcancel.Name = "btnCcancel";
             this.btnCcancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCcancel.TabIndex = 11;
-            this.btnCcancel.Text = "Cancel";
+            this.btnCcancel.TabIndex = 2;
+            this.btnCcancel.Text = "Close";
             this.btnCcancel.UseVisualStyleBackColor = true;
             // 
             // btnSave
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSave.Location = new System.Drawing.Point(228, 199);
+            this.btnSave.Location = new System.Drawing.Point(197, 255);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
-            this.btnSave.TabIndex = 10;
+            this.btnSave.TabIndex = 1;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // udId
             // 
-            this.udId.Location = new System.Drawing.Point(13, 36);
+            this.udId.Location = new System.Drawing.Point(24, 70);
             this.udId.Maximum = new decimal(new int[] {
             2147483647,
             0,
@@ -103,7 +107,7 @@ namespace ARKViewer
             0});
             this.udId.Name = "udId";
             this.udId.Size = new System.Drawing.Size(290, 20);
-            this.udId.TabIndex = 12;
+            this.udId.TabIndex = 1;
             this.udId.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.udId.ValueChanged += new System.EventHandler(this.udId_ValueChanged);
             // 
@@ -112,25 +116,25 @@ namespace ARKViewer
             this.label1.BackColor = System.Drawing.SystemColors.Control;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.DimGray;
-            this.label1.Location = new System.Drawing.Point(13, 131);
+            this.label1.Location = new System.Drawing.Point(24, 151);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(292, 23);
-            this.label1.TabIndex = 13;
+            this.label1.TabIndex = 6;
             this.label1.Text = "Colour";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // pnlColour
             // 
             this.pnlColour.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlColour.Location = new System.Drawing.Point(13, 158);
+            this.pnlColour.Location = new System.Drawing.Point(24, 178);
             this.pnlColour.Name = "pnlColour";
             this.pnlColour.Size = new System.Drawing.Size(290, 25);
-            this.pnlColour.TabIndex = 14;
+            this.pnlColour.TabIndex = 7;
             this.pnlColour.Click += new System.EventHandler(this.pnlColour_Click);
             // 
             // udR
             // 
-            this.udR.Location = new System.Drawing.Point(16, 97);
+            this.udR.Location = new System.Drawing.Point(27, 121);
             this.udR.Maximum = new decimal(new int[] {
             255,
             0,
@@ -138,13 +142,13 @@ namespace ARKViewer
             0});
             this.udR.Name = "udR";
             this.udR.Size = new System.Drawing.Size(92, 20);
-            this.udR.TabIndex = 15;
+            this.udR.TabIndex = 3;
             this.udR.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.udR.ValueChanged += new System.EventHandler(this.udR_ValueChanged);
             // 
             // udG
             // 
-            this.udG.Location = new System.Drawing.Point(113, 97);
+            this.udG.Location = new System.Drawing.Point(124, 121);
             this.udG.Maximum = new decimal(new int[] {
             255,
             0,
@@ -152,13 +156,13 @@ namespace ARKViewer
             0});
             this.udG.Name = "udG";
             this.udG.Size = new System.Drawing.Size(92, 20);
-            this.udG.TabIndex = 16;
+            this.udG.TabIndex = 4;
             this.udG.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.udG.ValueChanged += new System.EventHandler(this.udG_ValueChanged);
             // 
             // udB
             // 
-            this.udB.Location = new System.Drawing.Point(211, 97);
+            this.udB.Location = new System.Drawing.Point(222, 121);
             this.udB.Maximum = new decimal(new int[] {
             255,
             0,
@@ -166,24 +170,62 @@ namespace ARKViewer
             0});
             this.udB.Name = "udB";
             this.udB.Size = new System.Drawing.Size(92, 20);
-            this.udB.TabIndex = 17;
+            this.udB.TabIndex = 5;
             this.udB.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.udB.ValueChanged += new System.EventHandler(this.udB_ValueChanged);
+            // 
+            // grpEditor
+            // 
+            this.grpEditor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpEditor.Controls.Add(this.label2);
+            this.grpEditor.Controls.Add(this.udB);
+            this.grpEditor.Controls.Add(this.label22);
+            this.grpEditor.Controls.Add(this.udG);
+            this.grpEditor.Controls.Add(this.lblClassName);
+            this.grpEditor.Controls.Add(this.udR);
+            this.grpEditor.Controls.Add(this.lblDisplayName);
+            this.grpEditor.Controls.Add(this.pnlColour);
+            this.grpEditor.Controls.Add(this.udId);
+            this.grpEditor.Controls.Add(this.label1);
+            this.grpEditor.Location = new System.Drawing.Point(12, 12);
+            this.grpEditor.Name = "grpEditor";
+            this.grpEditor.Size = new System.Drawing.Size(341, 226);
+            this.grpEditor.TabIndex = 0;
+            this.grpEditor.TabStop = false;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.Transparent;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(11, 17);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(98, 15);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Colour Details";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label22
+            // 
+            this.label22.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label22.BackColor = System.Drawing.Color.Aqua;
+            this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label22.Location = new System.Drawing.Point(0, 6);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(343, 6);
+            this.label22.TabIndex = 0;
+            this.label22.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // frmColourEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCcancel;
-            this.ClientSize = new System.Drawing.Size(318, 234);
-            this.Controls.Add(this.udB);
-            this.Controls.Add(this.udG);
-            this.Controls.Add(this.udR);
-            this.Controls.Add(this.pnlColour);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.udId);
-            this.Controls.Add(this.lblDisplayName);
-            this.Controls.Add(this.lblClassName);
+            this.ClientSize = new System.Drawing.Size(368, 290);
+            this.Controls.Add(this.grpEditor);
             this.Controls.Add(this.btnCcancel);
             this.Controls.Add(this.btnSave);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -197,6 +239,8 @@ namespace ARKViewer
             ((System.ComponentModel.ISupportInitialize)(this.udR)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udG)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udB)).EndInit();
+            this.grpEditor.ResumeLayout(false);
+            this.grpEditor.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -212,5 +256,8 @@ namespace ARKViewer
         private System.Windows.Forms.NumericUpDown udR;
         private System.Windows.Forms.NumericUpDown udG;
         private System.Windows.Forms.NumericUpDown udB;
+        private System.Windows.Forms.GroupBox grpEditor;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label22;
     }
 }

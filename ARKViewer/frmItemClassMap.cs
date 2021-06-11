@@ -164,7 +164,7 @@ namespace ARKViewer
 
         private void frmItemClassMap_Shown(object sender, EventArgs e)
         {
-            if (ClassMap.ClassName.Length > 0)
+            if (ClassMap.ClassName !=null && ClassMap.ClassName.Length > 0)
             {
                 txtDisplayName.Focus();
                 txtDisplayName.SelectAll();

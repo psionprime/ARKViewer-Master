@@ -1,6 +1,7 @@
 ﻿using ARKViewer.Configuration;
 using ARKViewer.CustomNameMaps;
 using ARKViewer.Models;
+using ARKViewer.Models.ASVPack;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -22,6 +23,7 @@ namespace ARKViewer
         private ColumnHeader SortingColumn_StructureMap = null;
         string imageFolder = "";
         ContentManager cm = null;
+        bool changesApplied = false;
 
         Dictionary<string, string> mapFilenameMap = new Dictionary<string, string>
             {
@@ -1639,7 +1641,7 @@ namespace ARKViewer
 
                         bool includeGameStructures = chkStructureLocations.Checked;
                         bool includeGameStructureContent = chkStructureContents.Checked;
-                        bool includeTribesPlayers = chkTribesPlayers.Checked;
+                        bool includeTribesPlayers = true;
                         bool includeTamed = chkTamedCreatures.Checked;
                         bool includeWild = chkWildCreatures.Checked;
                         bool includePlayerStructures = chkPlayerStructures.Checked;
@@ -1959,6 +1961,34 @@ namespace ARKViewer
 
                 PopulateStructureClassMap("");
             }
+        }
+
+        private void btnNewClient_Click(object sender, EventArgs e)
+        {
+
+            using(frmClientAccess access = new frmClientAccess(cm))
+            {
+                if(access.ShowDialog() == DialogResult.OK)
+                {
+
+                }
+            }
+
+        }
+
+        private void btnRemoveClient_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void chkFilterClient_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnEditClient_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

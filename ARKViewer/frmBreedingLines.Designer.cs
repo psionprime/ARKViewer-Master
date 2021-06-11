@@ -29,6 +29,7 @@ namespace ARKViewer
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmBreedingLines));
             this.cboGeneration = new System.Windows.Forms.ComboBox();
             this.lblGeneration = new System.Windows.Forms.Label();
@@ -165,6 +166,8 @@ namespace ARKViewer
             this.lvwWildDetail_Colour5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lvwWildDetail_Colour6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lvwWildDetail_Id = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.btnClose = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picWindowIcon)).BeginInit();
             this.panel3.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -276,6 +279,7 @@ namespace ARKViewer
             this.btnCopyCommandTamed.Name = "btnCopyCommandTamed";
             this.btnCopyCommandTamed.Size = new System.Drawing.Size(35, 35);
             this.btnCopyCommandTamed.TabIndex = 40;
+            this.toolTip1.SetToolTip(this.btnCopyCommandTamed, "Copy command to clipboard.");
             this.btnCopyCommandTamed.UseVisualStyleBackColor = true;
             this.btnCopyCommandTamed.Click += new System.EventHandler(this.btnCopyCommandTamed_Click);
             // 
@@ -548,7 +552,7 @@ namespace ARKViewer
             this.lblStatus.ForeColor = System.Drawing.Color.DimGray;
             this.lblStatus.Location = new System.Drawing.Point(204, 485);
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(728, 31);
+            this.lblStatus.Size = new System.Drawing.Size(647, 31);
             this.lblStatus.TabIndex = 41;
             this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -780,6 +784,7 @@ namespace ARKViewer
             this.btnTameCopyCommand.Name = "btnTameCopyCommand";
             this.btnTameCopyCommand.Size = new System.Drawing.Size(35, 35);
             this.btnTameCopyCommand.TabIndex = 43;
+            this.toolTip1.SetToolTip(this.btnTameCopyCommand, "Copy command to clipboard.");
             this.btnTameCopyCommand.UseVisualStyleBackColor = true;
             this.btnTameCopyCommand.Click += new System.EventHandler(this.btnTameCopyCommand_Click);
             // 
@@ -1040,6 +1045,7 @@ namespace ARKViewer
             this.btnWildCopyCommand.Name = "btnWildCopyCommand";
             this.btnWildCopyCommand.Size = new System.Drawing.Size(35, 35);
             this.btnWildCopyCommand.TabIndex = 43;
+            this.toolTip1.SetToolTip(this.btnWildCopyCommand, "Copy command to clipboard.");
             this.btnWildCopyCommand.UseVisualStyleBackColor = true;
             this.btnWildCopyCommand.Click += new System.EventHandler(this.btnWildCopyCommand_Click);
             // 
@@ -1205,11 +1211,23 @@ namespace ARKViewer
             this.lvwWildDetail_Id.Text = "Id";
             this.lvwWildDetail_Id.Width = 0;
             // 
+            // btnClose
+            // 
+            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClose.Location = new System.Drawing.Point(857, 489);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(75, 23);
+            this.btnClose.TabIndex = 44;
+            this.btnClose.Text = "Close";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            // 
             // frmBreedingLines
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(948, 528);
+            this.Controls.Add(this.btnClose);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.lvwTame);
             this.Controls.Add(this.lblStatus);
@@ -1378,5 +1396,7 @@ namespace ARKViewer
         private System.Windows.Forms.Label lblWildCommand;
         private System.Windows.Forms.ComboBox cboWildCommand;
         private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Button btnClose;
     }
 }

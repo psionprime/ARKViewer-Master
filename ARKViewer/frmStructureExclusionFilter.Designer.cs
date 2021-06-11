@@ -41,14 +41,14 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.btnCancel.Location = new System.Drawing.Point(12, 428);
+            this.btnCancel.Location = new System.Drawing.Point(317, 428);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 17;
-            this.btnCancel.Text = "Cancel";
+            this.btnCancel.TabIndex = 2;
+            this.btnCancel.Text = "Close";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
             // pnlCreatureInventory
@@ -64,7 +64,7 @@
             this.pnlCreatureInventory.Location = new System.Drawing.Point(12, 46);
             this.pnlCreatureInventory.Name = "pnlCreatureInventory";
             this.pnlCreatureInventory.Size = new System.Drawing.Size(380, 365);
-            this.pnlCreatureInventory.TabIndex = 16;
+            this.pnlCreatureInventory.TabIndex = 0;
             // 
             // lstStructureFilter
             // 
@@ -75,7 +75,7 @@
             this.lstStructureFilter.Location = new System.Drawing.Point(18, 15);
             this.lstStructureFilter.Name = "lstStructureFilter";
             this.lstStructureFilter.Size = new System.Drawing.Size(342, 304);
-            this.lstStructureFilter.TabIndex = 23;
+            this.lstStructureFilter.TabIndex = 0;
             this.lstStructureFilter.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.lstStructureFilter_ItemCheck);
             // 
             // chkApplyFilter
@@ -86,7 +86,7 @@
             this.chkApplyFilter.Location = new System.Drawing.Point(327, 330);
             this.chkApplyFilter.Name = "chkApplyFilter";
             this.chkApplyFilter.Size = new System.Drawing.Size(33, 27);
-            this.chkApplyFilter.TabIndex = 22;
+            this.chkApplyFilter.TabIndex = 3;
             this.chkApplyFilter.UseVisualStyleBackColor = true;
             this.chkApplyFilter.CheckedChanged += new System.EventHandler(this.chkApplyFilter_CheckedChanged);
             // 
@@ -116,7 +116,7 @@
             this.lblWindowTitle.Location = new System.Drawing.Point(12, 9);
             this.lblWindowTitle.Name = "lblWindowTitle";
             this.lblWindowTitle.Size = new System.Drawing.Size(301, 31);
-            this.lblWindowTitle.TabIndex = 18;
+            this.lblWindowTitle.TabIndex = 0;
             this.lblWindowTitle.Text = "Structure Exclusions";
             this.lblWindowTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -125,11 +125,11 @@
             this.btnApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnApply.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnApply.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnApply.Location = new System.Drawing.Point(317, 428);
+            this.btnApply.Location = new System.Drawing.Point(236, 428);
             this.btnApply.Name = "btnApply";
             this.btnApply.Size = new System.Drawing.Size(75, 23);
-            this.btnApply.TabIndex = 19;
-            this.btnApply.Text = "Apply";
+            this.btnApply.TabIndex = 1;
+            this.btnApply.Text = "Save";
             this.btnApply.UseVisualStyleBackColor = true;
             this.btnApply.Click += new System.EventHandler(this.btnApply_Click);
             // 
