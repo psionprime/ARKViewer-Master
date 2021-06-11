@@ -250,6 +250,7 @@ namespace ARKViewer
             cboItemListItem.Items.Clear();
             cboItemListItem.Items.Add(new ComboValuePair("-1", "[Please Select]"));
             cboItemListItem.Items.Add(new ComboValuePair("", "[All Items]"));
+            cboItemListItem.SelectedIndex = 0;
 
             List<ComboValuePair> newItems = new List<ComboValuePair>();
 
@@ -276,11 +277,41 @@ namespace ARKViewer
                     }
 
                     //add items regardless, different search type and want to see them all in this case
-                    if(tribe.Structures!=null && tribe.Structures.Count > 0)
-                    {
 
+                    if (tribe.Structures != null && tribe.Structures.Count > 0)
+                    {
+                        tribe.Structures.ForEach(s =>
+                        {
+                            if (s.InventoryId.GetValueOrDefault(0) != 0)
+                            {
+                                var inventory = cm.GetInventory(s.InventoryId.GetValueOrDefault(0));
+                                if (inventory != null && inventory.Items.Count > 0)
+                                {
+                                    var matchedItems = inventory.Items.Where(i => !playerItems.Contains(i.ClassName)).Select(c => c.ClassName).Distinct().ToList();
+                                    if (matchedItems != null && matchedItems.Count > 0) playerItems.AddRange(matchedItems);
+                                }
+                            }
+                        });
                     }
 
+                    if (tribe.Tames != null && tribe.Tames.Count > 0)
+                    {
+                        tribe.Tames.ForEach(s =>
+                        {
+                            if (s.InventoryId.GetValueOrDefault(0) != 0)
+                            {
+                                var inventory = cm.GetInventory(s.InventoryId.GetValueOrDefault(0));
+                                if(inventory!=null && inventory.Items.Count > 0)
+                                {
+                                    var matchedItems = inventory.Items.Where(i => !playerItems.Contains(i.ClassName)).Select(c => c.ClassName).Distinct().ToList();
+
+                                    if(matchedItems!=null && matchedItems.Count>0) playerItems.AddRange(matchedItems);
+                                }
+
+                            }
+                            
+                        });
+                    }
                 }
 
                 if(playerItems!=null && playerItems.Count > 0)
@@ -299,6 +330,7 @@ namespace ARKViewer
                 }
 
             }
+
             if (newItems.Count > 0)
             {
                 cboItemListTribe.BeginUpdate();
@@ -789,7 +821,7 @@ namespace ARKViewer
                         newItem.SubItems.Add(player.Stats.GetValue(10).ToString());//fortitude
 
 
-                        newItem.SubItems.Add(player.LastActive.GetValueOrDefault(DateTime.MinValue).ToString("dd MMM yy HH:mm:ss"));
+                        newItem.SubItems.Add((player.LastActive.HasValue&&player.LastActive.Value == DateTime.MinValue)?"n/a": player.LastActive.Value.ToString("dd MMM yy HH:mm:ss"));
                         newItem.SubItems.Add(player.Name);
                         newItem.SubItems.Add(player.SteamId);
                         newItem.Tag = player;
@@ -4779,6 +4811,227 @@ namespace ARKViewer
             else
             {
                 LoadWildDetail();
+            }
+        }
+
+        private void cboItemListTribe_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LoadItemListDetail();
+        }
+
+        private void cboItemListItem_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LoadItemListDetail();
+        }
+
+        private void LoadItemListDetail()
+        {
+            if (cboItemListTribe.SelectedItem == null) return;
+            if (cboItemListItem.SelectedItem == null) return;
+
+            lvwItemList.BeginUpdate();
+            lvwItemList.Items.Clear();
+
+            int.TryParse(((ComboValuePair)cboItemListTribe.SelectedItem).Key, out int selectedTribeId);
+            string selectedItemClass = ((ComboValuePair)cboItemListItem.SelectedItem).Key;
+
+            //get selected tribe(s)
+            var tribes = cm.GetTribes(selectedTribeId);
+            if(tribes!=null && tribes.Count > 0)
+            {
+                //LISTVIEW: Tribe, Container, Item, Qty, Lat, Lon - groupby Tribe, Container, Item
+                List<ListViewItem> foundListViewItems = new List<ListViewItem>();
+                foreach(var tribe in tribes)
+                {
+
+                    //list items in structures
+                    if (tribe.Structures != null && tribe.Structures.Count > 0)
+                    {
+                        var matchedContainers = tribe.Structures.Where(s =>
+                                s.InventoryId.GetValueOrDefault(0) != 0
+                            )
+                            .Select(s => new
+                            {
+                                tribe.TribeName,
+                                Container = "Structure",
+                                s.Latitude,
+                                s.Longitude,
+                                s.X,
+                                s.Y,
+                                s.Z,
+                                MatchedItems = cm.GetInventory(s.InventoryId.GetValueOrDefault(0)).Items.Where(i=>i.ClassName == selectedItemClass || selectedItemClass == "").ToList()
+                            })
+                            .ToList();
+
+                        if(matchedContainers != null && matchedContainers.Count > 0)
+                        {
+                            foreach(var container in matchedContainers)
+                            {
+                                var groupedItems = container.MatchedItems.GroupBy(x => x.ClassName).Select(g => new { ClassName = g.Key, Qty = g.Sum(i => i.Quantity) }).ToList();
+
+                                if (groupedItems != null && groupedItems.Count > 0)
+                                {
+                                    groupedItems.ForEach(g =>
+                                    {
+                                        string displayName = g.ClassName;
+                                        var itemMap = Program.ProgramConfig.ItemMap.FirstOrDefault(m => m.ClassName == g.ClassName);
+                                        if (itemMap != null) displayName = itemMap.DisplayName;
+
+                                        ListViewItem newItem = new ListViewItem(tribe.TribeName);
+                                        newItem.SubItems.Add(container.Container);
+                                        newItem.SubItems.Add(displayName);
+                                        newItem.SubItems.Add(g.Qty.ToString());
+                                        newItem.SubItems.Add(container.Latitude.GetValueOrDefault(0).ToString("f2"));
+                                        newItem.SubItems.Add(container.Longitude.GetValueOrDefault(0).ToString("f2"));
+                                        newItem.Tag = new ContentDroppedItem() { Latitude = container.Latitude.GetValueOrDefault(0), Longitude = container.Longitude.GetValueOrDefault(0), X = container.X, Y = container.Y, Z = container.Z };
+                                        foundListViewItems.Add(newItem);
+
+                                    });
+                                }
+                            }
+                            
+                        }
+                    }
+
+                    //list items in structures
+                    if (tribe.Tames != null && tribe.Tames.Count > 0)
+                    {
+                        var matchedContainers = tribe.Tames.Where(s =>
+                                s.InventoryId.GetValueOrDefault(0) != 0
+                            )
+                            .Select(s => new
+                            {
+                                tribe.TribeName,
+                                Container = "Tame",
+                                s.Latitude,
+                                s.Longitude,
+                                s.X,
+                                s.Y,
+                                s.Z,
+                                MatchedItems = cm.GetInventory(s.InventoryId.GetValueOrDefault(0)).Items.Where(i => i.ClassName == selectedItemClass || selectedItemClass == "").ToList()
+                            })
+                            .ToList();
+
+                        if (matchedContainers != null && matchedContainers.Count > 0)
+                        {
+                            foreach (var container in matchedContainers)
+                            {
+                                var groupedItems = container.MatchedItems.GroupBy(x => x.ClassName).Select(g => new { ClassName = g.Key, Qty = g.Sum(i => i.Quantity) }).ToList();
+
+                                if (groupedItems != null && groupedItems.Count > 0)
+                                {
+                                    groupedItems.ForEach(g =>
+                                    {
+                                        string displayName = g.ClassName;
+                                        var itemMap = Program.ProgramConfig.ItemMap.FirstOrDefault(m => m.ClassName == g.ClassName);
+                                        if (itemMap != null) displayName = itemMap.DisplayName;
+
+                                        ListViewItem newItem = new ListViewItem(tribe.TribeName);
+                                        newItem.SubItems.Add(container.Container);
+                                        newItem.SubItems.Add(displayName);
+                                        newItem.SubItems.Add(g.Qty.ToString());
+                                        foundListViewItems.Add(newItem);
+
+                                    });
+                                }
+                            }
+
+                        }
+                    }
+
+                    //list items in players
+                    if (tribe.Players != null && tribe.Players.Count > 0)
+                    {
+                        var matchedContainers = tribe.Players.Where(s =>
+                                s.InventoryId.GetValueOrDefault(0) != 0
+                            )
+                            .Select(s => new
+                            {
+                                tribe.TribeName,
+                                Container = "Player",
+                                s.Latitude,
+                                s.Longitude,
+                                s.X,
+                                s.Y,
+                                s.Z,
+                                MatchedItems = cm.GetInventory(s.InventoryId.GetValueOrDefault(0)).Items.Where(i => i.ClassName == selectedItemClass || selectedItemClass == "").ToList()
+                            })
+                            .ToList();
+
+                        if (matchedContainers != null && matchedContainers.Count > 0)
+                        {
+                            foreach (var container in matchedContainers)
+                            {
+                                var groupedItems = container.MatchedItems.GroupBy(x => x.ClassName).Select(g => new { ClassName = g.Key, Qty = g.Sum(i => i.Quantity) }).ToList();
+
+                                if (groupedItems != null && groupedItems.Count > 0)
+                                {
+                                    groupedItems.ForEach(g =>
+                                    {
+                                        string displayName = g.ClassName;
+                                        var itemMap = Program.ProgramConfig.ItemMap.FirstOrDefault(m => m.ClassName == g.ClassName);
+                                        if (itemMap != null) displayName = itemMap.DisplayName;
+
+                                        ListViewItem newItem = new ListViewItem(tribe.TribeName);
+                                        newItem.SubItems.Add(container.Container);
+                                        newItem.SubItems.Add(displayName);
+                                        newItem.SubItems.Add(g.Qty.ToString());
+                                        foundListViewItems.Add(newItem);
+
+                                    });
+                                }
+                            }
+
+                        }
+                    }
+                }
+                if(foundListViewItems!=null && foundListViewItems.Count > 0)
+                {
+                    lvwItemList.Items.AddRange(foundListViewItems.ToArray());
+                }
+
+            }
+
+
+            lvwItemList.EndUpdate();
+
+        }
+
+        private void lvwItemList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnItemListCommand.Enabled = lvwItemList.SelectedItems.Count == 1;
+        }
+
+        private void btnItemListCommand_Click(object sender, EventArgs e)
+        {
+            if (cboItemListCommand.SelectedItem == null) return;
+
+            var commandText = cboItemListCommand.SelectedItem.ToString();
+            if (commandText != null)
+            {
+
+                ListViewItem selectedItem = lvwItemList.SelectedItems[0];
+                ContentDroppedItem droppedItem = (ContentDroppedItem)selectedItem.Tag;
+                commandText = commandText.Replace("<x>", System.FormattableString.Invariant($"{droppedItem.X:0.00}"));
+                commandText = commandText.Replace("<y>", System.FormattableString.Invariant($"{droppedItem.Y:0.00}"));
+                commandText = commandText.Replace("<z>", System.FormattableString.Invariant($"{droppedItem.Z + 100:0.00}"));
+
+                switch (Program.ProgramConfig.CommandPrefix)
+                {
+                    case 1:
+                        commandText = $"admincheat {commandText}";
+
+                        break;
+                    case 2:
+                        commandText = $"cheat {commandText}";
+                        break;
+                }
+
+                Clipboard.SetText(commandText);
+
+                lblStatus.Text = $"Command copied:  {commandText}";
+                lblStatus.Refresh();
+
             }
         }
     }

@@ -2113,6 +2113,7 @@
             this.cboItemListItem.Name = "cboItemListItem";
             this.cboItemListItem.Size = new System.Drawing.Size(304, 21);
             this.cboItemListItem.TabIndex = 3;
+            this.cboItemListItem.SelectedIndexChanged += new System.EventHandler(this.cboItemListItem_SelectedIndexChanged);
             // 
             // lblItemListTribe
             // 
@@ -2132,6 +2133,7 @@
             this.cboItemListTribe.Name = "cboItemListTribe";
             this.cboItemListTribe.Size = new System.Drawing.Size(278, 21);
             this.cboItemListTribe.TabIndex = 1;
+            this.cboItemListTribe.SelectedIndexChanged += new System.EventHandler(this.cboItemListTribe_SelectedIndexChanged);
             // 
             // btnItemListCommand
             // 
@@ -2144,6 +2146,7 @@
             this.btnItemListCommand.Size = new System.Drawing.Size(35, 35);
             this.btnItemListCommand.TabIndex = 7;
             this.btnItemListCommand.UseVisualStyleBackColor = true;
+            this.btnItemListCommand.Click += new System.EventHandler(this.btnItemListCommand_Click);
             // 
             // lblItemListCommand
             // 
@@ -2211,6 +2214,7 @@
             this.lvwItemList.TabIndex = 4;
             this.lvwItemList.UseCompatibleStateImageBehavior = false;
             this.lvwItemList.View = System.Windows.Forms.View.Details;
+            this.lvwItemList.SelectedIndexChanged += new System.EventHandler(this.lvwItemList_SelectedIndexChanged);
             // 
             // lvwItemList_Tribe
             // 

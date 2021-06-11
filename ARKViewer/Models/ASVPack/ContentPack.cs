@@ -1012,11 +1012,64 @@ namespace ARKViewer.Models.ASVPack
                 });
             }
 
+
+            //hold new abandoned tribes to create fake ones until they return to server.
+            ConcurrentBag<ContentTribe> abandonedTribes = new ConcurrentBag<ContentTribe>();
+
             //check for abandoned tames
+
             ConcurrentBag<ContentTamedCreature> abandonedTames = new ConcurrentBag<ContentTamedCreature>();
-            var abandoned = gd.TamedCreatures.Where(x => !Tribes.Any(t => t.TribeId == x.TargetingTeam)).ToList();
+            var abandoned = gd.TamedCreatures.Where(x => x.TargetingTeam!=0 &!Tribes.Any(t => t.TribeId == x.TargetingTeam)).ToList();
             if (abandoned != null && abandoned.Count > 0)
             {
+                //try and create ContentTribe from abandoned tame data
+                var missingSoloTribes = abandoned.Where(a=>a.TribeName == null && a.TargetingTeam!=0).GroupBy(x => x.TargetingTeam).Where(g=>g.Key!=0).Select(s=> new { TribeId = s.Key, TribeName = $"Tribe of {s.First().TamerName}"}).Distinct().ToList();
+                if(missingSoloTribes!=null && missingSoloTribes.Count > 0)
+                {
+                    missingSoloTribes.ForEach(x =>
+                    {
+                        var newTribe = new ContentTribe()
+                        {
+                            TribeId = x.TribeId,
+                            TribeName = x.TribeName,
+                            LastActive = DateTime.MinValue,
+                            Players = new List<ContentPlayer>(),
+                            Structures = new List<ContentStructure>(),
+                            Tames = new List<ContentTamedCreature>(),
+                            Logs = Array.Empty<string>()
+                        };
+
+
+                        //add the solo player
+                        abandonedTribes.Add(newTribe);
+                    });
+
+                }
+                
+                var missingTribes = abandoned.Where(a=>a.TribeName!=null && a.TargetingTeam !=0  &!abandonedTribes.Any(t => t.TribeId == a.TargetingTeam)).GroupBy(x => x.TargetingTeam).Select(s => new { TribeId = s.Key, TribeName = s.First().TribeName }).Distinct().ToList();
+                if (missingTribes != null && missingTribes.Count > 0)
+                {
+                    missingTribes.ForEach(x =>
+                    {
+                        var newTribe = new ContentTribe()
+                        {
+                            TribeId = x.TribeId,
+                            TribeName = x.TribeName,
+                            LastActive = DateTime.MinValue,
+                            Players = new List<ContentPlayer>(),
+                            Structures = new List<ContentStructure>(),
+                            Tames = new List<ContentTamedCreature>(),
+                            Logs = Array.Empty<string>()
+                        };
+
+
+                        //add the solo player
+                        abandonedTribes.Add(newTribe);
+                    });
+                }
+
+
+                //populate ASV content for tame as abandoned
                 Parallel.ForEach(abandoned, tame =>
                 {
                     var loadedTame = new ContentTamedCreature()
@@ -1062,15 +1115,64 @@ namespace ARKViewer.Models.ASVPack
                     abandonedTames.Add(loadedTame);
                 });
 
+
+
                 if (!abandonedTames.IsEmpty) Tribes.First(t=>t.TribeId == int.MinValue).Tames.AddRange(abandonedTames.ToList());
             }
 
             //check for abandoned
             ConcurrentBag<ContentStructure> abandonedStructures = new ConcurrentBag<ContentStructure>();
-            var derelics = gd.TamedCreatures.Where(x => !Tribes.Any(t => t.TribeId == x.TargetingTeam)).ToList();
+            var derelics = gd.Structures.Where(x => x.TargetingTeam !=null && x.TargetingTeam != 0 &!Tribes.Any(t => t.TribeId == x.TargetingTeam &! abandonedTribes.Any(a => t.TribeId == a.TribeId))).ToList();
             if (derelics != null && derelics.Count > 0)
             {
-                Parallel.ForEach(abandoned, structure =>
+
+                //try and create ContentTribe from abandoned tame data
+                var missingSoloTribes = derelics.Where(a => a.OwnerName == null && a.TargetingTeam.GetValueOrDefault(0) !=0 &!abandonedTribes.Any(t => t.TribeId == a.TargetingTeam)).GroupBy(x => x.TargetingTeam).Select(s => new { TribeId = (long)s.Key.GetValueOrDefault(0), TribeName = $"Tribe of {s.First().OwningPlayerName}" }).Distinct().ToList();
+                if (missingSoloTribes != null && missingSoloTribes.Count > 0)
+                {
+                    missingSoloTribes.ForEach(x =>
+                    {
+                        var newTribe = new ContentTribe()
+                        {
+                            TribeId = x.TribeId,
+                            TribeName = x.TribeName,
+                            LastActive = DateTime.MinValue,
+                            Players = new List<ContentPlayer>(),
+                            Structures = new List<ContentStructure>(),
+                            Tames = new List<ContentTamedCreature>(),
+                            Logs = Array.Empty<string>()
+                        };
+
+                        //add the solo player
+                        abandonedTribes.Add(newTribe);
+                    });
+
+                }
+
+                var missingTribes = derelics.Where(a => a.OwnerName != null && a.TargetingTeam.GetValueOrDefault(0)!=0  &! abandonedTribes.Any(t=>t.TribeId == a.TargetingTeam)).GroupBy(x => x.TargetingTeam).Select(s => new { TribeId = (long)s.Key.GetValueOrDefault(0), TribeName = s.First().OwnerName}).Distinct().ToList();
+                if (missingTribes != null && missingTribes.Count > 0)
+                {
+                    missingTribes.ForEach(x =>
+                    {
+                        var newTribe = new ContentTribe()
+                        {
+                            TribeId = x.TribeId,
+                            TribeName = x.TribeName,
+                            LastActive = DateTime.MinValue,
+                            Players = new List<ContentPlayer>(),
+                            Structures = new List<ContentStructure>(),
+                            Tames = new List<ContentTamedCreature>(),
+                            Logs = Array.Empty<string>()
+                        };
+
+
+                        //add the solo player
+                        abandonedTribes.Add(newTribe);
+                    });
+                }
+
+
+                Parallel.ForEach(derelics, structure =>
                 {
                     ContentStructure loadedStructure = new ContentStructure()
                     {
@@ -1081,7 +1183,7 @@ namespace ARKViewer.Models.ASVPack
                         Y = structure.Location.Y,
                         Z = structure.Location.Z,
                         TargetingTeam = int.MinValue,
-                        AbandonedTeam = structure.TargetingTeam,
+                        AbandonedTeam = structure.TargetingTeam.GetValueOrDefault(0),
                         InventoryId = addInventory(structure.Inventory)
                     };
 
@@ -1091,6 +1193,50 @@ namespace ARKViewer.Models.ASVPack
                 if (!abandonedStructures.IsEmpty) Tribes.First(t => t.TribeId == int.MinValue).Structures.AddRange(abandonedStructures.ToList());
             }
 
+
+            if(abandonedTribes!=null && abandonedTribes.Count > 0)
+            {
+                var abandonedTribeList = abandonedTribes.ToList();
+                abandonedTribeList.ForEach(x =>
+                {
+                    //find matching abandoned tames
+                    var tribeTames = abandonedTames.Where(t => t.AbandonedTeam == x.TribeId).ToList();
+                    if(tribeTames!=null && tribeTames.Count > 0)
+                    {
+                        tribeTames.ForEach(t => {
+                            t.TargetingTeam = t.AbandonedTeam;
+                            t.AbandonedTeam = 0;
+                        });
+
+                        //add to this tribe tames
+                        x.Tames.AddRange(tribeTames.ToArray());
+
+                        //remove from abandoned tribe tames
+                        Tribes.First(t => t.TribeId == int.MinValue).Tames.RemoveAll(a => a.TargetingTeam == x.TribeId);
+                    }
+
+                    //now matching structures
+                    var tribeStructures = abandonedStructures.Where(t => t.AbandonedTeam == x.TribeId).ToList();
+                    if (tribeStructures != null && tribeStructures.Count > 0)
+                    {
+                        tribeStructures.ForEach(t => {
+                            t.TargetingTeam = t.AbandonedTeam;
+                            t.AbandonedTeam = 0;
+                        });
+
+                        //add to this tribe tames
+                        x.Structures.AddRange(tribeStructures.ToArray());
+
+                        //remove from abandoned tribe tames
+                        Tribes.First(t => t.TribeId == int.MinValue).Structures.RemoveAll(a => a.AbandonedTeam == x.TribeId);
+                    }
+                });
+
+                Tribes.AddRange(abandonedTribeList);
+
+                var abandonedTribe = Tribes.First(t => t.TribeId == int.MinValue);
+                if (abandonedTribe.Tames.Count == 0 && abandonedTribe.Structures.Count == 0) Tribes.Remove(abandonedTribe);
+            }
 
             if (IncludeDroppedItems)
             {
