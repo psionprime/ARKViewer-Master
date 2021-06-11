@@ -467,7 +467,7 @@ namespace ARKViewer
                     {
                         string friendlyName = "";
                         var map = Program.ProgramConfig.ItemMap.FirstOrDefault<ItemClassMap>(m => m.ClassName == groupItem.ClassName);
-                        if (map != null) friendlyName = map.FriendlyName;
+                        if (map != null) friendlyName = map.DisplayName;
 
                         if (friendlyName.Contains(Environment.NewLine))
                         {
@@ -486,7 +486,7 @@ namespace ARKViewer
                             if (friendlyName.Length == 0)
                             {
                                 var map = Program.ProgramConfig.ItemMap.FirstOrDefault<ItemClassMap>(m => m.ClassName == item.ClassName);
-                                if (map != null) friendlyName = map.FriendlyName;
+                                if (map != null) friendlyName = map.DisplayName;
                             }
 
                             if (friendlyName.Contains(Environment.NewLine))

@@ -9,7 +9,7 @@ namespace ARKViewer.CustomNameMaps
     public class ItemClassMap
     {
         public string ClassName { get; set; }
-        public string FriendlyName { get; set; }
+        public string DisplayName { get; set; }
         public string Category { get; set; }
         public string Image { get; set; } = "";
 

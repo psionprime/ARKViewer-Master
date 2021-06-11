@@ -124,7 +124,7 @@ namespace ARKViewer
                     var itemMap = Program.ProgramConfig.ItemMap.Where(i => i.ClassName == invItem.ClassName).FirstOrDefault<ItemClassMap>();
                     if (itemMap != null && itemMap.ClassName != "")
                     {
-                        itemName = itemMap.FriendlyName;
+                        itemName = itemMap.DisplayName;
                         categoryName = itemMap.Category;
                         itemIcon = Program.GetItemImageIndex(itemMap.Image);
                         

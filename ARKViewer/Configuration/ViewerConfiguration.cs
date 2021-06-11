@@ -164,7 +164,7 @@ namespace ARKViewer.Configuration
                     JObject itemObject = new JObject();
                     itemObject.Add(new JProperty("ClassName", item.ClassName));
                     itemObject.Add(new JProperty("Category", item.Category));
-                    itemObject.Add(new JProperty("FriendlyName", item.FriendlyName));
+                    itemObject.Add(new JProperty("FriendlyName", item.DisplayName));
                     itemObject.Add(new JProperty("Image", item.Image));
 
                     itemArray.Add(itemObject);
@@ -322,7 +322,7 @@ namespace ARKViewer.Configuration
                 {
                     ItemClassMap item = new ItemClassMap();
                     item.ClassName = itemObject.Value<string>("ClassName");
-                    item.FriendlyName = itemObject.Value<string>("FriendlyName");
+                    item.DisplayName = itemObject.Value<string>("FriendlyName");
                     item.Category = itemObject.Value<string>("Category");
                     item.Image = itemObject.Value<string>("Image") ;
                     ItemMap.Add(item);

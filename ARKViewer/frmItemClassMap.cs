@@ -96,7 +96,7 @@ namespace ARKViewer
             
             ClassMap = selectedMap;
             txtClassName.Text = selectedMap.ClassName;
-            txtDisplayName.Text = selectedMap.FriendlyName;
+            txtDisplayName.Text = selectedMap.DisplayName;
             txtCategory.Text = selectedMap.Category;
 
             picIcon.Image = ARKViewer.Properties.Resources.marker_0;
@@ -149,7 +149,7 @@ namespace ARKViewer
 
         private void txtDisplayName_Validating(object sender, CancelEventArgs e)
         {
-            ClassMap.FriendlyName = txtDisplayName.Text.Trim();
+            ClassMap.DisplayName = txtDisplayName.Text.Trim();
         }
 
         private void txtCategory_Validating(object sender, CancelEventArgs e)

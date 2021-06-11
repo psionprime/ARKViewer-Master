@@ -174,6 +174,7 @@ namespace ARKViewer
             RefreshTamedTribes();
             RefreshCryoTribes();
             RefreshStructureTribes();
+            RefreshItemListTribes();
             RefreshStructureSummary();
             RefreshDroppedPlayers();
 
@@ -246,12 +247,19 @@ namespace ARKViewer
             cboItemListTribe.Items.Clear();
             cboItemListTribe.Items.Add(new ComboValuePair("0", "[All Tribes]"));
 
+            cboItemListItem.Items.Clear();
+            cboItemListItem.Items.Add(new ComboValuePair("-1", "[Please Select]"));
+            cboItemListItem.Items.Add(new ComboValuePair("", "[All Items]"));
+
             List<ComboValuePair> newItems = new List<ComboValuePair>();
 
             var tribes = cm.GetTribes(0);
-            
+
             if (tribes.Count() > 0)
             {
+
+                List<string> playerItems = new List<string>();
+
                 foreach (var tribe in tribes)
                 {
                     bool addTribe = true;
@@ -266,7 +274,30 @@ namespace ARKViewer
                         ComboValuePair valuePair = new ComboValuePair(tribe.TribeId.ToString(), tribe.TribeName);
                         newItems.Add(valuePair);
                     }
+
+                    //add items regardless, different search type and want to see them all in this case
+                    if(tribe.Structures!=null && tribe.Structures.Count > 0)
+                    {
+
+                    }
+
                 }
+
+                if(playerItems!=null && playerItems.Count > 0)
+                {
+                    List<ComboValuePair> comboItems = new List<ComboValuePair>();
+                    playerItems.ForEach(i =>
+                    {
+                        string displayName = i;
+                        var itemMap = Program.ProgramConfig.ItemMap.FirstOrDefault(m => m.ClassName == i);
+                        if (itemMap != null) displayName = itemMap.DisplayName;
+                        comboItems.Add(new ComboValuePair(i,displayName));
+
+                    });
+
+                    cboItemListItem.Items.AddRange(comboItems.ToArray());
+                }
+
             }
             if (newItems.Count > 0)
             {
@@ -280,49 +311,12 @@ namespace ARKViewer
             }
 
             cboItemListTribe.SelectedIndex = 0;
-        }
 
-        private void RefreshItemListItems()
-        {
-            if (cm == null) return;
 
-            cboItemListItem.Items.Clear();
-            cboItemListItem.Items.Add(new ComboValuePair("", "[All Items]"));
 
-            List<ComboValuePair> newItems = new List<ComboValuePair>();
 
-            var tribes = cm.GetTribes(0);
 
-            if (tribes.Count() > 0)
-            {
-                foreach (var tribe in tribes)
-                {
-                    bool addTribe = true;
-                    if (Program.ProgramConfig.HideNoBody)
-                    {
 
-                        addTribe = tribe.Players.Count > 0 && !tribe.Players.All(p => (p.Latitude == 0 && p.Longitude == 0));
-                    }
-
-                    if (addTribe)
-                    {
-                        ComboValuePair valuePair = new ComboValuePair(tribe.TribeId.ToString(), tribe.TribeName);
-                        newItems.Add(valuePair);
-                    }
-                }
-            }
-            if (newItems.Count > 0)
-            {
-                cboItemListItem.BeginUpdate();
-                foreach (var newItem in newItems.OrderBy(o => o.Value))
-                {
-                    cboItemListItem.Items.Add(newItem);
-                }
-
-                cboItemListItem.EndUpdate();
-            }
-
-            cboItemListItem.SelectedIndex = 0;
         }
 
         private void RefreshTamedTribes()
@@ -501,9 +495,9 @@ namespace ARKViewer
 
                         ComboValuePair classNameItem = new ComboValuePair(className, "");
 
-                        if (itemMap != null && itemMap.FriendlyName.Length > 0)
+                        if (itemMap != null && itemMap.DisplayName.Length > 0)
                         {
-                            itemName = itemMap.FriendlyName;
+                            itemName = itemMap.DisplayName;
                             classNameItem.Value = itemName;
 
                         }
@@ -1211,7 +1205,7 @@ namespace ARKViewer
                         ItemClassMap itemMap = Program.ProgramConfig.ItemMap.Where(m => m.ClassName == droppedItem.ClassName).FirstOrDefault();
                         if (itemMap != null)
                         {
-                            itemName = itemMap.FriendlyName;
+                            itemName = itemMap.DisplayName;
                         }
 
                         //get tribe/player
@@ -1942,7 +1936,7 @@ namespace ARKViewer
                     {
                         string displayName = resourceClass;
                         var itemMap = Program.ProgramConfig.ItemMap.FirstOrDefault(i => i.ClassName == resourceClass);
-                        if (itemMap != null && itemMap.FriendlyName.Length > 0) displayName = itemMap.FriendlyName;
+                        if (itemMap != null && itemMap.DisplayName.Length > 0) displayName = itemMap.DisplayName;
 
                         productionComboValues.Add(new ComboValuePair(resourceClass, displayName));
                     }
@@ -1972,7 +1966,7 @@ namespace ARKViewer
                 //add "All" summary
                 int minLevelDefault = 1;
                 int maxLevelDefault = 150;
-                if (wildSummary != null && wildSummary.Count() > 0)
+                if (wildSummary != null)
                 {
                     minLevelDefault = wildSummary.Min(s => s.Min);
                     maxLevelDefault = wildSummary.Max(s => s.Max);
@@ -4781,6 +4775,10 @@ namespace ARKViewer
                 {
                     LoadWildDetail();
                 }
+            }
+            else
+            {
+                LoadWildDetail();
             }
         }
     }

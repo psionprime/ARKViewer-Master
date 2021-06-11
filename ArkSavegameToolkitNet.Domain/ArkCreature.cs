@@ -121,10 +121,14 @@ namespace ArkSavegameToolkitNet.Domain
                 foreach(Structs.StructPropertyList prop in productionContainer.Value)
                 {
                     Property.PropertyObject resourceRef = (Property.PropertyObject)prop.Properties.First().Value;
-                    string fullPathValue = resourceRef.Value.ObjectString.Name.ToString();
-                    string className = fullPathValue.Substring(fullPathValue.LastIndexOf(".") + 1);
+                    if(resourceRef.Value!=null && resourceRef.Value.ObjectString != null)
+                    {
+                        string fullPathValue = resourceRef.Value.ObjectString.Name.ToString();
+                        string className = fullPathValue.Substring(fullPathValue.LastIndexOf(".") + 1);
 
-                    if (!productionList.Contains(className)) productionList.Add(className);
+                        if (!productionList.Contains(className)) productionList.Add(className);
+                    }
+
                 }
             }
 

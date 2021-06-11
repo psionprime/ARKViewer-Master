@@ -2108,7 +2108,6 @@
             // cboItemListItem
             // 
             this.cboItemListItem.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboItemListItem.Enabled = false;
             this.cboItemListItem.FormattingEnabled = true;
             this.cboItemListItem.Location = new System.Drawing.Point(414, 15);
             this.cboItemListItem.Name = "cboItemListItem";
@@ -2118,7 +2117,6 @@
             // lblItemListTribe
             // 
             this.lblItemListTribe.AutoSize = true;
-            this.lblItemListTribe.Enabled = false;
             this.lblItemListTribe.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblItemListTribe.Location = new System.Drawing.Point(17, 18);
             this.lblItemListTribe.Name = "lblItemListTribe";
@@ -2129,7 +2127,6 @@
             // cboItemListTribe
             // 
             this.cboItemListTribe.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboItemListTribe.Enabled = false;
             this.cboItemListTribe.FormattingEnabled = true;
             this.cboItemListTribe.Location = new System.Drawing.Point(69, 16);
             this.cboItemListTribe.Name = "cboItemListTribe";
@@ -2152,7 +2149,6 @@
             // 
             this.lblItemListCommand.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblItemListCommand.AutoSize = true;
-            this.lblItemListCommand.Enabled = false;
             this.lblItemListCommand.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblItemListCommand.Location = new System.Drawing.Point(14, 425);
             this.lblItemListCommand.Name = "lblItemListCommand";
@@ -2164,7 +2160,6 @@
             // 
             this.cboItemListCommand.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.cboItemListCommand.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboItemListCommand.Enabled = false;
             this.cboItemListCommand.FormattingEnabled = true;
             this.cboItemListCommand.Items.AddRange(new object[] {
             "SetPlayerPos  <x> <y> <z>"});
@@ -2188,7 +2183,6 @@
             // lblItemListItem
             // 
             this.lblItemListItem.AutoSize = true;
-            this.lblItemListItem.Enabled = false;
             this.lblItemListItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblItemListItem.Location = new System.Drawing.Point(373, 19);
             this.lblItemListItem.Name = "lblItemListItem";
@@ -2208,7 +2202,6 @@
             this.lvwItemList_Quantity,
             this.lvwItemList_Lat,
             this.lvwItemList_Lon});
-            this.lvwItemList.Enabled = false;
             this.lvwItemList.FullRowSelect = true;
             this.lvwItemList.HideSelection = false;
             this.lvwItemList.Location = new System.Drawing.Point(12, 52);

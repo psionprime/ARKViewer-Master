@@ -287,12 +287,12 @@ namespace ARKViewer
             {
                 string filterText = txtItemFilter.Text;
 
-                foreach (var item in SavedConfig.ItemMap.OrderBy(d => d.FriendlyName))
+                foreach (var item in SavedConfig.ItemMap.OrderBy(d => d.DisplayName))
                 {
 
                     ListViewItem newItem = lvwItemMap.Items.Add(item.Category);
                     newItem.SubItems.Add(item.ClassName);
-                    newItem.SubItems.Add(item.FriendlyName);
+                    newItem.SubItems.Add(item.DisplayName);
 
                     int imageIndex = Program.GetItemImageIndex(item.Image);
                     newItem.ImageIndex = imageIndex -1;
@@ -1174,7 +1174,7 @@ namespace ARKViewer
                 if (existingMap != null && existingMap.ClassName.Length != 0)
                 {
                     //found it, update
-                    existingMap.FriendlyName = mapEditor.ClassMap.FriendlyName;
+                    existingMap.DisplayName = mapEditor.ClassMap.DisplayName;
                     existingMap.Category = mapEditor.ClassMap.Category;
                     existingMap.Image = mapEditor.ClassMap.Image;
                 }
